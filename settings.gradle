@@ -1,0 +1,6 @@
+rootProject.name = 'box2d-jni '
+
+include ':modules:box2d:core'
+include ':modules:box2d:bindings'
+
+include ':modules:samples'

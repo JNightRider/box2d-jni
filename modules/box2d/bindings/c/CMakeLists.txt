@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.22)
+project(box2d-bindings
+	VERSION 1.0.0
+	DESCRIPTION "An implementation of the Box2D physics engine for Java (JNI)"
+	LANGUAGES C
+)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+set(BUILD_SHARED_LIBS OFF)
+
+# Configure JNI headers
+find_package(JNI REQUIRED)
+
+if(NOT JNI_FOUND)
+    message(FATAL_ERROR "No JNI found, please configure your JAVA_HOME")
+else()
+    message("-- JNI ${JNI_INCLUDE_DIRS}")
+endif()
+
+# Box2D configuration for JNI
+set(BOX2D_SAMPLES OFF CACHE BOOL "" FORCE)
+set(BOX2D_BENCHMARKS OFF CACHE BOOL "" FORCE)
+set(BOX2D_DOCS OFF CACHE BOOL "" FORCE)
+set(BOX2D_UNIT_TESTS OFF CACHE BOOL "" FORCE)
+set(BOX2D_PROFILE OFF CACHE BOOL "" FORCE)
+set(BOX2D_VALIDATE OFF CACHE BOOL "" FORCE)
+
+set(BOX2D_DISABLE_SIMD OFF CACHE BOOL "" FORCE)
+
+# Dependencies - Box2D
+add_subdirectory(extern/box2d)
+
+# Modules
+add_subdirectory(src)

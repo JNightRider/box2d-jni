@@ -1,0 +1,14 @@
+allprojects {
+
+    group = 'org.box2d.jni'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+}

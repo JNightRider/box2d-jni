@@ -1,0 +1,13 @@
+description = 'box2d-jni core'
+
+// Java compile-time options
+tasks.withType(JavaCompile).configureEach  {
+    options.compilerArgs << '-Xdiags:verbose'
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true // to provide detailed deprecation warnings
+    options.encoding    = 'UTF-8'
+
+    def bindings = project(":modules:box2d:bindings")
+    def outputFile = new File(bindings.layout.projectDirectory.asFile, '/c/include/box2d/jni')
+    options.headerOutputDirectory = outputFile
+}
