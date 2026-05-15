@@ -1,1 +1,92 @@
+plugins {
+    alias(libs.plugins.download)
+}
+
 description = 'box2d-jni bindings'
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn('buildJNI')
+}
+
+// C/C++ compilation (Box2d| JNI )
+tasks.register('nativesJar', Jar) {
+    archiveBaseName.set('box2d')
+    archiveClassifier.set('natives-linux')
+
+    def dir = layout.projectDirectory.file('c/build/natives')
+    from(dir.asFile) {
+        into 'natives'
+        include '**/*.so', '**/*.dll', '**/*.dylib'
+    }
+}
+
+tasks.register('configureCMake', Exec) {
+    workingDir layout.projectDirectory.file('c').asFile
+    commandLine(
+            'cmake',
+            '-S', '.',
+            '-B', 'build',
+            '-DCMAKE_BUILD_TYPE=Release',
+            '-DCMAKE_C_FLAGS=-Wno-format-truncation'
+    )
+}
+
+tasks.register('buildCMake', Exec) {
+    dependsOn ('configureCMake')
+
+    workingDir layout.projectDirectory.file('c').asFile
+    commandLine(
+            'cmake',
+            '--build', 'build',
+            '--config', 'Release'
+    )
+}
+
+// Register tasks to download ZIP archives:
+def box2dTag = findProperty('box2d.source.code')
+
+tasks.register('downloadBox2dZip', Download) {
+    src "https://github.com/JNightRider/box2d/archive/refs/tags/${box2dTag}.zip"
+    dest file(layout.projectDirectory.file('downloads/box2d.zip'))
+    overwrite false
+}
+
+tasks.register('unpackBox2dSource', Copy) {
+    dependsOn 'downloadBox2dZip'
+    from (zipTree(downloadBox2dZip.dest)) {
+        include(
+                "box2d-${box2dTag}/**",
+        )
+        eachFile { fcd ->
+            fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
+        }
+        includeEmptyDirs = false
+    }
+    into layout.projectDirectory.dir('c/extern/box2d')
+}
+
+// build JNI and CMake
+buildCMake.mustRunAfter configureCMake
+configureCMake.mustRunAfter unpackBox2dSource
+unpackBox2dSource.mustRunAfter downloadBox2dZip
+nativesJar.mustRunAfter buildCMake
+
+tasks.register('buildJNI') {
+    dependsOn 'downloadBox2dZip',
+            'unpackBox2dSource',
+            'configureCMake',
+            'buildCMake',
+            'nativesJar'
+}
+
+// Register cleanup tasks:
+clean.dependsOn('cleanNative')
+
+tasks.register('cleanNative', Delete) {
+    delete(
+        layout.projectDirectory.dir('c/build'),
+        layout.projectDirectory.dir('c/extern'),
+        layout.projectDirectory.dir('c/include/box2d'),
+        layout.projectDirectory.dir('downloads')
+    )
+}

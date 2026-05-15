@@ -6,3 +6,11 @@
 #include <stdint.h>
 
 
+// -----------------------------------------------------
+
+#define UNUSED_PARAM(param) \
+    (void)(param);
+
+#define UNUSED_PARAMS(a, b) \
+    (void)(a); \
+    (void)(b);

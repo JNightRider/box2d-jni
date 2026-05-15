@@ -1,5 +1,10 @@
 description = 'box2d-jni core'
 
+dependencies {
+    // Keep the normal natives artifact on the classpath for fallback/runtime parity.
+    testRuntimeOnly project(':modules:box2d:bindings')
+}
+
 // Java compile-time options
 tasks.withType(JavaCompile).configureEach  {
     options.compilerArgs << '-Xdiags:verbose'
@@ -11,3 +16,5 @@ tasks.withType(JavaCompile).configureEach  {
     def outputFile = new File(bindings.layout.projectDirectory.asFile, '/c/include/box2d/jni')
     options.headerOutputDirectory = outputFile
 }
+
+

@@ -48,3 +48,4 @@ modules/box2d/bindings/c/extern
 
 ### box2d-jni ###
 modules/box2d/bindings/c/include/box2d
+modules/box2d/bindings/downloads

@@ -10,13 +10,13 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 
 set(BUILD_SHARED_LIBS OFF)
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/natives)
+
 # Configure JNI headers
 find_package(JNI REQUIRED)
 
 if(NOT JNI_FOUND)
     message(FATAL_ERROR "No JNI found, please configure your JAVA_HOME")
-else()
-    message("-- JNI ${JNI_INCLUDE_DIRS}")
 endif()
 
 # Box2D configuration for JNI

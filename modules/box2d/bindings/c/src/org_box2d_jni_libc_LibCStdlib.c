@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include "common_tools.h"
 #include "box2d/jni/org_box2d_jni_libc_LibCStdlib.h"
 
 /*
@@ -10,6 +11,7 @@
 JNIEXPORT jlong JNICALL Java_org_box2d_jni_libc_LibCStdlib_nmalloc
     (JNIEnv *__env, jclass clazz, jlong size)
 {
+    UNUSED_PARAMS(__env, clazz)
     return (jlong)(void*)malloc((size_t)size);
 }
 
@@ -21,5 +23,6 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_libc_LibCStdlib_nmalloc
 JNIEXPORT void JNICALL Java_org_box2d_jni_libc_LibCStdlib_nfree
     (JNIEnv *__env, jclass clazz, jlong ptr)
 {
+    UNUSED_PARAMS(__env, clazz)
     free((void*)ptr);
 }
