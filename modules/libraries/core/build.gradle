@@ -1,8 +1,14 @@
 description = 'box2d-jni core'
 
+jar {
+    archiveBaseName = "box2d"
+    archiveClassifier = "core"
+    destinationDirectory = file("${rootDir}/lib")
+}
+
 dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
-    testRuntimeOnly project(':modules:box2d:bindings')
+    testRuntimeOnly project(':modules:libraries:bindings')
 }
 
 // Java compile-time options
@@ -12,7 +18,7 @@ tasks.withType(JavaCompile).configureEach  {
     options.deprecation = true // to provide detailed deprecation warnings
     options.encoding    = 'UTF-8'
 
-    def bindings = project(":modules:box2d:bindings")
+    def bindings = project(":modules:libraries:bindings")
     def outputFile = new File(bindings.layout.projectDirectory.asFile, '/c/include/box2d/jni')
     options.headerOutputDirectory = outputFile
 }

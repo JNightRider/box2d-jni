@@ -1,5 +1,6 @@
 .gradle
 build/
+lib/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -43,9 +44,9 @@ nbbuild/
 .DS_Store
 
 ### box2d ###
-modules/box2d/bindings/c/build
-modules/box2d/bindings/c/extern
+modules/libraries/bindings/c/build/
+modules/libraries/bindings/c/extern/
 
 ### box2d-jni ###
-modules/box2d/bindings/c/include/box2d
-modules/box2d/bindings/downloads
+modules/libraries/bindings/c/include/box2d/
+modules/libraries/bindings/downloads

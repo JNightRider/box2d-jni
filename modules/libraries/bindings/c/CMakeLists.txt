@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(box2d-bindings
 	VERSION 1.0.0
 	DESCRIPTION "An implementation of the Box2D physics engine for Java (JNI)"
-	LANGUAGES C
+	LANGUAGES C CXX
 )
 
 set(CMAKE_C_STANDARD 11)

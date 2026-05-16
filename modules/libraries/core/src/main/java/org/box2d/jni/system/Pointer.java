@@ -1,6 +1,6 @@
 /*
-Copyright Night Rider. All rights reserved.
-https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ * Copyright Night Rider. All rights reserved.
+ * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
  */
 package org.box2d.jni.system;
 

@@ -4,6 +4,10 @@ allprojects {
 
     repositories {
         mavenCentral()
+        // to find libraries in the project's "lib" directory
+        flatDir {
+            dirs "${rootProject.projectDir}/lib"
+        }
     }
 }
 

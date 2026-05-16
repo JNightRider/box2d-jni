@@ -1,9 +1,12 @@
 package org.box2d.jni;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.box2d.jni.libc.LibC;
+import org.box2d.jni.system.Pointer;
+
+
 public class Main {
-    static void main() {
-        
+
+    public static void main(String[] args) {
+        System.out.println(LibC.sizeof(Pointer.class));
     }
 }

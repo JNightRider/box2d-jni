@@ -1,5 +1,7 @@
 add_library(box2d-bindings SHARED
+    org_box2d_jni_libc_LibC.c
     org_box2d_jni_libc_LibCStdlib.c
+    org_box2d_jni_libc_LibCString.c
 )
 
 target_include_directories(box2d-bindings
