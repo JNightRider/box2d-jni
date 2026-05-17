@@ -11,17 +11,26 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
+ * A class to manage the unit tests of the {@link b2Vec2} class.
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class b2Vec2Test {
 
+    /**
+     * Initialize all tests.
+     */
     @Test
     public void __constructor() {
         struct();
         buffer();
     }
 
+    /**
+     * Test the properties of the structure.
+     */
     private void struct() {
         try (b2Vec2 ptr = b2Vec2.malloc()) {
             Assert.assertNotEquals(NULL, ptr.address());
@@ -34,6 +43,9 @@ public class b2Vec2Test {
         }
     }
 
+    /**
+     * Buffer test for {@code b2Vec2.Buffer} structures
+     */
     private void buffer() {
         b2Vec2.Buffer ptr = b2Vec2.malloc(5);
         Assert.assertNotEquals(NULL, ptr.address());
