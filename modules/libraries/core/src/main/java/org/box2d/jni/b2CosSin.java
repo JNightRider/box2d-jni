@@ -172,7 +172,7 @@ public class b2CosSin extends Struct<b2CosSin> {
 
     // -----------------------------------
     
-    /** An array of {@code b2Vec2} structs. */
+    /** An array of {@code b2CosSin} structs. */
     public static class Buffer extends StructBuffer<b2CosSin, Buffer> implements JNINative {
         /** An element that provides information about the structure. */
         private static final b2CosSin ELEMENT_FACTORY = b2CosSin.factory();
