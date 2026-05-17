@@ -9,6 +9,8 @@ jar {
 dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:bindings')
+    testRuntimeOnly name: 'box2d-natives-linux_x64'
+    testImplementation(libs.junit4)      // framework for automated testing
 }
 
 // Java compile-time options
@@ -23,4 +25,20 @@ tasks.withType(JavaCompile).configureEach  {
     options.headerOutputDirectory = outputFile
 }
 
+Boolean enableNativeAccess = JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)
 
+tasks.withType(JavaExec).configureEach { // Java runtime options:
+    classpath sourceSets.test.runtimeClasspath
+    dependsOn('assemble')
+    enableAssertions = true
+    if (enableNativeAccess) {
+        jvmArgs('--enable-native-access=ALL-UNNAMED') // suppress System::load() warning
+    }
+}
+tasks.withType(Test).configureEach {
+    if (enableNativeAccess) {
+        jvmArgs('--enable-native-access=ALL-UNNAMED') // suppress System::load() warning
+    }
+    //testLogging.showStandardStreams = true
+}
+test.dependsOn('assemble')

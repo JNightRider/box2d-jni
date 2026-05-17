@@ -1,6 +1,6 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ * https://opensource.org/license/bsd-3-clause
  */
 package org.box2d.jni.system;
 
@@ -59,7 +59,7 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
         public State(AtomicLong struct) {
             this.struct = struct;
         }
-        
+
         /* (non-Javadoc)
          * @see java.lang.Runnable#run() 
          */
@@ -67,7 +67,7 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
         public void run() {
             long address = struct.getAndSet(NULL);
             if (address != NULL) {
-                apiLog("Freed memory: " + String.format("[0x%X]", struct.get())); 
+                apiLog("Freed memory (struct): " + String.format("[0x%X]", address));
                 nfree(address);
             } else {
                 apiWarr("An attempt was made to free invalid (previously freed) memory.");
@@ -144,7 +144,8 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
         if (!validToRelease()) {
             apiWarr("Memory cannot be freed since this object ("
                     + getClass().getName()
-                    + ") is a reference.");
+                    + ") is a reference: "
+                    + String.format("[0x%X]", address()));
             return;
         }
         if (cleanable != null) {
@@ -190,9 +191,10 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
      * instances of the same type. This is used by {@link StructBuffer}.</p>
      *
      * @param address the struct memory address
+     * @param ptr The structure it points to (reference)
      * @return Struct|{@code void*}
      */
-    protected abstract SELF create(long address);
+    protected abstract SELF create(long address, Pointer ptr);
 
     /** Zeroes-out the struct data. */
     public void clear() {

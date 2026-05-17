@@ -1,6 +1,6 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ * https://opensource.org/license/bsd-3-clause
  */
 package org.box2d.jni.system;
 
@@ -50,7 +50,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      */
     public T get() {
         T factory = getElementFactory();
-        return factory.create(address.get() + Integer.toUnsignedLong(nextGetIndex()) * factory.sizeof());
+        return factory.create(NULL, () -> address.get() + Integer.toUnsignedLong(nextGetIndex()) * factory.sizeof());
     }
 
     /**
@@ -108,7 +108,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      */
     public T get(int index) {
         T factory = getElementFactory();
-        return factory.create(address.get() + Integer.toUnsignedLong(checkIndex(index, limit)) * factory.sizeof());
+        return factory.create(NULL, () -> address.get() + Integer.toUnsignedLong(checkIndex(index, limit)) * factory.sizeof());
     }
 
     /**
@@ -223,7 +223,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             if (fence <= index) {
                 throw new NoSuchElementException();
             }
-            return factory.create(address + Integer.toUnsignedLong(index++) * factory.sizeof());
+            return factory.create(NULL, () -> address + Integer.toUnsignedLong(index++) * factory.sizeof());
         }
 
         @Override
@@ -232,7 +232,9 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             int i = index;
             try {
                 for (int sizeof = factory.sizeof(); i < fence; i++) {
-                    action.accept(factory.create(address + Integer.toUnsignedLong(i) * sizeof));
+                    int offset = i;
+                    action.accept(factory.create(NULL, () -> address + Integer.toUnsignedLong(offset) * sizeof));
+                    
                 }
             } finally {
                 index = i;
@@ -244,8 +246,9 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
     public void forEach(Consumer<? super T> action) {
         Objects.requireNonNull(action);
         T factory = getElementFactory();
-        for (int i = position, fence = limit; i < fence; i++) {            
-            action.accept(factory.create(address.get() + Integer.toUnsignedLong(i) * sizeof()));
+        for (int i = position, fence = limit; i < fence; i++) {
+            int offset = i;
+            action.accept(factory.create(NULL, () -> address.get() + Integer.toUnsignedLong(offset) * sizeof()));
         }
     }
 
@@ -275,7 +278,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             Objects.requireNonNull(action);
 
             if (index < fence) {
-                action.accept(factory.create(address + Integer.toUnsignedLong(index++) * factory.sizeof()));
+                action.accept(factory.create(NULL, () -> address + Integer.toUnsignedLong(index++) * factory.sizeof()));
                 return true;
             }
 
@@ -308,7 +311,8 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             int i = index;
             try {
                 for (int sizeof = factory.sizeof(); i < fence; i++) {
-                    action.accept(factory.create(address + Integer.toUnsignedLong(i) * sizeof));
+                    int offset = i;
+                    action.accept(factory.create(NULL, () -> address + Integer.toUnsignedLong(offset) * sizeof));
                 }
             } finally {
                 index = i;

@@ -6,8 +6,11 @@ description = 'box2d-jni bindings'
 
 def osArch = System.getProperty("os.arch")
 def is64Bit = osArch.contains("64") || osArch.startsWith("armv8")
-
 def osName = System.getProperty("os.name")
+
+dependencies {
+    testImplementation name: 'box2d-natives-linux_x64'
+}
 
 tasks.withType(JavaCompile).configureEach {
     dependsOn('buildJNI')

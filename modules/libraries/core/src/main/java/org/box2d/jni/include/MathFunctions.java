@@ -2,14 +2,15 @@
  * Copyright Night Rider. All rights reserved.
  * https://opensource.org/license/bsd-3-clause
  */
-package org.box2d.jni.system;
+package org.box2d.jni.include;
 
 /**
+ * Vector math types and functions
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
-@FunctionalInterface
-public interface AllocFunc {
+public class MathFunctions {
     
-    long alloc(int alignment, int sizeof, long num);
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ * https://opensource.org/license/bsd-3-clause
  */
 package org.box2d.jni.system;
 
@@ -145,6 +145,11 @@ public final class Library {
         apiLog("locate libpath : " + libpath);
         
         try (InputStream io = context.getResourceAsStream(libpath)) {
+            if (io == null) {
+                apiErro("No existe la biblioteca en el classpath: " + libpath);
+                return;
+            }
+            
             Path path = Paths.get(tmpdir).resolve(JNI_LIBRARY_NAME);
 
             if (! Files.exists(path)) {

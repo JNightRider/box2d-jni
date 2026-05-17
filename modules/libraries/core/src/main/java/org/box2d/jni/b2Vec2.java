@@ -1,6 +1,6 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ * https://opensource.org/license/bsd-3-clause
  */
 package org.box2d.jni;
 
@@ -73,8 +73,8 @@ public class b2Vec2 extends Struct<b2Vec2> {
     // -----------------------------------
 
     @Override
-    protected b2Vec2 create(long address) {
-        return new b2Vec2(address);
+    protected b2Vec2 create(long address, Pointer ptr) {
+        return ptr == null ? new b2Vec2(address) : new b2Vec2(ptr);
     }
     
     private static b2Vec2 factory() {

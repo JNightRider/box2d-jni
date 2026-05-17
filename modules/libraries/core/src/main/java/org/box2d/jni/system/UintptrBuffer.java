@@ -1,6 +1,6 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ * https://opensource.org/license/bsd-3-clause
  */
 package org.box2d.jni.system;
 
@@ -8,6 +8,7 @@ import java.nio.*;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.Debug.apiLog;
 
 /**
  *
@@ -73,7 +74,9 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      * owned by the buffer.</p>
      */
     public void free() {
-        nfree(address.get());
+        long ptr = address.getAndSet(NULL);
+        nfree(ptr);
+        apiLog("Freed memory (Buffer|void*): " + String.format("[0x%X]", ptr)); 
     }
 
     /**
