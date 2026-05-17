@@ -77,22 +77,19 @@ public class b2Vec2 extends Struct<b2Vec2> {
         return new b2Vec2(address);
     }
     
-    public static b2Vec2 create0(long address, boolean factor) {
-        return new b2Vec2(address, factor);
+    private static b2Vec2 factory() {
+        return new b2Vec2(-1L, true);
     }
     
-    public static b2Vec2 malloc(AllocFunc alloc) {
+    public static b2Vec2 alloc(AllocFunc alloc) {
         return new b2Vec2(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
     
     public static b2Vec2 malloc() {
         return new b2Vec2(nmalloc(SIZEOF));
     }
-    
-    
+
     public static Buffer malloc(int capacity) {
-        Debug.apiPrint("capacity: " + capacity);
-        Debug.apiPrint("SIZEOF: "  + SIZEOF);
         return new Buffer(nmalloc(capacity * SIZEOF), capacity);
     }
     
@@ -107,9 +104,9 @@ public class b2Vec2 extends Struct<b2Vec2> {
     
     // -----------------------------------
     
-    public static class Buffer extends StructBuffer<b2Vec2, Buffer> {
+    public static class Buffer extends StructBuffer<b2Vec2, Buffer> implements JNINative {
         
-         private static final b2Vec2 ELEMENT_FACTORY = b2Vec2.create0(-1L, true);
+         private static final b2Vec2 ELEMENT_FACTORY = b2Vec2.factory();
 
         public Buffer(long address, int remaining) {
             super(address, remaining);
@@ -118,7 +115,6 @@ public class b2Vec2 extends Struct<b2Vec2> {
         public Buffer(long address, int mark, int position, int limit, int capacity) {
             super(address, mark, position, limit, capacity);
         }
-
         
         @Override
         protected b2Vec2 getElementFactory() {
@@ -135,5 +131,4 @@ public class b2Vec2 extends Struct<b2Vec2> {
             return new Buffer(address, mark, position, limit, capacity);
         }        
     }
-    
 }

@@ -23,10 +23,10 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
 
     protected UintptrBuffer(long address, int mark, int position, int limit, int capacity) {
         super(address, true);
-        this.mark = mark;
-        this.position = position;
-        this.limit = limit;
-        this.capacity = capacity;
+        this.mark       = mark;
+        this.position   = position;
+        this.limit      = limit;
+        this.capacity   = capacity;
     }
 
     /**

@@ -66,7 +66,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      */
     public SELF get(T value) {
         int sizeof = getElementFactory().sizeof();
-        nmemcpy(address.get() + Integer.toUnsignedLong(nextGetIndex()) * sizeof, value.address(), sizeof);
+        nmemcpy(value.address(), address.get() + Integer.toUnsignedLong(nextGetIndex()) * sizeof, sizeof);
         return self();
     }
 
@@ -125,7 +125,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      */
     public SELF get(int index, T value) {
         int sizeof = getElementFactory().sizeof();
-        nmemcpy(address.get() + check(index, limit) * sizeof, value.address(), sizeof);
+        nmemcpy(value.address(), address.get() + check(index, limit) * sizeof, sizeof);
         return self();
     }
 
@@ -199,12 +199,12 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
     // is not a problem on Graal. Also, see JDK-8166840.
     private static class StructIterator<T extends Struct<T>> implements Iterator<T> {
 
-        private long address;
+        private final long address;
 
-        private T factory;
+        private final T factory;
 
         private int index;
-        private int fence;
+        private final int fence;
 
         StructIterator(long address, T factory, int position, int limit) {
             this.address = address;
