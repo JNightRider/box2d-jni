@@ -65,16 +65,18 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
          */
         @Override
         public void run() {
-            apiLog("Freed memory: " + String.format("[0x%X]", struct.get())); 
             long address = struct.getAndSet(NULL);
             if (address != NULL) {
+                apiLog("Freed memory: " + String.format("[0x%X]", struct.get())); 
                 nfree(address);
+            } else {
+                apiWarr("An attempt was made to free invalid (previously freed) memory.");
             }
         }
     }
 
     /** A reference to a native data structure. */
-    protected final Pointer ptr;
+    protected Pointer ptr;
     /** An object in charge of managing the state (release) of a native object. */
     private State state;
     /** The result of registering with the cleaner. */
@@ -108,10 +110,30 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
      * @param address A virtual memory address
      */
     protected Struct(long address) {
-        super(address, true);
-        this.ptr       = null;
-        this.state     = new State(this.address);
-        this.cleanable = PTR_CLEANER.register(Struct.this, state);
+        this(address, false);
+    }
+
+    /**
+     * Constructor of the <code>Struct</code> class where a data structure is
+     * created to manage and encapsulate the memory address of a native object,
+     * said address is obtained through a native call by the JVM.
+     * <p>
+     * Do not use this constructor unless you have a valid memory address (at
+     * your own risk).
+     * </p>
+     *
+     * @param address A virtual memory address
+     * @param factor It is {@code true} if the created structure is intended to
+     * provide information and does not point to any virtual memory address;
+     * {@code false} if it is a pointer.
+     */
+    protected Struct(long address, boolean factor) {
+        super(address, !factor);
+        if (!factor) {
+            this.ptr       = null;
+            this.state     = new State(this.address);
+            this.cleanable = PTR_CLEANER.register(Struct.this, state);
+        }
     }
 
     /* (non-Javadoc)
@@ -119,18 +141,19 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
      */
     @Override
     public void close() {
-        if (! validToRelease() ) {
-            apiWarr("Memory cannot be freed since this object (" 
-                    +  getClass().getName() 
+        if (!validToRelease()) {
+            apiWarr("Memory cannot be freed since this object ("
+                    + getClass().getName()
                     + ") is a reference.");
             return;
         }
-        //if (address.get() == NULL) {
-        //    return;
-        //}        
-        cleanable.clean();
+        if (cleanable != null) {
+            cleanable.clean();
+        } else {
+            apiWarr("An attempt was made to remove an object that is not pointing at anything: " + getClass());
+        }
     }
-    
+
     /**
      * Check if this object is releasable.
      * @return boolean
@@ -156,7 +179,7 @@ public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implemen
      *
      * @return long
      */
-    public abstract long sizeof();
+    public abstract int sizeof();
 
     /**
      * Similar to {@link #Struct(long) the constructor}, but returns

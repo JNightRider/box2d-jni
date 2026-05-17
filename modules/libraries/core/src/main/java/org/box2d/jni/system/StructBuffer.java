@@ -30,7 +30,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
     }
 
     @Override
-    public long sizeof() {
+    public int sizeof() {
         return getElementFactory().sizeof();
     }
 
@@ -65,7 +65,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * position is not smaller than its limit
      */
     public SELF get(T value) {
-        long sizeof = getElementFactory().sizeof();
+        int sizeof = getElementFactory().sizeof();
         nmemcpy(address.get() + Integer.toUnsignedLong(nextGetIndex()) * sizeof, value.address(), sizeof);
         return self();
     }
@@ -86,8 +86,8 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws java.nio.ReadOnlyBufferException If this buffer is read-only
      */
     public SELF put(T value) {
-        long sizeof = getElementFactory().sizeof();
-        nmemcpy(value.address(), address.get() + Integer.toUnsignedLong(nextPutIndex()) * sizeof, sizeof);
+        int sizeof = getElementFactory().sizeof();
+        nmemcpy(address.get() + Integer.toUnsignedLong(nextPutIndex()) * sizeof, value.address(), sizeof);
         return self();
     }
 
@@ -108,7 +108,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      */
     public T get(int index) {
         T factory = getElementFactory();
-        return factory.create(address.get() + check(index, limit) * factory.sizeof());
+        return factory.create(address.get() + Integer.toUnsignedLong(checkIndex(index, limit)) * factory.sizeof());
     }
 
     /**
@@ -116,6 +116,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * into the specified struct.
      *
      * @param index the index from which the struct will be read
+     * @param value the value
      *
      * @return the struct at the specified index
      *
@@ -123,7 +124,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * smaller than the buffer's limit
      */
     public SELF get(int index, T value) {
-        long sizeof = getElementFactory().sizeof();
+        int sizeof = getElementFactory().sizeof();
         nmemcpy(address.get() + check(index, limit) * sizeof, value.address(), sizeof);
         return self();
     }
@@ -144,8 +145,8 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws java.nio.ReadOnlyBufferException If this buffer is read-only
      */
     public SELF put(int index, T value) {
-        long sizeof = getElementFactory().sizeof();
-        nmemcpy(value.address(), address.get() + check(index, limit) * sizeof, sizeof);
+        int sizeof = getElementFactory().sizeof();
+        nmemcpy(address.get() + check(index, limit) * sizeof, value.address(), sizeof);
         return self();
     }
 
@@ -230,7 +231,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             Objects.requireNonNull(action);
             int i = index;
             try {
-                for (long sizeof = factory.sizeof(); i < fence; i++) {
+                for (int sizeof = factory.sizeof(); i < fence; i++) {
                     action.accept(factory.create(address + Integer.toUnsignedLong(i) * sizeof));
                 }
             } finally {
@@ -306,7 +307,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             Objects.requireNonNull(action);
             int i = index;
             try {
-                for (long sizeof = factory.sizeof(); i < fence; i++) {
+                for (int sizeof = factory.sizeof(); i < fence; i++) {
                     action.accept(factory.create(address + Integer.toUnsignedLong(i) * sizeof));
                 }
             } finally {

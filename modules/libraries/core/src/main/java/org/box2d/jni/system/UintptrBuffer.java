@@ -34,7 +34,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      *
      * @return
      */
-    public abstract long sizeof();
+    public abstract int sizeof();
 
     /**
      * Returns the buffer's base address. [INTERNAL USE ONLY]
@@ -396,7 +396,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
             throw new BufferOverflowException();
         }
 
-        nmemcpy(src.address(), this.address(), Integer.toUnsignedLong(n) * sizeof());
+        nmemcpy(this.address(), src.address(), Integer.toUnsignedLong(n) * sizeof());
         position += n;
 
         return self();
