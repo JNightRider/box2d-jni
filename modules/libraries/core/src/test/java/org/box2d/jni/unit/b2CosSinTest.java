@@ -19,7 +19,7 @@ import org.junit.Test;
  */
 public class b2CosSinTest {
     
-        /**
+    /**
      * Initialize all tests.
      */
     @Test
