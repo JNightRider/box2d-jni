@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2Vec2} class.
+ * A class to manage the unit tests of the {@link b2CosSin} class.
  *
  * @author wil
  * @version 1.0.0
@@ -44,7 +44,7 @@ public class b2CosSinTest {
     }
 
     /**
-     * Buffer test for {@code b2Vec2.Buffer} structures
+     * Buffer test for {@code Buffer} structures
      */
     private void buffer() {
         b2CosSin.Buffer ptr = b2CosSin.malloc(5);
