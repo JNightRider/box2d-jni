@@ -123,6 +123,19 @@ public class b2CosSin extends Struct<b2CosSin> {
     }
 
     /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2CosSin
+     */
+    public static b2CosSin createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2CosSin(ptr);
+    }
+
+    /**
      * Reserve memory for the new object {@code b2CosSin}.
      *
      * @param alloc Custom memory manager

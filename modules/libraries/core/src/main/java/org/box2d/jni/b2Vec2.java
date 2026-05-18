@@ -122,6 +122,19 @@ public class b2Vec2 extends Struct<b2Vec2> {
     }
 
     /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2Vec2
+     */
+    public static b2Vec2 createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2Vec2(ptr);
+    }
+    
+    /**
      * Reserve memory for the new object {@code b2Vec2}.
      *
      * @param alloc Custom memory manager

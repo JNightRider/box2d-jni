@@ -7,23 +7,22 @@ package org.box2d.jni;
 import org.box2d.jni.system.*;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
-import static org.box2d.jni.system.Memory.*;
-import static org.box2d.jni.system.VarType.*;
+import static org.box2d.jni.libc.LibCString.*;
 
 /**
  * <pre><code>
- * typedef struct b2Rot
+ * typedef struct b2Transform
  * {
- * 	/// cosine and sine
- * 	float c, s;
- * } b2Rot;
+ * 	b2Vec2 p;
+ * 	b2Rot q;
+ * } b2Transform;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Rot extends Struct<b2Rot> {
+public class b2Transform extends Struct<b2Transform> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -33,28 +32,28 @@ public class b2Rot extends Struct<b2Rot> {
 
     /** The struct member offsets. */
     private static final int
-            C,
-            S;
+            P,
+            Q;
 
     static {
         Layout layout = __struct(
-                __member(Float.sizeof()),
-                __member(Float.sizeof())
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Rot.SIZEOF, b2Rot.ALIGNOF)
         );
 
-        C = layout.offsetof(0);
-        S = layout.offsetof(1);
+        P = layout.offsetof(0);
+        Q = layout.offsetof(1);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
     }
-    
+
     /**
      * Generates a reference to the given pointer.
      *
      * @param ptr A reference pointer.
      */
-    public b2Rot(Pointer ptr) {
+    public b2Transform(Pointer ptr) {
         super(ptr);
     }
 
@@ -63,7 +62,7 @@ public class b2Rot extends Struct<b2Rot> {
      *
      * @param address A virtual memory address
      */
-    public b2Rot(long address) {
+    public b2Transform(long address) {
         super(address);
     }
 
@@ -75,29 +74,30 @@ public class b2Rot extends Struct<b2Rot> {
      *
      * @see Struct#Struct(long, boolean)
      */
-    protected b2Rot(long address, boolean factor) {
+    protected b2Transform(long address, boolean factor) {
         super(address, factor);
     }
 
-    /** @return Returns the property {@code c} */
-    public float c() { return nc(address()); }
+    /** @return Returns the property {@code p} */
+    public b2Vec2 p() { return np(address()); }
     /** @return Returns the property {@code s} */
-    public float s() { return ns(address()); }
+    public b2Rot q() { return nq(address()); }
     
     /**
-     * Set the value of property {@code c}
+     * Set the value of property {@code p}
      *
      * @param value The value
-     * @return b2Rot
+     * @return b2Transform
      */
-    public b2Rot c(float value) { nc(address(), value); return this; }
+    public b2Transform p(b2Vec2 value) { np(address(), value); return this; }
+
     /**
-     * Set the value of property {@code s}
+     * Set the value of property {@code q}
      *
      * @param value The value
-     * @return b2Rot
+     * @return b2Transform
      */
-    public b2Rot s(float value) { ns(address(), value); return this; }
+    public b2Transform q(b2Rot value) { nq(address(), value); return this; }
     
     /*(non-Javadoc)
      */
@@ -107,54 +107,41 @@ public class b2Rot extends Struct<b2Rot> {
     /*(non-Javadoc)
      */
     @Override
-    protected b2Rot create(long address, Pointer ptr) {
-        return ptr == null ? new b2Rot(address) : new b2Rot(ptr);
+    protected b2Transform create(long address, Pointer ptr) {
+        return ptr == null ? new b2Transform(address) : new b2Transform(ptr);
     }
     
     // -----------------------------------
 
     /**
      * Internal use of the buffer.
-     * @return b2Rot
+     * @return b2Transform
      */
-    private static b2Rot factory() {
-        return new b2Rot(-1L, true);
+    private static b2Transform factory() {
+        return new b2Transform(-1L, true);
     }
 
     /**
-     * Create a reference to a pointer to access its properties.
-     *
-     * @param ptr A reference pointer.
-     * @return b2Rot
-     */
-    public static b2Rot createSafe(Pointer ptr) {
-        if (ptr == null) {
-            return null;
-        }
-        return new b2Rot(ptr);
-    }
-
-    /**
-     * Reserve memory for the new object {@code b2Rot}.
+     * Reserve memory for the new object {@code b2Transform}.
      *
      * @param alloc Custom memory manager
-     * @return b2Rot
+     * @return b2Transform
      */
-    public static b2Rot alloc(AllocFunc alloc) {
-        return new b2Rot(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2Transform alloc(AllocFunc alloc) {
+        return new b2Transform(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2Rot}.
+     * Reserve memory for the new object {@code b2Transform}.
      *
-     * @return b2Rot
+     * @return b2Transform
      */
-    public static b2Rot malloc() {
-        return new b2Rot(nmalloc(SIZEOF));
+    public static b2Transform malloc() {
+        return new b2Transform(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Rot}.
+     * Reserve an amount n of memory for the object {@code b2Transform}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -164,7 +151,7 @@ public class b2Rot extends Struct<b2Rot> {
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Rot}.
+     * Reserve an amount n of memory for the object {@code b2Transform}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -176,18 +163,18 @@ public class b2Rot extends Struct<b2Rot> {
     
     // -----------------------------------
 
-    public static float nc(long address) { return memGetFloat(address + C); }
-    public static float ns(long address) { return memGetFloat(address + S); }
+    public static b2Vec2 np(long address) { return b2Vec2.createSafe(() -> address + P); }
+    public static b2Rot nq(long address) { return b2Rot.createSafe(() -> address + Q); }
 
-    public static void nc(long address, float value) { memPutFloat(address + C, value); }
-    public static void ns(long address, float value) { memPutFloat(address + S, value); }
+    public static void np(long address, b2Vec2 value) { nmemcpy(address + P, value.address(), b2Vec2.SIZEOF); }
+    public static void nq(long address, b2Rot value) { nmemcpy(address + Q, value.address(), b2Rot.SIZEOF); }
 
     // -----------------------------------
     
-    /** An array of {@code b2Rot} structs. */
-    public static class Buffer extends StructBuffer<b2Rot, Buffer> implements JNINative {
+    /** An array of {@code b2Transform} structs. */
+    public static class Buffer extends StructBuffer<b2Transform, Buffer> implements JNINative {
         /** An element that provides information about the structure. */
-        private static final b2Rot ELEMENT_FACTORY = b2Rot.factory();
+        private static final b2Transform ELEMENT_FACTORY = b2Transform.factory();
 
         /**
          * Create a new buffer.
@@ -215,7 +202,7 @@ public class b2Rot extends Struct<b2Rot> {
         /*(non-Jabadoc)
          */
         @Override
-        protected b2Rot getElementFactory() {
+        protected b2Transform getElementFactory() {
             return ELEMENT_FACTORY;
         }
 
