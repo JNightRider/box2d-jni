@@ -79,6 +79,23 @@ public class b2Vec2 extends Struct<b2Vec2> {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param x the valur {@code x}
+     * @param y the valur {@code y}
+     *
+     * @return b2Vec2
+     */
+    public b2Vec2 set(
+        float x,
+        float y
+    ) {
+        x(x);
+        y(y);
+        return this;
+    }
+
     /** @return Returns the property {@code x} */
     public float x() { return nx(address()); }
     /** @return Returns the property {@code y} */

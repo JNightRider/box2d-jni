@@ -79,6 +79,23 @@ public class b2Rot extends Struct<b2Rot> {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param c the valur {@code c}
+     * @param s the valur {@code s}
+     *
+     * @return b2Rot
+     */
+    public b2Rot set(
+        float c,
+        float s
+    ) {
+        c(c);
+        s(s);
+        return this;
+    }
+    
     /** @return Returns the property {@code c} */
     public float c() { return nc(address()); }
     /** @return Returns the property {@code s} */

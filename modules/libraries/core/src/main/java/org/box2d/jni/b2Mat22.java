@@ -78,6 +78,23 @@ public class b2Mat22 extends Struct<b2Mat22> {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param cx the valur {@code cx}
+     * @param cy the valur {@code cy}
+     *
+     * @return b2Mat22
+     */
+    public b2Mat22 set(
+        b2Vec2 cx,
+        b2Vec2 cy
+    ) {
+        cx(cx);
+        cy(cy);
+        return this;
+    }
+    
     /** @return Returns the property {@code cx} */
     public b2Vec2 cx() { return ncx(address()); }
     /** @return Returns the property {@code cy} */

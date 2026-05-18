@@ -78,6 +78,23 @@ public class b2Transform extends Struct<b2Transform> {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param p the valur {@code p}
+     * @param q the valur {@code q}
+     *
+     * @return b2Transform
+     */
+    public b2Transform set(
+        b2Vec2 p,
+        b2Rot q
+    ) {
+        p(p);
+        q(q);
+        return this;
+    }
+    
     /** @return Returns the property {@code p} */
     public b2Vec2 p() { return np(address()); }
     /** @return Returns the property {@code s} */
