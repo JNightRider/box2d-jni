@@ -120,6 +120,19 @@ public class b2Transform extends Struct<b2Transform> {
     private static b2Transform factory() {
         return new b2Transform(-1L, true);
     }
+    
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2Transform
+     */
+    public static b2Transform createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2Transform(ptr);
+    }
 
     /**
      * Reserve memory for the new object {@code b2Transform}.
