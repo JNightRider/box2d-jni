@@ -19,7 +19,7 @@ import static org.box2d.jni.libc.LibCString.*;
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffer<T, SELF>> extends UintptrBuffer<SELF> implements Iterable<T> {
+public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffer<T, SELF>> extends UintptrBuffer<T, SELF> implements Iterable<T> {
 
     protected StructBuffer(long address, int remaining) {
         super(address, -1, 0, remaining, remaining);
@@ -48,6 +48,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws java.nio.BufferUnderflowException If the buffer's current
      * position is not smaller than its limit
      */
+    @Override
     public T get() {
         T factory = getElementFactory();
         return factory.create(NULL, () -> address.get() + Integer.toUnsignedLong(nextGetIndex()) * factory.sizeof());
@@ -106,6 +107,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws IndexOutOfBoundsException If {@code index} is negative or not
      * smaller than the buffer's limit
      */
+    @Override
     public T get(int index) {
         T factory = getElementFactory();
         return factory.create(NULL, () -> address.get() + Integer.toUnsignedLong(checkIndex(index, limit)) * factory.sizeof());

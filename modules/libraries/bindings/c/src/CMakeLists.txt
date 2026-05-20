@@ -3,6 +3,7 @@ add_library(box2d-bindings SHARED
     org_box2d_jni_libc_LibCString.c
     org_box2d_jni_system_Memory.c
     org_box2d_jni_system_VarType.c
+    box2d/org_box2d_jni_include_MathFunctions.c
 )
 
 target_include_directories(box2d-bindings

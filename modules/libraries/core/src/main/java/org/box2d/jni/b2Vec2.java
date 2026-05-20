@@ -7,6 +7,7 @@ package org.box2d.jni;
 import org.box2d.jni.system.*;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
+import org.box2d.jni.readonly.ConstB2Vec2;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.VarType.*;
 
@@ -23,7 +24,7 @@ import static org.box2d.jni.system.VarType.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Vec2 extends Struct<b2Vec2> {
+public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -97,8 +98,10 @@ public class b2Vec2 extends Struct<b2Vec2> {
     }
 
     /** @return Returns the property {@code x} */
+    @Override
     public float x() { return nx(address()); }
     /** @return Returns the property {@code y} */
+    @Override
     public float y() { return ny(address()); }
     
     /**

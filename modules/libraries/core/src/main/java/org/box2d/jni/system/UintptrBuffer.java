@@ -6,6 +6,7 @@ package org.box2d.jni.system;
 
 import java.nio.*;
 
+import org.box2d.jni.readonly.ConstBuffer;
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Debug.apiLog;
@@ -13,9 +14,10 @@ import static org.box2d.jni.system.Debug.apiLog;
 /**
  *
  * @author wil
+ * @param <VALUE>
  * @param <SELF>
  */
-public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Uintptr {
+public abstract class UintptrBuffer<VALUE, SELF extends UintptrBuffer<VALUE, SELF>> extends Uintptr implements ConstBuffer<VALUE> {
 
     protected int mark,
             position,
@@ -84,6 +86,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      *
      * @return the capacity of this buffer
      */
+    @Override
     public int capacity() {
         return capacity;
     }
@@ -93,6 +96,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      *
      * @return the position of this buffer
      */
+    @Override
     public int position() {
         return position;
     }
@@ -125,6 +129,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      *
      * @return the limit of this buffer
      */
+    @Override
     public int limit() {
         return limit;
     }
@@ -267,6 +272,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      *
      * @return the number of elements remaining in this buffer
      */
+    @Override
     public int remaining() {
         return limit - position;
     }
@@ -278,6 +284,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
      * @return {@code true} if, and only if, there is at least one element
      * remaining in this buffer
      */
+    @Override
     public boolean hasRemaining() {
         return position < limit;
     }
