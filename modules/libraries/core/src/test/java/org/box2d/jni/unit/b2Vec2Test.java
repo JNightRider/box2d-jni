@@ -67,6 +67,12 @@ public class b2Vec2Test {
             ptr.neg();
             Assert.assertEquals(-0.5f, ptr.x(), 0);
             Assert.assertEquals(-8f, ptr.y(), 0);
+            
+            Assert.assertFalse(ptr.equality(tmp));
+            
+            tmp.set(1, 1);
+            ptr.set(1, 1);
+            Assert.assertTrue(ptr.equality(tmp));
         }
     }
 

@@ -5,9 +5,9 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2Vec2;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
-import org.box2d.jni.readonly.ConstB2Vec2;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.VarType.*;
 
