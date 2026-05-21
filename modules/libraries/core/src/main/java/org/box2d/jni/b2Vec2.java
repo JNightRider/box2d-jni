@@ -171,10 +171,9 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
     /**
      * Unary negate a vector
      *
-     * @param o b2Vec2
      * @return b2Vec2
      */
-    public b2Vec2 neg(b2Vec2 o) {
+    public b2Vec2 neg() {
         x(-x());
         y(-y());
         return this;
@@ -266,22 +265,22 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
     // -----------------------------------
     public static long nadd(long a, long b, long __result) {
         nx(__result, nx(a) + nx(b));
-        nx(__result, ny(a) + ny(b));
+        ny(__result, ny(a) + ny(b));
         return __result;
     }
     public static long nsub(long a, long b, long __result) {
         nx(__result, nx(a) - nx(b));
-        nx(__result, ny(a) * ny(b));
+        ny(__result, ny(a) - ny(b));
         return __result;
     }
     public static long nmult(long a, long b, long __result) {
         nx(__result, nx(a) * nx(b));
-        nx(__result, ny(a) * ny(b));
+        ny(__result, ny(a) * ny(b));
         return __result;
     }
     public static long nmult(long a, float b, long __result) {
         nx(__result, nx(a) * b);
-        nx(__result, ny(a) * b);
+        ny(__result, ny(a) * b);
         return __result;
     }
     public static boolean nequality(long a, long b) { return nx(a) == nx(b) && ny(a) == ny(b); }

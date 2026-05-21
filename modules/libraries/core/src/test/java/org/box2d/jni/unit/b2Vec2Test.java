@@ -41,6 +41,33 @@ public class b2Vec2Test {
             Assert.assertEquals(2, ptr.x(), 0);
             Assert.assertEquals(4, ptr.y(), 0);
         }
+        try (
+                b2Vec2 ptr = b2Vec2.malloc();
+                b2Vec2 tmp = b2Vec2.malloc()
+            ) {
+            Assert.assertNotEquals(NULL, ptr.address());
+            Assert.assertNotEquals(NULL, tmp.address());
+
+            ptr.clear();
+            Assert.assertEquals(0, ptr.x(), 0);
+            Assert.assertEquals(0, ptr.y(), 0);
+
+            tmp.x(1).y(10);
+            ptr.add(tmp);
+
+            Assert.assertEquals(1, ptr.x(), 0);
+            Assert.assertEquals(10, ptr.y(), 0);
+
+            tmp.x(0.5f).y(2);
+            ptr.sub(tmp);
+
+            Assert.assertEquals(0.5f, ptr.x(), 0);
+            Assert.assertEquals(8f, ptr.y(), 0);
+
+            ptr.neg();
+            Assert.assertEquals(-0.5f, ptr.x(), 0);
+            Assert.assertEquals(-8f, ptr.y(), 0);
+        }
     }
 
     /**
