@@ -130,6 +130,75 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
     protected b2Vec2 create(long address, Pointer ptr) {
         return ptr == null ? new b2Vec2(address) : new b2Vec2(ptr);
     }
+
+    // ----------------------------------
+
+    // --- [ Math operator overloads for Java ] ---
+
+    /**
+     * Unary add one vector to another
+     *
+     * @param o b2Vec2
+     * @return b2Vec2
+     */
+    public b2Vec2 add(b2Vec2 o) {
+        nadd(address(), o.address(), address());
+        return this;
+    }
+
+    /**
+     * Unary subtract one vector from another
+     *
+     * @param o b2Vec2
+     * @return b2Vec2
+     */
+    public b2Vec2 sub(b2Vec2 o) {
+        nsub(address(), o.address(), address());
+        return this;
+    }
+
+    /**
+     * Unary multiply a vector by a scalar
+     *
+     * @param o b2Vec2
+     * @return b2Vec2
+     */
+    public b2Vec2 mult(b2Vec2 o) {
+        nmult(address(), o.address(), address());
+        return this;
+    }
+
+    /**
+     * Unary negate a vector
+     *
+     * @param o b2Vec2
+     * @return b2Vec2
+     */
+    public b2Vec2 neg(b2Vec2 o) {
+        x(-x());
+        y(-y());
+        return this;
+    }
+
+    /**
+     * Binary vector equality
+     *
+     * @param o b2Vec2
+     * @return boolean
+     */
+    public boolean equality(b2Vec2 o) {
+        return nequality(address(), o.address());
+    }
+
+    /**
+     * Binary vector inequality
+     *
+     * @param o b2Vec2
+     * @return boolean
+     */
+    public boolean inequality(b2Vec2 o) {
+        return ninequality(address(), o.address());
+    }
     
     // -----------------------------------
 
@@ -195,7 +264,29 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
     }
     
     // -----------------------------------
-
+    public static long nadd(long a, long b, long __result) {
+        nx(__result, nx(a) + nx(b));
+        nx(__result, ny(a) + ny(b));
+        return __result;
+    }
+    public static long nsub(long a, long b, long __result) {
+        nx(__result, nx(a) - nx(b));
+        nx(__result, ny(a) * ny(b));
+        return __result;
+    }
+    public static long nmult(long a, long b, long __result) {
+        nx(__result, nx(a) * nx(b));
+        nx(__result, ny(a) * ny(b));
+        return __result;
+    }
+    public static long nmult(long a, float b, long __result) {
+        nx(__result, nx(a) * b);
+        nx(__result, ny(a) * b);
+        return __result;
+    }
+    public static boolean nequality(long a, long b) { return nx(a) == nx(b) && ny(a) == ny(b); }
+    public static boolean ninequality(long a, long b) { return nx(a) != nx(b) || ny(a) != ny(b); }
+    
     public static float nx(long address) { return memGetFloat(address + X); }
     public static float ny(long address) { return memGetFloat(address + Y); }
 
