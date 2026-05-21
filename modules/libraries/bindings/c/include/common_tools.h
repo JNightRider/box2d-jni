@@ -22,8 +22,8 @@
 
 // -----------------------------------------------------
 
-#define ADDRESS_FLOAT_BUFFER(__env, buffer, name, capacity)                             \
-    jfloat * const name = (jfloat *) (*__env)->GetDirectBufferAddress(__env, buffer);   \
+#define ADDRESS_FLOAT_BUFFER(__env, buffer, name, capacity) \
+    jfloat * const name = (jfloat *) (*__env)->GetDirectBufferAddress(__env, buffer); \
     const jlong capacity = (*__env)->GetDirectBufferCapacity(__env, buffer);
 /*
 #define ADDRESS_INT_BUFFER(__env, buffer, name, capacity)                       \
