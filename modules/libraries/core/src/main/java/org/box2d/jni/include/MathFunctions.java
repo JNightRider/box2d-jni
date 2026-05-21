@@ -16,6 +16,8 @@ import org.box2d.jni.b2Vec2;
 
 import org.box2d.jni.readonly.ConstB2Vec2;
 import org.box2d.jni.readonly.ConstBuffer;
+
+import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
 
 /**
@@ -26,6 +28,7 @@ import static org.box2d.jni.system.Checks.*;
  * @since 1.0.0
  */
 public final class MathFunctions {
+    static { Library.initialize(); }
 
     /**
      * The PI number used by box2d in the native layer.

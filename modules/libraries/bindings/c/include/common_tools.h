@@ -40,4 +40,6 @@
 
 #define ADDRESS_UINT8_BUFFER(__env, buffer, name, capacity)                     \
     uint8_t * const name = (uint8_t *) __env->GetDirectBufferAddress(buffer);   \
-    const jlong capacity = (__env)->GetDirectBufferCapacity(buffer);*/
+    const jlong capacity = (__env)->GetDirectBufferCapacity(buffer);
+    
+*/

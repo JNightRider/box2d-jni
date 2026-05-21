@@ -1,4 +1,6 @@
 add_library(box2d-bindings SHARED
+    org_box2d_jni_libc_LibCFloat.c
+    org_box2d_jni_libc_LibCMath.c
     org_box2d_jni_libc_LibCStdlib.c
     org_box2d_jni_libc_LibCString.c
     org_box2d_jni_system_Memory.c
