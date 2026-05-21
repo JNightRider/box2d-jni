@@ -6,9 +6,9 @@ package org.box2d.jni.test;
 
 import org.box2d.jni.test.internal.*;
 
-import static java.lang.System.out;
 import java.util.Objects;
-import java.util.function.Function;
+
+import static java.lang.System.out;
 
 import static org.box2d.jni.test.TestMacros.*;
 import static org.box2d.jni.test.internal.Extern.*;
