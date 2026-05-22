@@ -63,4 +63,15 @@ public interface CallbackI extends Pointer {
      *             called
      */
     void callback(long resp, long args);
+
+    /**
+     * Returns the address of the function that this {@code Callback} points to.
+     *
+     * @see JNI
+     *
+     * @return the function address
+     */
+    default long functionAddress() {
+        return napiClosureFunction(address());
+    }
 }

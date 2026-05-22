@@ -14,27 +14,36 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void* b2AllocFcn( unsigned int size, int alignment );}
- *
+ * Callback function: {@code typedef void b2FreeFcn( void* mem, unsigned int size ); }
+ * 
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2AllocFcnI extends CallbackI {
+public interface b2FreeFcnI extends CallbackI {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         LongBuffer targs = createLongBuffer(2);
-        targs.put(ffi_type_uint32)
-             .put(ffi_type_sint32);
+        targs.put(ffi_type_pointer)
+             .put(ffi_type_uint32);
         targs.flip();
-        long rtype = ffi_type_pointer;
+        long rtype = ffi_type_void;
         
         return njniCallbackCreate(instance, rtype, targs, 2);
     };
+
+    /*(non-Javadoc)*/
+    @Override
+    public default void callback(long resp, long args) {
+        invoke(
+                memGetAddress(memGetAddress(args)),
+                memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))
+        );
+    }
 
     /**
      * A handler for the native class constructor.
@@ -46,22 +55,11 @@ public interface b2AllocFcnI extends CallbackI {
         return CONSTRUCTOR;
     }
 
-    /*(non-Javadoc)*/
-    @Override
-    public default void callback(long resp, long args) {
-        long __result = invoke(
-                memGetAddress(memGetAddress(args)),
-                memGetInt(memGetAddress(args + VarType.Pointer.sizeof()))
-        );
-        apiClosureRetP(resp, __result);
-    }
-
     /**
      * The function of the callback.
      *
-     * @param size long
-     * @param alignment long
-     * @return long
+     * @param mem long
+     * @param size int
      */
-    long invoke(long size, int alignment);
+    void invoke( long mem, long size );
 }

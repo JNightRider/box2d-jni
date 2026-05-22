@@ -52,7 +52,7 @@ public final class Upcalls {
             return;
         }
         callback.__destructor().apply(address);
-        apiLog("Callback free: " + callback.getClass());
+        apiLog("Callback free: " + callback.getClass() + String.format(" [0x%X]", address));
     }
 
     public static long upcallGet(CallbackI callback) {
