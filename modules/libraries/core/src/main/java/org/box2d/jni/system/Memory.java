@@ -4,15 +4,63 @@
  */
 package org.box2d.jni.system;
 
+import java.nio.*;
+import static org.box2d.jni.system.Checks.*;
+
 /**
  *
  * @author wil
  */
 public final class Memory {
-    
+
     static {
         Library.initialize();
     }
+
+    // -----------------------------------
+    public static ByteBuffer createByteBuffer(int size, int sizeof) {
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(size * sizeof);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        return byteBuffer;
+    }
+
+    public static ByteBuffer createByteBuffer(int size) {
+        return createByteBuffer(1, size);
+    }
+
+    public static DoubleBuffer createDoubleBuffer(int size) {
+        ByteBuffer byteBuffer = createByteBuffer(size, Double.BYTES);
+        DoubleBuffer result = byteBuffer.asDoubleBuffer();
+
+        checkBuffer(result, size);
+        return result;
+    }
+
+    public static FloatBuffer createFloatBuffer(int size) {
+        ByteBuffer byteBuffer = createByteBuffer(size, Float.BYTES);
+        FloatBuffer result = byteBuffer.asFloatBuffer();
+
+        checkBuffer(result, size);
+        return result;
+    }
+
+    public static IntBuffer createIntBuffer(int size) {
+        ByteBuffer byteBuffer = createByteBuffer(size, Integer.BYTES);
+        IntBuffer result = byteBuffer.asIntBuffer();
+
+        checkBuffer(result, size);
+        return result;
+    }
+
+    public static LongBuffer createLongBuffer(int size) {
+        ByteBuffer byteBuffer = createByteBuffer(size, Long.BYTES);
+        LongBuffer result = byteBuffer.asLongBuffer();
+
+        checkBuffer(result, size);
+        return result;
+    }
+
+    // -----------------------------------
     
     public static int memSizeOf(long ptr) {
         Checks.checkAddress(ptr);

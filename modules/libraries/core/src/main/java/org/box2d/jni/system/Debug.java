@@ -111,9 +111,9 @@ public final class Debug {
         }
     }
 
-    public static void apiLogMore(CharSequence msg) {
+    public static void apiLogMore(CharSequence msg, Color ...colors) {
         if (DEBUG) {
-            DEBUG_STREAM.print("\t\t" + msg + "\n");
+            DEBUG_STREAM.print(Color.sprintf("\t\t" + msg + "\n", colors));
         }
     }
 }

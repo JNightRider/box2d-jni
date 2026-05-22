@@ -15,6 +15,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/natives)
 # Configure JNI headers
 find_package(JNI REQUIRED)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(FFI REQUIRED IMPORTED_TARGET libffi)
+
 if(NOT JNI_FOUND)
     message(FATAL_ERROR "No JNI found, please configure your JAVA_HOME")
 endif()
