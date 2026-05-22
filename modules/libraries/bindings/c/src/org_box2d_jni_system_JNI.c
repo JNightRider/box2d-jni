@@ -23,3 +23,15 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_JNI_invokeJIP
     UNUSED_PARAMS(__env, clazz)
     return ((jlong) ((uintptr_t* (*) (uintptr_t, int32_t)) (uintptr_t)__functionAddress) ((uintptr_t)param0, (int32_t)param1));
 }
+
+/*
+ * Class:     org_box2d_jni_system_JNI
+ * Method:    invokeJJV
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNI_invokeJJV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (((void (*) (uintptr_t, uintptr_t)) (uintptr_t)__functionAddress) ((uintptr_t)param0, (uintptr_t)param1));
+}
