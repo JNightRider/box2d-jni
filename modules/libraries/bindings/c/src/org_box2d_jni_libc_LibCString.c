@@ -38,3 +38,17 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_libc_LibCString_nmemcpy
     __result = (jlong)(uintptr_t) memcpy((void *)dest, (const void*) src, (size_t) n);
     return __result;
 }
+
+/*
+ * Class:     org_box2d_jni_libc_LibCString
+ * Method:    nstrlen
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_libc_LibCString_nstrlen
+    (JNIEnv *__env, jclass clazz, jlong s)
+{
+    jlong __result;
+    UNUSED_PARAMS(__env, clazz)
+    __result = (jlong)(size_t) strlen((char*)s);
+    return __result;
+}

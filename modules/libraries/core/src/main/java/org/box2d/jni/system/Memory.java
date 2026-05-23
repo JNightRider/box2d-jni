@@ -166,4 +166,10 @@ public final class Memory {
     }
     
     public static native void nputAddress(long ptr, long value);
+    
+    public static long memGetNativeAddress(Buffer buffer) {
+        return ngetNativeAddress(buffer);
+    }
+    
+    public static native long ngetNativeAddress(Buffer buffer);
 }

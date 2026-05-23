@@ -227,3 +227,15 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_Memory_nputAddress
     UNUSED_PARAMS(__env, clazz)
     putAddress(ptr, (uintptr_t)value);
 }
+
+/*
+ * Class:     org_box2d_jni_system_Memory
+ * Method:    ngetNativeAddress
+ * Signature: (Ljava/nio/Buffer;)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Memory_ngetNativeAddress
+    (JNIEnv *__env, jclass clazz, jobject jptr)
+{
+    void* ptr = (*__env)->GetDirectBufferAddress(__env, jptr);
+    return (jlong)(uintptr_t)ptr;
+}

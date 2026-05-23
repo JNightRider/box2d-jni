@@ -18,4 +18,6 @@ public class LibCString {
     public static native long nmemset(long ptr, int value, long num);
     
     public static native long nmemcpy(long dest, long src, long n);
+    
+    public static native long nstrlen(long s);
 }
