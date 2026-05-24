@@ -87,6 +87,10 @@ public final class Debug {
         DEBUG = true;
     }
     
+    public static void enabled(boolean flag) {
+        DEBUG = flag;
+    }
+    
     public static void apiPrint(CharSequence msg) {
         if (DEBUG) {
             DEBUG_STREAM.print(Color.sprintf("%c{ " + msg + "}\n", Color.CYAN));

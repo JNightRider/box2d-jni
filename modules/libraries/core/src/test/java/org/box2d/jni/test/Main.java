@@ -5,6 +5,7 @@
 package org.box2d.jni.test;
 
 import org.box2d.jni.test.internal.*;
+import org.box2d.jni.system.Debug;
 
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ import static org.box2d.jni.test.internal.Extern.*;
 public class Main {
     
     static {
+        Debug.enabled(false);
         MathTest = extern(new TestMath(), TestMath::MathTest);
     }
     
