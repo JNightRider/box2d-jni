@@ -70,25 +70,25 @@ public class Main {
             out.printf("Filter: %s\n", filter);
         }
 
-        out.printf( "======================================\n" );
+        out.printf("======================================\n");
 
         //MAYBE_RUN_TEST( TableTest );
-	MAYBE_RUN_TEST( MathTest  );
-	//MAYBE_RUN_TEST( BitSetTest );
-	//MAYBE_RUN_TEST( CollisionTest );
-	//MAYBE_RUN_TEST( ContainerTest );
-	//MAYBE_RUN_TEST( DeterminismTest );
-	//MAYBE_RUN_TEST( DistanceTest );
-	//MAYBE_RUN_TEST( DynamicTreeTest );
-	//MAYBE_RUN_TEST( IdTest );
-	//MAYBE_RUN_TEST( ShapeTest );
-	//MAYBE_RUN_TEST( ThreadTest );
-	//MAYBE_RUN_TEST( WorldTest );
+        MAYBE_RUN_TEST(MathTest);
+        //MAYBE_RUN_TEST( BitSetTest );
+        //MAYBE_RUN_TEST( CollisionTest );
+        //MAYBE_RUN_TEST( ContainerTest );
+        //MAYBE_RUN_TEST( DeterminismTest );
+        //MAYBE_RUN_TEST( DistanceTest );
+        //MAYBE_RUN_TEST( DynamicTreeTest );
+        //MAYBE_RUN_TEST( IdTest );
+        //MAYBE_RUN_TEST( ShapeTest );
+        //MAYBE_RUN_TEST( ThreadTest );
+        //MAYBE_RUN_TEST( WorldTest );
 
-        out.printf( "======================================\n" );
-	out.printf( "All Box2D tests passed!\n" );
-	
-	float duration = b2GetMilliseconds( ticks );
-	out.printf( "Test duration = %.2f s\n", 0.001f * duration );
+        out.printf("======================================\n");
+        out.printf("All Box2D tests passed!\n");
+
+        float duration = b2GetMilliseconds(ticks);
+        out.printf("Test duration = %.2f s\n", 0.001f * duration);
     }
 }
