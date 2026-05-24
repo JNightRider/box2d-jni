@@ -10,6 +10,7 @@ add_library(box2d-bindings SHARED
     org_box2d_jni_system_Upcalls.c
     org_box2d_jni_system_VarType.c
     
+    box2d/org_box2d_jni_include_Base.c
     box2d/org_box2d_jni_include_MathFunctions.c
 )
 

@@ -10,6 +10,7 @@ import java.util.Objects;
 
 import static java.lang.System.out;
 
+import static org.box2d.jni.include.Base.*;
 import static org.box2d.jni.test.TestMacros.*;
 import static org.box2d.jni.test.internal.Extern.*;
 
@@ -59,7 +60,7 @@ public class Main {
             filter = args[1];
         }
 
-        long ticks = System.currentTimeMillis(); //b2GetTicks();
+        long ticks =  b2GetTicks();
 
         out.printf("Starting Box2D unit tests\n");
         if (filter != null)
@@ -85,7 +86,7 @@ public class Main {
         out.printf( "======================================\n" );
 	out.printf( "All Box2D tests passed!\n" );
 	
-	float duration = System.currentTimeMillis(); //b2GetMilliseconds( ticks );
+	float duration = b2GetMilliseconds( ticks );
 	out.printf( "Test duration = %.2f s\n", 0.001f * duration );
     }
 }
