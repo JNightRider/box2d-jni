@@ -57,5 +57,5 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_system_JNI_invokePPII
     (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
-    return ((jint) ((int32_t* (*) (void*, void*, int32_t)) (uintptr_t)__functionAddress) ((void*)param0, (void*)param1, (int32_t)param2));
+    return ((jint) ((int32_t (*) (void*, void*, int32_t)) (uintptr_t)__functionAddress) ((void*)param0, (void*)param1, (int32_t)param2));
 }

@@ -21,7 +21,7 @@
 JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_MemoryUtil_nGetStringUTFChars
     (JNIEnv *__env, jclass clazz, jstring str)
 {
-    char *ptr = (*__env)->GetStringUTFChars(__env, str, NULL);
+    const char *ptr = (*__env)->GetStringUTFChars(__env, str, NULL);
     return (jlong)ptr;
 }
 
