@@ -4,20 +4,21 @@
  */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2WorldId;
+import org.box2d.jni.b2BodyId;
+
 import static org.box2d.jni.system.Pointer.*;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2WorldId} class.
+ * A class to manage the unit tests of the {@link b2BodyId} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2WorldIdTest {
+public class b2BodyIdTest {
 
     /**
      * Initialize all tests.
@@ -32,13 +33,15 @@ public class b2WorldIdTest {
      * Test the properties of the structure.
      */
     private void struct() {
-        try (b2WorldId ptr = b2WorldId.malloc()) {
+        try (b2BodyId ptr = b2BodyId.malloc()) {
             Assert.assertNotEquals(NULL, ptr.address());
 
-            ptr.index1((short) 1);
+            ptr.index1(1);
+            ptr.world0((short) 2);
             ptr.generation((short) 5);
 
-            Assert.assertEquals(1, (int) ptr.index1());
+            Assert.assertEquals(1, (int)ptr.index1());
+            Assert.assertEquals(2, (int) ptr.world0());
             Assert.assertEquals(5, (int) ptr.generation());
         }
     }
@@ -47,25 +50,25 @@ public class b2WorldIdTest {
      * Buffer test for {@code Buffer} structures
      */
     private void buffer() {
-        b2WorldId.Buffer ptr = b2WorldId.malloc(5);
+        b2BodyId.Buffer ptr = b2BodyId.malloc(5);
+
         Assert.assertNotEquals(NULL, ptr.address());
         Assert.assertEquals(5, ptr.remaining());
 
         {
-            try (b2WorldId obj = b2WorldId.malloc()) {
-                obj.index1((short)1).generation((short) 2);
-                ptr.put(obj);
-            }        
-            try (b2WorldId obj = b2WorldId.malloc()) {
-                obj.index1((short)4).generation((short) 1);
+            try (b2BodyId obj = b2BodyId.malloc()) {
+                obj.index1(1) .world0((short) 10) .generation((short) 2);
                 ptr.put(obj);
             }
-            try (b2WorldId obj = b2WorldId.malloc()) {
-                obj.index1((short)10).generation((short)100);
+            try (b2BodyId obj = b2BodyId.malloc()) {
+                obj.index1(4).world0((short) 20).generation((short) 1);
+                ptr.put(obj);
+            }
+            try (b2BodyId obj = b2BodyId.malloc()) {
+                obj.index1(10).world0((short) 30).generation((short) 100);
                 ptr.put(obj);
             }
         }
-        
 
         ptr.flip();
 
@@ -73,19 +76,23 @@ public class b2WorldIdTest {
         Assert.assertEquals(3, ptr.remaining());
 
         {
-            try (b2WorldId obj = ptr.get(0)) {
+            try (b2BodyId obj = ptr.get(0)) {
                 Assert.assertEquals(1, (int)obj.index1());
-                Assert.assertEquals(2, (int)obj.generation());
+                Assert.assertEquals(10, (int) obj.world0());
+                Assert.assertEquals(2, (int) obj.generation());
             }
-            try (b2WorldId obj = ptr.get(1)) {
+            try (b2BodyId obj = ptr.get(1)) {
                 Assert.assertEquals(4, (int)obj.index1());
-                Assert.assertEquals(1, (int)obj.generation());
+                Assert.assertEquals(20, (int) obj.world0());
+                Assert.assertEquals(1, (int) obj.generation());
             }
-            try (b2WorldId obj = ptr.get(2)) {
+            try (b2BodyId obj = ptr.get(2)) {
                 Assert.assertEquals(10, (int)obj.index1());
-                Assert.assertEquals(100, (int)obj.generation());
+                Assert.assertEquals(30, (int) obj.world0());
+                Assert.assertEquals(100, (int) obj.generation());
             }
         }
+
         ptr.free();
     }
 }
