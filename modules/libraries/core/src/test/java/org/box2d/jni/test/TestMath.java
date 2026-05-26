@@ -13,7 +13,7 @@ import static org.box2d.jni.libc.LibCMath.*;
 import static org.box2d.jni.test.TestMacros.*;
 
 /**
- * A line-by-line Java translation of the box2d 'test/main.c' example.
+ * A line-by-line Java translation of the box2d 'test/test_math.c' example.
  * <p>
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test_math.c
  *

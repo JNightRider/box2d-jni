@@ -47,6 +47,12 @@ public final class Checks {
         }
     }
     
+    public static void checkMinBuffer(Buffer buffer, int length) {
+        if (buffer.capacity() < length) {
+            throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
+        }
+    }
+    
     public static void checkBuffer(Buffer buffer, int length) {
         if (buffer.capacity() != length) {
             throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));

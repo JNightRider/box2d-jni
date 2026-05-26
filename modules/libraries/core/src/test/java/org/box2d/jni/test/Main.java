@@ -29,7 +29,8 @@ public class Main {
     
     static {
         Debug.enabled(false);
-        MathTest = extern(new TestMath(), TestMath::MathTest);
+        MathTest    = extern(new TestMath(), TestMath::MathTest);
+        IdTest      = extern(new TestId(), TestId::IdTest);
     }
     
 
@@ -38,7 +39,7 @@ public class Main {
 //extern int DeterminismTest( void );
 //extern int DistanceTest( void );
 //extern int DynamicTreeTest( void );
-//    static Extern<Integer> IdTest;
+    static Extern<Integer> IdTest;
     static Extern<Integer> MathTest;
 //extern int ShapeTest( void );
 //extern int TableTest( void );    
@@ -80,7 +81,7 @@ public class Main {
         //MAYBE_RUN_TEST( DeterminismTest );
         //MAYBE_RUN_TEST( DistanceTest );
         //MAYBE_RUN_TEST( DynamicTreeTest );
-        //MAYBE_RUN_TEST( IdTest );
+        MAYBE_RUN_TEST( IdTest );
         //MAYBE_RUN_TEST( ShapeTest );
         //MAYBE_RUN_TEST( ThreadTest );
         //MAYBE_RUN_TEST( WorldTest );
