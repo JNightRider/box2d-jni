@@ -33,7 +33,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNI_invokeJJV
     (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
-    (((void (*) (uintptr_t, uintptr_t)) (uintptr_t)__functionAddress) ((uintptr_t)param0, (uintptr_t)param1));
+    ((void (*) (uint64_t, uint64_t)) (uintptr_t)__functionAddress) ((uint64_t)param0, (uint64_t)param1);
 }
 
 /*
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNI_invokePV
     (JNIEnv *__env, jclass clazz, jlong param0, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
-    (((void (*) (void*)) (uintptr_t)__functionAddress) ((void*)param0));
+    ((void (*) (uintptr_t)) (uintptr_t)__functionAddress) ((uintptr_t)param0);
 }
 
 /*
@@ -57,5 +57,41 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_system_JNI_invokePPII
     (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
-    return ((jint) ((int32_t (*) (void*, void*, int32_t)) (uintptr_t)__functionAddress) ((void*)param0, (void*)param1, (int32_t)param2));
+    return ((jint) ((int32_t (*) (uintptr_t, uintptr_t, int32_t)) (uintptr_t)__functionAddress) ((uintptr_t)param0, (uintptr_t)param1, (int32_t)param2));
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNI
+ * Method:    invokePPV
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNI_invokePPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (uintptr_t, uintptr_t))(uintptr_t)__functionAddress)((uintptr_t)param0, (uintptr_t)param1);
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNI
+ * Method:    invokePPPP
+ * Signature: (JJJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_JNI_invokePPPP
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong param2, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return ((jlong) ((uintptr_t (*) (uintptr_t, uintptr_t, uintptr_t)) (uintptr_t)__functionAddress) ((uintptr_t)param0, (uintptr_t)param1, (uintptr_t)param2));
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNI
+ * Method:    invokeFJFJF
+ * Signature: (FJFJJ)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNI_invokeFJFJF
+    (JNIEnv *__env, jclass clazz, jfloat param0, jlong param1, jfloat param2, jlong param3, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return ((jfloat) ((jfloat (*) (jfloat, uint64_t, jfloat, uint64_t)) (uintptr_t)__functionAddress) ((jfloat)param0, (uint64_t)param1, (jfloat)param2, (uint64_t)param3));
 }

@@ -5,6 +5,8 @@
 package org.box2d.jni.system;
 
 import java.util.function.Function;
+
+import org.box2d.jni.function.CFunction;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
@@ -15,7 +17,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface CallbackI extends Pointer {
+public interface CallbackI extends Pointer, CFunction {
 
     /**
      * Native callback destroyer
@@ -71,6 +73,7 @@ public interface CallbackI extends Pointer {
      *
      * @return the function address
      */
+    @Override
     default long functionAddress() {
         return napiClosureFunction(address());
     }

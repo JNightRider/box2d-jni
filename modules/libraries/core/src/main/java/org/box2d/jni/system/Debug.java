@@ -93,7 +93,7 @@ public final class Debug {
     
     public static void apiPrint(CharSequence msg) {
         if (DEBUG) {
-            DEBUG_STREAM.print(Color.sprintf("%c{ " + msg + "}\n", Color.CYAN));
+            DEBUG_STREAM.print(Color.sprintf("%c{" + msg + "}\n", Color.CYAN));
         }
     }
 
