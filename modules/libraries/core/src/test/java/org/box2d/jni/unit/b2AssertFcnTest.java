@@ -38,7 +38,7 @@ public class b2AssertFcnTest {
                 Assert.assertEquals(4, lineNumber);
                 return 1;
             };
-            int __result = JNI.invokePPII(buffer0, buffer1, 4, func.functionAddress());
+            int __result = JNI.invokePPII(buffer0, buffer1, 4, func.address());
             Assert.assertEquals(1, __result);
         }
         {
@@ -48,7 +48,7 @@ public class b2AssertFcnTest {
                 Assert.assertEquals(4, lineNumber);
                 return 1;
             });
-            int __result = JNI.invokePPII(buffer0, buffer1, 4, func.functionAddress());
+            int __result = JNI.invokePPII(buffer0, buffer1, 4, func.address());
             Assert.assertEquals(1, __result);
         }
         LibCStdlib.nfree(buffer0);

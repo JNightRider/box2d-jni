@@ -33,7 +33,7 @@ public final class Base {
      */
     public static void b2SetAllocator(b2AllocFcnI allocFcn, b2FreeFcnI freeFcn) {
         checkPointers(allocFcn, freeFcn);
-        nb2SetAllocator(allocFcn.functionAddress(), freeFcn.functionAddress());
+        nb2SetAllocator(allocFcn.address(), freeFcn.address());
     }
     /* {@code B2_API void b2SetAllocator( b2AllocFcn* allocFcn, b2FreeFcn* freeFcn ); } */
     public static native void nb2SetAllocator(long allocFcn, long freeFcn);
@@ -63,7 +63,7 @@ public final class Base {
      */
     public static b2AssertFcn b2SetAssertFcn(b2AssertFcnI assertFcn) {
         checkPointers(assertFcn);
-        nb2SetAssertFcn(assertFcn.functionAddress());
+        nb2SetAssertFcn(assertFcn.address());
         return b2AssertFcn.create(assertFcn);
     }
     /* {@code B2_API void b2SetAssertFcn( b2AssertFcn* assertFcn ); } */
@@ -80,7 +80,7 @@ public final class Base {
      */
     public static b2LogFcn b2SetLogFcn(b2LogFcnI logFcn) {
         checkPointers(logFcn);
-        nb2SetLogFcn(logFcn.functionAddress());
+        nb2SetLogFcn(logFcn.address());
         return b2LogFcn.create(logFcn);
     }
     /* {@code B2_API void b2SetLogFcn( b2LogFcn* logFcn ); } */

@@ -1,0 +1,266 @@
+/*
+ * Copyright Night Rider. All rights reserved.
+ * https://opensource.org/license/bsd-3-clause
+ */
+package org.box2d.jni;
+
+import org.box2d.jni.system.*;
+
+import static org.box2d.jni.libc.LibCStdlib.*;
+import static org.box2d.jni.system.Memory.*;
+
+/**
+ * <pre><code>
+ * typedef struct b2Filter
+ * {
+ * 	uint64_t categoryBits;
+ * 	uint64_t maskBits;
+ * 	int groupIndex;
+ * } b2Filter;
+ * </code></pre>
+ *
+ * @author wil
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+public class b2Filter extends Struct<b2Filter> {
+
+    /** The struct size in bytes. */
+    public static final int SIZEOF;
+
+    /** The struct alignment in bytes. */
+    public static final int ALIGNOF;
+
+    /** The struct member offsets. */
+    private static final int
+            CATEGORY_BITS,
+            MASK_BITS,
+            GROUP_INDEX;
+
+    static {
+
+        Layout layout = __struct(
+                __member(VarType.Int64t.sizeof()),
+                __member(VarType.Int64t.sizeof()),
+                __member(4)
+        );
+
+        CATEGORY_BITS = layout.offsetof(0);
+        MASK_BITS = layout.offsetof(1);
+        GROUP_INDEX = layout.offsetof(2);
+
+        SIZEOF = layout.getSize();
+        ALIGNOF = layout.getAlignment();
+    }
+
+    /**
+     * Generates a reference to the given pointer.
+     *
+     * @param ptr A reference pointer.
+     */
+    public b2Filter(Pointer ptr) {
+        super(ptr);
+    }
+
+    /**
+     * Create a new pointer to the object using its memory address.
+     *
+     * @param address A virtual memory address
+     */
+    public b2Filter(long address) {
+        super(address);
+    }
+
+    /**
+     * This structure is for internal buffer use.
+     *
+     * @param address A virtual memory address
+     * @param factor boolean
+     *
+     * @see Struct#Struct(long, boolean)
+     */
+    protected b2Filter(long address, boolean factor) {
+        super(address, factor);
+    }
+
+    /** @return Returns the property {@code categoryBits} */
+    public long categoryBits() { return ncategoryBits(address()); }
+    /** @return Returns the property {@code maskBits} */
+    public long maskBits() { return nmaskBits(address()); }
+    /** @return Returns the property {@code groupIndex} */
+    public int groupIndex() { return ngroupIndex(address()); }
+
+    /**
+     * Set the value of property {@code categoryBits}
+     *
+     * @param value The value
+     * @return b2Filter
+     */
+    public b2Filter categoryBits(long value) {
+        ncategoryBits(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code maskBits}
+     *
+     * @param value The value
+     * @return b2Filter
+     */
+    public b2Filter maskBits(long value) {
+        nmaskBits(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code groupIndex}
+     *
+     * @param value The value
+     * @return b2Filter
+     */
+    public b2Filter groupIndex(int value) {
+        ngroupIndex(address(), value);
+        return this;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    public int sizeof() {
+        return SIZEOF;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    protected b2Filter create(long address, Pointer ptr) {
+        return ptr == null ? new b2Filter(address) : new b2Filter(ptr);
+    }
+
+    // -----------------------------------
+
+    /**
+     * Internal use of the buffer.
+     *
+     * @return b2Filter
+     */
+    private static b2Filter factory() {
+        return new b2Filter(-1L, true);
+    }
+
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2Filter
+     */
+    public static b2Filter createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2Filter(ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Filter}.
+     *
+     * @param alloc Custom memory manager
+     * @return b2Filter
+     */
+    public static b2Filter alloc(AllocFunc alloc) {
+        return new b2Filter(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Filter}.
+     *
+     * @return b2Filter
+     */
+    public static b2Filter malloc() {
+        return new b2Filter(nmalloc(SIZEOF));
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Filter}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity) {
+        return new Buffer(nmalloc(capacity * SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Filter}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, AllocFunc alloc) {
+        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+    }
+
+    // -----------------------------------
+
+    public static long ncategoryBits(long address) { return memGetLong(address + CATEGORY_BITS); }
+    public static long nmaskBits(long address) { return memGetLong(address + MASK_BITS); }
+    public static int ngroupIndex(long address) { return memGetInt(address + GROUP_INDEX); }
+
+    public static void ncategoryBits(long address, long value) { memPutLong(address + CATEGORY_BITS, value); }
+    public static void nmaskBits(long address, long value) { memPutLong(address + MASK_BITS, value); }
+    public static void ngroupIndex(long address, int value) { memPutInt(address + GROUP_INDEX, value); }
+
+    // -----------------------------------
+
+    /** An array of {@code b2Filter} structs. */
+    public static class Buffer extends StructBuffer<b2Filter, Buffer> implements JNINative {
+
+        /** An element that provides information about the structure. */
+        private static final b2Filter ELEMENT_FACTORY = b2Filter.factory();
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param remaining int
+         */
+        public Buffer(long address, int remaining) {
+            super(address, remaining);
+        }
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param mark int
+         * @param position int
+         * @param limit int
+         * @param capacity int
+         */
+        public Buffer(long address, int mark, int position, int limit, int capacity) {
+            super(address, mark, position, limit, capacity);
+        }
+
+        /*(non-Jabadoc)
+         */
+        @Override
+        protected b2Filter getElementFactory() {
+            return ELEMENT_FACTORY;
+        }
+
+        /*(non-Jabadoc)
+         */
+        @Override
+        protected Buffer self() {
+            return this;
+        }
+
+        /*(non-Jabadoc)
+         */
+        @Override
+        protected Buffer create(long address, int mark, int position, int limit, int capacity) {
+            return new Buffer(address, mark, position, limit, capacity);
+        }
+    }
+}

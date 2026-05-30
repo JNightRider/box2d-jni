@@ -39,7 +39,7 @@ public class b2FrictionCallbackTest {
                 Assert.assertEquals(0X003FFL, userMaterialIdB);
                 return 10.5f;
             };
-            float __result = JNI.invokeFJFJF(1.5f, 0X5FCl, 5.34f, 0X003FFL, func.functionAddress());
+            float __result = JNI.invokeFJFJF(1.5f, 0X5FCl, 5.34f, 0X003FFL, func.address());
             Assert.assertEquals(10.5f, __result, 0.0f);
         }
         {
@@ -56,7 +56,7 @@ public class b2FrictionCallbackTest {
             });
             Assert.assertEquals(b2FrictionCallback.create(func), func);
 
-            float __result = JNI.invokeFJFJF(1.5f, 0X5FCl, 5.34f, 0X003FFL, func.functionAddress());
+            float __result = JNI.invokeFJFJF(1.5f, 0X5FCl, 5.34f, 0X003FFL, func.address());
             Assert.assertEquals(10.5f, __result, 0.0f);
         }
         Callbacks.b2FreeCallbacks();

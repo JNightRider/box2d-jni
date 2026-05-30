@@ -30,14 +30,14 @@ public class b2FreeFcnITest {
                 Assert.assertEquals(1024L, mem);
                 Assert.assertEquals(6L, size);
             };
-            JNI.invokeJJV(1024L, 6L, func.functionAddress());
+            JNI.invokeJJV(1024L, 6L, func.address());
         }
         {
             b2FreeFcn func = b2FreeFcn.create((mem, size) -> {
                 Assert.assertEquals(1024L, mem);
                 Assert.assertEquals(6L, size);
             });
-            JNI.invokeJJV(1024L, 6L, func.functionAddress());
+            JNI.invokeJJV(1024L, 6L, func.address());
         }
         Callbacks.b2FreeCallbacks();
     }

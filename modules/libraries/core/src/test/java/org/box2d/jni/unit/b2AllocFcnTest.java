@@ -31,7 +31,7 @@ public class b2AllocFcnTest {
                 Assert.assertEquals(2, alignment);
                 return 1024L;
             };
-            long mem = JNI.invokeJIP(10L, 2, alloc.functionAddress());
+            long mem = JNI.invokeJIP(10L, 2, alloc.address());
             Assert.assertEquals(1024L, mem);
         }
         {
@@ -40,7 +40,7 @@ public class b2AllocFcnTest {
                 Assert.assertEquals(2, alignment);
                 return 500L;
             });
-            long mem = JNI.invokeJIP(10L, 2, alloc.functionAddress());
+            long mem = JNI.invokeJIP(10L, 2, alloc.address());
             Assert.assertEquals(500L, mem);
         }
         Callbacks.b2FreeCallbacks();

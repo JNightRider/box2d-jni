@@ -13,7 +13,7 @@ import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
-import org.box2d.jni.function.CTaskCallback;
+import org.box2d.jni.function.CEnqueueTaskCallback;
 
 /**
  * Callback function: {@code typedef void* b2EnqueueTaskCallback( b2TaskCallback* task, void* taskContext, void* userContext );}
@@ -23,7 +23,7 @@ import org.box2d.jni.function.CTaskCallback;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2EnqueueTaskCallbackI extends CallbackI {
+public interface b2EnqueueTaskCallbackI extends CallbackI, CEnqueueTaskCallback {
 
     /**
      * Native callback constructor.
@@ -56,10 +56,6 @@ public interface b2EnqueueTaskCallbackI extends CallbackI {
             @Override public void invoke(long taskContext) {
                 JNI.invokePV(taskContext, address());
             }
-
-            @Override public long functionAddress() {
-                return super.address();
-            }
         }) {
             long __result = invoke(
                     callback,
@@ -69,14 +65,4 @@ public interface b2EnqueueTaskCallbackI extends CallbackI {
             apiClosureRetP(resp, __result);
         }
     }
-
-    /**
-     * The function of the callback.
-     *
-     * @param task FuntionTaskCallback
-     * @param taskContext long
-     * @param userContext long
-     * @return long
-     */
-    long invoke(CTaskCallback task, long taskContext, long userContext );
 }

@@ -7,6 +7,7 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
+import org.box2d.jni.function.CRestitutionCallback;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
@@ -21,7 +22,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2RestitutionCallbackI extends CallbackI {
+public interface b2RestitutionCallbackI extends CallbackI, CRestitutionCallback {
 
     /**
      * Native callback constructor.
@@ -59,16 +60,4 @@ public interface b2RestitutionCallbackI extends CallbackI {
         );
         apiClosureRet(resp, __result);
     }
-
-    /**
-     * The function of the callback.
-     *
-     * @param restitutionA float
-     * @param userMaterialIdA long
-     * @param restitutionB float
-     * @param userMaterialIdB long
-     * @return float
-     */
-    float invoke( float restitutionA, long userMaterialIdA, float restitutionB, long userMaterialIdB );
 }
-

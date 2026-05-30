@@ -7,6 +7,7 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
+import org.box2d.jni.function.CFrictionCallback;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
@@ -21,7 +22,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2FrictionCallbackI extends CallbackI {
+public interface b2FrictionCallbackI extends CallbackI, CFrictionCallback {
 
     /**
      * Native callback constructor.
@@ -58,16 +59,5 @@ public interface b2FrictionCallbackI extends CallbackI {
                 memGetLong(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
         );
         apiClosureRet(resp, __result);
-    }
-
-    /**
-     * The function of the callback.
-     *
-     * @param frictionA float
-     * @param userMaterialIdA long
-     * @param frictionB float
-     * @param userMaterialIdB long
-     * @return float
-     */
-    float invoke(float frictionA, long userMaterialIdA, float frictionB, long userMaterialIdB);
+    }    
 }

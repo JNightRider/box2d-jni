@@ -33,7 +33,7 @@ public class b2FinishTaskCallbackTest {
                 Assert.assertEquals(10l, userTask);
                 Assert.assertEquals(20l, userContext);
             };
-            JNI.invokePPV(10, 20, func.functionAddress());
+            JNI.invokePPV(10, 20, func.address());
         }
         {
             b2FinishTaskCallback func = b2FinishTaskCallback.create((userTask, userContext) -> {
@@ -42,7 +42,7 @@ public class b2FinishTaskCallbackTest {
                 Assert.assertEquals(20l, userContext);
             });
             Assert.assertEquals(b2FinishTaskCallback.create(func), func);
-            JNI.invokePPV(10, 20, func.functionAddress());
+            JNI.invokePPV(10, 20, func.address());
         }
         Callbacks.b2FreeCallbacks();
     }

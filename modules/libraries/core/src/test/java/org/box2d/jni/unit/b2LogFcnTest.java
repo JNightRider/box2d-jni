@@ -36,13 +36,13 @@ public class b2LogFcnTest {
             b2LogFcnI func = (message) -> {
                 Assert.assertEquals("Box2d-JNI", message);
             };
-            JNI.invokePV(buffer, func.functionAddress());
+            JNI.invokePV(buffer, func.address());
         }
         {
             b2LogFcn func = b2LogFcn.create((message) -> {
                 Assert.assertEquals("Box2d-JNI", message);
             });
-            JNI.invokePV(buffer, func.functionAddress());
+            JNI.invokePV(buffer, func.address());
         }
         LibCStdlib.nfree(buffer);
         Callbacks.b2FreeCallbacks();

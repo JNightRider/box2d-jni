@@ -12,6 +12,7 @@ import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
+import org.box2d.jni.function.CFinishTaskCallback;
 
 /**
  * Callback function: {@code typedef void b2FinishTaskCallback( void* userTask, void* userContext );}
@@ -21,7 +22,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2FinishTaskCallbackI extends CallbackI {
+public interface b2FinishTaskCallbackI extends CallbackI, CFinishTaskCallback {
 
     /**
      * Native callback constructor.
@@ -54,12 +55,4 @@ public interface b2FinishTaskCallbackI extends CallbackI {
                 memGetAddress(memGetAddress(args + VarType.Pointer.sizeof()))
         );
     }
-
-    /**
-     * The function of the callback.
-     *
-     * @param userTask long
-     * @param userContext long
-     */
-    void invoke(long userTask, long userContext );
 }

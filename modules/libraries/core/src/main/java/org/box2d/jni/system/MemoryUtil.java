@@ -13,6 +13,13 @@ import static org.box2d.jni.system.Pointer.*;
  */
 public final class MemoryUtil {
     
+    public static long memUTF8(String value) {
+        if (value == null) {
+            return NULL;
+        }
+        return 0L;
+    }
+    
     public static long memUTF8(String value, long __result) {
         long ptr = nGetStringUTFChars(value);
         if (ptr != NULL) {

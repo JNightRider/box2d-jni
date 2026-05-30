@@ -7,19 +7,21 @@ package org.box2d.jni.function;
 import org.box2d.jni.system.Pointer;
 
 /**
- * It represents the read-only function {@code b2TaskCallback} (its structure
+ * It represents the read-only function {@code b2EnqueueTaskCallbackI} (its structure
  * cannot be modified, only invoked).
  *
  * @author wil
  * @version 1.0.0
  * @since
  */
-public interface CTaskCallback extends Pointer {
-
+public interface CEnqueueTaskCallback extends Pointer {
     /**
      * The function of the callback.
      *
+     * @param task FuntionTaskCallback
      * @param taskContext long
+     * @param userContext long
+     * @return long
      */
-    void invoke(long taskContext);
+    long invoke(CTaskCallback task, long taskContext, long userContext );
 }

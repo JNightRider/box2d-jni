@@ -31,7 +31,7 @@ public class b2TaskCallbackTest {
                 Debug.apiPrint("invoke: b2TaskCallbackI(" + taskContext + ")");
                 Assert.assertEquals(0x045ffl, taskContext);
             };            
-            JNI.invokePV(0x045ffl, func.functionAddress());
+            JNI.invokePV(0x045ffl, func.address());
         }
         {
             b2TaskCallback func = b2TaskCallback.create((taskContext) -> {
@@ -39,7 +39,7 @@ public class b2TaskCallbackTest {
                 Assert.assertEquals(0x045ffl, taskContext);
             });
             Assert.assertEquals(b2TaskCallback.create(func), func);
-            JNI.invokePV(0x045ffl, func.functionAddress());
+            JNI.invokePV(0x045ffl, func.address());
         }
         Callbacks.b2FreeCallbacks();
     }

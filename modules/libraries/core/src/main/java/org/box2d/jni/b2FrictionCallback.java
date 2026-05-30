@@ -4,8 +4,10 @@
  */
 package org.box2d.jni;
 
+import org.box2d.jni.function.CFrictionCallback;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
+import org.box2d.jni.system.JNI;
 
 /**
  * Callback function: {@code typedef float b2FrictionCallback( float frictionA, uint64_t userMaterialIdA, float frictionB, uint64_t userMaterialIdB );

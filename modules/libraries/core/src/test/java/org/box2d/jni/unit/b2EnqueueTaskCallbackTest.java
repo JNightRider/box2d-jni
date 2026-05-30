@@ -40,8 +40,8 @@ public class b2EnqueueTaskCallbackTest {
             b2EnqueueTaskCallbackI func = (task, taskContext, userContext) -> {
                 Debug.apiPrint("task=" + task + ", taskContext=" + taskContext + ", userContext=" + userContext);
 
-                Assert.assertNotEquals(NULL, task.functionAddress());
-                Assert.assertEquals(tci.functionAddress(), task.functionAddress());
+                Assert.assertNotEquals(NULL, task.address());
+                Assert.assertEquals(tci.address(), task.address());
                 Assert.assertEquals(2, taskContext);
                 Assert.assertEquals(3, userContext);
                 task.invoke(0x0044FCL);
@@ -49,7 +49,7 @@ public class b2EnqueueTaskCallbackTest {
                 return 0x0034fl;
             };
 
-            long __result = JNI.invokePPPP(tci.functionAddress(), 2, 3, func.functionAddress());
+            long __result = JNI.invokePPPP(tci.address(), 2, 3, func.address());
             Assert.assertEquals(0x0034fl, __result);
         }
         {
@@ -61,8 +61,8 @@ public class b2EnqueueTaskCallbackTest {
             b2EnqueueTaskCallback func = b2EnqueueTaskCallback.create((task, taskContext, userContext) -> {
                 Debug.apiPrint("task=" + task + ", taskContext=" + taskContext + ", userContext=" + userContext);
 
-                Assert.assertNotEquals(NULL, task.functionAddress());
-                Assert.assertEquals(tc.functionAddress(), task.functionAddress());
+                Assert.assertNotEquals(NULL, task.address());
+                Assert.assertEquals(tc.address(), task.address());
                 Assert.assertEquals(2, taskContext);
                 Assert.assertEquals(3, userContext);
                 task.invoke(0x0044FCL);
@@ -71,7 +71,7 @@ public class b2EnqueueTaskCallbackTest {
             });
             Assert.assertEquals(b2EnqueueTaskCallback.create(func), func);
 
-            long __result = JNI.invokePPPP(tc.functionAddress(), 2, 3, func.functionAddress());
+            long __result = JNI.invokePPPP(tc.address(), 2, 3, func.address());
             Assert.assertEquals(0x0034fl, __result);
         }
         Callbacks.b2FreeCallbacks();
