@@ -122,6 +122,14 @@ public final class Upcalls {
 
     // -----------------------------------
     
+    public static final long ffi_type_b2ShapeId = nffi_type_b2ShapeId();
+    public static native long nffi_type_b2ShapeId();
+    
+    public static final long ffi_type_b2Vec2 = nffi_type_b2Vec2();
+    public static native long nffi_type_b2Vec2();
+    
+    // -----------------------------------
+    
     public static long jniCallbackCreate(Object handle, long restype, LongBuffer atypes) {
         return njniCallbackCreate(handle, restype, atypes, atypes.remaining());
     }
@@ -145,7 +153,12 @@ public final class Upcalls {
     public static void apiClosureRetP(long ret, long __result)   { memPutAddress(ret, __result); }
     public static void apiClosureRet(long ret, float __result)   { memPutFloat(ret, __result); }
     public static void apiClosureRet(long ret, double __result)  { memPutDouble(ret, __result); }
-    public static long apiClosureFunction(CallbackI ptr)         { return napiClosureFunction(ptr.address()); }    
+    public static long apiClosureFunction(CallbackI ptr) {
+        Long address = UP_CALLS.get(ptr);
+        if (address == null || address == NULL) {
+            return NULL;
+        }
+        return napiClosureFunction(address);
+    }
     public static native long napiClosureFunction(long ptr);
-
 }

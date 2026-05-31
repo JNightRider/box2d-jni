@@ -12,6 +12,31 @@
 #include "common_tools.h"
 #include "box2d/jni/org_box2d_jni_system_Upcalls.h"
 
+ffi_type* ffi_type_b2ShapeId_elements[4] = {
+    &ffi_type_sint32,
+    &ffi_type_uint16,
+    &ffi_type_uint16,
+    NULL
+};
+ffi_type ffi_type_b2ShapeId = {
+    .size = 0,
+    .alignment = 0,
+    .type = FFI_TYPE_STRUCT,
+    .elements = ffi_type_b2ShapeId_elements
+};
+
+ffi_type* ffi_type_b2Vec2_elements[3] = {
+    &ffi_type_float,
+    &ffi_type_float,
+    NULL
+};
+ffi_type ffi_type_b2Vec2 = {
+    .size = 0,
+    .alignment = 0,
+    .type = FFI_TYPE_STRUCT,
+    .elements = ffi_type_b2Vec2_elements
+};
+
 /*
  * Class:     org_box2d_jni_system_Upcalls
  * Method:    nffi_type_void
@@ -166,6 +191,30 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1longdouble
 {
     UNUSED_PARAMS(__env, clazz)
     return (jlong)&ffi_type_longdouble;
+}
+
+/*
+ * Class:     org_box2d_jni_system_Upcalls
+ * Method:    nffi_type_b2ShapeId
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2ShapeId
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong) &ffi_type_b2ShapeId;
+}
+
+/*
+ * Class:     org_box2d_jni_system_Upcalls
+ * Method:    nffi_type_b2Vec2
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2Vec2
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong) &ffi_type_b2Vec2;
 }
 
 /*

@@ -5,6 +5,7 @@ add_library(box2d-bindings SHARED
     org_box2d_jni_libc_LibCStdlib.c
     org_box2d_jni_libc_LibCString.c
     org_box2d_jni_system_JNI.c
+    org_box2d_jni_system_JNIB2.c
     org_box2d_jni_system_Memory.c
     org_box2d_jni_system_MemoryUtil.c
     org_box2d_jni_system_Upcalls.c

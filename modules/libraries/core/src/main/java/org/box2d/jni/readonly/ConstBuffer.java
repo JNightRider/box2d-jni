@@ -86,4 +86,10 @@ public interface ConstBuffer<E> extends ConstPointer {
      * smaller than the buffer's limit
      */
     E get(int index);
+    /**
+     * Returns the buffer's base address. [INTERNAL USE ONLY]
+     *
+     * @return
+     */
+    long address0();
 }

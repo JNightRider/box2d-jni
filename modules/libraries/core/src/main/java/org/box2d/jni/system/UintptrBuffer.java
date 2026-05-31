@@ -19,11 +19,17 @@ import static org.box2d.jni.system.Debug.apiLog;
  */
 public abstract class UintptrBuffer<VALUE, SELF extends UintptrBuffer<VALUE, SELF>> extends Uintptr implements ConstBuffer<VALUE> {
 
+    protected ByteBuffer container;
     protected int mark,
             position,
             limit,
             capacity;
 
+    protected UintptrBuffer(ByteBuffer container, int mark, int position, int limit, int capacity) {
+        this(Memory.memGetNativeAddress(container), mark, position, limit, capacity);
+        this.container = container;
+    }
+    
     protected UintptrBuffer(long address, int mark, int position, int limit, int capacity) {
         super(address, true);
         this.mark       = mark;
@@ -44,6 +50,7 @@ public abstract class UintptrBuffer<VALUE, SELF extends UintptrBuffer<VALUE, SEL
      *
      * @return
      */
+    @Override
     public long address0() {
         return address.get();
     }

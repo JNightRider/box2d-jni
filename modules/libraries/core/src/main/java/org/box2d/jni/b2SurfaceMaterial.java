@@ -4,7 +4,10 @@
  */
 package org.box2d.jni;
 
+import java.nio.ByteBuffer;
+
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2SurfaceMaterial;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Memory.*;
@@ -26,7 +29,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2SurfaceMaterial extends Struct<b2SurfaceMaterial> {
+public class b2SurfaceMaterial extends Struct<b2SurfaceMaterial> implements ConstB2SurfaceMaterial {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -96,16 +99,22 @@ public class b2SurfaceMaterial extends Struct<b2SurfaceMaterial> {
     }
     
     /** @return Returns the property {@code friction} */
+    @Override
     public float friction() { return nfriction(address()); }
     /** @return Returns the property {@code nrestitution} */
+    @Override
     public float restitution() { return nrestitution(address()); }
     /** @return Returns the property {@code nrollingResistance} */
+    @Override
     public float rollingResistance() { return nrollingResistance(address()); }
     /** @return Returns the property {@code ntangentSpeed} */
+    @Override
     public float tangentSpeed() { return ntangentSpeed(address()); }
     /** @return Returns the property {@code nuserMaterialId} */
+    @Override
     public long userMaterialId() { return nuserMaterialId(address()); }
     /** @return Returns the property {@code ncustomColor} */
+    @Override
     public int customColor() { return ncustomColor(address()); }
 
     /**
@@ -244,7 +253,7 @@ public class b2SurfaceMaterial extends Struct<b2SurfaceMaterial> {
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         return new Buffer( alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
-    }
+    }    
 
     // ----------------------------------- 
     
@@ -277,6 +286,15 @@ public class b2SurfaceMaterial extends Struct<b2SurfaceMaterial> {
          */
         public Buffer(long address, int remaining) {
             super(address, remaining);
+        }
+        
+         /**
+         * Create a new buffer.
+         *
+         * @param container ByteBuffer
+         */
+        public Buffer(ByteBuffer container) {
+            super(container, container.remaining() / SIZEOF);
         }
 
         /**

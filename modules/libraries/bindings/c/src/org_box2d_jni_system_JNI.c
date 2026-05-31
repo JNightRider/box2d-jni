@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "common_tools.h"
 #include "box2d/jni/org_box2d_jni_system_JNI.h"
@@ -95,3 +96,4 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNI_invokeFJFJF
     UNUSED_PARAMS(__env, clazz)
     return ((jfloat) ((jfloat (*) (jfloat, uint64_t, jfloat, uint64_t)) (uintptr_t)__functionAddress) ((jfloat)param0, (uint64_t)param1, (jfloat)param2, (uint64_t)param3));
 }
+

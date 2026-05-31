@@ -4,6 +4,9 @@
  */
 package org.box2d.jni.system;
 
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Pointer.*;
 
@@ -12,6 +15,16 @@ import static org.box2d.jni.system.Pointer.*;
  * @author wil
  */
 public final class MemoryUtil {
+    
+    public static FloatBuffer memFloatBuffer(long ptr, int capacity) {
+        ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
+        return buffer.asFloatBuffer();
+    }
+    
+    public static IntBuffer memIntBuffer(long ptr, int capacity) {
+        ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
+        return buffer.asIntBuffer();
+    }
     
     public static long memUTF8(String value) {
         if (value == null) {

@@ -40,7 +40,7 @@ public interface CallbackI extends Pointer {
      *
      * @return Function|free()
      */
-    public default Function<Long, Void> __destructor() {
+    default Function<Long, Void> __destructor() {
         return DESCTRUCTOR;
     }
 
@@ -50,7 +50,7 @@ public interface CallbackI extends Pointer {
      * @return the pointer address
      */
     @Override
-    public default long address() {
+    default long address() {
         long address = upcallGet(this);
         if (address != NULL) {
             return napiClosureFunction(address);

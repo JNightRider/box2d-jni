@@ -5,6 +5,7 @@
 package org.box2d.jni.libc;
 
 import org.box2d.jni.system.Library;
+import org.box2d.jni.system.Pointer;
 
 /**
  *
@@ -16,6 +17,11 @@ public class LibCString {
     }
     
     public static native long nmemset(long ptr, int value, long num);
+    
+    public static <T extends Pointer> T memcpy(T dest, Pointer src, long n) {
+        nmemcpy(dest.address(), src.address(), n);
+        return dest;
+    }
     
     public static native long nmemcpy(long dest, long src, long n);
     

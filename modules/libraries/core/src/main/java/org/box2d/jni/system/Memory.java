@@ -172,4 +172,11 @@ public final class Memory {
     }
     
     public static native long ngetNativeAddress(Buffer buffer);
+    
+    public static ByteBuffer memPutNativeAddress(long ptr, int size) {
+        return nputNativeAddress(ptr, size);
+    }
+    
+    public static native ByteBuffer nputNativeAddress(long ptr, int size);
+    
 }

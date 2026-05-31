@@ -4,6 +4,7 @@
  */
 package org.box2d.jni.system;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.stream.*;
 import java.util.function.*;
@@ -20,6 +21,10 @@ import static org.box2d.jni.libc.LibCString.*;
  * @since 1.0.0
  */
 public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffer<T, SELF>> extends UintptrBuffer<T, SELF> implements Iterable<T> {
+
+    public StructBuffer(ByteBuffer container, int remaining) {
+        super(container, -1, 0, remaining, remaining);
+    }
 
     protected StructBuffer(long address, int remaining) {
         super(address, -1, 0, remaining, remaining);

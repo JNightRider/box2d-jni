@@ -4,6 +4,7 @@
  */
 package org.box2d.jni;
 
+import java.nio.ByteBuffer;
 import org.box2d.jni.system.*;
 import org.box2d.jni.readonly.ConstB2Vec2;
 
@@ -307,6 +308,15 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
          */
         public Buffer(long address, int remaining) {
             super(address, remaining);
+        }
+
+        /**
+         * Create a new buffer.
+         *
+         * @param container ByteBuffer
+         */
+        public Buffer(ByteBuffer container) {
+            super(container, container.remaining() / SIZEOF);
         }
 
         /**
