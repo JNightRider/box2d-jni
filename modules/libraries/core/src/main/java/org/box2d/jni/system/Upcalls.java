@@ -128,6 +128,12 @@ public final class Upcalls {
     public static final long ffi_type_b2Vec2 = nffi_type_b2Vec2();
     public static native long nffi_type_b2Vec2();
     
+    public static final long ffi_type_b2Rot = nffi_type_b2Rot();
+    public static native long nffi_type_b2Rot();
+    
+    public static final long ffi_type_b2Transform = nffi_type_b2Transform();
+    public static native long nffi_type_b2Transform();
+    
     // -----------------------------------
     
     public static long jniCallbackCreate(Object handle, long restype, LongBuffer atypes) {

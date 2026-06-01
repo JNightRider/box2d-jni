@@ -9,26 +9,26 @@ import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.Pointer;
 
 /**
- * It represents the read-only function {@code b2PreSolveFcn} (its
+ * It represents the read-only function {@code b2CastResultFcn} (its
  * structure cannot be modified, only invoked).
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface CPreSolveFcn extends Pointer {
+public interface CCastResultFcn extends Pointer {
 
     /**
      * The function of the callback.
      *
-     * @param shapeIdA b2ShapeId
-     * @param shapeIdB b2ShapeId
+     * @param shapeId b2ShapeId
      * @param point b2Vec2
      * @param normal b2Vec2
+     * @param fraction float
      * @param context long
-     * @return long
+     * @return float
      */
-    boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Vec2 point, b2Vec2 normal, long context);
+    float invoke(b2ShapeId shapeId, b2Vec2 point, b2Vec2 normal, float fraction, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

@@ -97,3 +97,14 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNI_invokeFJFJF
     return ((jfloat) ((jfloat (*) (jfloat, uint64_t, jfloat, uint64_t)) (uintptr_t)__functionAddress) ((jfloat)param0, (uint64_t)param1, (jfloat)param2, (uint64_t)param3));
 }
 
+/*
+ * Class:     org_box2d_jni_system_JNI
+ * Method:    invokePIIPV
+ * Signature: (JIIJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNI_invokePIIPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jint param1, jint param2, jlong param3, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (uintptr_t, uint32_t, uint32_t, uintptr_t))(uintptr_t)__functionAddress)((uintptr_t)param0, (uint32_t)param1, (uint32_t)param2, (uintptr_t)param3);
+}

@@ -36,10 +36,10 @@ public class b2PreSolveFcnTest {
             ) {
 
             b2PreSolveFcnI func = (shapeIdA, shapeIdB, point, normal, context) -> {
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
-                Debug.apiPrint("b2CustomFilterFcnI: x=" + point.x() + ", y=" + point.y());
-                Debug.apiPrint("b2CustomFilterFcnI: x=" + normal.x() + ", y=" + normal.y());
+                Debug.apiPrint("b2PreSolveFcnTestI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
+                Debug.apiPrint("b2PreSolveFcnTestI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
+                Debug.apiPrint("b2PreSolveFcnTestI: x=" + point.x() + ", y=" + point.y());
+                Debug.apiPrint("b2PreSolveFcnTestI: x=" + normal.x() + ", y=" + normal.y());
 
                 Assert.assertEquals(10, (int) shapeIdA.index1());
                 Assert.assertEquals(20, (short) shapeIdA.generation());
@@ -68,10 +68,10 @@ public class b2PreSolveFcnTest {
             ) {
 
             b2PreSolveFcn func = b2PreSolveFcn.create((shapeIdA, shapeIdB, point, normal, context) -> {
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
-                Debug.apiPrint("b2CustomFilterFcnI: x=" + point.x() + ", y=" + point.y());
-                Debug.apiPrint("b2CustomFilterFcnI: x=" + normal.x() + ", y=" + normal.y());
+                Debug.apiPrint("b2PreSolveFcnTest: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
+                Debug.apiPrint("b2PreSolveFcnTest: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
+                Debug.apiPrint("b2PreSolveFcnTest: x=" + point.x() + ", y=" + point.y());
+                Debug.apiPrint("b2PreSolveFcnTest: x=" + normal.x() + ", y=" + normal.y());
 
                 Assert.assertEquals(10, (int) shapeIdA.index1());
                 Assert.assertEquals(20, (short) shapeIdA.generation());

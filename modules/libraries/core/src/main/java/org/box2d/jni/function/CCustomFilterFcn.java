@@ -30,7 +30,7 @@ public interface CCustomFilterFcn extends Pointer {
     /**
      * {@code true} if the function arguments are passed by value (a copy of the
      * structure), otherwise {@code false} if it is simply a direct reference to
-     * the structure retrieved from linfii.
+     * the structure retrieved from libfii.
      *
      * @return boolean
      */

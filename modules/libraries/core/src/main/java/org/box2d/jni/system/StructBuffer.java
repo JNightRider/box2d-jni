@@ -230,7 +230,8 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             if (fence <= index) {
                 throw new NoSuchElementException();
             }
-            return factory.create(NULL, () -> address + Integer.toUnsignedLong(index++) * factory.sizeof());
+            int offset = index++;
+            return factory.create(NULL, () -> address + Integer.toUnsignedLong(offset) * factory.sizeof());
         }
 
         @Override
@@ -285,7 +286,8 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
             Objects.requireNonNull(action);
 
             if (index < fence) {
-                action.accept(factory.create(NULL, () -> address + Integer.toUnsignedLong(index++) * factory.sizeof()));
+                int offset = index++;
+                action.accept(factory.create(NULL, () -> address + Integer.toUnsignedLong(offset) * factory.sizeof()));
                 return true;
             }
 

@@ -34,7 +34,7 @@ static void cbHandler(ffi_cif* cif, void* resp, void** args, void* userdata)
     );
     
     EXCEPTION_CHECK(env)
-    ATTACH_CURRENT_THREAD(ptr->jvm, &env, flag)
+    DETACH_CURRENT_THREAD(ptr->jvm, &env, flag)
 }
 
 Callback* jniCallbackCreate(

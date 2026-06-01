@@ -6,6 +6,7 @@ package org.box2d.jni.include;
 
 import org.box2d.jni.b2BodyDef;
 import org.box2d.jni.b2ChainDef;
+import org.box2d.jni.b2DebugDraw;
 import org.box2d.jni.b2DistanceJointDef;
 import org.box2d.jni.b2ExplosionDef;
 import org.box2d.jni.b2Filter;
@@ -282,4 +283,43 @@ public final class Types {
 
     /* {@code B2_API b2ExplosionDef b2DefaultExplosionDef( void ); } */
     public static native void nb2DefaultExplosionDef(long __result);
+
+    // --- [ b2GetGraphColor ] ---
+
+    /**
+     * {@code B2_API b2HexColor b2GetGraphColor( int index ); }
+     *
+     * @see org.box2d.jni.b2HexColor
+     *
+     * @param index graph color index
+     *
+     * @return b2HexColor
+     */
+    public static int b2GetGraphColor(int index) {
+        return nb2GetGraphColor(index);
+    }
+
+    /* {@code B2_API b2HexColor b2GetGraphColor( int index ); } */
+    public static native int nb2GetGraphColor(int index);
+
+    // --- [ b2DefaultDebugDraw ] ---
+
+    /**
+     * {@code B2_API b2DebugDraw b2DefaultDebugDraw( void ); }
+     *
+     * Use this to initialize your drawing interface. This allows you to implement a sub-set
+     * of the drawing functions.
+     *
+     * @param __result store
+     *
+     * @return b2DebugDraw
+     */
+    public static b2DebugDraw b2DefaultDebugDraw(b2DebugDraw __result) {
+        checkPointers(__result);
+        nb2DefaultDebugDraw(__result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2DebugDraw b2DefaultDebugDraw( void ); } */
+    public static native void nb2DefaultDebugDraw(long __result);
 }

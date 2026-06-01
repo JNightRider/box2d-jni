@@ -263,6 +263,17 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
         return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
     }
     
+    /**
+     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     *
+     * @param address Buffer address
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer createSafe(long address, int capacity) {
+        return address == NULL ? null : new Buffer(address, capacity);
+    }
+    
     // -----------------------------------
     public static long nadd(long a, long b, long __result) {
         nx(__result, nx(a) + nx(b));

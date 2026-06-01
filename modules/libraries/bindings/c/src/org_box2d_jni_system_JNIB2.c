@@ -76,3 +76,15 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1VEC2_1
     UNUSED_PARAMS(__env, clazz)
     return ((jfloat) ((float (*) (b2ShapeId, b2Vec2, b2Vec2, float, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2Vec2*)param1, *(b2Vec2*)param2, (float)param3, (uintptr_t)param4));
 }
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_TRANSFORM_PIFIPV
+ * Signature: (JJIFIJJ)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1TRANSFORM_1PIFIPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jfloat param3, jint param4, jlong param5, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2Transform, uintptr_t, uint32_t, float, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2Transform*)param0, (uintptr_t)param1, (uint32_t)param2, (float)param3, (uint32_t)param4, (uintptr_t)param5);
+}
