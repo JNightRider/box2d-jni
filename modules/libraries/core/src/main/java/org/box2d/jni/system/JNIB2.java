@@ -16,4 +16,11 @@ public final class JNIB2 {
     public static native float invoke_SHAPEID_VEC2_VEC2_FPF(long param0, long param1, long param2, float param3, long param4, long __functionAddress);
     
     public static native float invoke_TRANSFORM_PIFIPV(long param0, long param1, int param2, float param3, int param4, long param5, long __functionAddress);
+    public static native void invoke_TRANSFORM_PV(long param0, long param1, long __functionAddress);
+    public static native void invoke_TRANSFORM_FIPV(long param0, float param1, int param2, long param3, long __functionAddress);
+    
+    public static native void invoke_VEC2_FIPV(long param0, float param1, int param2, long param3, long __functionAddress);
+    public static native void invoke_VEC2_VEC2_FIPV(long param0, long param1, float param2, int param3, long param4, long __functionAddress);
+    public static native void invoke_VEC2_VEC2_IPV(long param0, long param1, int param2, long param3, long __functionAddress);
+    public static native void invoke_VEC2_PIPV(long param0, long param1, int param2, long param3, long __functionAddress);
 }

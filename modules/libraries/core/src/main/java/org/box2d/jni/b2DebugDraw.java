@@ -4,6 +4,7 @@
  */
 package org.box2d.jni;
 
+import org.box2d.jni.draw.*;
 import org.box2d.jni.system.*;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
@@ -252,8 +253,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawPolygonFcn(long value) {
-        ndrawPolygonFcn(address(), value);
+    public b2DebugDraw drawPolygonFcn(DrawPolygonFcnI value) {
+        ndrawPolygonFcn(address(), value.address());
         return this;
     }
 
@@ -263,8 +264,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawSolidPolygonFcn(long value) {
-        ndrawSolidPolygonFcn(address(), value);
+    public b2DebugDraw drawSolidPolygonFcn(DrawSolidPolygonFcnI value) {
+        ndrawSolidPolygonFcn(address(), value.address());
         return this;
     }
 
@@ -274,8 +275,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawCircleFcn(long value) {
-        ndrawCircleFcn(address(), value);
+    public b2DebugDraw drawCircleFcn(DrawCircleFcnI value) {
+        ndrawCircleFcn(address(), value.address());
         return this;
     }
 
@@ -285,8 +286,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawSolidCircleFcn(long value) {
-        ndrawSolidCircleFcn(address(), value);
+    public b2DebugDraw drawSolidCircleFcn(DrawSolidCircleFcnI value) {
+        ndrawSolidCircleFcn(address(), value.address());
         return this;
     }
 
@@ -296,8 +297,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawSolidCapsuleFcn(long value) {
-        ndrawSolidCapsuleFcn(address(), value);
+    public b2DebugDraw drawSolidCapsuleFcn(DrawSolidCapsuleFcnI value) {
+        ndrawSolidCapsuleFcn(address(), value.address());
         return this;
     }
 
@@ -307,8 +308,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawLineFcn(long value) {
-        ndrawLineFcn(address(), value);
+    public b2DebugDraw drawLineFcn(DrawLineFcnI value) {
+        ndrawLineFcn(address(), value.address());
         return this;
     }
 
@@ -318,8 +319,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawTransformFcn(long value) {
-        ndrawTransformFcn(address(), value);
+    public b2DebugDraw drawTransformFcn(DrawTransformFcnI value) {
+        ndrawTransformFcn(address(), value.address());
         return this;
     }
 
@@ -329,8 +330,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawPointFcn(long value) {
-        ndrawPointFcn(address(), value);
+    public b2DebugDraw drawPointFcn(DrawPointFcnI value) {
+        ndrawPointFcn(address(), value.address());
         return this;
     }
 
@@ -340,8 +341,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawStringFcn(long value) {
-        ndrawStringFcn(address(), value);
+    public b2DebugDraw drawStringFcn(DrawStringFcnI value) {
+        ndrawStringFcn(address(), value.address());
         return this;
     }
 

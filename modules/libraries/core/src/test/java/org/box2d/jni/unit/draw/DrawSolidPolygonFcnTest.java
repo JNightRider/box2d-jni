@@ -51,6 +51,11 @@ public class DrawSolidPolygonFcnTest {
                 Assert.assertEquals(b2HexColor.b2_colorGreen, color);
                 Assert.assertEquals(0xFFFFl, context);
                 Assert.assertEquals(buffer.address(), vertices);
+                
+                Assert.assertEquals(1f, transform.p().x(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y(), 0.0f);
+                Assert.assertEquals(4f, transform.q().c(), 0.0f);
+                Assert.assertEquals(6f, transform.q().s(), 0.0f);
 
                 b2Vec2.Buffer vrt = b2Vec2.createSafe(vertices, vertexCount * b2Vec2.SIZEOF);
 
@@ -95,6 +100,11 @@ public class DrawSolidPolygonFcnTest {
                 Assert.assertEquals(0xFFFFl, context);
                 Assert.assertEquals(buffer.address(), vertices);
 
+                Assert.assertEquals(1f, transform.p().x(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y(), 0.0f);
+                Assert.assertEquals(4f, transform.q().c(), 0.0f);
+                Assert.assertEquals(6f, transform.q().s(), 0.0f);
+                
                 b2Vec2.Buffer vrt = b2Vec2.createSafe(vertices, vertexCount * b2Vec2.SIZEOF);
 
                 b2Vec2 vb = vrt.get(0);
