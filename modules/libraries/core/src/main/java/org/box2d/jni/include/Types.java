@@ -266,6 +266,24 @@ public final class Types {
     /* {@code B2_API b2WeldJointDef b2DefaultWeldJointDef( void ); } */
     public static native void nb2DefaultWeldJointDef(long __result);
     
+    // --- [ b2DefaultWheelJointDef ] ---
+
+//    /**
+//     * {@code BB2_API b2WheelJointDef b2DefaultWheelJointDef( void ); }
+//     *
+//     * @param __result store
+//     *
+//     * @return b2WeldJointDef
+//     */
+//    public static b2WheelJointDef b2DefaultWheelJointDef(b2WheelJointDef __result) {
+//        checkPointers(__result);
+//        nb2DefaultWeldJointDef(__result.address());
+//        return __result;
+//    }
+
+    /* {@code B2_API b2WheelJointDef b2DefaultWheelJointDef( void ); } */
+    public static native void nb2DefaultWheelJointDef(long __result);
+    
     // --- [ b2DefaultExplosionDef ] ---
 
     /**
