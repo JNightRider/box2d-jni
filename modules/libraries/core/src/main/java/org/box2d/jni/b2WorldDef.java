@@ -32,6 +32,7 @@ import static org.box2d.jni.system.Memory.*;
  *     b2FinishTaskCallback* finishTask;
  *     void* userTaskContext;
  *     void* userData;
+ *     const char* recordingPath;
  *     b2Capacity capacity;
  *     int internalValue;
  * } b2WorldDef;
@@ -68,6 +69,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
             FINISH_TASK,
             USER_TASK_CONTEXT,
             USER_DATA,
+            RECORDING_PATH,
             CAPACITY,
             INTERNAL_VALUE;
 
@@ -86,6 +88,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
                 __member(1),
                 __member(1),
                 __member(4),
+                __member(VarType.Uintptrt.sizeof()),
                 __member(VarType.Uintptrt.sizeof()),
                 __member(VarType.Uintptrt.sizeof()),
                 __member(VarType.Uintptrt.sizeof()),
@@ -116,9 +119,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         USER_TASK_CONTEXT = layout.offsetof(15);
         USER_DATA = layout.offsetof(16);
 
-        CAPACITY = layout.offsetof(17);
+        RECORDING_PATH = layout.offsetof(17);
+        CAPACITY = layout.offsetof(18);
 
-        INTERNAL_VALUE = layout.offsetof(18);
+        INTERNAL_VALUE = layout.offsetof(19);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -209,6 +213,9 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /** @return Returns the property {@code internalValue} */
     @Override
     public int internalValue() { return ninternalValue(address()); }
+    /** @return Returns the property {@code recordingPath} */
+    @Override
+    public long recordingPath() { return nrecordingPath(address()); }
 
     /**
      * Set the value of property {@code gravity}
@@ -401,6 +408,17 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         return this;
     }
     
+    /**
+     * Set the value of property {@code recordingPath}
+     *
+     * @param value long
+     * @return b2WorldDef
+     */
+   public b2WorldDef recordingPath(long value) {
+       nrecordingPath(address(), value);
+       return this;
+   }
+    
     /*(non-Javadoc)
      */
     @Override
@@ -500,7 +518,9 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     public static long nuserData(long address)                  { return memGetAddress(address + USER_DATA);                    }
     public static b2Capacity ncapacity(long address)            { return b2Capacity.createSafe(() -> address + CAPACITY);       }
     public static int ninternalValue(long address)              { return memGetInt(address + INTERNAL_VALUE);                   }
-    
+    public static long nrecordingPath(long address)             { return memGetAddress(address + RECORDING_PATH);               }
+
+    public static void nrecordingPath(long address, long value)             { memPutAddress(address + RECORDING_PATH, value);                           }
     public static void ngravity(long address, b2Vec2 value)                 { nmemcpy(address + GRAVITY, value.address(), b2Vec2.SIZEOF);         }
     public static void nrestitutionThreshold(long address, float value)     { memPutFloat(address + RESTITUTION_THRESHOLD, value);                      }
     public static void nhitEventThreshold(long address, float value)        { memPutFloat(address + HIT_EVENT_THRESHOLD, value);                        }

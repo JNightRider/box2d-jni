@@ -22,131 +22,138 @@ public interface ConstB2WorldDef extends ConstStruct {
      *
      * @return b2Vec2
      */
-    public b2Vec2 gravity();
+     b2Vec2 gravity();
 
     /**
      * Returns the property {@code restitutionThreshold}
      *
      * @return float
      */
-    public float restitutionThreshold();
+     float restitutionThreshold();
 
     /**
      * Returns the property {@code hitEventThreshold}
      *
      * @return float
      */
-    public float hitEventThreshold();
+     float hitEventThreshold();
 
     /**
      * Returns the property {@code contactHertz}
      *
      * @return float
      */
-    public float contactHertz();
+     float contactHertz();
 
     /**
      * Returns the property {@code contactDampingRatio}
      *
      * @return float
      */
-    public float contactDampingRatio();
+     float contactDampingRatio();
 
     /**
      * Returns the property {@code contactSpeed}
      *
      * @return float
      */
-    public float contactSpeed();
+     float contactSpeed();
 
     /**
      * Returns the property {@code maximumLinearSpeed}
      *
      * @return float
      */
-    public float maximumLinearSpeed();
+     float maximumLinearSpeed();
 
     /**
      * Returns the property {@code frictionCallback}
      *
      * @return long
      */
-    public long frictionCallback();
+     long frictionCallback();
 
     /**
      * Returns the property {@code restitutionCallback}
      *
      * @return long
      */
-    public long restitutionCallback();
+     long restitutionCallback();
 
     /**
      * Returns the property {@code enableSleep}
      *
      * @return boolean
      */
-    public boolean enableSleep();
+     boolean enableSleep();
 
     /**
      * Returns the property {@code enableContinuous}
      *
      * @return boolean
      */
-    public boolean enableContinuous();
+     boolean enableContinuous();
 
     /**
      * Returns the property {@code enableContactSoftening}
      *
      * @return boolean
      */
-    public boolean enableContactSoftening();
+     boolean enableContactSoftening();
 
     /**
      * Returns the property {@code workerCount}
      *
      * @return int
      */
-    public int workerCount();
+     int workerCount();
 
     /**
      * Returns the property {@code enqueueTask}
      *
      * @return long
      */
-    public long enqueueTask();
+     long enqueueTask();
 
     /**
      * Returns the property {@code finishTask}
      *
      * @return long
      */
-    public long finishTask();
+     long finishTask();
 
     /**
      * Returns the property {@code userTaskContext}
      *
      * @return long
      */
-    public long userTaskContext();
+     long userTaskContext();
 
     /**
      * Returns the property {@code userData}
      *
      * @return long
      */
-    public long userData();
+     long userData();
 
     /**
      * Returns the property {@code capacity}
      *
      * @return b2Capacity
      */
-    public b2Capacity capacity();
+     b2Capacity capacity();
 
     /**
      * Returns the property {@code internalValue}
      *
      * @return int
      */
-    public int internalValue();
+     int internalValue();
+     
+     /**
+     * Returns the property {@code recordingPath}
+     *
+     * @return long
+     */
+     long recordingPath();
 }
