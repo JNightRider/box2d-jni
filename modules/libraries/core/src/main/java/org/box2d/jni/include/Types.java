@@ -23,6 +23,7 @@ import org.box2d.jni.b2WorldDef;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.libc.LibCStdint.*;
 
 /**
  * Class that represents the {@code types.h} header of box2d.
@@ -33,6 +34,11 @@ import static org.box2d.jni.system.Checks.*;
  */
 public final class Types {
     static { Library.initialize(); }
+    
+    /** {@code #define B2_DEFAULT_CATEGORY_BITS 1 }*/
+    public static final int B2_DEFAULT_CATEGORY_BITS = 1;
+    /** {@code #define B2_DEFAULT_MASK_BITS UINT64_MAX }*/
+    public static final long B2_DEFAULT_MASK_BITS = UINT64_MAX;
 
     // --- [ b2DefaultWorldDef ] ---
 

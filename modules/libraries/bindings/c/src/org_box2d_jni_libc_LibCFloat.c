@@ -20,5 +20,6 @@
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCFloat_nFLT_1EPSILON
     (JNIEnv *__env, jclass clazz)
 {
+    UNUSED_PARAMS(__env, clazz)
     return (jfloat)FLT_EPSILON;
 }
