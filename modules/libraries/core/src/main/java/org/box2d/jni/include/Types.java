@@ -18,6 +18,7 @@ import org.box2d.jni.b2RevoluteJointDef;
 import org.box2d.jni.b2ShapeDef;
 import org.box2d.jni.b2SurfaceMaterial;
 import org.box2d.jni.b2WeldJointDef;
+import org.box2d.jni.b2WheelJointDef;
 import org.box2d.jni.b2WorldDef;
 
 import org.box2d.jni.system.Library;
@@ -268,18 +269,18 @@ public final class Types {
     
     // --- [ b2DefaultWheelJointDef ] ---
 
-//    /**
-//     * {@code BB2_API b2WheelJointDef b2DefaultWheelJointDef( void ); }
-//     *
-//     * @param __result store
-//     *
-//     * @return b2WeldJointDef
-//     */
-//    public static b2WheelJointDef b2DefaultWheelJointDef(b2WheelJointDef __result) {
-//        checkPointers(__result);
-//        nb2DefaultWeldJointDef(__result.address());
-//        return __result;
-//    }
+    /**
+     * {@code BB2_API b2WheelJointDef b2DefaultWheelJointDef( void ); }
+     *
+     * @param __result store
+     *
+     * @return b2WeldJointDef
+     */
+    public static b2WheelJointDef b2DefaultWheelJointDef(b2WheelJointDef __result) {
+        checkPointers(__result);
+        nb2DefaultWeldJointDef(__result.address());
+        return __result;
+    }
 
     /* {@code B2_API b2WheelJointDef b2DefaultWheelJointDef( void ); } */
     public static native void nb2DefaultWheelJointDef(long __result);
