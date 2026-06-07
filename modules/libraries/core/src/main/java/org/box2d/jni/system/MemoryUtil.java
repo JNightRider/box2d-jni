@@ -25,14 +25,7 @@ public final class MemoryUtil {
         ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
         return buffer.asIntBuffer();
     }
-    
-    public static long memUTF8(String value) {
-        if (value == null) {
-            return NULL;
-        }
-        return 0L;
-    }
-    
+
     public static long memUTF8(String value, long __result) {
         long ptr = nGetStringUTFChars(value);
         if (ptr != NULL) {
@@ -41,7 +34,6 @@ public final class MemoryUtil {
         nReleaseStringUTFChars(value, ptr);
         return __result;
     }
-    
     
     public static String memGetStringUTF8(long ptr) {
         if (ptr == NULL) {

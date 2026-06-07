@@ -79,6 +79,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2GetVersion
 
 /*
  * Class:     org_box2d_jni_include_Base
+ * Method:    nb2GetBuildHash
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Base_nb2GetBuildHash
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jint)b2GetBuildHash();
+}
+
+/*
+ * Class:     org_box2d_jni_include_Base
  * Method:    nb2GetTicks
  * Signature: ()J
  */

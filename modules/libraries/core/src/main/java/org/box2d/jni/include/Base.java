@@ -87,6 +87,7 @@ public final class Base {
     public static native void nb2SetLogFcn(long logFcn);
 
     // --- [ b2GetVersion ] ---
+
     /**
      * {@code B2_API b2Version b2GetVersion( void ); }
      *
@@ -100,6 +101,18 @@ public final class Base {
     }
     /* {@code B2_API b2Version b2GetVersion( void ); } */
     public static native void nb2GetVersion(long __result);
+    
+    // --- [ b2GetBuildHash ] ---
+    /**
+     * {@code B2_API uint32_t b2GetBuildHash( void ); }
+     *
+     * @return int
+     */
+    public static int b2GetBuildHash() {
+        return nb2GetBuildHash();
+    }
+    /* {@code B2_API uint32_t b2GetBuildHash( void ); } */
+    public static native int nb2GetBuildHash();
     
     // --- [ b2GetTicks ] ---
 

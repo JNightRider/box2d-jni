@@ -167,7 +167,7 @@ public class b2BodyDef extends Struct<b2BodyDef> {
     /** @return Returns the property {@code sleepThreshold} */
     public float sleepThreshold() { return nsleepThreshold(address()); }    
     /** @return Returns the property {@code name} */
-    public String name() { return nname(address()); }
+    public long name() { return nname(address()); }
     /** @return Returns the property {@code userData} */
     public long userData() { return nuserData(address()); }
     /** @return Returns the property {@code motionLocks} */
@@ -256,7 +256,7 @@ public class b2BodyDef extends Struct<b2BodyDef> {
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef name(String value) { nname(address(), value); return this; }
+    public b2BodyDef name(long value) { nname(address(), value); return this; }
     /**
      * Set the value of property {@code userData}
      *
@@ -409,7 +409,7 @@ public class b2BodyDef extends Struct<b2BodyDef> {
     public static float nangularDamping(long address)           { return memGetFloat(address + ANGULAR_DAMPING);                    }
     public static float ngravityScale(long address)             { return memGetFloat(address + GRAVITY_SCALE);                      }
     public static float nsleepThreshold(long address)           { return memGetFloat(address + SLEEP_THRESHOLD);                    }
-    public static String nname(long address)                    { return memGetStringUTF8(memGetAddress(address + NAME));       }
+    public static long nname(long address)                      { return memGetAddress(address + NAME);                             }
     public static long nuserData(long address)                  { return memGetAddress(address + USER_DATA);                        }
     public static b2MotionLocks nmotionLocks(long address)      { return b2MotionLocks.createSafe(() -> address + MOTION_LOCKS);    }
     public static boolean nenableSleep(long address)            { return memGetByte(address + ENABLE_SLEEP) != 0;                   }
@@ -429,7 +429,7 @@ public class b2BodyDef extends Struct<b2BodyDef> {
     public static void nangularDamping(long address, float value)           { memPutFloat(address + ANGULAR_DAMPING, value);                                }
     public static void ngravityScale(long address, float value)             { memPutFloat(address + GRAVITY_SCALE, value);                                  }
     public static void nsleepThreshold(long address, float value)           { memPutFloat(address + SLEEP_THRESHOLD, value);                                }
-    public static void nname(long address, String value)                    { memPutAddress(address + NAME, memUTF8(value));                          }
+    public static void nname(long address, long value)                      { memPutAddress(address + NAME, value);                                         }
     public static void nuserData(long address, long value)                  { memPutAddress(address + USER_DATA, value);                                    }
     public static void nmotionLocks(long address, b2MotionLocks value)      { nmemcpy(address + MOTION_LOCKS, value.address(), b2MotionLocks.SIZEOF); }
     public static void nenableSleep(long address, boolean value)            { memPutByte(address + ENABLE_SLEEP, (byte) (value ? 1 : 0));                   }
