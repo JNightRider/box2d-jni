@@ -29,7 +29,7 @@ public interface b2FreeFcnI extends CallbackI {
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         LongBuffer targs = createLongBuffer(2);
         targs.put(ffi_type_pointer)
-             .put(ffi_type_uint32);
+             .put(ffi_type_size_t);
         targs.flip();
         long rtype = ffi_type_void;
         

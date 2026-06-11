@@ -4,6 +4,7 @@
  */
 package org.box2d.jni.test;
 
+import org.box2d.jni.system.Pointer;
 import org.box2d.jni.test.internal.*;
 import org.box2d.jni.system.Debug;
 
@@ -64,7 +65,8 @@ public class Main {
         }
 
         long ticks =  b2GetTicks();
-
+        out.println("is64: " + Pointer.BITS64);
+        out.println("is32: " + Pointer.BITS32);
         out.printf("Starting Box2D unit tests\n");
         if (filter != null)
         {

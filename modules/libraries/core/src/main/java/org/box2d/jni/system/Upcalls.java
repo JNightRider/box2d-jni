@@ -121,6 +121,10 @@ public final class Upcalls {
     public static native long nffi_type_longdouble();
 
     // -----------------------------------
+    public static final long ffi_type_size_t = nffi_type_size_t();
+    public static long nffi_type_size_t() {
+        return BITS64 ? ffi_type_uint64 : ffi_type_uint32;
+    }
     
     public static final long ffi_type_b2ShapeId = nffi_type_b2ShapeId();
     public static native long nffi_type_b2ShapeId();

@@ -19,7 +19,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2FreeFcnITest {
+public class b2FreeFcnTest {
     /**
      * Initialize all tests.
      */

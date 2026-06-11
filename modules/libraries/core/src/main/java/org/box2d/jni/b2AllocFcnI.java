@@ -28,7 +28,7 @@ public interface b2AllocFcnI extends CallbackI {
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         LongBuffer targs = createLongBuffer(2);
-        targs.put(ffi_type_uint32)
+        targs.put(ffi_type_size_t)
              .put(ffi_type_sint32);
         targs.flip();
         long rtype = ffi_type_pointer;
