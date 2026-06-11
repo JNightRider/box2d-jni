@@ -29,13 +29,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetAllocator
 /*
  * Class:     org_box2d_jni_include_Base
  * Method:    nb2GetByteCount
- * Signature: ()I
+ * Signature: ()J
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Base_nb2GetByteCount
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Base_nb2GetByteCount
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2GetByteCount();
+    return (jlong)b2GetByteCount();
 }
 
 /*
@@ -75,18 +75,6 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2GetVersion
     UNUSED_PARAMS(__env, clazz)
     b2Version* ptr = (b2Version*)(uintptr_t)__result;
     *ptr = b2GetVersion();
-}
-
-/*
- * Class:     org_box2d_jni_include_Base
- * Method:    nb2GetBuildHash
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Base_nb2GetBuildHash
-    (JNIEnv *__env, jclass clazz)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jint)b2GetBuildHash();
 }
 
 /*

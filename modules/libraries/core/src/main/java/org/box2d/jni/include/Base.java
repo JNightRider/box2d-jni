@@ -44,13 +44,13 @@ public final class Base {
     /**
      * {@code B2_API int b2GetByteCount( void ); }
      *
-     * @return int
+     * @return long
      */
-    public static int b2GetByteCount() {
+    public static long b2GetByteCount() {
         return nb2GetByteCount();
     }
     /* {@code B2_API int b2GetByteCount( void ); } */
-    public static native int nb2GetByteCount();
+    public static native long nb2GetByteCount();
 
 
     // --- [ b2SetAssertFcn ] ---
@@ -101,18 +101,6 @@ public final class Base {
     }
     /* {@code B2_API b2Version b2GetVersion( void ); } */
     public static native void nb2GetVersion(long __result);
-    
-    // --- [ b2GetBuildHash ] ---
-    /**
-     * {@code B2_API uint32_t b2GetBuildHash( void ); }
-     *
-     * @return int
-     */
-    public static int b2GetBuildHash() {
-        return nb2GetBuildHash();
-    }
-    /* {@code B2_API uint32_t b2GetBuildHash( void ); } */
-    public static native int nb2GetBuildHash();
     
     // --- [ b2GetTicks ] ---
 

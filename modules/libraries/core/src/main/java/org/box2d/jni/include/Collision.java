@@ -16,4 +16,6 @@ import static org.box2d.jni.system.Checks.*;
  */
 public final class Collision {
     static { Library.initialize(); }
+    /* Native bindings: {@code #define B2_MAX_POLYGON_VERTICES 8 */
+    public static final int B2_MAX_POLYGON_VERTICES = 8;
 }
