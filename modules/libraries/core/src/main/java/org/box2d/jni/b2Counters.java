@@ -46,23 +46,23 @@ public class b2Counters extends Struct<b2Counters> {
 
     /** The struct member offsets. */
     private static final int
-            BODY_COUNT,
-            SHAPE_COUNT,
-            CONTACT_COUNT,
-            JOINT_COUNT,
-            ISLAND_COUNT,
-            STACK_USED,
-            STATIC_TREE_HEIGHT,
-            TREE_HEIGHT,
-            BYTE_COUNT,
-            TASK_COUNT,
-            COLOR_COUNTS,
-            AWAKE_CONTACT_COUNT,
-            RECYCLED_CONTACT_COUNT;
+                BYTE_COUNT,
+                BODY_COUNT,
+                SHAPE_COUNT,
+                CONTACT_COUNT,
+                JOINT_COUNT,
+                ISLAND_COUNT,
+                STACK_USED,
+                STATIC_TREE_HEIGHT,
+                TREE_HEIGHT,
+                TASK_COUNT,
+                COLOR_COUNTS,
+                AWAKE_CONTACT_COUNT,
+                RECYCLED_CONTACT_COUNT;
 
     static {
         Layout layout = __struct(
-                __member(4),
+                __member(8),
                 __member(4),
                 __member(4),
                 __member(4),
@@ -77,15 +77,15 @@ public class b2Counters extends Struct<b2Counters> {
                 __member(4)
         );
 
-        BODY_COUNT = layout.offsetof(0);
-        SHAPE_COUNT = layout.offsetof(1);
-        CONTACT_COUNT = layout.offsetof(2);
-        JOINT_COUNT = layout.offsetof(3);
-        ISLAND_COUNT = layout.offsetof(4);
-        STACK_USED = layout.offsetof(5);
-        STATIC_TREE_HEIGHT = layout.offsetof(6);
-        TREE_HEIGHT = layout.offsetof(7);
-        BYTE_COUNT = layout.offsetof(8);
+        BYTE_COUNT = layout.offsetof(0);
+        BODY_COUNT = layout.offsetof(1);
+        SHAPE_COUNT = layout.offsetof(2);
+        CONTACT_COUNT = layout.offsetof(3);
+        JOINT_COUNT = layout.offsetof(4);
+        ISLAND_COUNT = layout.offsetof(5);
+        STACK_USED = layout.offsetof(6);
+        STATIC_TREE_HEIGHT = layout.offsetof(7);
+        TREE_HEIGHT = layout.offsetof(8);
         TASK_COUNT = layout.offsetof(9);
         COLOR_COUNTS = layout.offsetof(10);
         AWAKE_CONTACT_COUNT = layout.offsetof(11);
@@ -140,7 +140,7 @@ public class b2Counters extends Struct<b2Counters> {
     /** @return Returns the property {@code treeHeight} */
     public int treeHeight() { return ntreeHeight(address()); }
     /** @return Returns the property {@code byteCount} */
-    public int byteCount() { return nbyteCount(address()); }
+    public long byteCount() { return nbyteCount(address()); }
     /** @return Returns the property {@code taskCount} */
     public int taskCount() { return ntaskCount(address()); }
     /** @return Returns the property {@code colorCounts} */
@@ -241,10 +241,10 @@ public class b2Counters extends Struct<b2Counters> {
     /**
      * Set the value of property {@code byteCount}
      *
-     * @param value int
+     * @param value long
      * @return b2Counters
      */
-    public b2Counters byteCount(int value) {
+    public b2Counters byteCount(long value) {
         nbyteCount(address(), value);
         return this;
     }
@@ -381,7 +381,7 @@ public class b2Counters extends Struct<b2Counters> {
     public static int nstackUsed(long address)            { return memGetInt(address + STACK_USED); }
     public static int nstaticTreeHeight(long address)     { return memGetInt(address + STATIC_TREE_HEIGHT); }
     public static int ntreeHeight(long address)           { return memGetInt(address + TREE_HEIGHT); }
-    public static int nbyteCount(long address)            { return memGetInt(address + BYTE_COUNT); }
+    public static long nbyteCount(long address)           { return memGetLong(address + BYTE_COUNT); }
     public static int ntaskCount(long address)            { return memGetInt(address + TASK_COUNT); }
     public static IntBuffer ncolorCounts(long address)    { return memIntBuffer(address + COLOR_COUNTS, 24); }
     public static int nawakeContactCount(long address)    { return memGetInt(address + AWAKE_CONTACT_COUNT); }
@@ -395,7 +395,7 @@ public class b2Counters extends Struct<b2Counters> {
     public static void nstackUsed(long address, int value) { memPutInt(address + STACK_USED, value); }
     public static void nstaticTreeHeight(long address, int value) { memPutInt(address + STATIC_TREE_HEIGHT, value); }
     public static void ntreeHeight(long address, int value) { memPutInt(address + TREE_HEIGHT, value); }
-    public static void nbyteCount(long address, int value) { memPutInt(address + BYTE_COUNT, value); }
+    public static void nbyteCount(long address, long value) { memPutLong(address + BYTE_COUNT, value); }
     public static void ntaskCount(long address, int value) { memPutInt(address + TASK_COUNT, value); }
     public static void ncolorCounts(long address, IntBuffer value) { nmemcpy(address + COLOR_COUNTS, memGetNativeAddress(value), 24 * 4); }
     public static void nawakeContactCount(long address, int value) { memPutInt(address + AWAKE_CONTACT_COUNT, value); }

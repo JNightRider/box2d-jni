@@ -90,8 +90,6 @@ public class b2WorldDefTest {
             
             ptr.userTaskContext(1111L);
             ptr.userData(2222L);
-            ptr.recordingPath(3333L);
-
             
             ptr.capacity()
                 .staticShapeCount(10)
@@ -124,7 +122,6 @@ public class b2WorldDefTest {
             
             Assert.assertEquals(1111L, ptr.userTaskContext());
             Assert.assertEquals(2222L, ptr.userData());
-            Assert.assertEquals(3333L, ptr.recordingPath());
 
             Assert.assertEquals(10, ptr.capacity().staticShapeCount());
             Assert.assertEquals(20, ptr.capacity().dynamicShapeCount());

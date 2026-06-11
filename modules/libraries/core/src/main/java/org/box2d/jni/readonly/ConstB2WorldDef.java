@@ -149,11 +149,4 @@ public interface ConstB2WorldDef extends ConstStruct {
      * @return int
      */
      int internalValue();
-     
-     /**
-     * Returns the property {@code recordingPath}
-     *
-     * @return long
-     */
-     long recordingPath();
 }
