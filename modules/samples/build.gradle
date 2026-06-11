@@ -5,11 +5,11 @@ plugins {
 description = 'box2d-jni samples'
 
 dependencies {
-    implementation project(":modules:libraries:core")
+    implementation project(":modules:libraries:box2d-core")
     implementation name: 'box2d-natives-linux_x64'
 }
 
-classes.dependsOn(':modules:libraries:core:build')
+classes.dependsOn(':modules:libraries:box2d-core:build')
 
 Boolean enableNativeAccess = JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)
 

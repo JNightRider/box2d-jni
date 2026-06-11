@@ -1,0 +1,264 @@
+name: CI Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  BUILD_TYPE: Debug
+
+jobs:
+  build-ubuntu-gcc:
+    name: ubuntu-gcc
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_SAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: ./bin/test
+      
+  build-ubuntu-clang:
+    name: ubuntu-clang
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+    - uses: actions/checkout@v6
+    
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_C_COMPILER=clang-18 -DCMAKE_C_FLAGS="-fsanitize=thread -fno-omit-frame-pointer" -DCMAKE_CXX_FLAGS="-fsanitize=thread -fno-omit-frame-pointer" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=thread" -DBOX2D_SAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: ./bin/test
+      
+  build-ubuntu-clang-msan:
+    name: ubuntu-clang-msan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_C_COMPILER=clang-18 -DCMAKE_C_FLAGS="-fsanitize=memory -fsanitize-memory-track-origins=1 -fno-omit-frame-pointer" -DCMAKE_CXX_FLAGS="-fsanitize=memory -fsanitize-memory-track-origins=1 -fno-omit-frame-pointer" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=memory" -DBOX2D_SAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      env:
+        MSAN_OPTIONS: abort_on_error=1:halt_on_error=1
+      run: ./bin/test
+            
+  build-macos:
+    name: macos
+    runs-on: macos-latest
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_SAMPLES=OFF -DBOX2D_SANITIZE=ON -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: ./bin/test
+      
+  build-windows:
+    name: windows
+    runs-on: windows-latest
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - name: Setup MSVC dev command prompt
+      uses: TheMrMilchmann/setup-msvc-dev@v4
+      with:
+        arch: x64
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_SAMPLES=OFF -DBOX2D_SANITIZE=ON -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+      # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_SAMPLES=OFF -DBUILD_SHARED_LIBS=OFF
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: ./bin/${{env.BUILD_TYPE}}/test
+
+  build-windows-clang-cl-avx2:
+    name: windows-clang-cl-avx2
+    runs-on: windows-latest
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -T ClangCL -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_AVX2=ON -DBOX2D_SAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: ./bin/${{env.BUILD_TYPE}}/test
+
+  build-windows-mingw:
+    name: windows-mingw
+    runs-on: windows-latest
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Setup MSYS2 UCRT64
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: UCRT64
+        update: true
+        install: >-
+          mingw-w64-ucrt-x86_64-gcc
+          mingw-w64-ucrt-x86_64-cmake
+          mingw-w64-ucrt-x86_64-ninja
+
+    - name: Configure CMake
+      run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_SAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: build
+      run: ./bin/test
+
+  build-windows-arm64:
+    name: windows-arm64
+    runs-on: windows-11-arm
+    timeout-minutes: 4
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -A arm64 -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBOX2D_DISABLE_SIMD=TRUE -DBOX2D_SAMPLES=OFF -DBOX2D_SANITIZE=ON -DBUILD_SHARED_LIBS=OFF -DBOX2D_VALIDATE=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: ./bin/${{env.BUILD_TYPE}}/test
+
+  samples-windows-static:
+    name: samples-windows-static
+    runs-on: windows-latest
+    timeout-minutes: 6
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - name: Setup MSVC dev command prompt
+      uses: TheMrMilchmann/setup-msvc-dev@v4
+      with:
+        arch: x64
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOX2D_SAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBOX2D_UNIT_TESTS=OFF
+      
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+  samples-windows-dynamic:
+    name: samples-windows-dynamic
+    runs-on: windows-latest
+    timeout-minutes: 6
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - name: Setup MSVC dev command prompt
+      uses: TheMrMilchmann/setup-msvc-dev@v4
+      with:
+        arch: x64
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOX2D_SAMPLES=ON -DBUILD_SHARED_LIBS=ON -DBOX2D_UNIT_TESTS=OFF
+      
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+  samples-macos-static:
+    name: samples-macos-static
+    runs-on: macos-latest
+    timeout-minutes: 6
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOX2D_SAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBOX2D_UNIT_TESTS=OFF
+      
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+  samples-macos-dynamic:
+    name: samples-macos-dynamic
+    runs-on: macos-latest
+    timeout-minutes: 6
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOX2D_SAMPLES=ON -DBUILD_SHARED_LIBS=ON -DBOX2D_UNIT_TESTS=OFF
+      
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+  samples-ubuntu-gcc-static:
+    name: samples-ubuntu-gcc-static
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install X11, Wayland, GL & GTK development libraries
+      run: sudo apt-get update && sudo apt-get install -y libx11-dev wayland-protocols libwayland-dev libxkbcommon-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libgtk-3-dev
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOX2D_SAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBOX2D_UNIT_TESTS=OFF
+      
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
