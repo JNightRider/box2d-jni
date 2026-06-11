@@ -4,11 +4,8 @@
  */
 package org.box2d.jni.test;
 
-import org.box2d.jni.system.Pointer;
 import org.box2d.jni.test.internal.*;
 import org.box2d.jni.system.Debug;
-
-import java.util.Objects;
 
 import static java.lang.System.out;
 
