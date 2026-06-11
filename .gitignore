@@ -6,8 +6,8 @@ lib/
 !**/src/test/**/build/
 
 ### build JNI ###
-modules/libraries/core/generated/headers
-modules/libraries/core/generated/box2d
+modules/libraries/box2d-core/generated/headers
+modules/libraries/box2d-core/generated/box2d
 
 ### IntelliJ IDEA ###
 .idea
@@ -44,9 +44,9 @@ nbbuild/
 .DS_Store
 
 ### box2d ###
-modules/libraries/bindings/c/build/
-modules/libraries/bindings/c/extern/
+modules/libraries/box2d-bindings/c/build/
+modules/libraries/box2d-bindings/c/extern/
 
 ### box2d-jni ###
-modules/libraries/bindings/c/include/box2d/
-modules/libraries/bindings/downloads
+modules/libraries/box2d-bindings/c/include/box2d/
+modules/libraries/box2d-bindings/downloads
