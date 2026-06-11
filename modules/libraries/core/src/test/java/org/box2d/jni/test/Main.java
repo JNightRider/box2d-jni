@@ -46,27 +46,14 @@ public class Main {
 //extern int TableTest( void );    
 //    static Extern<Integer> WorldTest;
     
-    static String filter;    
-    private static void MAYBE_RUN_TEST( Extern<Integer> T )
-    {
-        if ( filter != null && Objects.equals(filter, T.$()) )
-        {
-            out.printf( "test skipped: " + T.$() + "\n" );
-            return;
-        }
-        RUN_TEST( T );
-    }
-    
     public static void main(String[] args) {
         /*const char* */ filter = null;
-        if (args.length > 1)
+        if (args.length > 0)
         {
-            filter = args[1];
+            filter = args[0];
         }
 
         long ticks =  b2GetTicks();
-        out.println("is64: " + Pointer.BITS64);
-        out.println("is32: " + Pointer.BITS32);
         out.printf("Starting Box2D unit tests\n");
         if (filter != null)
         {

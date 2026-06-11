@@ -4,8 +4,11 @@
  */
 package org.box2d.jni.test;
 
-import static java.lang.System.out;
 import org.box2d.jni.test.internal.Extern;
+
+import static java.lang.System.out;
+import java.util.Objects;
+import static org.box2d.jni.include.Base.*;
 
 /**
  * A line-by-line Java translation of the box2d 'test/main.c' example.
@@ -18,10 +21,14 @@ import org.box2d.jni.test.internal.Extern;
  */
 public final class TestMacros {
     
+    static String filter; 
+    
     public static void RUN_TEST( Extern<Integer> T ) {
         do                                        
         {
+            long testTicks = b2GetTicks();
             int result = T.invoke();
+            float s = 0.001f * b2GetMilliseconds( testTicks );
             if ( result == 1 )
             {
                 out.printf( "test failed: "  + T.$() + "\n" );
@@ -29,7 +36,7 @@ public final class TestMacros {
             }
             else
             {
-                out.printf( "test passed: " + T.$() + "\n" );
+                out.printf( "test passed: " + T.$() + " after %.2f s\n", s );
             }
         }
         while ( false );
@@ -84,5 +91,18 @@ public final class TestMacros {
     
     // Used to prevent the compiler from warning about unused variables
     public static void MAYBE_UNUSED( Object x ) { /*( (void)( x ) )*/ }
+    
+    // Filter-aware test runner: skips tests that don't match the filter
+    public static void MAYBE_RUN_TEST(Extern<Integer> T) {
+        do {
+            if ( filter != null && Objects.equals(filter, T.$()) )
+            {
+                out.printf( "test skipped: "  + T.$() + "\n" );
+                break;
+            }
+            RUN_TEST(T);
+        }
+        while (false);
+    }
 }
 
