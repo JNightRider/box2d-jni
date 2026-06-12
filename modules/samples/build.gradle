@@ -6,7 +6,9 @@ description = 'box2d-jni samples'
 
 dependencies {
     implementation project(":modules:libraries:box2d-core")
-    implementation name: 'box2d-natives-linux_x64'
+    implementation files(
+        "${rootDir}/lib/box2d-natives-linux_x64.jar"
+    )
 }
 
 classes.dependsOn(':modules:libraries:box2d-core:build')

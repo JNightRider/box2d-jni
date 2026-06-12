@@ -8,10 +8,6 @@ def osArch = System.getProperty("os.arch")
 def is64Bit = osArch.contains("64") || osArch.startsWith("armv8")
 def osName = System.getProperty("os.name")
 
-dependencies {
-    testImplementation name: 'box2d-natives-linux_x64'
-}
-
 tasks.withType(JavaCompile).configureEach {
     dependsOn('buildJNI')
 }
@@ -88,7 +84,7 @@ def box2dTag = findProperty('box2d.source.code')
 
 tasks.register('downloadBox2dZip', Download) {
     src "https://github.com/JNightRider/box2d/archive/refs/tags/${box2dTag}.zip"
-    dest file(layout.projectDirectory.file('downloads/box2d.zip'))
+    dest file(layout.projectDirectory.file("downloads/${box2dTag}.zip"))
     overwrite false
 }
 
@@ -127,7 +123,9 @@ tasks.register('cleanNative', Delete) {
     delete(
         layout.projectDirectory.dir('c/build'),
         layout.projectDirectory.dir('c/extern'),
-        layout.projectDirectory.dir('c/include/box2d'),
-        layout.projectDirectory.dir('downloads')
+        layout.projectDirectory.dir('c/include/box2d')
     )
+    if (Boolean.valueOf(findProperty('box2d.source.code.autoremove'))) {
+        delete layout.projectDirectory.dir('downloads')
+    }
 }
