@@ -1,13 +1,10 @@
 allprojects {
 
     group = 'org.box2d.jni'
+    version ='0.1.0'
 
     repositories {
         mavenCentral()
-        // to find libraries in the project's "lib" directory
-        flatDir {
-            dirs "${rootProject.projectDir}/lib"
-        }
     }
 }
 
