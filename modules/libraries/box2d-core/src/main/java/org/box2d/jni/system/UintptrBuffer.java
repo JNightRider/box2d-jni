@@ -6,7 +6,8 @@ package org.box2d.jni.system;
 
 import java.nio.*;
 
-import org.box2d.jni.readonly.ConstBuffer;
+import org.box2d.jni.readonly.ConstUintptrBuffer;
+
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Debug.apiLog;
@@ -14,10 +15,9 @@ import static org.box2d.jni.system.Debug.apiLog;
 /**
  *
  * @author wil
- * @param <VALUE>
  * @param <SELF>
  */
-public abstract class UintptrBuffer<VALUE, SELF extends UintptrBuffer<VALUE, SELF>> extends Uintptr implements ConstBuffer<VALUE> {
+public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Uintptr implements ConstUintptrBuffer<SELF> {
 
     protected ByteBuffer container;
     protected int mark,

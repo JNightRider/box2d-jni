@@ -11,6 +11,8 @@ import java.util.List;
 
 import static java.lang.Math.*;
 
+import org.box2d.jni.readonly.ConstStruct;
+
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Debug.*;
@@ -31,7 +33,7 @@ import static org.box2d.jni.system.Pointer.*;
  *
  * @param <SELF> A type of structure
  */
-public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implements AutoCloseable, Pointer {
+public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implements ConstStruct, AutoCloseable, Pointer {
     
     protected static final int DEFAULT_PACK_ALIGNMENT = Library.__WIN32__.get()? 8 : 0x4000_0000;
     protected static final int DEFAULT_ALIGN_AS       = 0;

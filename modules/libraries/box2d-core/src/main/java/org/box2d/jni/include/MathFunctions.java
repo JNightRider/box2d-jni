@@ -15,10 +15,10 @@ import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2Vec2;
 
 import org.box2d.jni.readonly.ConstB2Vec2;
-import org.box2d.jni.readonly.ConstBuffer;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import org.box2d.jni.readonly.ConstUintptrBuffer;
 
 /**
  * Vector math types and functions
@@ -1397,12 +1397,13 @@ public final class MathFunctions {
      * {@code B2_INLINE b2AABB b2MakeAABB( const b2Vec2* points, int count, float radius )}
      *
      * @param points b2Vec2.Buffer
+     *
      * @param count int
      * @param radius float
      * @param __result b2AABB
      * @return b2AABB
      */
-    public static b2AABB b2MakeAABB(ConstBuffer<b2Vec2> points, int count, float radius, b2AABB __result) {
+    public static b2AABB b2MakeAABB(ConstB2Vec2.ConstBuffer points, int count, float radius, b2AABB __result) {
         checkPointers(points, __result);
         nb2MakeAABB(points.address(), count, radius, __result.address());
         return __result;

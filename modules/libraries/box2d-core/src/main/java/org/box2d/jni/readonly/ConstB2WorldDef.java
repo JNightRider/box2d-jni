@@ -4,9 +4,6 @@
  */
 package org.box2d.jni.readonly;
 
-import org.box2d.jni.b2Capacity;
-import org.box2d.jni.b2Vec2;
-
 /**
  * Interface that is responsible for representing a native object that is a
  * constant of type <code>b2WorldDef</code>. (native type: const b2WorldDef)
@@ -20,9 +17,9 @@ public interface ConstB2WorldDef extends ConstStruct {
     /**
      * Returns the property {@code gravity}
      *
-     * @return b2Vec2
+     * @return ConstB2Vec2
      */
-     b2Vec2 gravity();
+     ConstB2Vec2 gravity();
 
     /**
      * Returns the property {@code restitutionThreshold}
@@ -139,9 +136,9 @@ public interface ConstB2WorldDef extends ConstStruct {
     /**
      * Returns the property {@code capacity}
      *
-     * @return b2Capacity
+     * @return ConstB2Capacity
      */
-     b2Capacity capacity();
+     ConstB2Capacity capacity();
 
     /**
      * Returns the property {@code internalValue}

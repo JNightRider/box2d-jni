@@ -4,9 +4,6 @@
  */
 package org.box2d.jni.readonly;
 
-import org.box2d.jni.b2ShapeId;
-import org.box2d.jni.b2Vec2;
-
 /**
  * Interface that is responsible for representing a native object that is a constant
  * of type <code>b2RayResult</code>. (native type: const b2RayResult)
@@ -17,11 +14,11 @@ import org.box2d.jni.b2Vec2;
  */
 public interface ConstB2RayResult extends ConstStruct {
     /** @return Returns the property {@code shapeId} */
-    public b2ShapeId shapeId();
+    public ConstB2ShapeId shapeId();
     /** @return Returns the property {@code point} */
-    public b2Vec2 point();
+    public ConstB2Vec2 point();
     /** @return Returns the property {@code normal} */
-    public b2Vec2 normal();
+    public ConstB2Vec2 normal();
     /** @return Returns the property {@code fraction} */
     public float fraction();
     /** @return Returns the property {@code nodeVisits} */

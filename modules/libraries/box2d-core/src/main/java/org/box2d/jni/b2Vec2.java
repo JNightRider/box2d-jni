@@ -307,7 +307,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
     // -----------------------------------
     
     /** An array of {@code b2Vec2} structs. */
-    public static class Buffer extends StructBuffer<b2Vec2, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2Vec2, Buffer> implements ConstB2Vec2.ConstBuffer<b2Vec2, Buffer>, JNINative {
         /** An element that provides information about the structure. */
         private static final b2Vec2 ELEMENT_FACTORY = b2Vec2.factory();
 

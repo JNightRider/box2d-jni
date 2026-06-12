@@ -46,6 +46,8 @@ public final class Id {
         return id.index1().intValue() == 0;
     }
     
+    // --- [ B2_IS_NON_NULL ] ---
+    
     /**
      * {@code #define B2_IS_NON_NULL( id ) ( (id).index1 != 0 ) }
      * @param id ConstB2Id
@@ -61,6 +63,8 @@ public final class Id {
         return id.index1().intValue() != 0;
     }
 
+    // --- [ B2_ID_EQUALS ] ---
+    
     /**
      * {@code #define B2_ID_EQUALS( id1, id2 ) ( (id1).index1 == (id2).index1 && (id1).world0 == (id2).world0 && (id1).generation == (id2).generation )}
      *

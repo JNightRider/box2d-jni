@@ -5,54 +5,17 @@
 package org.box2d.jni.readonly;
 
 /**
- * Interface that is responsible for representing a native object that is a constant
- * of type <code>ConstBuffer</code>. (native type: const void*|void[])
+ * Interface that is responsible for representing a native object that is a
+ * constant of type <code>Struct</code>. (native type: const struct*|struct[])
  *
- * @param <E> type|{@code const void*}
+ * @param <T>
+ * @param <SELF> type|{@code const void*}
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface ConstBuffer<E> extends ConstPointer {
-
-    /**
-     * Returns this buffer's capacity.
-     *
-     * @return the capacity of this buffer
-     */
-    int capacity();
-
-    /**
-     * Returns this buffer's position.
-     *
-     * @return the position of this buffer
-     */
-    int position();
-
-    /**
-     * Returns this buffer's limit.
-     *
-     * @return the limit of this buffer
-     */
-    int limit();
-
-    /**
-     * Returns the number of elements between the current position and the
-     * limit.
-     *
-     * @return the number of elements remaining in this buffer
-     */
-    int remaining();
-
-    /**
-     * Tells whether there are any elements between the current position and the
-     * limit.
-     *
-     * @return {@code true} if, and only if, there is at least one element
-     * remaining in this buffer
-     */
-    boolean hasRemaining();
+public interface ConstStructBuffer<T extends ConstStruct, SELF extends ConstStructBuffer<T, SELF>> extends ConstUintptrBuffer<SELF> {
 
     /**
      * Relative <i>get</i> method. Reads the struct at this buffer's current
@@ -68,7 +31,7 @@ public interface ConstBuffer<E> extends ConstPointer {
      * @throws java.nio.BufferUnderflowException If the buffer's current
      * position is not smaller than its limit
      */
-    E get();
+    T get();
 
     /**
      * Absolute <i>get</i> method. Reads the struct at the specified index.
@@ -85,11 +48,5 @@ public interface ConstBuffer<E> extends ConstPointer {
      * @throws IndexOutOfBoundsException If {@code index} is negative or not
      * smaller than the buffer's limit
      */
-    E get(int index);
-    /**
-     * Returns the buffer's base address. [INTERNAL USE ONLY]
-     *
-     * @return
-     */
-    long address0();
+    T get(int index);
 }
