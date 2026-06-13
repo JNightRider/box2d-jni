@@ -1,11 +1,11 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://opensource.org/license/bsd-3-clause
+ * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
  */
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2PlaneResult;
+import org.box2d.jni.readonly.ConstB2CollisionPlane;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -13,21 +13,20 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2PlaneResult
+ * typedef struct b2CollisionPlane
  * {
  *     b2Plane plane;
- *     b2Vec2 point;
- *     bool hit;
- * } b2PlaneResult;
+ *     float pushLimit;
+ *     float push;
+ *     bool clipVelocity;
+ * } b2CollisionPlane;
  * </code></pre>
- *
- * These are the collision planes returned from b2World_CollideMover
  *
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2PlaneResult {
+public class b2CollisionPlane extends Struct<b2CollisionPlane> implements ConstB2CollisionPlane {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -38,19 +37,22 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
     /** The struct member offsets. */
     private static final int
             PLANE,
-            POINT,
-            HIT;
+            PUSH_LIMIT,
+            PUSH,
+            CLIP_VELOCITY;
 
     static {
         Layout layout = __struct(
                 __member(b2Plane.SIZEOF, b2Plane.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(4),
+                __member(4),
                 __member(1)
         );
 
         PLANE = layout.offsetof(0);
-        POINT = layout.offsetof(1);
-        HIT = layout.offsetof(2);
+        PUSH_LIMIT = layout.offsetof(1);
+        PUSH = layout.offsetof(2);
+        CLIP_VELOCITY = layout.offsetof(3);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -61,7 +63,7 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
      *
      * @param ptr A reference pointer.
      */
-    public b2PlaneResult(Pointer ptr) {
+    public b2CollisionPlane(Pointer ptr) {
         super(ptr);
     }
 
@@ -70,7 +72,7 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
      *
      * @param address A virtual memory address
      */
-    public b2PlaneResult(long address) {
+    public b2CollisionPlane(long address) {
         super(address);
     }
 
@@ -80,51 +82,64 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2PlaneResult(long address, boolean factor) {
+    protected b2CollisionPlane(long address, boolean factor) {
         super(address, factor);
     }
-
-    // -----------------------------------
 
     /** @return Returns the property {@code plane} */
     @Override
     public b2Plane plane() { return nplane(address()); }
-    /** @return Returns the property {@code point} */
+    /** @return Returns the property {@code pushLimit} */
     @Override
-    public b2Vec2 point() { return npoint(address()); }
-    /** @return Returns the property {@code hit} */
+    public float pushLimit() { return npushLimit(address()); }
+    /** @return Returns the property {@code push} */
     @Override
-    public boolean hit() { return nhit(address()); }
-
-    // -----------------------------------
+    public float push() { return npush(address()); }
+    /** @return Returns the property {@code clipVelocity} */
+    @Override
+    public boolean clipVelocity() { return nclipVelocity(address()); }
 
     /**
      * Set the value of property {@code plane}
+     *
      * @param value b2Plane
-     * @return b2PlaneResult
+     * @return b2CollisionPlane
      */
-    public b2PlaneResult plane(b2Plane value) {
+    public b2CollisionPlane plane(b2Plane value) {
         nplane(address(), value);
         return this;
     }
 
     /**
-     * Set the value of property {@code point}
-     * @param value b2Vec2
-     * @return b2PlaneResult
+     * Set the value of property {@code pushLimit}
+     *
+     * @param value float
+     * @return b2CollisionPlane
      */
-    public b2PlaneResult point(b2Vec2 value) {
-        npoint(address(), value);
+    public b2CollisionPlane pushLimit(float value) {
+        npushLimit(address(), value);
         return this;
     }
 
     /**
-     * Set the value of property {@code hit}
-     * @param value boolean
-     * @return b2PlaneResult
+     * Set the value of property {@code push}
+     *
+     * @param value float
+     * @return b2CollisionPlane
      */
-    public b2PlaneResult hit(boolean value) {
-        nhit(address(), value);
+    public b2CollisionPlane push(float value) {
+        npush(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code clipVelocity}
+     *
+     * @param value boolean
+     * @return b2CollisionPlane
+     */
+    public b2CollisionPlane clipVelocity(boolean value) {
+        nclipVelocity(address(), value);
         return this;
     }
 
@@ -138,53 +153,55 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
     /*(non-Javadoc)
      */
     @Override
-    protected b2PlaneResult create(long address, Pointer ptr) {
-        return ptr == null ? new b2PlaneResult(address) : new b2PlaneResult(ptr);
+    protected b2CollisionPlane create(long address, Pointer ptr) {
+        return ptr == null ? new b2CollisionPlane(address) : new b2CollisionPlane(ptr);
     }
 
     // -----------------------------------
 
     /**
      * Internal use of the buffer.
+     *
+     * @return b2CollisionPlane
      */
-    private static b2PlaneResult factory() {
-        return new b2PlaneResult(-1L, true);
+    private static b2CollisionPlane factory() {
+        return new b2CollisionPlane(-1L, true);
     }
 
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2RayResult
+     * @return b2CollisionPlane
      */
-    public static b2PlaneResult createSafe(Pointer ptr) {
+    public static b2CollisionPlane createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2PlaneResult(ptr);
+        return new b2CollisionPlane(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2PlaneResult}.
+     * Reserve memory for the new object {@code b2CollisionPlane}.
      *
      * @param alloc Custom memory manager
-     * @return b2RayResult
+     * @return b2CollisionPlane
      */
-    public static b2PlaneResult alloc(AllocFunc alloc) {
-        return new b2PlaneResult(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2CollisionPlane alloc(AllocFunc alloc) {
+        return new b2CollisionPlane(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2PlaneResult}.
+     * Reserve memory for the new object {@code b2CollisionPlane}.
      *
-     * @return b2RayResult
+     * @return b2CollisionPlane
      */
-    public static b2PlaneResult malloc() {
-        return new b2PlaneResult(nmalloc(SIZEOF));
+    public static b2CollisionPlane malloc() {
+        return new b2CollisionPlane(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2PlaneResult}.
+     * Reserve an amount n of memory for the object {@code b2CollisionPlane}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -194,33 +211,35 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2PlaneResult}.
+     * Reserve an amount n of memory for the object {@code b2CollisionPlane}.
      *
-     *  @param capacity Number of elements
+     * @param capacity Number of elements
      * @param alloc Custom memory manager
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
     }
-
-    // -----------------------------------
+    
+        // -----------------------------------
     
     public static b2Plane nplane(long address) { return b2Plane.createSafe(() -> address + PLANE); }
-    public static b2Vec2 npoint(long address) { return b2Vec2.createSafe(() -> address + POINT); }
-    public static boolean nhit(long address) { return memGetByte(address + HIT) != 0; }
+    public static float npushLimit(long address) { return memGetFloat(address + PUSH_LIMIT); }
+    public static float npush(long address) { return memGetFloat(address + PUSH); }
+    public static boolean nclipVelocity(long address) { return memGetByte(address + CLIP_VELOCITY) != 0; }
 
     public static void nplane(long address, b2Plane value) { nmemcpy(address + PLANE, value.address(), b2Plane.SIZEOF); }
-    public static void npoint(long address, b2Vec2 value) { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF); }
-    public static void nhit(long address, boolean value) { memPutByte(address + HIT, (byte)(value ? 1 : 0)); }
+    public static void npushLimit(long address, float value) { memPutFloat(address + PUSH_LIMIT, value); }
+    public static void npush(long address, float value) { memPutFloat(address + PUSH, value); }
+    public static void nclipVelocity(long address, boolean value) { memPutByte(address + CLIP_VELOCITY, (byte) (value ? 1 : 0)); }
     
     // -----------------------------------
 
-    /** An array of {@code b2PlaneResult} structs. */
-    public static class Buffer extends StructBuffer<b2PlaneResult, Buffer> implements JNINative {
+    /** An array of {@code b2CollisionPlane} structs. */
+    public static class Buffer extends StructBuffer<b2CollisionPlane, Buffer> implements JNINative {
 
         /** An element that provides information about the structure. */
-        private static final b2PlaneResult ELEMENT_FACTORY = b2PlaneResult.factory();
+        private static final b2CollisionPlane ELEMENT_FACTORY = b2CollisionPlane.factory();
 
         /**
          * Create a new buffer.
@@ -248,7 +267,7 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
         /*(non-Javadoc)
          */
         @Override
-        protected b2PlaneResult getElementFactory() {
+        protected b2CollisionPlane getElementFactory() {
             return ELEMENT_FACTORY;
         }
 

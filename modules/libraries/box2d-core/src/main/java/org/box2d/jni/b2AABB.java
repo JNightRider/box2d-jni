@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2AABB;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -22,7 +23,7 @@ import static org.box2d.jni.libc.LibCString.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2AABB extends Struct<b2AABB> {
+public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -79,8 +80,10 @@ public class b2AABB extends Struct<b2AABB> {
     }
 
     /** @return Returns the property {@code lowerBound} */
+    @Override
     public b2Vec2 lowerBound() { return nlowerBound(address()); }
     /** @return Returns the property {@code upperBound} */
+    @Override
     public b2Vec2 upperBound() { return nupperBound(address()); }
     
     /**
@@ -185,7 +188,7 @@ public class b2AABB extends Struct<b2AABB> {
     // -----------------------------------
     
     /** An array of {@code b2AABB} structs. */
-    public static class Buffer extends StructBuffer<b2AABB, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2AABB, Buffer> implements ConstB2AABB.ConstBuffer<b2AABB, Buffer>, JNINative {
         /** An element that provides information about the structure. */
         private static final b2AABB ELEMENT_FACTORY = b2AABB.factory();
 

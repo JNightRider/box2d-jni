@@ -1,0 +1,406 @@
+/*
+ * Copyright Night Rider. All rights reserved.
+ * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ */
+package org.box2d.jni;
+
+import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2TreeNode;
+
+import static org.box2d.jni.libc.LibCStdlib.*;
+import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.Memory.*;
+
+/**
+ * <pre><code>
+ * typedef struct b2TreeNode
+ * {
+ *     b2AABB aabb;
+ *     uint64_t categoryBits;
+ *     union
+ *     {
+ *         struct
+ *         {
+ *             int32_t child1, child2;
+ *         } children;
+ *
+ *         uint64_t userData;
+ *     };
+ *     union
+ *     {
+ *         int32_t parent;
+ *         int32_t next;
+ *     };
+ *     uint16_t height;
+ *     uint16_t flags;
+ * } b2TreeNode;
+ * </code></pre>
+ *
+ * @author wil
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
+
+    /** The struct size in bytes. */
+    public static final int SIZEOF;
+
+    /** The struct alignment in bytes. */
+    public static final int ALIGNOF;
+
+    /** The struct member offsets. */
+    private static final int
+            AABB,
+            CATEGORY_BITS,
+            CHILDREN1,
+            CHILDREN2,
+            USER_DATA,
+            PARENT,
+            NEXT,
+            HEIGHT,
+            FLAGS;
+
+    static {
+        Layout layout = __struct(
+                __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
+                __member(8),
+                __union(
+                        __struct(
+                                __member(4),
+                                __member(4)
+                        ),
+                        __member(8)
+                ),
+                __union(
+                        __member(4),
+                        __member(4)
+                ),
+                __member(2),
+                __member(2)
+        );
+
+        AABB = layout.offsetof(0);
+        CATEGORY_BITS = layout.offsetof(1);
+
+        CHILDREN1 = layout.offsetof(4);
+        CHILDREN2 = layout.offsetof(5);
+        USER_DATA = layout.offsetof(6);
+
+        PARENT = layout.offsetof(8);
+        NEXT = layout.offsetof(9);
+
+        HEIGHT = layout.offsetof(10);
+        FLAGS = layout.offsetof(11);
+
+        SIZEOF = layout.getSize();
+        ALIGNOF = layout.getAlignment();
+    }
+
+    /**
+     * Generates a reference to the given pointer.
+     *
+     * @param ptr A reference pointer.
+     */
+    public b2TreeNode(Pointer ptr) {
+        super(ptr);
+    }
+
+    /**
+     * Create a new pointer to the object using its memory address.
+     *
+     * @param address A virtual memory address
+     */
+    public b2TreeNode(long address) {
+        super(address);
+    }
+
+    /**
+     * This structure is for internal buffer use.
+     *
+     * @param address A virtual memory address
+     * @param factor boolean
+     */
+    protected b2TreeNode(long address, boolean factor) {
+        super(address, factor);
+    }
+
+    /** @return Returns the property {@code aabb} */
+    @Override
+    public b2AABB aabb() { return naabb(address()); }
+    /** @return Returns the property {@code categoryBits} */
+    @Override
+    public long categoryBits() { return ncategoryBits(address()); }
+    /** @return Returns the property {@code child1} */
+    @Override
+    public int child1() { return nchild1(address()); }
+    /** @return Returns the property {@code child2} */
+    @Override
+    public int child2() { return nchild2(address()); }
+    /** @return Returns the property {@code userData} */
+    @Override
+    public long userData() { return nuserData(address()); }
+    /** @return Returns the property {@code parent} */
+    @Override
+    public int parent() { return nparent(address()); }
+    /** @return Returns the property {@code next} */
+    @Override
+    public int next() { return nnext(address()); }
+    /** @return Returns the property {@code height} */
+    @Override
+    public short height() { return nheight(address()); }
+    /** @return Returns the property {@code flags} */
+    @Override
+    public short flags() { return nflags(address()); }
+
+    /**
+     * Set the value of property {@code aabb}
+     *
+     * @param value b2AABB
+     * @return b2TreeNode
+     */
+    public b2TreeNode aabb(b2AABB value) {
+        naabb(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code categoryBits}
+     *
+     * @param value long
+     * @return b2TreeNode
+     */
+    public b2TreeNode categoryBits(long value) {
+        ncategoryBits(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code child1}
+     *
+     * @param value int
+     * @return b2TreeNode
+     */
+    public b2TreeNode child1(int value) {
+        nchild1(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code child2}
+     *
+     * @param value int
+     * @return b2TreeNode
+     */
+    public b2TreeNode child2(int value) {
+        nchild2(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code userData}
+     *
+     * @param value long
+     * @return b2TreeNode
+     */
+    public b2TreeNode userData(long value) {
+        nuserData(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code parent}
+     *
+     * @param value int
+     * @return b2TreeNode
+     */
+    public b2TreeNode parent(int value) {
+        nparent(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code next}
+     *
+     * @param value int
+     * @return b2TreeNode
+     */
+    public b2TreeNode next(int value) {
+        nnext(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code height}
+     *
+     * @param value short
+     * @return b2TreeNode
+     */
+    public b2TreeNode height(short value) {
+        nheight(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code flags}
+     *
+     * @param value short
+     * @return b2TreeNode
+     */
+    public b2TreeNode flags(short value) {
+        nflags(address(), value);
+        return this;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    public int sizeof() {
+        return SIZEOF;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    protected b2TreeNode create(long address, Pointer ptr) {
+        return ptr == null ? new b2TreeNode(address) : new b2TreeNode(ptr);
+    }
+    
+        // -----------------------------------
+
+    /**
+     * Internal use of the buffer.
+     *
+     * @return b2TreeNode
+     */
+    private static b2TreeNode factory() {
+        return new b2TreeNode(-1L, true);
+    }
+
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2TreeNode
+     */
+    public static b2TreeNode createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2TreeNode(ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2TreeNode}.
+     *
+     * @param alloc Custom memory manager
+     * @return b2TreeNode
+     */
+    public static b2TreeNode alloc(AllocFunc alloc) {
+        return new b2TreeNode(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2TreeNode}.
+     *
+     * @return b2TreeNode
+     */
+    public static b2TreeNode malloc() {
+        return new b2TreeNode(nmalloc(SIZEOF));
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2TreeNode}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity) {
+        return new Buffer(nmalloc(capacity * SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2TreeNode}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, AllocFunc alloc) {
+        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+    }
+
+    // -----------------------------------
+    
+    public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
+    public static long ncategoryBits(long address) { return memGetLong(address + CATEGORY_BITS); }
+    public static int nchild1(long address) { return memGetInt(address + CHILDREN1); }
+    public static int nchild2(long address) { return memGetInt(address + CHILDREN2); }
+    public static long nuserData(long address) { return memGetLong(address + USER_DATA); }
+    public static int nparent(long address) { return memGetInt(address + PARENT); }
+    public static int nnext(long address) { return memGetInt(address + NEXT); }
+    public static short nheight(long address) { return memGetShort(address + HEIGHT); }
+    public static short nflags(long address) { return memGetShort(address + FLAGS); }
+
+    public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF);}
+    public static void ncategoryBits(long address, long value) { memPutLong(address + CATEGORY_BITS, value);}
+    public static void nchild1(long address, int value) { memPutInt(address + CHILDREN1, value);}
+    public static void nchild2(long address, int value) { memPutInt(address + CHILDREN2, value);}
+    public static void nuserData(long address, long value) { memPutLong(address + USER_DATA, value);}
+    public static void nparent(long address, int value) { memPutInt(address + PARENT, value);}
+    public static void nnext(long address, int value) { memPutInt(address + NEXT, value);}
+    public static void nheight(long address, short value) { memPutShort(address + HEIGHT, value);}
+    public static void nflags(long address, short value) { memPutShort(address + FLAGS, value);}
+    
+    // -----------------------------------
+
+    /** An array of {@code b2TreeNode} structs. */
+    public static class Buffer extends StructBuffer<b2TreeNode, Buffer> implements JNINative {
+
+        /** An element that provides information about the structure. */
+        private static final b2TreeNode ELEMENT_FACTORY = b2TreeNode.factory();
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param remaining int
+         */
+        public Buffer(long address, int remaining) {
+            super(address, remaining);
+        }
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param mark int
+         * @param position int
+         * @param limit int
+         * @param capacity int
+         */
+        public Buffer(long address, int mark, int position, int limit, int capacity) {
+            super(address, mark, position, limit, capacity);
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected b2TreeNode getElementFactory() {
+            return ELEMENT_FACTORY;
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected Buffer self() {
+            return this;
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected Buffer create(long address, int mark, int position, int limit, int capacity) {
+            return new Buffer(address, mark, position, limit, capacity);
+        }
+    }
+}

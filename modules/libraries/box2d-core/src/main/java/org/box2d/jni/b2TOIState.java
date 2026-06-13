@@ -108,8 +108,10 @@ public enum b2TOIState {
             return b2_toiStateOverlapped;
         } else if (type == b2_toiStateHit.value()) {
             return b2_toiStateHit;
+        } else if (type == b2_toiStateSeparated.value()) {
+            return b2_toiStateSeparated;
         }
-        return b2_toiStateSeparated;
+        throw new UnsupportedOperationException("enum: " + type);
     }
 
     /* (non-Javadoc)

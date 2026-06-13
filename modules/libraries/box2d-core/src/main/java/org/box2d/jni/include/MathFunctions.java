@@ -18,7 +18,6 @@ import org.box2d.jni.readonly.ConstB2Vec2;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
-import org.box2d.jni.readonly.ConstUintptrBuffer;
 
 /**
  * Vector math types and functions

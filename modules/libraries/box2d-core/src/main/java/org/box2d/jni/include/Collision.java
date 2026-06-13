@@ -6,10 +6,13 @@ package org.box2d.jni.include;
 
 import org.box2d.jni.b2AABB;
 import org.box2d.jni.b2CastOutput;
+import org.box2d.jni.b2CollisionPlane;
 import org.box2d.jni.b2DistanceOutput;
+import org.box2d.jni.b2DynamicTree;
 import org.box2d.jni.b2Hull;
 import org.box2d.jni.b2Manifold;
 import org.box2d.jni.b2MassData;
+import org.box2d.jni.b2PlaneSolverResult;
 import org.box2d.jni.b2Polygon;
 import org.box2d.jni.b2Rot;
 import org.box2d.jni.b2SegmentDistanceResult;
@@ -18,11 +21,18 @@ import org.box2d.jni.b2Simplex;
 import org.box2d.jni.b2SimplexCache;
 import org.box2d.jni.b2TOIOutput;
 import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2TreeQueryCallbackFcnI;
+import org.box2d.jni.b2TreeRayCastCallbackFcnI;
+import org.box2d.jni.b2TreeShapeCastCallbackFcn;
+import org.box2d.jni.b2TreeStats;
 import org.box2d.jni.b2Vec2;
+
 import org.box2d.jni.readonly.ConstB2Capsule;
 import org.box2d.jni.readonly.ConstB2ChainSegment;
 import org.box2d.jni.readonly.ConstB2Circle;
+import org.box2d.jni.readonly.ConstB2CollisionPlane;
 import org.box2d.jni.readonly.ConstB2DistanceInput;
+import org.box2d.jni.readonly.ConstB2DynamicTree;
 import org.box2d.jni.readonly.ConstB2Hull;
 import org.box2d.jni.readonly.ConstB2Polygon;
 import org.box2d.jni.readonly.ConstB2RayCastInput;
@@ -32,6 +42,7 @@ import org.box2d.jni.readonly.ConstB2ShapeCastPairInput;
 import org.box2d.jni.readonly.ConstB2Sweep;
 import org.box2d.jni.readonly.ConstB2TOIInput;
 import org.box2d.jni.readonly.ConstB2Vec2;
+
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
 
@@ -1033,4 +1044,470 @@ public final class Collision {
 
     /* {@code B2_API b2Manifold b2CollideChainSegmentAndPolygon( const b2ChainSegment* segmentA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB, b2SimplexCache* cache ); } */
     public static native void nb2CollideChainSegmentAndPolygon(long segmentA, long xfA, long polygonB, long xfB, long cache, long __result);
+
+    // --- [ b2DynamicTree_Create ] ---
+
+    /**
+     * {@code B2_API b2DynamicTree b2DynamicTree_Create( int proxyCapacity ); }
+     *
+     * @param proxyCapacity int
+     * @param __result store
+     *
+     * @return b2DynamicTree
+     */
+    public static b2DynamicTree b2DynamicTree_Create(int proxyCapacity, b2DynamicTree __result) {
+        checkPointers(__result);
+        nb2DynamicTree_Create(proxyCapacity, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2DynamicTree b2DynamicTree_Create( int proxyCapacity ); } */
+    public static native void nb2DynamicTree_Create(int proxyCapacity, long __result);
+
+
+    // --- [ b2DynamicTree_Destroy ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_Destroy( b2DynamicTree* tree ); }
+     *
+     * @param tree b2DynamicTree
+     */
+    public static void b2DynamicTree_Destroy(b2DynamicTree tree) {
+        checkPointers(tree);
+        nb2DynamicTree_Destroy(tree.address());
+    }
+
+    /* {@code B2_API void b2DynamicTree_Destroy( b2DynamicTree* tree ); } */
+    public static native void nb2DynamicTree_Destroy(long tree);
+
+
+    // --- [ b2DynamicTree_CreateProxy ] ---
+
+    /**
+     * {@code B2_API int b2DynamicTree_CreateProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); }
+     *
+     * @param tree b2DynamicTree
+     * @param aabb b2AABB
+     * @param categoryBits long
+     * @param userData long
+     *
+     * @return int
+     */
+    public static int b2DynamicTree_CreateProxy(b2DynamicTree tree, b2AABB aabb, long categoryBits, long userData) {
+        checkPointers(tree, aabb);
+        return nb2DynamicTree_CreateProxy(tree.address(), aabb.address(), categoryBits, userData);
+    }
+
+    /* {@code B2_API int b2DynamicTree_CreateProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); } */
+    public static native int nb2DynamicTree_CreateProxy(long tree, long aabb, long categoryBits, long userData);
+
+
+    // --- [ b2DynamicTree_DestroyProxy ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_DestroyProxy( b2DynamicTree* tree, int proxyId ); }
+     *
+     * @param tree b2DynamicTree
+     * @param proxyId int
+     */
+    public static void b2DynamicTree_DestroyProxy(b2DynamicTree tree, int proxyId) {
+        checkPointers(tree);
+        nb2DynamicTree_DestroyProxy(tree.address(), proxyId);
+    }
+
+    /* {@code B2_API void b2DynamicTree_DestroyProxy( b2DynamicTree* tree, int proxyId ); } */
+    public static native void nb2DynamicTree_DestroyProxy(long tree, int proxyId);
+
+    // --- [ b2DynamicTree_MoveProxy ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_MoveProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); }
+     *
+     * @param tree b2DynamicTree
+     * @param proxyId int
+     * @param aabb b2AABB
+     */
+    public static void b2DynamicTree_MoveProxy(b2DynamicTree tree, int proxyId, b2AABB aabb) {
+        checkPointers(tree, aabb);
+        nb2DynamicTree_MoveProxy(tree.address(), proxyId, aabb.address());
+    }
+
+    /* {@code B2_API void b2DynamicTree_MoveProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); } */
+    public static native void nb2DynamicTree_MoveProxy(long tree, int proxyId, long aabb);
+
+
+    // --- [ b2DynamicTree_EnlargeProxy ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_EnlargeProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); }
+     *
+     * @param tree b2DynamicTree
+     * @param proxyId int
+     * @param aabb b2AABB
+     */
+    public static void b2DynamicTree_EnlargeProxy(b2DynamicTree tree, int proxyId, b2AABB aabb) {
+        checkPointers(tree, aabb);
+        nb2DynamicTree_EnlargeProxy(tree.address(), proxyId, aabb.address());
+    }
+
+    /* {@code B2_API void b2DynamicTree_EnlargeProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); } */
+    public static native void nb2DynamicTree_EnlargeProxy(long tree, int proxyId, long aabb);
+
+
+    // --- [ b2DynamicTree_SetCategoryBits ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_SetCategoryBits( b2DynamicTree* tree, int proxyId, uint64_t categoryBits ); }
+     *
+     * @param tree b2DynamicTree
+     * @param proxyId int
+     * @param categoryBits long
+     */
+    public static void b2DynamicTree_SetCategoryBits(b2DynamicTree tree, int proxyId, long categoryBits) {
+        checkPointers(tree);
+        nb2DynamicTree_SetCategoryBits(tree.address(), proxyId, categoryBits);
+    }
+
+    /* {@code B2_API void b2DynamicTree_SetCategoryBits( b2DynamicTree* tree, int proxyId, uint64_t categoryBits ); } */
+    public static native void nb2DynamicTree_SetCategoryBits(long tree, int proxyId, long categoryBits);
+
+
+    // --- [ b2DynamicTree_GetCategoryBits ] ---
+
+    /**
+     * {@code B2_API uint64_t b2DynamicTree_GetCategoryBits( b2DynamicTree* tree, int proxyId ); }
+     *
+     * @param tree b2DynamicTree
+     * @param proxyId int
+     *
+     * @return long
+     */
+    public static long b2DynamicTree_GetCategoryBits(b2DynamicTree tree, int proxyId) {
+        checkPointers(tree);
+        return nb2DynamicTree_GetCategoryBits(tree.address(), proxyId);
+    }
+
+    /* {@code B2_API uint64_t b2DynamicTree_GetCategoryBits( b2DynamicTree* tree, int proxyId ); } */
+    public static native long nb2DynamicTree_GetCategoryBits(long tree, int proxyId);
+
+    // --- [ b2DynamicTree_Query ] ---
+
+    /**
+     * {@code B2_API b2TreeStats b2DynamicTree_Query( const b2DynamicTree* tree, b2AABB aabb, uint64_t maskBits, b2TreeQueryCallbackFcn* callback, void* context ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param aabb b2AABB
+     * @param maskBits long
+     * @param callback long
+     * @param context long
+     * @param __result store
+     *
+     * @return b2TreeStats
+     */
+    public static b2TreeStats b2DynamicTree_Query(ConstB2DynamicTree tree, b2AABB aabb, long maskBits, b2TreeQueryCallbackFcnI callback, long context, b2TreeStats __result) {
+        checkPointers(tree, aabb, callback, __result);
+        nb2DynamicTree_Query(tree.address(), aabb.address(), maskBits, callback.address(), context, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2TreeStats b2DynamicTree_Query( const b2DynamicTree* tree, b2AABB aabb, uint64_t maskBits, b2TreeQueryCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_Query(long tree, long aabb, long maskBits, long callback, long context, long __result);
+
+
+    // --- [ b2DynamicTree_QueryAll ] ---
+
+    /**
+     * {@code B2_API b2TreeStats b2DynamicTree_QueryAll( const b2DynamicTree* tree, b2AABB aabb, b2TreeQueryCallbackFcn* callback, void* context ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param aabb b2AABB
+     * @param callback long
+     * @param context long
+     * @param __result store
+     *
+     * @return b2TreeStats
+     */
+    public static b2TreeStats b2DynamicTree_QueryAll(ConstB2DynamicTree tree, b2AABB aabb, b2TreeQueryCallbackFcnI callback, long context, b2TreeStats __result) {
+        checkPointers(tree, aabb, callback, __result);
+        nb2DynamicTree_QueryAll(tree.address(), aabb.address(), callback.address(), context, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2TreeStats b2DynamicTree_QueryAll( const b2DynamicTree* tree, b2AABB aabb, b2TreeQueryCallbackFcn* callback,
+     *                                                   void* context ); } */
+    public static native void nb2DynamicTree_QueryAll(long tree, long aabb, long callback, long context, long __result);
+
+    // --- [ b2DynamicTree_RayCast ] ---
+
+    /**
+     * {@code B2_API b2TreeStats b2DynamicTree_RayCast( const b2DynamicTree* tree, const b2RayCastInput* input, uint64_t maskBits, b2TreeRayCastCallbackFcn* callback, void* context ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param input ConstB2RayCastInput
+     * @param maskBits long
+     * @param callback long
+     * @param context long
+     * @param __result store
+     *
+     * @return b2TreeStats
+     */
+    public static b2TreeStats b2DynamicTree_RayCast(ConstB2DynamicTree tree, ConstB2RayCastInput input, long maskBits, b2TreeRayCastCallbackFcnI callback, long context, b2TreeStats __result) {
+        checkPointers(tree, input, callback, __result);
+        nb2DynamicTree_RayCast(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2TreeStats b2DynamicTree_RayCast( const b2DynamicTree* tree, const b2RayCastInput* input, uint64_t maskBits, b2TreeRayCastCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_RayCast(long tree, long input, long maskBits, long callback, long context, long __result);
+
+    // --- [ b2DynamicTree_ShapeCast ] ---
+
+    /**
+     * {@code B2_API b2TreeStats b2DynamicTree_ShapeCast( const b2DynamicTree* tree, const b2ShapeCastInput* input, uint64_t maskBits, b2TreeShapeCastCallbackFcn* callback, void* context ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param input ConstB2ShapeCastInput
+     * @param maskBits long
+     * @param callback long
+     * @param context long
+     * @param __result store
+     *
+     * @return b2TreeStats
+     */
+    public static b2TreeStats b2DynamicTree_ShapeCast(ConstB2DynamicTree tree, ConstB2ShapeCastInput input, long maskBits, b2TreeShapeCastCallbackFcn callback, long context, b2TreeStats __result) {
+        checkPointers(tree, input, callback, __result);
+        nb2DynamicTree_ShapeCast(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2TreeStats b2DynamicTree_ShapeCast( const b2DynamicTree* tree, const b2ShapeCastInput* input, uint64_t maskBits,
+     *                                                   b2TreeShapeCastCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_ShapeCast(long tree, long input, long maskBits, long callback, long context, long __result);
+
+
+    // --- [ b2DynamicTree_GetHeight ] ---
+
+    /**
+     * {@code B2_API int b2DynamicTree_GetHeight( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     *
+     * @return int
+     */
+    public static int b2DynamicTree_GetHeight(ConstB2DynamicTree tree) {
+        checkPointers(tree);
+        return nb2DynamicTree_GetHeight(tree.address());
+    }
+
+    /* {@code B2_API int b2DynamicTree_GetHeight( const b2DynamicTree* tree ); } */
+    public static native int nb2DynamicTree_GetHeight(long tree);
+
+
+    // --- [ b2DynamicTree_GetAreaRatio ] ---
+
+    /**
+     * {@code B2_API float b2DynamicTree_GetAreaRatio( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     *
+     * @return float
+     */
+    public static float b2DynamicTree_GetAreaRatio(ConstB2DynamicTree tree) {
+        checkPointers(tree);
+        return nb2DynamicTree_GetAreaRatio(tree.address());
+    }
+
+    /* {@code B2_API float b2DynamicTree_GetAreaRatio( const b2DynamicTree* tree ); } */
+    public static native float nb2DynamicTree_GetAreaRatio(long tree);
+
+
+    // --- [ b2DynamicTree_GetRootBounds ] ---
+
+    /**
+     * {@code B2_API b2AABB b2DynamicTree_GetRootBounds( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param __result store
+     *
+     * @return b2AABB
+     */
+    public static b2AABB b2DynamicTree_GetRootBounds(ConstB2DynamicTree tree, b2AABB __result) {
+        checkPointers(tree, __result);
+        nb2DynamicTree_GetRootBounds(tree.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2AABB b2DynamicTree_GetRootBounds( const b2DynamicTree* tree ); } */
+    public static native void nb2DynamicTree_GetRootBounds(long tree, long __result);
+
+
+    // --- [ b2DynamicTree_GetProxyCount ] ---
+
+    /**
+     * {@code B2_API int b2DynamicTree_GetProxyCount( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     *
+     * @return int
+     */
+    public static int b2DynamicTree_GetProxyCount(ConstB2DynamicTree tree) {
+        checkPointers(tree);
+        return nb2DynamicTree_GetProxyCount(tree.address());
+    }
+
+    /* {@code B2_API int b2DynamicTree_GetProxyCount( const b2DynamicTree* tree ); } */
+    public static native int nb2DynamicTree_GetProxyCount(long tree);
+
+    // --- [ b2DynamicTree_Rebuild ] ---
+
+    /**
+     * {@code B2_API int b2DynamicTree_Rebuild( b2DynamicTree* tree, bool fullBuild ); }
+     *
+     * @param tree b2DynamicTree
+     * @param fullBuild boolean
+     *
+     * @return int
+     */
+    public static int b2DynamicTree_Rebuild(b2DynamicTree tree, boolean fullBuild) {
+        checkPointers(tree);
+        return nb2DynamicTree_Rebuild(tree.address(), fullBuild);
+    }
+
+    /* {@code B2_API int b2DynamicTree_Rebuild( b2DynamicTree* tree, bool fullBuild ); } */
+    public static native int nb2DynamicTree_Rebuild(long tree, boolean fullBuild);
+
+
+    // --- [ b2DynamicTree_GetByteCount ] ---
+
+    /**
+     * {@code B2_API int b2DynamicTree_GetByteCount( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     *
+     * @return int
+     */
+    public static int b2DynamicTree_GetByteCount(ConstB2DynamicTree tree) {
+        checkPointers(tree);
+        return nb2DynamicTree_GetByteCount(tree.address());
+    }
+
+    /* {@code B2_API int b2DynamicTree_GetByteCount( const b2DynamicTree* tree ); } */
+    public static native int nb2DynamicTree_GetByteCount(long tree);
+
+
+    // --- [ b2DynamicTree_GetUserData ] ---
+
+    /**
+     * {@code B2_API uint64_t b2DynamicTree_GetUserData( const b2DynamicTree* tree, int proxyId ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param proxyId int
+     *
+     * @return long
+     */
+    public static long b2DynamicTree_GetUserData(ConstB2DynamicTree tree, int proxyId) {
+        checkPointers(tree);
+        return nb2DynamicTree_GetUserData(tree.address(), proxyId);
+    }
+
+    /* {@code B2_API uint64_t b2DynamicTree_GetUserData( const b2DynamicTree* tree, int proxyId ); } */
+    public static native long nb2DynamicTree_GetUserData(long tree, int proxyId);
+
+
+    // --- [ b2DynamicTree_GetAABB ] ---
+
+    /**
+     * {@code B2_API b2AABB b2DynamicTree_GetAABB( const b2DynamicTree* tree, int proxyId ); }
+     *
+     * @param tree ConstB2DynamicTree
+     * @param proxyId int
+     * @param __result store
+     *
+     * @return b2AABB
+     */
+    public static b2AABB b2DynamicTree_GetAABB(ConstB2DynamicTree tree, int proxyId, b2AABB __result) {
+        checkPointers(tree, __result);
+        nb2DynamicTree_GetAABB(tree.address(), proxyId, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2AABB b2DynamicTree_GetAABB( const b2DynamicTree* tree, int proxyId ); } */
+    public static native void nb2DynamicTree_GetAABB(long tree, int proxyId, long __result);
+
+
+    // --- [ b2DynamicTree_Validate ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_Validate( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     */
+    public static void b2DynamicTree_Validate(ConstB2DynamicTree tree) {
+        checkPointers(tree);
+        nb2DynamicTree_Validate(tree.address());
+    }
+
+    /* {@code B2_API void b2DynamicTree_Validate( const b2DynamicTree* tree ); } */
+    public static native void nb2DynamicTree_Validate(long tree);
+
+
+    // --- [ b2DynamicTree_ValidateNoEnlarged ] ---
+
+    /**
+     * {@code B2_API void b2DynamicTree_ValidateNoEnlarged( const b2DynamicTree* tree ); }
+     *
+     * @param tree ConstB2DynamicTree
+     */
+    public static void b2DynamicTree_ValidateNoEnlarged(ConstB2DynamicTree tree) {
+        checkPointers(tree);
+        nb2DynamicTree_ValidateNoEnlarged(tree.address());
+    }
+
+    /* {@code B2_API void b2DynamicTree_ValidateNoEnlarged( const b2DynamicTree* tree ); } */
+    public static native void nb2DynamicTree_ValidateNoEnlarged(long tree);
+ 
+    // --- [ b2SolvePlanes ] ---
+
+    /**
+     * {@code B2_API b2PlaneSolverResult b2SolvePlanes( b2Vec2 targetDelta, b2CollisionPlane* planes, int count ); }
+     *
+     * @param targetDelta b2Vec2
+     * @param planes b2CollisionPlane
+     * @param count int
+     * @param __result store
+     *
+     * @return b2PlaneSolverResult
+     */
+    public static b2PlaneSolverResult b2SolvePlanes(b2Vec2 targetDelta, b2CollisionPlane planes, int count, b2PlaneSolverResult __result) {
+        checkPointers(targetDelta, planes, __result);
+        nb2SolvePlanes(targetDelta.address(), planes.address(), count, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2PlaneSolverResult b2SolvePlanes( b2Vec2 targetDelta, b2CollisionPlane* planes, int count ); } */
+    public static native void nb2SolvePlanes(long targetDelta, long planes, int count, long __result);
+
+
+    // --- [ b2ClipVector ] ---
+
+    /**
+     * {@code B2_API b2Vec2 b2ClipVector( b2Vec2 vector, const b2CollisionPlane* planes, int count ); }
+     *
+     * @param vector b2Vec2
+     * @param planes ConstB2CollisionPlane
+     * @param count int
+     * @param __result store
+     *
+     * @return b2Vec2
+     */
+    public static b2Vec2 b2ClipVector(b2Vec2 vector, ConstB2CollisionPlane planes, int count, b2Vec2 __result) {
+        checkPointers(vector, planes, __result);
+        nb2ClipVector(vector.address(), planes.address(), count, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2Vec2 b2ClipVector( b2Vec2 vector, const b2CollisionPlane* planes, int count ); } */
+    public static native void nb2ClipVector(long vector, long planes, int count, long __result);
+    /** private constructor. */
+    private Collision() {}
 }

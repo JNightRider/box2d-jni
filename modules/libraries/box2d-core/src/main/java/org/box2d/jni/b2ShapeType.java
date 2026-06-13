@@ -133,8 +133,10 @@ public enum b2ShapeType {
             return b2_polygonShape;
         } else if (type == b2_chainSegmentShape.value()) {
             return b2_chainSegmentShape;
+        } else if (type == b2_shapeTypeCount.value()) {
+            return b2_shapeTypeCount;
         }
-        return b2_shapeTypeCount;
+        throw new UnsupportedOperationException("enum: " + type);
     }
 
     /* (non-Javadoc)

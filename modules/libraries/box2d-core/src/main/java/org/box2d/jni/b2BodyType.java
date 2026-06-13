@@ -106,8 +106,10 @@ public enum b2BodyType {
             return b2_kinematicBody;
         } else if (type == b2_dynamicBody.value()) {
             return b2_dynamicBody;
+        } else if (type == b2_bodyTypeCount.value()) {
+            return b2_bodyTypeCount;
         }
-        return b2_bodyTypeCount;
+        throw new UnsupportedOperationException("enum: " + type);
     }
 
     /* (non-Javadoc)

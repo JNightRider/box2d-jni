@@ -135,8 +135,10 @@ public enum b2JointType {
             return b2_revoluteJoint;
         } else if (type == b2_weldJoint.value()) {
             return b2_weldJoint;
+        } else if (type == b2_wheelJoint.value()) {
+            return b2_wheelJoint;
         }
-        return b2_wheelJoint;
+        throw new UnsupportedOperationException("enum: " + type);
     }
 
     /* (non-Javadoc)
