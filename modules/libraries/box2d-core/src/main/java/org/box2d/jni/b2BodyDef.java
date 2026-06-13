@@ -420,7 +420,7 @@ public class b2BodyDef extends Struct<b2BodyDef> {
     public static boolean nenableContactRecycling(long address) { return memGetByte(address + ENABLE_CONTACT_RECYCLING) != 0;       }
     public static int ninternalValue(long address)              { return memGetInt(address + INTERNAL_VALUE);                       }
 
-    public static void ntype(long address, b2BodyType value)                { memPutInt(address + TYPE, value.b2nGetType());                          }
+    public static void ntype(long address, b2BodyType value)                { memPutInt(address + TYPE, value.value());                               }
     public static void nposition(long address, b2Vec2 value)                { nmemcpy(address + POSITION, value.address(), b2Vec2.SIZEOF);            }
     public static void nrotation(long address, b2Rot value)                 { nmemcpy(address + ROTATION, value.address(), b2Rot.SIZEOF);             }
     public static void linearVelocity(long address, b2Vec2 value)           { nmemcpy(address + LINEAR_VELOCITY, value.address(), b2Vec2.SIZEOF);     }

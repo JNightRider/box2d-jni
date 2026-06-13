@@ -112,7 +112,7 @@ public enum b2JointType {
      *
      * @return int
      */
-    protected Integer b2nGetType() {
+    protected Integer value() {
         return b2Type;
     }
 
@@ -123,17 +123,17 @@ public enum b2JointType {
      * @return body type
      */
     public static b2JointType valueOf(int type) {
-        if (type == b2_distanceJoint.b2nGetType()) {
+        if (type == b2_distanceJoint.value()) {
             return b2_distanceJoint;
-        } else if (type == b2_filterJoint.b2nGetType()) {
+        } else if (type == b2_filterJoint.value()) {
             return b2_filterJoint;
-        } else if (type == b2_motorJoint.b2nGetType()) {
+        } else if (type == b2_motorJoint.value()) {
             return b2_motorJoint;
-        } else if (type == b2_prismaticJoint.b2nGetType()) {
+        } else if (type == b2_prismaticJoint.value()) {
             return b2_prismaticJoint;
-        } else if (type == b2_revoluteJoint.b2nGetType()) {
+        } else if (type == b2_revoluteJoint.value()) {
             return b2_revoluteJoint;
-        } else if (type == b2_weldJoint.b2nGetType()) {
+        } else if (type == b2_weldJoint.value()) {
             return b2_weldJoint;
         }
         return b2_wheelJoint;

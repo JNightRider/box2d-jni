@@ -16,6 +16,11 @@ import static org.box2d.jni.system.Pointer.*;
  */
 public final class MemoryUtil {
     
+    public static ByteBuffer memByteBuffer(long ptr, int capacity) {
+        ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
+        return buffer;
+    }
+    
     public static FloatBuffer memFloatBuffer(long ptr, int capacity) {
         ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
         return buffer.asFloatBuffer();

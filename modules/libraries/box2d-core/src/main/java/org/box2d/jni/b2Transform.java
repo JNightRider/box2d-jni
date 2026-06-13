@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2Transform;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -22,7 +23,7 @@ import static org.box2d.jni.libc.LibCString.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Transform extends Struct<b2Transform> {
+public class b2Transform extends Struct<b2Transform> implements ConstB2Transform {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -96,8 +97,10 @@ public class b2Transform extends Struct<b2Transform> {
     }
     
     /** @return Returns the property {@code p} */
+    @Override
     public b2Vec2 p() { return np(address()); }
     /** @return Returns the property {@code s} */
+    @Override
     public b2Rot q() { return nq(address()); }
     
     /**

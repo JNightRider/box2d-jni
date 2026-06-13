@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2Rot;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Memory.*;
@@ -23,7 +24,7 @@ import static org.box2d.jni.system.VarType.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Rot extends Struct<b2Rot> {
+public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -97,8 +98,10 @@ public class b2Rot extends Struct<b2Rot> {
     }
     
     /** @return Returns the property {@code c} */
+    @Override
     public float c() { return nc(address()); }
     /** @return Returns the property {@code s} */
+    @Override
     public float s() { return ns(address()); }
     
     /**

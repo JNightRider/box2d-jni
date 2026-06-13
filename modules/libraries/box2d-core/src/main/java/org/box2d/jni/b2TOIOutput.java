@@ -1,6 +1,6 @@
 /*
  * Copyright Night Rider. All rights reserved.
- * https://opensource.org/license/bsd-3-clause
+ * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
  */
 package org.box2d.jni;
 
@@ -12,20 +12,20 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2Manifold
+ * typedef struct b2TOIOutput
  * {
+ *     b2TOIState state;
+ *     b2Vec2 point;
  *     b2Vec2 normal;
- *     float rollingImpulse;
- *     b2ManifoldPoint points[2];
- *     int pointCount;
- * } b2Manifold;
+ *     float fraction;
+ * } b2TOIOutput;
  * </code></pre>
  * 
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Manifold extends Struct<b2Manifold> {
+public class b2TOIOutput extends Struct<b2TOIOutput> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -35,23 +35,23 @@ public class b2Manifold extends Struct<b2Manifold> {
 
     /** The struct member offsets. */
     private static final int
+            STATE,
+            POINT,
             NORMAL,
-            ROLLING_IMPULSE,
-            POINTS,
-            POINT_COUNT;
+            FRACTION;
 
     static {
         Layout layout = __struct(
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4),
-                __array(b2ManifoldPoint.SIZEOF, b2ManifoldPoint.ALIGNOF, 2),
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4)
         );
 
-        NORMAL = layout.offsetof(0);
-        ROLLING_IMPULSE = layout.offsetof(1);
-        POINTS = layout.offsetof(2);
-        POINT_COUNT = layout.offsetof(3);
+        STATE = layout.offsetof(0);
+        POINT = layout.offsetof(1);
+        NORMAL = layout.offsetof(2);
+        FRACTION = layout.offsetof(3);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -62,7 +62,7 @@ public class b2Manifold extends Struct<b2Manifold> {
      *
      * @param ptr A reference pointer.
      */
-    public b2Manifold(Pointer ptr) {
+    public b2TOIOutput(Pointer ptr) {
         super(ptr);
     }
 
@@ -71,7 +71,7 @@ public class b2Manifold extends Struct<b2Manifold> {
      *
      * @param address A virtual memory address
      */
-    public b2Manifold(long address) {
+    public b2TOIOutput(long address) {
         super(address);
     }
 
@@ -81,61 +81,60 @@ public class b2Manifold extends Struct<b2Manifold> {
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2Manifold(long address, boolean factor) {
+    protected b2TOIOutput(long address, boolean factor) {
         super(address, factor);
     }
 
+    /** @return Returns the property {@code state} */
+    public b2TOIState state() { return nstate(address()); }
+    /** @return Returns the property {@code point} */
+    public b2Vec2 point() { return npoint(address()); }
     /** @return Returns the property {@code normal} */
     public b2Vec2 normal() { return nnormal(address()); }
-    /** @return Returns the property {@code rollingImpulse} */
-    public float rollingImpulse() { return nrollingImpulse(address()); }
-    /** @return Returns the property {@code points} */
-    public b2ManifoldPoint.Buffer points() { return npoints(address()); }
-    /** @return Returns the property {@code pointCount} */
-    public int pointCount() { return npointCount(address()); }
+    /** @return Returns the property {@code fraction} */
+    public float fraction() { return nfraction(address()); }
+
+    /**
+     * Set the value of property {@code state}
+     * 
+     * @param value b2TOIState
+     * @return b2TOIOutput
+     */
+    public b2TOIOutput state(b2TOIState value) {
+        nstate(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code point}
+     * 
+     * @param value b2Vec2
+     * @return b2TOIOutput
+     */
+    public b2TOIOutput point(b2Vec2 value) {
+        npoint(address(), value);
+        return this;
+    }
 
     /**
      * Set the value of property {@code normal}
-     *
+     * 
      * @param value b2Vec2
-     * @return b2Manifold
+     * @return b2TOIOutput
      */
-    public b2Manifold normal(b2Vec2 value) {
+    public b2TOIOutput normal(b2Vec2 value) {
         nnormal(address(), value);
         return this;
     }
 
     /**
-     * Set the value of property {@code rollingImpulse}
-     *
+     * Set the value of property {@code fraction}
+     * 
      * @param value float
-     * @return b2Manifold
+     * @return b2TOIOutput
      */
-    public b2Manifold rollingImpulse(float value) {
-        nrollingImpulse(address(), value);
-        return this;
-    }
-    
-    /**
-     * Set the value of property {@code pointCount}
-     *
-     * @param value int
-     * @return b2Manifold
-     */
-    public b2Manifold points(b2ManifoldPoint.Buffer value) {
-        npoints(address(), value);
-        return this;
-    }
-
-
-    /**
-     * Set the value of property {@code pointCount}
-     *
-     * @param value int
-     * @return b2Manifold
-     */
-    public b2Manifold pointCount(int value) {
-        npointCount(address(), value);
+    public b2TOIOutput fraction(float value) {
+        nfraction(address(), value);
         return this;
     }
 
@@ -149,55 +148,55 @@ public class b2Manifold extends Struct<b2Manifold> {
     /*(non-Javadoc)
      */
     @Override
-    protected b2Manifold create(long address, Pointer ptr) {
-        return ptr == null ? new b2Manifold(address) : new b2Manifold(ptr);
+    protected b2TOIOutput create(long address, Pointer ptr) {
+        return ptr == null ? new b2TOIOutput(address) : new b2TOIOutput(ptr);
     }
-    
+
     // -----------------------------------
 
     /**
      * Internal use of the buffer.
      *
-     * @return b2Manifold
+     * @return b2TOIOutput
      */
-    private static b2Manifold factory() {
-        return new b2Manifold(-1L, true);
+    private static b2TOIOutput factory() {
+        return new b2TOIOutput(-1L, true);
     }
 
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2Manifold
+     * @return b2TOIOutput
      */
-    public static b2Manifold createSafe(Pointer ptr) {
+    public static b2TOIOutput createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2Manifold(ptr);
+        return new b2TOIOutput(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2Manifold}.
+     * Reserve memory for the new object {@code b2TOIOutput}.
      *
      * @param alloc Custom memory manager
-     * @return b2Manifold
+     * @return b2TOIOutput
      */
-    public static b2Manifold alloc(AllocFunc alloc) {
-        return new b2Manifold(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2TOIOutput alloc(AllocFunc alloc) {
+        return new b2TOIOutput(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2Manifold}.
+     * Reserve memory for the new object {@code b2TOIOutput}.
      *
-     * @return b2Manifold
+     * @return b2TOIOutput
      */
-    public static b2Manifold malloc() {
-        return new b2Manifold(nmalloc(SIZEOF));
+    public static b2TOIOutput malloc() {
+        return new b2TOIOutput(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Manifold}.
+     * Reserve an amount n of memory for the object {@code b2TOIOutput}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -207,7 +206,7 @@ public class b2Manifold extends Struct<b2Manifold> {
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Manifold}.
+     * Reserve an amount n of memory for the object {@code b2TOIOutput}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -219,23 +218,23 @@ public class b2Manifold extends Struct<b2Manifold> {
 
     // -----------------------------------
     
+    public static b2TOIState nstate(long address) { return b2TOIState.valueOf(memGetInt(address + STATE)); }
+    public static b2Vec2 npoint(long address) { return b2Vec2.createSafe(() -> address + POINT); }
     public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
-    public static float nrollingImpulse(long address) { return memGetFloat(address + ROLLING_IMPULSE); }
-    public static b2ManifoldPoint.Buffer npoints(long address) { return b2ManifoldPoint.createSafe(address + POINTS, 2); }
-    public static int npointCount(long address) { return memGetInt(address + POINT_COUNT); }
+    public static float nfraction(long address) { return memGetFloat(address + FRACTION); }
 
+    public static void nstate(long address, b2TOIState value) { memPutInt(address + STATE, value.value()); }
+    public static void npoint(long address, b2Vec2 value) { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF); }
     public static void nnormal(long address, b2Vec2 value) { nmemcpy(address + NORMAL, value.address(), b2Vec2.SIZEOF); }
-    public static void nrollingImpulse(long address, float value) { memPutFloat(address + ROLLING_IMPULSE, value); }
-    public static void npoints(long address, b2ManifoldPoint.Buffer value) { nmemcpy(address + POINTS, value.address(), b2ManifoldPoint.SIZEOF * 2 ); }
-    public static void npointCount(long address, int value) { memPutInt(address + POINT_COUNT, value); }
+    public static void nfraction(long address, float value) { memPutFloat(address + FRACTION, value); }
     
     // -----------------------------------
 
-    /** An array of {@code b2Manifold} structs. */
-    public static class Buffer extends StructBuffer<b2Manifold, Buffer> implements JNINative {
+    /** An array of {@code b2TOIOutput} structs. */
+    public static class Buffer extends StructBuffer<b2TOIOutput, Buffer> implements JNINative {
 
         /** An element that provides information about the structure. */
-        private static final b2Manifold ELEMENT_FACTORY = b2Manifold.factory();
+        private static final b2TOIOutput ELEMENT_FACTORY = b2TOIOutput.factory();
 
         /**
          * Create a new buffer.
@@ -263,7 +262,7 @@ public class b2Manifold extends Struct<b2Manifold> {
         /*(non-Javadoc)
          */
         @Override
-        protected b2Manifold getElementFactory() {
+        protected b2TOIOutput getElementFactory() {
             return ELEMENT_FACTORY;
         }
 
@@ -281,5 +280,4 @@ public class b2Manifold extends Struct<b2Manifold> {
             return new Buffer(address, mark, position, limit, capacity);
         }
     }
-    
 }

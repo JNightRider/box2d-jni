@@ -4,8 +4,8 @@
  */
 package org.box2d.jni;
 
-import org.box2d.jni.readonly.ConstB2WorldDef;
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2WorldDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;

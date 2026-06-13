@@ -113,7 +113,7 @@ public enum b2ShapeType {
      * Get native value.
      * @return int
      */
-    protected int b2nGetType() {
+    protected int value() {
         return b2Type;
     }
 
@@ -123,15 +123,15 @@ public enum b2ShapeType {
      * @return body type
      */
     public static b2ShapeType valueOf(int type) {
-        if (type == b2_circleShape.b2nGetType()) {
+        if (type == b2_circleShape.value()) {
             return b2_circleShape;
-        } else if (type == b2_capsuleShape.b2nGetType()) {
+        } else if (type == b2_capsuleShape.value()) {
             return b2_capsuleShape;
-        } else if (type == b2_segmentShape.b2nGetType()) {
+        } else if (type == b2_segmentShape.value()) {
             return b2_segmentShape;
-        } else if (type == b2_polygonShape.b2nGetType()) {
+        } else if (type == b2_polygonShape.value()) {
             return b2_polygonShape;
-        } else if (type == b2_chainSegmentShape.b2nGetType()) {
+        } else if (type == b2_chainSegmentShape.value()) {
             return b2_chainSegmentShape;
         }
         return b2_shapeTypeCount;

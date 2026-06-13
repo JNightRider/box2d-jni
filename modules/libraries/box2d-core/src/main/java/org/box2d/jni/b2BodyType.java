@@ -90,7 +90,7 @@ public enum b2BodyType {
      * Returns the native type
      * @return int
      */
-    protected Integer b2nGetType() {
+    protected Integer value() {
         return b2Type;
     }
     
@@ -100,11 +100,11 @@ public enum b2BodyType {
      * @return body type
      */
     public static b2BodyType valueOf(int type) {
-        if (type == b2_staticBody.b2nGetType()) {
+        if (type == b2_staticBody.value()) {
             return b2_staticBody;
-        }  else if (type == b2_kinematicBody.b2nGetType()) {
+        }  else if (type == b2_kinematicBody.value()) {
             return b2_kinematicBody;
-        } else if (type == b2_dynamicBody.b2nGetType()) {
+        } else if (type == b2_dynamicBody.value()) {
             return b2_dynamicBody;
         }
         return b2_bodyTypeCount;

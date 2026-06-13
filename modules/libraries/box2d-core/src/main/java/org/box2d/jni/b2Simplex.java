@@ -1,0 +1,281 @@
+/*
+ * Copyright Night Rider. All rights reserved.
+ * https://github.com/JNightRider/box2d-jni/blob/master/LICENSE
+ */
+package org.box2d.jni;
+
+import org.box2d.jni.system.*;
+
+import static org.box2d.jni.libc.LibCStdlib.*;
+import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.Memory.*;
+
+/**
+ * <pre><code>
+ * typedef struct b2Simplex
+ * {
+ *     b2SimplexVertex v1, v2, v3; /// vertices
+ *     int count;                  /// number of valid vertices
+ * } b2Simplex;
+ * </code></pre>
+ *
+ * @author wil
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+public class b2Simplex extends Struct<b2Simplex> {
+
+    /** The struct size in bytes. */
+    public static final int SIZEOF;
+
+    /** The struct alignment in bytes. */
+    public static final int ALIGNOF;
+
+    /** The struct member offsets. */
+    private static final int
+            V1,
+            V2,
+            V3,
+            COUNT;
+
+    static {
+        Layout layout = __struct(
+                __member(b2SimplexVertex.SIZEOF, b2SimplexVertex.ALIGNOF),
+                __member(b2SimplexVertex.SIZEOF, b2SimplexVertex.ALIGNOF),
+                __member(b2SimplexVertex.SIZEOF, b2SimplexVertex.ALIGNOF),
+                __member(4)
+        );
+
+        V1 = layout.offsetof(0);
+        V2 = layout.offsetof(1);
+        V3 = layout.offsetof(2);
+        COUNT = layout.offsetof(3);
+
+        SIZEOF = layout.getSize();
+        ALIGNOF = layout.getAlignment();
+    }
+
+    /**
+     * Generates a reference to the given pointer.
+     *
+     * @param ptr A reference pointer.
+     */
+    public b2Simplex(Pointer ptr) {
+        super(ptr);
+    }
+
+    /**
+     * Create a new pointer to the object using its memory address.
+     *
+     * @param address A virtual memory address
+     */
+    public b2Simplex(long address) {
+        super(address);
+    }
+
+    /**
+     * This structure is for internal buffer use.
+     *
+     * @param address A virtual memory address
+     * @param factor boolean
+     */
+    protected b2Simplex(long address, boolean factor) {
+        super(address, factor);
+    }
+
+    /** @return Returns the property {@code v1} */
+    public b2SimplexVertex v1() { return nv1(address()); }
+    /** @return Returns the property {@code v2} */
+    public b2SimplexVertex v2() { return nv2(address()); }
+    /** @return Returns the property {@code v3} */
+    public b2SimplexVertex v3() { return nv3(address()); }
+    /** @return Returns the property {@code count} */
+    public int count() { return ncount(address()); }
+    
+    /**
+     * Set the value of property {@code v1}
+     *
+     * @param value b2SimplexVertex
+     * @return b2Simplex
+     */
+    public b2Simplex v1(b2SimplexVertex value) {
+        nv1(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code v2}
+     *
+     * @param value b2SimplexVertex
+     * @return b2Simplex
+     */
+    public b2Simplex v2(b2SimplexVertex value) {
+        nv2(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code v3}
+     *
+     * @param value b2SimplexVertex
+     * @return b2Simplex
+     */
+    public b2Simplex v3(b2SimplexVertex value) {
+        nv3(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code count}
+     *
+     * @param value int
+     * @return b2Simplex
+     */
+    public b2Simplex count(int value) {
+        ncount(address(), value);
+        return this;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    public int sizeof() {
+        return SIZEOF;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    protected b2Simplex create(long address, Pointer ptr) {
+        return ptr == null ? new b2Simplex(address) : new b2Simplex(ptr);
+    }
+
+    // -----------------------------------
+
+    /**
+     * Internal use of the buffer.
+     *
+     * @return b2Simplex
+     */
+    private static b2Simplex factory() {
+        return new b2Simplex(-1L, true);
+    }
+
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2Simplex
+     */
+    public static b2Simplex createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2Simplex(ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Simplex}.
+     *
+     * @param alloc Custom memory manager
+     * @return b2Simplex
+     */
+    public static b2Simplex alloc(AllocFunc alloc) {
+        return new b2Simplex(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Simplex}.
+     *
+     * @return b2Simplex
+     */
+    public static b2Simplex malloc() {
+        return new b2Simplex(nmalloc(SIZEOF));
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Simplex}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity) {
+        return new Buffer(nmalloc(capacity * SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Simplex}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, AllocFunc alloc) {
+        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+    }
+
+    // -----------------------------------
+    
+    public static b2SimplexVertex nv1(long address) { return b2SimplexVertex.createSafe(() -> address + V1); }
+    public static b2SimplexVertex nv2(long address) { return b2SimplexVertex.createSafe(() -> address + V2); }
+    public static b2SimplexVertex nv3(long address) { return b2SimplexVertex.createSafe(() -> address + V3); }
+    public static int ncount(long address) { return memGetInt(address + COUNT); }
+
+    public static void nv1(long address, b2SimplexVertex value) { nmemcpy(address + V1, value.address(), b2SimplexVertex.SIZEOF); }
+    public static void nv2(long address, b2SimplexVertex value) { nmemcpy(address + V2, value.address(), b2SimplexVertex.SIZEOF); }
+    public static void nv3(long address, b2SimplexVertex value) { nmemcpy(address + V3, value.address(), b2SimplexVertex.SIZEOF); }
+    public static void ncount(long address, int value) { memPutInt(address + COUNT, value); }
+    
+    // -----------------------------------
+
+    /** An array of {@code b2Simplex} structs. */
+    public static class Buffer extends StructBuffer<b2Simplex, Buffer> implements JNINative {
+
+        /** An element that provides information about the structure. */
+        private static final b2Simplex ELEMENT_FACTORY = b2Simplex.factory();
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param remaining int
+         */
+        public Buffer(long address, int remaining) {
+            super(address, remaining);
+        }
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param mark int
+         * @param position int
+         * @param limit int
+         * @param capacity int
+         */
+        public Buffer(long address, int mark, int position, int limit, int capacity) {
+            super(address, mark, position, limit, capacity);
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected b2Simplex getElementFactory() {
+            return ELEMENT_FACTORY;
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected Buffer self() {
+            return this;
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected Buffer create(long address, int mark, int position, int limit, int capacity) {
+            return new Buffer(address, mark, position, limit, capacity);
+        }
+    }
+}
