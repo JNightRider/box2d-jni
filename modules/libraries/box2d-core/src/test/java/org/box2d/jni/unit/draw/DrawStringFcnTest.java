@@ -47,7 +47,7 @@ public class DrawStringFcnTest {
                 Assert.assertEquals(1f, p.x(), 0.0f);
                 Assert.assertEquals(2f, p.y(), 0.0f);
             };
-            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
+            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
         }
         try
         (
@@ -64,7 +64,7 @@ public class DrawStringFcnTest {
                 Assert.assertEquals(1f, p.x(), 0.0f);
                 Assert.assertEquals(2f, p.y(), 0.0f);
             });
-            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
+            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
         }
         LibCStdlib.nfree(nmem);
         Callbacks.b2FreeCallbacks();

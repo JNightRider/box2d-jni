@@ -11,7 +11,7 @@ add_library(box2d-bindings SHARED
     org_box2d_jni_system_MemoryUtil.c
     org_box2d_jni_system_Upcalls.c
     org_box2d_jni_system_VarType.c
-    
+
     box2d/org_box2d_jni_b2BodyType.c
     box2d/org_box2d_jni_b2JointType.c
     box2d/org_box2d_jni_b2ShapeType.c

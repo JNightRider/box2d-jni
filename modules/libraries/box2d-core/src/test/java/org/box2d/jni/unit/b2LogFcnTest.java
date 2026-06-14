@@ -30,7 +30,7 @@ public class b2LogFcnTest {
     public void callback() {
         String str = "Box2d-JNI";
         long buffer = LibCStdlib.nmalloc(20);
-        MemoryUtil.memUTF8(str, buffer);
+        MemoryUtil.memMallocUTF8(str, buffer);
 
         {
             b2LogFcnI func = (message) -> {

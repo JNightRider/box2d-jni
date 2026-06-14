@@ -10,7 +10,7 @@ dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
     testRuntimeOnly files(
-        "${rootDir}/lib/box2d-natives-linux_x64.jar"
+        "${rootDir}/lib/box2d-0.1.0-natives-linux_x64.jar"
     )
     testImplementation(libs.junit4)      // framework for automated testing
 }

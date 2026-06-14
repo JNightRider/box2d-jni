@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2MotionLocks;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Memory.*;
@@ -23,7 +24,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2MotionLocks extends Struct<b2MotionLocks> {
+public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2MotionLocks {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -83,10 +84,13 @@ public class b2MotionLocks extends Struct<b2MotionLocks> {
     }
 
     /** @return Returns the property {@code linearX} */
+    @Override
     public boolean linearX() { return nlinearX(address()); }
     /** @return Returns the property {@code linearY} */
+    @Override
     public boolean linearY() { return nlinearY(address()); }
     /** @return Returns the property {@code angularZ} */
+    @Override
     public boolean angularZ() { return nangularZ(address()); }
 
     /**

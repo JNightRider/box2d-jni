@@ -90,7 +90,7 @@ public enum b2BodyType {
      * Returns the native type
      * @return int
      */
-    protected Integer value() {
+    public Integer value() {
         return b2Type;
     }
     

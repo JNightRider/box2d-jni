@@ -5,11 +5,11 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2BodyDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
-import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * <pre><code>
@@ -41,7 +41,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2BodyDef extends Struct<b2BodyDef> {
+public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -149,42 +149,61 @@ public class b2BodyDef extends Struct<b2BodyDef> {
     }
 
     /** @return Returns the property {@code type} */
+    @Override
     public b2BodyType type() { return ntype(address()); }
     /** @return Returns the property {@code position} */
+    @Override
     public b2Vec2 position() { return nposition(address()); }
     /** @return Returns the property {@code rotation} */
+    @Override
     public b2Rot rotation() { return nrotation(address()); }
     /** @return Returns the property {@code linearVelocity} */
+    @Override
     public b2Vec2 linearVelocity() { return nlinearVelocity(address()); }
     /** @return Returns the property {@code angularVelocity} */
+    @Override
     public float angularVelocity() { return nangularVelocity(address()); }
     /** @return Returns the property {@code linearDamping} */
+    @Override
     public float linearDamping() { return nlinearDamping(address()); }
     /** @return Returns the property {@code angularDamping} */
+    @Override
     public float angularDamping() { return nangularDamping(address()); }
     /** @return Returns the property {@code gravityScale} */
+    @Override
     public float gravityScale() { return ngravityScale(address()); }
     /** @return Returns the property {@code sleepThreshold} */
+    @Override
     public float sleepThreshold() { return nsleepThreshold(address()); }    
     /** @return Returns the property {@code name} */
+    @Override
     public long name() { return nname(address()); }
     /** @return Returns the property {@code userData} */
+    @Override
     public long userData() { return nuserData(address()); }
     /** @return Returns the property {@code motionLocks} */
+    @Override
     public b2MotionLocks motionLocks() { return nmotionLocks(address()); }
     /** @return Returns the property {@code enableSleep} */
+    @Override
     public boolean enableSleep() { return nenableSleep(address()); }
     /** @return Returns the property {@code isAwake} */
+    @Override
     public boolean isAwake() { return nisAwake(address()); }
     /** @return Returns the property {@code isBullet} */
+    @Override
     public boolean isBullet() { return nisBullet(address()); }
     /** @return Returns the property {@code isEnabled} */
+    @Override
     public boolean isEnabled() { return nisEnabled(address()); }
     /** @return Returns the property {@code allowFastRotation} */
+    @Override
     public boolean allowFastRotation() { return nallowFastRotation(address()); }
     /** @return Returns the property {@code enableContactRecycling} */
+    @Override
     public boolean enableContactRecycling() { return nenableContactRecycling(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

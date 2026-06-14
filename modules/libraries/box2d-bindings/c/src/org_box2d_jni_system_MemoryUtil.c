@@ -12,6 +12,30 @@
 #include "common_tools.h"
 #include "box2d/jni/org_box2d_jni_system_MemoryUtil.h"
 
+/*
+ * Class:     org_box2d_jni_system_MemoryUtil
+ * Method:    nmemByteBuffer
+ * Signature: (JI)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_org_box2d_jni_system_MemoryUtil_nmemByteBuffer
+  (JNIEnv * __env, jclass clazz, jlong ptr, jint capacity)
+{
+    UNUSED_PARAM(clazz)
+    return (*__env)->NewDirectByteBuffer(__env, (void*)ptr, capacity);
+}
+
+/*
+ * Class:     org_box2d_jni_system_MemoryUtil
+ * Method:    nmemFree
+ * Signature: (Ljava/nio/Buffer;)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_MemoryUtil_nmemFree
+    (JNIEnv * __env, jclass clazz, jobject address)
+{
+    void* const ptr = (void*)(*__env)->GetDirectBufferAddress(__env, address);
+    UNUSED_PARAM(clazz)
+    free(ptr);
+}
 
 /*
  * Class:     org_box2d_jni_system_MemoryUtil
@@ -22,6 +46,7 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_MemoryUtil_nGetStringUTFChars
     (JNIEnv *__env, jclass clazz, jstring str)
 {
     const char *ptr = (*__env)->GetStringUTFChars(__env, str, NULL);
+    UNUSED_PARAM(clazz)
     return (jlong)ptr;
 }
 
@@ -34,6 +59,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_MemoryUtil_nReleaseStringUTFCha
     (JNIEnv *__env, jclass clazz, jstring str, jlong address)
 {
     char* ptr = (char*)(uintptr_t)address;
+    UNUSED_PARAM(clazz)
     (*__env)->ReleaseStringUTFChars(__env, str, ptr);
 }
 
@@ -46,6 +72,7 @@ JNIEXPORT jstring JNICALL Java_org_box2d_jni_system_MemoryUtil_nNewStringUTF
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     char* ptr = (char*)(uintptr_t)address;
+    UNUSED_PARAM(clazz)
     return (*__env)->NewStringUTF(__env, ptr);
 }
 

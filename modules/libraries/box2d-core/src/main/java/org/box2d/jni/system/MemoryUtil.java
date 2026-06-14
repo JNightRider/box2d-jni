@@ -4,9 +4,14 @@
  */
 package org.box2d.jni.system;
 
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+
+import org.box2d.jni.libc.LibCStdlib;
+
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Pointer.*;
 
@@ -15,23 +20,58 @@ import static org.box2d.jni.system.Pointer.*;
  * @author wil
  */
 public final class MemoryUtil {
-    
-    public static ByteBuffer memByteBuffer(long ptr, int capacity) {
-        ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
-        return buffer;
+    static {
+        Library.initialize();
     }
     
+    public static ByteBuffer memByteBuffer(long ptr, int capacity) {
+        if (ptr == NULL) {
+            return null;
+        }
+        ByteBuffer nbuffer = nmemByteBuffer(ptr, capacity);
+        nbuffer.order(ByteOrder.nativeOrder());
+        return nbuffer;
+    }
+    
+    public static native ByteBuffer nmemByteBuffer(long ptr, int capacity);
+    
     public static FloatBuffer memFloatBuffer(long ptr, int capacity) {
-        ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
+        return nmemFloatBuffer(ptr, capacity * Float.BYTES);
+    }
+    
+    public static FloatBuffer nmemFloatBuffer(long ptr, int capacity) {
+        ByteBuffer buffer = memByteBuffer(ptr, capacity);
         return buffer.asFloatBuffer();
     }
     
     public static IntBuffer memIntBuffer(long ptr, int capacity) {
-        ByteBuffer buffer = Memory.memPutNativeAddress(ptr, capacity);
+        return nmemIntBuffer(ptr, capacity * Integer.BYTES);
+    }
+    
+    public static IntBuffer nmemIntBuffer(long ptr, int capacity) {
+        ByteBuffer buffer = memByteBuffer(ptr, capacity);
         return buffer.asIntBuffer();
     }
 
-    public static long memUTF8(String value, long __result) {
+    public static void memFree(ByteBuffer buffer) {
+        nmemFree(buffer);
+    }
+    
+    public static void memFree(FloatBuffer buffer) {
+        nmemFree(buffer);
+    }
+    
+    public static void memFree(IntBuffer buffer) {
+        nmemFree(buffer);
+    }
+    
+    public static native void nmemFree(Buffer ptr);
+    
+    public static long memMallocUTF8L(String value, long len) {
+        return memMallocUTF8(value, LibCStdlib.nmalloc(len));
+    }
+
+    public static long memMallocUTF8(String value, long __result) {
         long ptr = nGetStringUTFChars(value);
         if (ptr != NULL) {
             nmemcpy(__result, ptr, nstrlen(ptr) + 1);

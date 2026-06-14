@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2ExplosionDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -26,7 +27,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2ExplosionDef extends Struct<b2ExplosionDef> {
+public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2ExplosionDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -90,14 +91,19 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> {
     }
 
     /** @return Returns the property {@code maskBits} */
+    @Override
     public long maskBits() { return nmaskBits(address()); }
     /** @return Returns the property {@code position} */
+    @Override
     public b2Vec2 position() { return nposition(address()); }
     /** @return Returns the property {@code radius} */
+    @Override
     public float radius() { return nradius(address()); }
     /** @return Returns the property {@code falloff} */
+    @Override
     public float falloff() { return nfalloff(address()); }
     /** @return Returns the property {@code impulsePerLength} */
+    @Override
     public float impulsePerLength() { return nimpulsePerLength(address()); }
 
     /**

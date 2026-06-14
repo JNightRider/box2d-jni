@@ -18,34 +18,34 @@ public final class Memory {
     }
 
     // -----------------------------------
-    public static ByteBuffer createByteBuffer(int size, int sizeof) {
+    public static ByteBuffer memCreateByteBuffer(int size, int sizeof) {
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(size * sizeof);
         byteBuffer.order(ByteOrder.nativeOrder());
         return byteBuffer;
     }
 
-    public static ByteBuffer createByteBuffer(int size) {
-        return createByteBuffer(1, size);
+    public static ByteBuffer memCreateByteBuffer(int size) {
+        return memCreateByteBuffer(1, size);
     }
 
-    public static DoubleBuffer createDoubleBuffer(int size) {
-        ByteBuffer byteBuffer = createByteBuffer(size, Double.BYTES);
+    public static DoubleBuffer memCreateDoubleBuffer(int size) {
+        ByteBuffer byteBuffer = memCreateByteBuffer(size, Double.BYTES);
         DoubleBuffer result = byteBuffer.asDoubleBuffer();
 
         checkBuffer(result, size);
         return result;
     }
 
-    public static FloatBuffer createFloatBuffer(int size) {
-        ByteBuffer byteBuffer = createByteBuffer(size, Float.BYTES);
+    public static FloatBuffer memCreateFloatBuffer(int size) {
+        ByteBuffer byteBuffer = memCreateByteBuffer(size, Float.BYTES);
         FloatBuffer result = byteBuffer.asFloatBuffer();
 
         checkBuffer(result, size);
         return result;
     }
 
-    public static IntBuffer createIntBuffer(int size) {
-        ByteBuffer byteBuffer = createByteBuffer(size, Integer.BYTES);
+    public static IntBuffer memCreateIntBuffer(int size) {
+        ByteBuffer byteBuffer = memCreateByteBuffer(size, Integer.BYTES);
         IntBuffer result = byteBuffer.asIntBuffer();
 
         checkBuffer(result, size);
@@ -53,7 +53,7 @@ public final class Memory {
     }
 
     public static LongBuffer createLongBuffer(int size) {
-        ByteBuffer byteBuffer = createByteBuffer(size, Long.BYTES);
+        ByteBuffer byteBuffer = memCreateByteBuffer(size, Long.BYTES);
         LongBuffer result = byteBuffer.asLongBuffer();
 
         checkBuffer(result, size);
@@ -172,11 +172,4 @@ public final class Memory {
     }
     
     public static native long ngetNativeAddress(Buffer buffer);
-    
-    public static ByteBuffer memPutNativeAddress(long ptr, int size) {
-        return nputNativeAddress(ptr, size);
-    }
-    
-    public static native ByteBuffer nputNativeAddress(long ptr, int size);
-    
 }

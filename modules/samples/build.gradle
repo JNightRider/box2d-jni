@@ -7,7 +7,7 @@ description = 'box2d-jni samples'
 dependencies {
     implementation project(":modules:libraries:box2d-core")
     implementation files(
-        "${rootDir}/lib/box2d-natives-linux_x64.jar"
+        "${rootDir}/lib/box2d-0.1.0-natives-linux_x64.jar"
     )
 }
 
