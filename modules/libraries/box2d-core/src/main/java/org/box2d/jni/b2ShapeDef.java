@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2ShapeDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -34,7 +35,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2ShapeDef extends Struct<b2ShapeDef> {
+public class b2ShapeDef extends Struct<b2ShapeDef> implements ConstB2ShapeDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -125,30 +126,43 @@ public class b2ShapeDef extends Struct<b2ShapeDef> {
     }
 
     /** @return Returns the property {@code userData} */
+    @Override
     public long userData() { return nuserData(address()); }
     /** @return Returns the property {@code material} */
+    @Override
     public b2SurfaceMaterial material() { return nmaterial(address()); }
     /** @return Returns the property {@code density} */
+    @Override
     public float density() { return ndensity(address()); }
     /** @return Returns the property {@code filter} */
+    @Override
     public b2Filter filter() { return nfilter(address()); }
     /** @return Returns the property {@code enableCustomFiltering} */
+    @Override
     public boolean enableCustomFiltering() { return nenableCustomFiltering(address()); }
     /** @return Returns the property {@code isSensor} */
+    @Override
     public boolean isSensor() { return nisSensor(address()); }
     /** @return Returns the property {@code enableSensorEvents} */
+    @Override
     public boolean enableSensorEvents() { return nenableSensorEvents(address()); }
     /** @return Returns the property {@code enableContactEvents} */
+    @Override
     public boolean enableContactEvents() { return nenableContactEvents(address()); }
     /** @return Returns the property {@code enableHitEvents} */
+    @Override
     public boolean enableHitEvents() { return nenableHitEvents(address()); }
     /** @return Returns the property {@code enablePreSolveEvents} */
+    @Override
     public boolean enablePreSolveEvents() { return nenablePreSolveEvents(address()); }
     /** @return Returns the property {@code invokeContactCreation} */
+    @Override
     public boolean invokeContactCreation() { return ninvokeContactCreation(address()); }
     /** @return Returns the property {@code updateBodyMass} */
+    @Override
     public boolean updateBodyMass() { return nupdateBodyMass(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
         /**

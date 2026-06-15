@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2FilterJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -26,7 +27,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2FilterJointDef extends Struct<b2FilterJointDef> {
+public class b2FilterJointDef extends Struct<b2FilterJointDef> implements ConstB2FilterJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -81,8 +82,10 @@ public class b2FilterJointDef extends Struct<b2FilterJointDef> {
     }
 
     /** @return Returns the property {@code base} */
+    @Override
     public b2JointDef base() { return nbase(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

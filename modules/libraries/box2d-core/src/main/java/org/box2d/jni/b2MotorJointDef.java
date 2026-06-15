@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2MotorJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -33,7 +34,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2MotorJointDef extends Struct<b2MotorJointDef> {
+public class b2MotorJointDef extends Struct<b2MotorJointDef> implements ConstB2MotorJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -118,28 +119,40 @@ public class b2MotorJointDef extends Struct<b2MotorJointDef> {
     }
 
     /** @return Returns the property {@code base} */
+    @Override
     public b2JointDef base() { return nbase(address()); }
     /** @return Returns the property {@code linearVelocity} */
+    @Override
     public b2Vec2 linearVelocity() { return nlinearVelocity(address()); }
     /** @return Returns the property {@code maxVelocityForce} */
+    @Override
     public float maxVelocityForce() { return nmaxVelocityForce(address()); }
     /** @return Returns the property {@code angularVelocity} */
+    @Override
     public float angularVelocity() { return nangularVelocity(address()); }
     /** @return Returns the property {@code maxVelocityTorque} */
+    @Override
     public float maxVelocityTorque() { return nmaxVelocityTorque(address()); }
     /** @return Returns the property {@code linearHertz} */
+    @Override
     public float linearHertz() { return nlinearHertz(address()); }
     /** @return Returns the property {@code linearDampingRatio} */
+    @Override
     public float linearDampingRatio() { return nlinearDampingRatio(address()); }
     /** @return Returns the property {@code maxSpringForce} */
+    @Override
     public float maxSpringForce() { return nmaxSpringForce(address()); }
     /** @return Returns the property {@code angularHertz} */
+    @Override
     public float angularHertz() { return nangularHertz(address()); }
     /** @return Returns the property {@code angularDampingRatio} */
+    @Override
     public float angularDampingRatio() { return nangularDampingRatio(address()); }
     /** @return Returns the property {@code maxSpringTorque} */
+    @Override
     public float maxSpringTorque() { return nmaxSpringTorque(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

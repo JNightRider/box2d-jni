@@ -5,27 +5,27 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2Recording;
+import org.box2d.jni.readonly.ConstB2RecPlayer;
 
 import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2Recording b2Recording;
+ * typedef struct b2RecPlayer b2RecPlayer;
  * </code></pre>
  * 
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Recording extends Struct<b2Recording> implements ConstB2Recording {
-
+public class b2RecPlayer extends Struct<b2RecPlayer> implements ConstB2RecPlayer {
+    
     /**
      * Generates a reference to the given pointer.
      *
      * @param ptr A reference pointer.
      */
-    public b2Recording(Pointer ptr) {
+    public b2RecPlayer(Pointer ptr) {
         super(ptr);
     }
 
@@ -34,7 +34,7 @@ public class b2Recording extends Struct<b2Recording> implements ConstB2Recording
      *
      * @param address A virtual memory address
      */
-    public b2Recording(long address) {
+    public b2RecPlayer(long address) {
         super(address);
     }
 
@@ -44,33 +44,33 @@ public class b2Recording extends Struct<b2Recording> implements ConstB2Recording
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2Recording(long address, boolean factor) {
+    protected b2RecPlayer(long address, boolean factor) {
         super(address, factor);
     }
-
+    
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2Recording
+     * @return b2RecPlayer
      */
-    public static b2Recording createSafe(Pointer ptr) {
+    public static b2RecPlayer createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2Recording(ptr);
+        return new b2RecPlayer(ptr);
     }
     
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr address
-     * @return b2Recording
+     * @return b2RecPlayer
      */
-    public static b2Recording create(long ptr) {
-        return new b2Recording(ptr);
+    public static b2RecPlayer create(long ptr) {
+        return new b2RecPlayer(ptr);
     }
-
+    
     /*(non-Javadoc)
      */
     @Override
@@ -85,7 +85,7 @@ public class b2Recording extends Struct<b2Recording> implements ConstB2Recording
     /*(non-Javadoc)
      */
     @Override
-    protected b2Recording create(long address, Pointer ptr) {
-        return ptr == null ? new b2Recording(address) : new b2Recording(ptr);
+    protected b2RecPlayer create(long address, Pointer ptr) {
+        return ptr == null ? new b2RecPlayer(address) : new b2RecPlayer(ptr);
     }
 }

@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2DistanceJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -35,7 +36,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2DistanceJointDef extends Struct<b2DistanceJointDef> {
+public class b2DistanceJointDef extends Struct<b2DistanceJointDef> implements ConstB2DistanceJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -126,32 +127,46 @@ public class b2DistanceJointDef extends Struct<b2DistanceJointDef> {
     }
 
     /** @return Returns the property {@code base} */
+    @Override
     public b2JointDef base() { return nbase(address()); }
     /** @return Returns the property {@code length} */
+    @Override
     public float length() { return nlength(address()); }
     /** @return Returns the property {@code enableSpring} */
+    @Override
     public boolean enableSpring() { return nenableSpring(address()); }
     /** @return Returns the property {@code lowerSpringForce} */
+    @Override
     public float lowerSpringForce() { return nlowerSpringForce(address()); }
     /** @return Returns the property {@code upperSpringForce} */
+    @Override
     public float upperSpringForce() { return nupperSpringForce(address()); }
     /** @return Returns the property {@code hertz} */
+    @Override
     public float hertz() { return nhertz(address()); }
     /** @return Returns the property {@code dampingRatio} */
+    @Override
     public float dampingRatio() { return ndampingRatio(address()); }
     /** @return Returns the property {@code enableLimit} */
+    @Override
     public boolean enableLimit() { return nenableLimit(address()); }
     /** @return Returns the property {@code minLength} */
+    @Override
     public float minLength() { return nminLength(address()); }
     /** @return Returns the property {@code maxLength} */
+    @Override
     public float maxLength() { return nmaxLength(address()); }
     /** @return Returns the property {@code enableMotor} */
+    @Override
     public boolean enableMotor() { return nenableMotor(address()); }
     /** @return Returns the property {@code maxMotorForce} */
+    @Override
     public float maxMotorForce() { return nmaxMotorForce(address()); }
     /** @return Returns the property {@code motorSpeed} */
+    @Override
     public float motorSpeed() { return nmotorSpeed(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

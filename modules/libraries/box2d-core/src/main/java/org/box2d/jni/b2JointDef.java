@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2JointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -32,7 +33,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2JointDef extends Struct<b2JointDef> {
+public class b2JointDef extends Struct<b2JointDef> implements ConstB2JointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -114,26 +115,37 @@ public class b2JointDef extends Struct<b2JointDef> {
     }
 
     /** @return Returns the property {@code userData} */
+    @Override
     public long userData() { return nuserData(address()); }
     /** @return Returns the property {@code bodyIdA} */
+    @Override
     public b2BodyId bodyIdA() { return nbodyIdA(address()); }
     /** @return Returns the property {@code bodyIdB} */
+    @Override
     public b2BodyId bodyIdB() { return nbodyIdB(address()); }
     /** @return Returns the property {@code localFrameA} */
+    @Override
     public b2Transform localFrameA() { return nlocalFrameA(address()); }
     /** @return Returns the property {@code localFrameB} */
+    @Override
     public b2Transform localFrameB() { return nlocalFrameB(address()); }
     /** @return Returns the property {@code forceThreshold} */
+    @Override
     public float forceThreshold() { return nforceThreshold(address()); }
     /** @return Returns the property {@code torqueThreshold} */
+    @Override
     public float torqueThreshold() { return ntorqueThreshold(address()); }
     /** @return Returns the property {@code constraintHertz} */
+    @Override
     public float constraintHertz() { return nconstraintHertz(address()); }
     /** @return Returns the property {@code constraintDampingRatio} */
+    @Override
     public float constraintDampingRatio() { return nconstraintDampingRatio(address()); }
     /** @return Returns the property {@code drawScale} */
+    @Override
     public float drawScale() { return ndrawScale(address()); }
     /** @return Returns the property {@code collideConnected} */
+    @Override
     public boolean collideConnected() { return ncollideConnected(address()); }
 
     /**

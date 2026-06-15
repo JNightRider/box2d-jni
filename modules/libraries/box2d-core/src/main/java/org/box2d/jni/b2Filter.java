@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2Filter;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Memory.*;
@@ -23,7 +24,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Filter extends Struct<b2Filter> {
+public class b2Filter extends Struct<b2Filter> implements ConstB2Filter {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -84,10 +85,13 @@ public class b2Filter extends Struct<b2Filter> {
     }
 
     /** @return Returns the property {@code categoryBits} */
+    @Override
     public long categoryBits() { return ncategoryBits(address()); }
     /** @return Returns the property {@code maskBits} */
+    @Override
     public long maskBits() { return nmaskBits(address()); }
     /** @return Returns the property {@code groupIndex} */
+    @Override
     public int groupIndex() { return ngroupIndex(address()); }
 
     /**

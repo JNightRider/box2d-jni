@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2WheelJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -32,7 +33,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2WheelJointDef extends Struct<b2WheelJointDef> {
+public class b2WheelJointDef extends Struct<b2WheelJointDef> implements ConstB2WheelJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -114,26 +115,37 @@ public class b2WheelJointDef extends Struct<b2WheelJointDef> {
     }
 
     /** @return Returns the property {@code base} */
+    @Override
     public b2JointDef base() { return nbase(address()); }
     /** @return Returns the property {@code enableSpring} */
+    @Override
     public boolean enableSpring() { return nenableSpring(address()); }
     /** @return Returns the property {@code hertz} */
+    @Override
     public float hertz() { return nhertz(address()); }
     /** @return Returns the property {@code dampingRatio} */
+    @Override
     public float dampingRatio() { return ndampingRatio(address()); }
     /** @return Returns the property {@code enableLimit} */
+    @Override
     public boolean enableLimit() { return nenableLimit(address()); }
     /** @return Returns the property {@code lowerTranslation} */
+    @Override
     public float lowerTranslation() { return nlowerTranslation(address()); }
     /** @return Returns the property {@code upperTranslation} */
+    @Override
     public float upperTranslation() { return nupperTranslation(address()); }
     /** @return Returns the property {@code enableMotor} */
+    @Override
     public boolean enableMotor() { return nenableMotor(address()); }
     /** @return Returns the property {@code maxMotorTorque} */
+    @Override
     public float maxMotorTorque() { return nmaxMotorTorque(address()); }
     /** @return Returns the property {@code motorSpeed} */
+    @Override
     public float motorSpeed() { return nmotorSpeed(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

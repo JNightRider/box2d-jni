@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2WeldJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -27,7 +28,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2WeldJointDef extends Struct<b2WeldJointDef> {
+public class b2WeldJointDef extends Struct<b2WeldJointDef> implements ConstB2WeldJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -94,16 +95,22 @@ public class b2WeldJointDef extends Struct<b2WeldJointDef> {
     }
 
     /** @return Returns the property {@code base} */
+    @Override
     public b2JointDef base() { return nbase(address()); }
     /** @return Returns the property {@code linearHertz} */
+    @Override
     public float linearHertz() { return nlinearHertz(address()); }
     /** @return Returns the property {@code angularHertz} */
+    @Override
     public float angularHertz() { return nangularHertz(address()); }
     /** @return Returns the property {@code linearDampingRatio} */
+    @Override
     public float linearDampingRatio() { return nlinearDampingRatio(address()); }
     /** @return Returns the property {@code angularDampingRatio} */
+    @Override
     public float angularDampingRatio() { return nangularDampingRatio(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

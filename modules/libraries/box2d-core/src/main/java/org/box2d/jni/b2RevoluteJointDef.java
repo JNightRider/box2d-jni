@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2RevoluteJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -33,7 +34,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2RevoluteJointDef extends Struct<b2RevoluteJointDef> {
+public class b2RevoluteJointDef extends Struct<b2RevoluteJointDef> implements ConstB2RevoluteJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -118,28 +119,40 @@ public class b2RevoluteJointDef extends Struct<b2RevoluteJointDef> {
     }
 
     /** @return Returns the property {@code base} */
+    @Override
     public b2JointDef base() { return nbase(address()); }
     /** @return Returns the property {@code targetAngle} */
+    @Override
     public float targetAngle() { return ntargetAngle(address()); }
     /** @return Returns the property {@code enableSpring} */
+    @Override
     public boolean enableSpring() { return nenableSpring(address()); }
     /** @return Returns the property {@code hertz} */
+    @Override
     public float hertz() { return nhertz(address()); }
     /** @return Returns the property {@code dampingRatio} */
+    @Override
     public float dampingRatio() { return ndampingRatio(address()); }
     /** @return Returns the property {@code enableLimit} */
+    @Override
     public boolean enableLimit() { return nenableLimit(address()); }
     /** @return Returns the property {@code lowerAngle} */
+    @Override
     public float lowerAngle() { return nlowerAngle(address()); }
     /** @return Returns the property {@code upperAngle} */
+    @Override
     public float upperAngle() { return nupperAngle(address()); }
     /** @return Returns the property {@code enableMotor} */
+    @Override
     public boolean enableMotor() { return nenableMotor(address()); }
     /** @return Returns the property {@code maxMotorTorque} */
+    @Override
     public float maxMotorTorque() { return nmaxMotorTorque(address()); }
     /** @return Returns the property {@code motorSpeed} */
+    @Override
     public float motorSpeed() { return nmotorSpeed(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**

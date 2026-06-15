@@ -274,7 +274,7 @@ public class b2SurfaceMaterial extends Struct<b2SurfaceMaterial> implements Cons
     // -----------------------------------
 
     /** An array of {@code b2BodyDef} structs. */
-    public static class Buffer extends StructBuffer<b2SurfaceMaterial, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2SurfaceMaterial, Buffer> implements ConstBuffer<b2SurfaceMaterial, Buffer>, JNINative {
         /** An element that provides information about the structure. */
         private static final b2SurfaceMaterial ELEMENT_FACTORY = b2SurfaceMaterial.factory();
 

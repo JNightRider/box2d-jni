@@ -5,6 +5,7 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2ChainDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -30,7 +31,7 @@ import static org.box2d.jni.system.Memory.*;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2ChainDef extends Struct<b2ChainDef> {
+public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -109,22 +110,31 @@ public class b2ChainDef extends Struct<b2ChainDef> {
     }
 
     /** @return Returns the property {@code userData} */
+    @Override
     public long userData() { return nuserData(address()); }
     /** @return Returns the property {@code points} */
+    @Override
     public long points() { return npoints(address()); }
     /** @return Returns the property {@code count} */
+    @Override
     public int count() { return ncount(address()); }
     /** @return Returns the property {@code materials} */
+    @Override
     public long materials() { return nmaterials(address()); }
     /** @return Returns the property {@code materialCount} */
+    @Override
     public int materialCount() { return nmaterialCount(address()); }
     /** @return Returns the property {@code filter} */
+    @Override
     public b2Filter filter() { return nfilter(address()); }
     /** @return Returns the property {@code isLoop} */
+    @Override
     public boolean isLoop() { return nisLoop(address()); }
     /** @return Returns the property {@code enableSensorEvents} */
+    @Override
     public boolean enableSensorEvents() { return nenableSensorEvents(address()); }
     /** @return Returns the property {@code internalValue} */
+    @Override
     public int internalValue() { return ninternalValue(address()); }
 
         /**
