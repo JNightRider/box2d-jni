@@ -42,14 +42,14 @@ public final class Base {
     // --- [ b2GetByteCount ] ---
 
     /**
-     * {@code B2_API int b2GetByteCount( void ); }
+     * {@code B2_API int64_t b2GetByteCount( void ); }
      *
      * @return long
      */
     public static long b2GetByteCount() {
         return nb2GetByteCount();
     }
-    /* {@code B2_API int b2GetByteCount( void ); } */
+    /* {@code B2_API int64_t b2GetByteCount( void ); } */
     public static native long nb2GetByteCount();
 
 
