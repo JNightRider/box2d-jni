@@ -78,6 +78,23 @@ public class b2Circle extends Struct<b2Circle> implements ConstB2Circle {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param center center
+     * @param radius radius
+     *
+     * @return b2AABB
+     */
+    public b2Circle set(
+        b2Vec2 center,
+        float radius
+    ) {
+        center(center);
+        radius(radius);
+        return this;
+    }
+    
     /** @return Returns the property {@code center} */
     @Override
     public b2Vec2 center() { return ncenter(address()); }

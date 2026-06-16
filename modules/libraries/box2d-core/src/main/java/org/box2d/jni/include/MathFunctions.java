@@ -52,7 +52,7 @@ public final class MathFunctions {
             b2Rot rtmp = b2Rot.malloc()
         ) {
             vtmp.set(0.0f, 0.0f);
-            rtmp.set(0.0f, 0.0f);
+            rtmp.set(1.0f, 0.0f);
             b2Transform_identity.set(vtmp, rtmp);
         }
         try

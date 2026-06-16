@@ -82,6 +82,26 @@ public class b2RayCastInput extends Struct<b2RayCastInput> implements ConstB2Ray
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param origin b2Vec2
+     * @param translation b2Vec2
+     * @param maxFraction float
+     *
+     * @return b2AABB
+     */
+    public b2RayCastInput set(
+        b2Vec2 origin,
+        b2Vec2 translation,
+        float maxFraction
+    ) {
+        origin(origin);
+        translation(translation);
+        maxFraction(maxFraction);
+        return this;
+    }
+
     /** @return Returns the property {@code origin} */
     @Override
     public b2Vec2 origin() { return norigin(address()); }

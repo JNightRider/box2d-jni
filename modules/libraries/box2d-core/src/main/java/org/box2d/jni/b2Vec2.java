@@ -251,6 +251,23 @@ public class b2Vec2 extends Struct<b2Vec2> implements ConstB2Vec2 {
     public static Buffer malloc(int capacity) {
         return new Buffer(nmalloc(capacity * SIZEOF), capacity);
     }
+    
+    /**
+     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     *
+     * @param src source
+     * @return Buffer
+     */
+    public static Buffer mallocSafe(b2Vec2 ...src) {
+        if (src == null) {
+            return null;
+        }
+        Buffer ptr = malloc(src.length);
+        for (b2Vec2 v : src) {
+            ptr.put(v);
+        }
+        return ptr;
+    }
 
     /**
      * Reserve an amount n of memory for the object {@code b2Vec2}.

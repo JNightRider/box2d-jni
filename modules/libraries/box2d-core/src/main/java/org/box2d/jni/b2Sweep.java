@@ -89,6 +89,32 @@ public class b2Sweep extends Struct<b2Sweep> implements ConstB2Sweep {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param localCenter the value {@code localCenter}
+     * @param c1 the value {@code c1}
+     * @param c2 the value {@code c1}
+     * @param q2 the value {@code q1}
+     * @param q1 the value {@code q2}
+     *
+     * @return b2Sweep
+     */
+    public b2Sweep set(
+        b2Vec2 localCenter,
+        b2Vec2 c1,
+        b2Vec2 c2,
+        b2Rot q1,
+        b2Rot q2
+    ) {
+        localCenter(localCenter);
+        c1(c1);
+        c2(c2);
+        q1(q1);
+        q2(q2);
+        return this;
+    }
+
     /** @return Returns the property {@code localCenter} */
     @Override
     public b2Vec2 localCenter() { return nlocalCenter(address()); }

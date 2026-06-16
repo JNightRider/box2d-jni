@@ -695,7 +695,7 @@ public final class Collision {
      *
      * @return b2ShapeProxy
      */
-    public static b2ShapeProxy b2MakeProxy(ConstB2Vec2 points, int count, float radius, b2ShapeProxy __result) {
+    public static b2ShapeProxy b2MakeProxy(ConstB2Vec2.ConstBuffer points, int count, float radius, b2ShapeProxy __result) {
         checkPointers(points, __result);
         nb2MakeProxy(points.address(), count, radius, __result.address());
         return __result;

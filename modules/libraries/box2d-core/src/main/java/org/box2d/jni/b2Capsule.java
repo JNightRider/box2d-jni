@@ -82,6 +82,26 @@ public class b2Capsule extends Struct<b2Capsule> implements ConstB2Capsule {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param center1
+     * @param center2
+     * @param radius
+     *
+     * @return b2AABB
+     */
+    public b2Capsule set(
+        b2Vec2 center1,
+        b2Vec2 center2,
+        float radius
+    ) {
+        center1(center1);
+        center2(center2);
+        radius(radius);
+        return this;
+    }
+
     /** @return Returns the property {@code center1} */
     @Override
     public b2Vec2 center1() { return ncenter1(address()); }

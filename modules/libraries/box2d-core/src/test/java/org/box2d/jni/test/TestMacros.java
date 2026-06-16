@@ -4,10 +4,12 @@
  */
 package org.box2d.jni.test;
 
+import java.util.Objects;
+
+import org.box2d.jni.system.UintptrBuffer;
 import org.box2d.jni.test.internal.Extern;
 
 import static java.lang.System.out;
-import java.util.Objects;
 import static org.box2d.jni.include.Base.*;
 
 /**
@@ -69,7 +71,7 @@ public final class TestMacros {
                 System.exit(1);
             }
         }
-	    while ( false );
+	while ( false );
     }
     
     public static void ENSURE_SMALL( float C, Float tol ) {
@@ -87,6 +89,9 @@ public final class TestMacros {
     
     public static int ARRAY_COUNT( Object[] A ) {
         return A.length;
+    }    
+    public static int ARRAY_COUNT( UintptrBuffer A ) {
+        return A.remaining();
     }
     
     // Used to prevent the compiler from warning about unused variables

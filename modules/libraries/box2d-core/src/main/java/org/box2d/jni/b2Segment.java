@@ -77,6 +77,23 @@ public class b2Segment extends Struct<b2Segment> implements ConstB2Segment {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     * 
+     * @param point1 point1
+     * @param point2 point2
+     *
+     * @return b2AABB
+     */
+    public b2Segment set(
+        b2Vec2 point1,
+        b2Vec2 point2
+    ) {
+        point1(point1);
+        point2(point2);
+        return this;
+    }
+
     /** @return Returns the property {@code point1} */
     @Override
     public b2Vec2 point1() { return npoint1(address()); }

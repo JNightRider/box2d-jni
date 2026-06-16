@@ -440,9 +440,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2SegmentDistance
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeDistance
     (JNIEnv *__env, jclass clazz, jlong input, jlong cache, jlong simplexes, jint simplexCapacity, jlong __result)
 {
-    b2DistanceOutput* ptr = (b2DistanceOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ShapeDistance( (const b2DistanceInput*)input, (b2SimplexCache*) cache, (b2Simplex*) simplexes, simplexCapacity );
+    *(b2DistanceOutput*)__result = b2ShapeDistance((const b2DistanceInput*) input, (b2SimplexCache*) cache, (b2Simplex*) simplexes, simplexCapacity );
 }
 
 /*

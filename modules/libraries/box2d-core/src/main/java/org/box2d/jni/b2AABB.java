@@ -79,6 +79,23 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param lowerBound the value {@code lowerBound}
+     * @param upperBound the value {@code upperBound}
+     *
+     * @return b2AABB
+     */
+    public b2AABB set(
+        b2Vec2 lowerBound,
+        b2Vec2 upperBound
+    ) {
+        lowerBound(lowerBound);
+        upperBound(upperBound);
+        return this;
+    }
+    
     /** @return Returns the property {@code lowerBound} */
     @Override
     public b2Vec2 lowerBound() { return nlowerBound(address()); }
