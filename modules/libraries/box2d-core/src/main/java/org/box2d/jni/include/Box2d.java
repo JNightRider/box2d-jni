@@ -993,18 +993,16 @@ public final class Box2d {
      * {@code B2_API b2Recording* b2CreateRecording( int byteCapacity ); }
      *
      * @param byteCapacity int
-     * @param __result store
      *
      * @return b2Recording
      */
-    public static b2Recording b2CreateRecording(int byteCapacity, b2Recording __result) {
-        checkPointers(__result);
-        nb2CreateRecording(byteCapacity, __result.address());
-        return __result;
+    public static b2Recording b2CreateRecording(int byteCapacity) {
+        long __result = nb2CreateRecording(byteCapacity);
+        return b2Recording.createSafe(() -> __result);
     }
 
     /* {@code B2_API b2Recording* b2CreateRecording( int byteCapacity ); } */
-    public static native void nb2CreateRecording(int byteCapacity, long __result);
+    public static native long nb2CreateRecording(int byteCapacity);
 
     // --- [ b2DestroyRecording ] ---
 
@@ -1110,18 +1108,16 @@ public final class Box2d {
      * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
      *
      * @param path long
-     * @param __result store
      *
      * @return b2Recording
      */
-    public static b2Recording b2LoadRecordingFromFile(long path, b2Recording __result) {
-        checkPointers(__result);
-        nb2LoadRecordingFromFile(path, __result.address());
-        return __result;
+    public static b2Recording b2LoadRecordingFromFile(long path) {
+        long __result = nb2LoadRecordingFromFile(path);
+        return b2Recording.createSafe(() -> __result);
     }
 
     /* {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); } */
-    public static native void nb2LoadRecordingFromFile(long path, long __result);
+    public static native long nb2LoadRecordingFromFile(long path);
 
     // --- [ b2World_Snapshot ] ---
 
@@ -1291,15 +1287,15 @@ public final class Box2d {
      *
      * @param bodyId b2BodyId
      *
-     * @return String
+     * @return long
      */
-    public static String b2Body_GetName(b2BodyId bodyId) {
+    public static long b2Body_GetName(b2BodyId bodyId) {
         checkPointers(bodyId);
         return nb2Body_GetName(bodyId.address());
     }
 
     /* {@code B2_API const char* b2Body_GetName( b2BodyId bodyId ); } */
-    public static native String nb2Body_GetName(long bodyId);
+    public static native long nb2Body_GetName(long bodyId);
 
     // --- [ b2Body_SetUserData ] ---
 
@@ -2367,7 +2363,7 @@ public final class Box2d {
      *
      * @return int
      */
-    public static int b2Body_GetContactData(b2BodyId bodyId, b2ContactData contactData, int capacity) {
+    public static int b2Body_GetContactData(b2BodyId bodyId, b2ContactData.Buffer contactData, int capacity) {
         checkPointers(bodyId, contactData);
         return nb2Body_GetContactData(bodyId.address(), contactData.address(), capacity);
     }
@@ -3233,7 +3229,7 @@ public final class Box2d {
      *
      * @return int
      */
-    public static int b2Shape_GetContactData(b2ShapeId shapeId, b2ContactData contactData, int capacity) {
+    public static int b2Shape_GetContactData(b2ShapeId shapeId, b2ContactData.Buffer contactData, int capacity) {
         checkPointers(shapeId, contactData);
         return nb2Shape_GetContactData(shapeId.address(), contactData.address(), capacity);
     }
@@ -3269,7 +3265,7 @@ public final class Box2d {
      *
      * @return int
      */
-    public static int b2Shape_GetSensorData(b2ShapeId shapeId, b2ShapeId visitorIds, int capacity) {
+    public static int b2Shape_GetSensorData(b2ShapeId shapeId, b2ShapeId.Buffer visitorIds, int capacity) {
         checkPointers(shapeId, visitorIds);
         return nb2Shape_GetSensorData(shapeId.address(), visitorIds.address(), capacity);
     }
@@ -6012,7 +6008,7 @@ public final class Box2d {
      */
     public static b2RecPlayer b2RecPlayer_Create(long data, int size, int workerCount) {
         long __result = nb2RecPlayer_Create(data, size, workerCount);
-        return b2RecPlayer.create(__result);
+        return b2RecPlayer.createSafe(() -> __result);
     }
 
     /* {@code B2_API b2RecPlayer* b2RecPlayer_Create( const void* data, int size, int workerCount ); } */

@@ -98,7 +98,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     }
 
     /** @return Returns the property {@code type} */
-    public int type() { return ntype(address()); }
+    public b2RecQueryType type() { return ntype(address()); }
     /** @return Returns the property {@code filter} */
     public b2QueryFilter filter() { return nfilter(address()); }
     /** @return Returns the property {@code aabb} */
@@ -118,7 +118,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * @param value b2RecQueryType
      * @return b2RecQueryInfo
      */
-    public b2RecQueryInfo type(int value) {
+    public b2RecQueryInfo type(b2RecQueryType value) {
         ntype(address(), value);
         return this;
     }
@@ -237,7 +237,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
 
     // -----------------------------------
     
-    public static int ntype(long address) { return memGetInt(address + TYPE); }
+    public static b2RecQueryType ntype(long address) { return b2RecQueryType.valueOf(memGetInt(address + TYPE)); }
     public static b2QueryFilter nfilter(long address) { return b2QueryFilter.createSafe(() -> address + FILTER); }
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
     public static b2Vec2 norigin(long address) { return b2Vec2.createSafe(() -> address + ORIGIN); }
@@ -245,7 +245,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     public static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
     public static int nhitCount(long address) { return memGetInt(address + HIT_COUNT); }
 
-    public static void ntype(long address, int value) { memPutInt(address + TYPE, value); }
+    public static void ntype(long address, b2RecQueryType value) { memPutInt(address + TYPE, value.value()); }
     public static void nfilter(long address, b2QueryFilter value) { nmemcpy(address + FILTER, value.address(), b2QueryFilter.SIZEOF); }
     public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF); }
     public static void norigin(long address, b2Vec2 value) { nmemcpy(address + ORIGIN, value.address(), b2Vec2.SIZEOF); }
