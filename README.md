@@ -28,7 +28,7 @@ Make sure you have the necessary tools and the **libffi** library installed on y
 
 ## Starting Box2d-JNI
 
-**Box2d-JNI** is a mirror of **box2d**, so the official documentation is valid for those who wish to use this library.
+Box2d-JNI is a mirror of **box2d**, so the official documentation is valid for those who wish to use this library.
 
-- [Ir a la documentació](https://box2d.org/documentation/)
+- [Go to the documentation](https://box2d.org/documentation/)
 - [Sample (Hello Box2D)](https://github.com/JNightRider/box2d-jni/blob/master/modules/samples/src/main/java/org/box2d/jni/HelloBox2D.java) 
