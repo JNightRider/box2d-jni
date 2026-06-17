@@ -200,7 +200,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeCircleAABB
     (JNIEnv *__env, jclass clazz, jlong shape, jlong transformAdd, jlong __result)
 {
     b2AABB* ptr = (b2AABB*)(uintptr_t)__result;
-    b2Transform* transform = (b2Transform*)(uintptr_t)transformAdd;
+    b2WorldTransform* transform = (b2WorldTransform*)(uintptr_t)transformAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2ComputeCircleAABB( (const b2Circle*)shape, *transform );
 }
@@ -214,7 +214,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeCapsuleAAB
     (JNIEnv *__env, jclass clazz, jlong shape, jlong transformAdd, jlong __result)
 {
     b2AABB* ptr = (b2AABB*)(uintptr_t)__result;
-    b2Transform* transform = (b2Transform*)(uintptr_t)transformAdd;
+    b2WorldTransform* transform = (b2WorldTransform*)(uintptr_t)transformAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2ComputeCapsuleAABB( (const b2Capsule*) shape, *transform );
 }
@@ -228,7 +228,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputePolygonAAB
     (JNIEnv *__env, jclass clazz, jlong shape, jlong transformAdd, jlong __result)
 {
     b2AABB* ptr = (b2AABB*)(uintptr_t)__result;
-    b2Transform* transform = (b2Transform*)(uintptr_t)transformAdd;
+    b2WorldTransform* transform = (b2WorldTransform*)(uintptr_t)transformAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2ComputePolygonAABB( (const b2Polygon*) shape, *transform );
 }
@@ -242,7 +242,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeSegmentAAB
     (JNIEnv *__env, jclass clazz, jlong shape, jlong transformAdd, jlong __result)
 {
     b2AABB* ptr = (b2AABB*)(uintptr_t)__result;
-    b2Transform* transform = (b2Transform*)(uintptr_t)transformAdd;
+    b2WorldTransform* transform = (b2WorldTransform*)(uintptr_t)transformAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2ComputeSegmentAABB( (const b2Segment*) shape, *transform );
 }
@@ -520,8 +520,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideCircles
     (JNIEnv *__env, jclass clazz, jlong circleA, jlong xfAAdd, jlong circleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideCircles( (const b2Circle*) circleA, *xfA, (const b2Circle* )circleB, *xfB );
 }
@@ -535,8 +535,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideCapsuleAnd
     (JNIEnv *__env, jclass clazz, jlong capsuleA, jlong xfAAdd, jlong circleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideCapsuleAndCircle( (const b2Capsule*) capsuleA, *xfA, (const b2Circle*) circleB, *xfB );
 }
@@ -550,8 +550,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideSegmentAnd
     (JNIEnv *__env, jclass clazz, jlong segmentA, jlong xfAAdd, jlong circleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideSegmentAndCircle( (const b2Segment*) segmentA, *xfA, (const b2Circle*) circleB, *xfB );
 }
@@ -565,8 +565,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollidePolygonAnd
     (JNIEnv *__env, jclass clazz, jlong polygonA, jlong xfAAdd, jlong circleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollidePolygonAndCircle( (const b2Polygon*) polygonA, *xfA, (const b2Circle* )circleB,  *xfB );
 }
@@ -580,8 +580,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideCapsules
     (JNIEnv *__env, jclass clazz, jlong capsuleA, jlong xfAAdd, jlong capsuleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideCapsules( (const b2Capsule*) capsuleA, *xfA, (const b2Capsule*) capsuleB, *xfB );
 }
@@ -595,8 +595,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideSegmentAnd
     (JNIEnv *__env, jclass clazz, jlong segmentA, jlong xfAAdd, jlong capsuleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideSegmentAndCapsule( (const b2Segment*) segmentA, *xfA, (const b2Capsule*) capsuleB, *xfB );
 }
@@ -610,8 +610,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollidePolygonAnd
     (JNIEnv *__env, jclass clazz, jlong polygonA, jlong xfAAdd, jlong capsuleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollidePolygonAndCapsule( (const b2Polygon*) polygonA, *xfA, (const b2Capsule*) capsuleB, *xfB );
 }
@@ -625,8 +625,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollidePolygons
     (JNIEnv *__env, jclass clazz, jlong polygonA, jlong xfAAdd, jlong polygonB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollidePolygons( (const b2Polygon*) polygonA, *xfA, (const b2Polygon*) polygonB, *xfB );
 }
@@ -640,8 +640,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideSegmentAnd
     (JNIEnv *__env, jclass clazz, jlong segmentA, jlong xfAAdd, jlong polygonB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideSegmentAndPolygon( (const b2Segment*) segmentA, *xfA, (const b2Polygon*) polygonB, *xfB );
 }
@@ -655,8 +655,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideChainSegme
     (JNIEnv *__env, jclass clazz, jlong segmentA, jlong xfAAdd, jlong circleB, jlong xfBAdd, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideChainSegmentAndCircle( (const b2ChainSegment*) segmentA, *xfA, (const b2Circle*) circleB, *xfB );
 }
@@ -670,8 +670,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideChainSegme
     (JNIEnv *__env, jclass clazz, jlong segmentA, jlong xfAAdd, jlong capsuleB, jlong xfBAdd, jlong cache, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideChainSegmentAndCapsule( (const b2ChainSegment*) segmentA, *xfA, (const b2Capsule*) capsuleB, *xfB, (b2SimplexCache*) cache );
 }
@@ -685,8 +685,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideChainSegme
     (JNIEnv *__env, jclass clazz, jlong segmentA, jlong xfAAdd, jlong polygonB, jlong xfBAdd, jlong cache, jlong __result)
 {
     b2Manifold* ptr = (b2Manifold*)(uintptr_t)__result;
-    b2Transform* xfA = (b2Transform*)(uintptr_t)xfAAdd;
-    b2Transform* xfB = (b2Transform*)(uintptr_t)xfBAdd;
+    b2WorldTransform* xfA = (b2WorldTransform*)(uintptr_t)xfAAdd;
+    b2WorldTransform* xfB = (b2WorldTransform*)(uintptr_t)xfBAdd;
     UNUSED_PARAMS(__env, clazz)
     *ptr = b2CollideChainSegmentAndPolygon( (const b2ChainSegment*) segmentA, *xfA, (const b2Polygon*) polygonB, *xfB, (b2SimplexCache*) cache );
 }
@@ -835,15 +835,15 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1RayC
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_ShapeCast
+ * Method:    nb2DynamicTree_BoxCast
  * Signature: (JJJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1ShapeCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1BoxCast
     (JNIEnv *__env, jclass clazz, jlong tree, jlong input, jlong maskBits, jlong callback, jlong context, jlong __result)
 {
     b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_ShapeCast( (const b2DynamicTree*) tree, (const b2ShapeCastInput* )input, (uint64_t) maskBits, (b2TreeShapeCastCallbackFcn*) callback, (void*) context );
+    *ptr = b2DynamicTree_BoxCast( (const b2DynamicTree*) tree, (const b2BoxCastInput*)input, (uint64_t) maskBits, (b2TreeBoxCastCallbackFcn*) callback, (void*) context );
 }
 
 /*

@@ -79,6 +79,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2GetVersion
 
 /*
  * Class:     org_box2d_jni_include_Base
+ * Method:    nb2IsDoublePrecision
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Base_nb2IsDoublePrecision
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean) b2IsDoublePrecision();
+}
+
+/*
+ * Class:     org_box2d_jni_include_Base
  * Method:    nb2GetTicks
  * Signature: ()J
  */

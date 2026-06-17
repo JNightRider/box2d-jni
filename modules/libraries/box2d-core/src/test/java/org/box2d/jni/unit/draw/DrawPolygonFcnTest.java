@@ -33,9 +33,9 @@ public class DrawPolygonFcnTest {
         (
                 b2Vec2.Buffer buffer = b2Vec2.malloc(10);
         ) {
-            buffer.put(b2Vec2.malloc().set(1, 2));
+            buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set((float) -Math.PI, (float) Math.PI));
-            buffer.put(b2Vec2.malloc().set(6, 8));
+            buffer.put(b2Vec2.malloc().set(6f, 8f));
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
 
@@ -71,9 +71,9 @@ public class DrawPolygonFcnTest {
         (
                 b2Vec2.Buffer buffer = b2Vec2.malloc(10);
         ) {
-            buffer.put(b2Vec2.malloc().set(1, 2));
+            buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set((float) -Math.PI, (float) Math.PI));
-            buffer.put(b2Vec2.malloc().set(6, 8));
+            buffer.put(b2Vec2.malloc().set(6f, 8f));
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
 

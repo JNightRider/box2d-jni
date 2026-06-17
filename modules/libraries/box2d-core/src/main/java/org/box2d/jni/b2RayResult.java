@@ -16,7 +16,7 @@ import static org.box2d.jni.system.Memory.*;
  * typedef struct b2RayResult
  * {
  *     b2ShapeId shapeId;
- *     b2Vec2 point;
+ *     b2Pos point;
  *     b2Vec2 normal;
  *     float fraction;
  *     int nodeVisits;
@@ -50,7 +50,7 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
     static {
         Layout layout = __struct(
                 __member(b2ShapeId.SIZEOF, b2ShapeId.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4),
                 __member(4),
@@ -103,7 +103,7 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
     public b2ShapeId shapeId() { return nshapeId(address()); }
     /** @return Returns the property {@code point} */
     @Override
-    public b2Vec2 point() { return npoint(address()); }
+    public b2Pos point() { return npoint(address()); }
     /** @return Returns the property {@code normal} */
     @Override
     public b2Vec2 normal() { return nnormal(address()); }
@@ -137,7 +137,7 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
      * @param value The value
      * @return b2RayResult
      */
-    public b2RayResult point(b2Vec2 value) {
+    public b2RayResult point(b2Pos value) {
         npoint(address(), value);
         return this;
     }
@@ -278,7 +278,7 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
     // -----------------------------------
 
     public static b2ShapeId nshapeId(long address) { return b2ShapeId.createSafe(() -> address + SHAPE_ID); }
-    public static b2Vec2 npoint(long address) { return b2Vec2.createSafe(() -> address + POINT); }
+    public static b2Pos npoint(long address) { return b2Pos.ncreateSafe(() -> address + POINT); }
     public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
     public static float nfraction(long address) { return memGetFloat(address + FRACTION); }
     public static int nnodeVisits(long address) { return memGetInt(address + NODE_VISITS); }
@@ -286,7 +286,7 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
     public static boolean nhit(long address) { return memGetByte(address + HIT) != 0; }
 
     public static void nshapeId(long address, b2ShapeId value) { nmemcpy(address + SHAPE_ID, value.address(), b2ShapeId.SIZEOF); }
-    public static void npoint(long address, b2Vec2 value) { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF); }
+    public static void npoint(long address, b2Pos value) { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF); }
     public static void nnormal(long address, b2Vec2 value) { nmemcpy(address + NORMAL, value.address(), b2Vec2.SIZEOF); }
     public static void nfraction(long address, float value) { memPutFloat(address + FRACTION, value); }
     public static void nnodeVisits(long address, int value) { memPutInt(address + NODE_VISITS, value); }

@@ -69,8 +69,8 @@ public class b2PlaneTest {
                 destroyer.create(() -> b2Plane.malloc()
                     .normal(/* b2Vec2 */
                         destroyer.create(() -> b2Vec2.malloc()
-                            .x(1)
-                            .y(2)
+                            .x(1f)
+                            .y(2f)
                         )
                     )
                     .offset(0.1f)

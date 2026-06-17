@@ -4,6 +4,7 @@
  */
 package org.box2d.jni.function;
 
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.Pointer;
@@ -22,13 +23,13 @@ public interface CCastResultFcn extends Pointer {
      * The function of the callback.
      *
      * @param shapeId b2ShapeId
-     * @param point b2Vec2
+     * @param point b2Pos
      * @param normal b2Vec2
      * @param fraction float
      * @param context long
      * @return float
      */
-    float invoke(b2ShapeId shapeId, b2Vec2 point, b2Vec2 normal, float fraction, long context);
+    float invoke(b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

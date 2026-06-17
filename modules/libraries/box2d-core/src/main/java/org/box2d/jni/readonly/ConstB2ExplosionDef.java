@@ -24,9 +24,9 @@ public interface ConstB2ExplosionDef extends ConstStruct {
     /**
      * The center of the explosion in world space
      *
-     * @return ConstB2Vec2
+     * @return ConstB2Pos
      */
-    ConstB2Vec2 position();
+    ConstB2Pos position();
 
     /**
      * The radius of the explosion

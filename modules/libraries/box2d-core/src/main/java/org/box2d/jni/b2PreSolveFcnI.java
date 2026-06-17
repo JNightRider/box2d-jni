@@ -16,7 +16,7 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef bool b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Vec2 point, b2Vec2 normal, void* context ); }
+ * Callback function: {@code typedef bool b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -32,7 +32,7 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
         LongBuffer targs = createLongBuffer(5);
         targs.put(ffi_type_b2ShapeId)
              .put(ffi_type_b2ShapeId)
-             .put(ffi_type_b2Vec2)
+             .put(ffi_type_b2Pos)
              .put(ffi_type_b2Vec2)
              .put(ffi_type_pointer);
         targs.flip();
@@ -62,8 +62,8 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
                         ? memcpy(b2ShapeId.malloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF)
                         : b2ShapeId.createSafe(() -> memGetAddress(args + VarType.Uintptrt.sizeof())),
                 isByValue()
-                        ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF)
-                        : b2Vec2.createSafe(() -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
+                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
+                        : b2Pos.ncreateSafe(() -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
                 isByValue()
                         ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args + 3 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF)
                         : b2Vec2.createSafe(() -> memGetAddress(args + 3 * VarType.Uintptrt.sizeof())),

@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         b2Vec2 vec2 = b2Vec2.malloc();
         
-        vec2.x(2).y(7);
+        vec2.x(2f).y(7f);
         
         Debug.apiPrint("x: %f, y: %f".formatted(vec2.x(), vec2.y()));
         Debug.apiPrint("Sizeof: b2Vec2 " + vec2.sizeof());
@@ -22,9 +22,9 @@ public class Main {
         
         
         b2Vec2.Buffer buffer = b2Vec2.malloc(3);
-        buffer.put(b2Vec2.malloc().x(1).y(0));
-        buffer.put(b2Vec2.malloc().x(3).y(4));
-        buffer.put(b2Vec2.malloc().x(4).y(8));
+        buffer.put(b2Vec2.malloc().x(1f).y(0f));
+        buffer.put(b2Vec2.malloc().x(3f).y(4f));
+        buffer.put(b2Vec2.malloc().x(4f).y(8f));
         buffer.flip();
         
         

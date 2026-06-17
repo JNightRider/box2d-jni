@@ -4,7 +4,6 @@
  */
 package org.box2d.jni.unit.draw;
 
-import org.box2d.jni.b2HexColor;
 import org.box2d.jni.b2Rot;
 import org.box2d.jni.b2Transform;
 import org.box2d.jni.draw.DrawTransformFcn;
@@ -32,7 +31,7 @@ public class DrawTransformFcnTest {
     public void callback() {
         try
         (
-            b2Vec2 v = b2Vec2.malloc().set(1, 2);
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
             b2Transform t = b2Transform.malloc().set(v, r)
         ) {
@@ -49,7 +48,7 @@ public class DrawTransformFcnTest {
         }
         try
         (
-            b2Vec2 v = b2Vec2.malloc().set(1, 2);
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
             b2Transform t = b2Transform.malloc().set(v, r)
         ) {

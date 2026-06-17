@@ -14,7 +14,6 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2ManifoldPoint
  * {
- *     b2Vec2 clipPoint;
  *     b2Vec2 anchorA;
  *     b2Vec2 anchorB;
  *     float separation;
@@ -30,7 +29,7 @@ import static org.box2d.jni.system.Memory.*;
  * 
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
 
@@ -42,7 +41,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
 
     /** The struct member offsets. */
     private static final int
-            CLIP_POINT,
             ANCHOR_A,
             ANCHOR_B,
             SEPARATION,
@@ -58,7 +56,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
         Layout layout = __struct(
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4),
                 __member(4),
                 __member(4),
@@ -69,17 +66,16 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
                 __member(1)
         );
 
-        CLIP_POINT = layout.offsetof(0);
-        ANCHOR_A = layout.offsetof(1);
-        ANCHOR_B = layout.offsetof(2);
-        SEPARATION = layout.offsetof(3);
-        BASE_SEPARATION = layout.offsetof(4);
-        NORMAL_IMPULSE = layout.offsetof(5);
-        TANGENT_IMPULSE = layout.offsetof(6);
-        TOTAL_NORMAL_IMPULSE = layout.offsetof(7);
-        NORMAL_VELOCITY = layout.offsetof(8);
-        ID = layout.offsetof(9);
-        PERSISTED = layout.offsetof(10);
+        ANCHOR_A = layout.offsetof(0);
+        ANCHOR_B = layout.offsetof(1);
+        SEPARATION = layout.offsetof(2);
+        BASE_SEPARATION = layout.offsetof(3);
+        NORMAL_IMPULSE = layout.offsetof(4);
+        TANGENT_IMPULSE = layout.offsetof(5);
+        TOTAL_NORMAL_IMPULSE = layout.offsetof(6);
+        NORMAL_VELOCITY = layout.offsetof(7);
+        ID = layout.offsetof(8);
+        PERSISTED = layout.offsetof(9);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -113,8 +109,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
         super(address, factor);
     }
 
-    /** @return Returns the property {@code clipPoint} */
-    public b2Vec2 clipPoint() { return nclipPoint(address()); }
     /** @return Returns the property {@code anchorA} */
     public b2Vec2 anchorA() { return nanchorA(address()); }
     /** @return Returns the property {@code anchorB} */
@@ -135,17 +129,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
     public short id() { return nid(address()); }
     /** @return Returns the property {@code persisted} */
     public boolean persisted() { return npersisted(address()); }
-
-    /**
-     * Set the value of property {@code clipPoint}
-     *
-     * @param value b2Vec2
-     * @return b2ManifoldPoint
-     */
-    public b2ManifoldPoint clipPoint(b2Vec2 value) {
-        nclipPoint(address(), value);
-        return this;
-    }
 
     /**
      * Set the value of property {@code anchorA}
@@ -347,7 +330,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
 
     // -----------------------------------
     
-    public static b2Vec2 nclipPoint(long address) { return b2Vec2.createSafe(() -> address + CLIP_POINT); }
     public static b2Vec2 nanchorA(long address) { return b2Vec2.createSafe(() -> address + ANCHOR_A); }
     public static b2Vec2 nanchorB(long address) { return b2Vec2.createSafe(() -> address + ANCHOR_B); }
     public static float nseparation(long address) { return memGetFloat(address + SEPARATION); }
@@ -359,7 +341,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
     public static short nid(long address) { return memGetShort(address + ID); }
     public static boolean npersisted(long address) { return memGetByte(address + PERSISTED) != 0; }
 
-    public static void nclipPoint(long address, b2Vec2 value) { nmemcpy(address + CLIP_POINT, value.address(), b2Vec2.SIZEOF); }
     public static void nanchorA(long address, b2Vec2 value) { nmemcpy(address + ANCHOR_A, value.address(), b2Vec2.SIZEOF); }
     public static void nanchorB(long address, b2Vec2 value) { nmemcpy(address + ANCHOR_B, value.address(), b2Vec2.SIZEOF); }
     public static void nseparation(long address, float value) { memPutFloat(address + SEPARATION, value); }

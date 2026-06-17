@@ -33,13 +33,13 @@ public class DrawSolidPolygonFcnTest {
         try
         (
             b2Vec2.Buffer buffer = b2Vec2.malloc(10);
-            b2Vec2 v = b2Vec2.malloc().set(1, 2);
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
             b2Transform t = b2Transform.malloc().set(v, r)
         ) {
-            buffer.put(b2Vec2.malloc().set(1, 2));
+            buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set(-0.5f, -3.5f));
-            buffer.put(b2Vec2.malloc().set(6, 8));
+            buffer.put(b2Vec2.malloc().set(6f, 8f));
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
 
@@ -81,13 +81,13 @@ public class DrawSolidPolygonFcnTest {
         try
         (
             b2Vec2.Buffer buffer = b2Vec2.malloc(10);
-            b2Vec2 v = b2Vec2.malloc().set(1, 2);
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
             b2Transform t = b2Transform.malloc().set(v, r)
         ) {
-            buffer.put(b2Vec2.malloc().set(1, 2));
+            buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set(-0.5f, -3.5f));
-            buffer.put(b2Vec2.malloc().set(6, 8));
+            buffer.put(b2Vec2.malloc().set(6f, 8f));
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
 

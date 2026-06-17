@@ -30,8 +30,8 @@ public class DrawLineFcnTest {
     public void callback() {
         try
         (
-            b2Vec2 v0 = b2Vec2.malloc().set(1, 2);
-            b2Vec2 v1 = b2Vec2.malloc().set(3, 5)
+            b2Vec2 v0 = b2Vec2.malloc().set(1f, 2f);
+            b2Vec2 v1 = b2Vec2.malloc().set(3f, 5f)
         ) {
             DrawLineFcnI func = (p1, p2, color, context) -> {
                 Debug.apiPrint("DrawLineFcnI: p1=" + p1 + ", p2=" + p2 + ", color=" + color + ", context=" + context);

@@ -173,21 +173,21 @@ public class b2WorldDefTest {
 
         {
             try (b2WorldDef obj = b2WorldDef.malloc()) {
-                obj.gravity().x(0).y(-10);
+                obj.gravity().x(0f).y(-10f);
                 obj.workerCount(1);
                 obj.enableSleep(true);
                 ptr.put(obj);
             }
 
             try (b2WorldDef obj = b2WorldDef.malloc()) {
-                obj.gravity().x(1).y(-20);
+                obj.gravity().x(1f).y(-20f);
                 obj.workerCount(2);
                 obj.enableSleep(false);
                 ptr.put(obj);
             }
 
             try (b2WorldDef obj = b2WorldDef.malloc()) {
-                obj.gravity().x(2).y(-30);
+                obj.gravity().x(2f).y(-30f);
                 obj.workerCount(3);
                 obj.enableSleep(true);
                 ptr.put(obj);

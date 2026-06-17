@@ -32,6 +32,7 @@ public class b2RayResultTest {
     /**
      * Test the properties of the structure.
      */
+    @SuppressWarnings("unchecked")
     private void struct() {
         try (b2RayResult ptr = b2RayResult.malloc()) {
             Assert.assertNotEquals(NULL, ptr.address());
@@ -58,8 +59,8 @@ public class b2RayResultTest {
             Assert.assertEquals(2, (int) ptr.shapeId().world0());
             Assert.assertEquals(3, (int) ptr.shapeId().generation());
 
-            Assert.assertEquals(10.5f, ptr.point().x(), 0.0001f);
-            Assert.assertEquals(20.5f, ptr.point().y(), 0.0001f);
+            Assert.assertEquals(10.5d, ptr.point().x().doubleValue(), 0.0001d);
+            Assert.assertEquals(20.5d, ptr.point().y().doubleValue(), 0.0001d);
 
             Assert.assertEquals(-1.0f, ptr.normal().x(), 0.0001f);
             Assert.assertEquals(0.0f, ptr.normal().y(), 0.0001f);
@@ -74,6 +75,7 @@ public class b2RayResultTest {
     /**
      * Buffer test for {@code Buffer} structures.
      */
+    @SuppressWarnings("unchecked")
     private void buffer() {
         b2RayResult.Buffer ptr = b2RayResult.malloc(5);
 
@@ -126,8 +128,8 @@ public class b2RayResultTest {
                 Assert.assertEquals(10, (int) obj.shapeId().world0());
                 Assert.assertEquals(2, (int) obj.shapeId().generation());
 
-                Assert.assertEquals(1f, obj.point().x(), 0.0001f);
-                Assert.assertEquals(2f, obj.point().y(), 0.0001f);
+                Assert.assertEquals(1d, obj.point().x().doubleValue(), 0.0001d);
+                Assert.assertEquals(2d, obj.point().y().doubleValue(), 0.0001d);
 
                 Assert.assertEquals(0f, obj.normal().x(), 0.0001f);
                 Assert.assertEquals(1f, obj.normal().y(), 0.0001f);
@@ -143,8 +145,8 @@ public class b2RayResultTest {
                 Assert.assertEquals(20, (int) obj.shapeId().world0());
                 Assert.assertEquals(3, (int) obj.shapeId().generation());
 
-                Assert.assertEquals(3f, obj.point().x(), 0.0001f);
-                Assert.assertEquals(4f, obj.point().y(), 0.0001f);
+                Assert.assertEquals(3d, obj.point().x().doubleValue(), 0.0001d);
+                Assert.assertEquals(4d, obj.point().y().doubleValue(), 0.0001d);
 
                 Assert.assertEquals(1f, obj.normal().x(), 0.0001f);
                 Assert.assertEquals(0f, obj.normal().y(), 0.0001f);
@@ -160,8 +162,8 @@ public class b2RayResultTest {
                 Assert.assertEquals(30, (int) obj.shapeId().world0());
                 Assert.assertEquals(4, (int) obj.shapeId().generation());
 
-                Assert.assertEquals(5f, obj.point().x(), 0.0001f);
-                Assert.assertEquals(6f, obj.point().y(), 0.0001f);
+                Assert.assertEquals(5d, obj.point().x().doubleValue(), 0.0001d);
+                Assert.assertEquals(6d, obj.point().y().doubleValue(), 0.0001d);
 
                 Assert.assertEquals(-1f, obj.normal().x(), 0.0001f);
                 Assert.assertEquals(0f, obj.normal().y(), 0.0001f);

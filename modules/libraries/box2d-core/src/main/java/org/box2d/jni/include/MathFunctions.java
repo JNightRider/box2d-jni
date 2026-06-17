@@ -10,9 +10,11 @@ import org.box2d.jni.b2AABB;
 import org.box2d.jni.b2CosSin;
 import org.box2d.jni.b2Mat22;
 import org.box2d.jni.b2Plane;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2Rot;
 import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 
 import org.box2d.jni.readonly.ConstB2Vec2;
 
@@ -26,6 +28,7 @@ import static org.box2d.jni.system.Checks.*;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public final class MathFunctions {
     static { Library.initialize(); }
 
@@ -44,7 +47,12 @@ public final class MathFunctions {
     public static final b2Transform b2Transform_identity = b2Transform.malloc() ;
     /** A matrix of zeros. */
     public static final b2Mat22 b2Mat22_zero = b2Mat22.malloc();
-    
+
+    /** Native bindings: {@code static const b2Pos b2Pos_zero = { 0.0f, 0.0f };} */
+    public static final b2Pos b2Pos_zero = b2Pos.nmalloc().set( 0.0f, 0.0f );
+    /** Native bindings: {@code static const b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };} */
+    public static final b2WorldTransform b2WorldTransform_identity = b2WorldTransform.nmalloc();
+
     static {
         try
         (
@@ -64,8 +72,17 @@ public final class MathFunctions {
             vtmp1.set(0.0f, 0.0f);
             b2Mat22_zero.set(vtmp0, vtmp1);
         }
+        try
+        (
+            b2Pos vtmp = b2Pos.nmalloc();
+            b2Rot rtmp = b2Rot.malloc()
+        ) {
+            vtmp.set(0.0f, 0.0f);
+            rtmp.set(1.0f, 0.0f);
+            b2WorldTransform_identity.set(vtmp, rtmp);
+        }
     }
-    
+
     // --- [ b2IsValidFloat ] ---
     
     /**
@@ -137,17 +154,49 @@ public final class MathFunctions {
     public static native boolean nb2IsValidAABB( long aabb );
 
     // --- [ b2IsValidPlane ] ---
+
     /**
      * {@code b2IsValidPlane( b2Plane a ); }
+     *
      * @param a b2Plane
      * @return boolean
      */
-    public static boolean b2IsValidPlane( b2Plane a ){
+    public static boolean b2IsValidPlane(b2Plane a) {
         checkPointers(a);
         return n2IsValidPlane(a.address());
     }
+
     /* {@code b2IsValidPlane( b2Plane a ); } */
-    public static native boolean n2IsValidPlane( long a );
+    public static native boolean n2IsValidPlane(long a);
+
+    // --- [ b2IsValidPosition ] ---
+    /**
+     * {@code b2IsValidPosition( b2Pos p );}
+     *
+     * @param p b2Pos
+     * @return boolean
+     */
+    public static boolean b2IsValidPosition(b2Pos p) {
+        checkPointers(p);
+        return nb2IsValidPosition(p.address());
+    }
+    /* {@code b2IsValidPosition( b2Pos p );} */
+    public static native boolean nb2IsValidPosition(long p);
+
+    // --- [ b2IsValidWorldTransform ] ---
+
+    /**
+     * {@code b2IsValidWorldTransform( b2WorldTransform t );}
+     *
+     * @param t b2WorldTransform
+     * @return boolean
+     */
+    public static boolean b2IsValidWorldTransform(b2WorldTransform t) {
+        checkPointers(t);
+        return nb2IsValidWorldTransform(t.address());
+    }
+    /* {@code b2IsValidWorldTransform( b2WorldTransform t );} */
+    public static native boolean nb2IsValidWorldTransform(long t);
 
     // --- [ b2MinInt ] ---
 
@@ -1236,7 +1285,224 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Transform b2InvMulTransforms( b2Transform A, b2Transform B )} */
     public static native void nb2InvMulTransforms(long A, long B, long __result);
 
+    // --- [ b2ToPos ] ---
 
+    /**
+     * {@code B2_INLINE b2Pos b2ToPos( b2Vec2 v )}
+     *
+     * @param v b2Vec2
+     * @param __result b2Pos
+     * @return b2Pos
+     */
+    public static b2Pos b2ToPos(b2Vec2 v, b2Pos __result) {
+        checkPointers(v, __result);
+        nb2ToPos(v.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Pos b2ToPos( b2Vec2 v )} */
+    public static native void nb2ToPos(long v, long __result);
+
+    // --- [ b2ToVec2 ] ---
+
+    /**
+     * {@code B2_INLINE b2Vec2 b2ToVec2( b2Pos p )}
+     *
+     * @param p b2Pos
+     * @param __result b2Vec2
+     * @return b2Vec2
+     */
+    public static b2Vec2 b2ToVec2(b2Pos p, b2Vec2 __result) {
+        checkPointers(p, __result);
+        nb2ToVec2(p.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Vec2 b2ToVec2( b2Pos p )} */
+    public static native void nb2ToVec2(long p, long __result);
+
+    // --- [ b2RoundDownFloat ] ---
+
+    /**
+     * {@code B2_INLINE float b2RoundDownFloat( double x )}
+     *
+     * @param x double
+     * @return float
+     */
+    public static float b2RoundDownFloat(double x) {
+        return nb2RoundDownFloat(x);
+    }
+
+    /* {@code B2_INLINE float b2RoundDownFloat( double x )} */
+    public static native float nb2RoundDownFloat(double x);
+
+    // --- [ b2RoundUpFloat ] ---
+
+    /**
+     * {@code B2_INLINE float b2RoundUpFloat( double x )}
+     *
+     * @param x double
+     * @return float
+     */
+    public static float b2RoundUpFloat(double x) {
+        return nb2RoundUpFloat(x);
+    }
+
+    /* {@code B2_INLINE float b2RoundUpFloat( double x )} */
+    public static native float nb2RoundUpFloat(double x);
+
+    // --- [ b2SubPos ] ---
+
+    /**
+     * {@code B2_INLINE b2Vec2 b2SubPos( b2Pos a, b2Pos b )}
+     *
+     * @param a b2Pos
+     * @param b b2Pos
+     * @param __result b2Vec2
+     * @return b2Vec2
+     */
+    public static b2Vec2 b2SubPos(b2Pos a, b2Pos b, b2Vec2 __result) {
+        checkPointers(a, b, __result);
+        nb2SubPos(a.address(), b.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Vec2 b2SubPos( b2Pos a, b2Pos b )} */
+    public static native void nb2SubPos(long a, long b, long __result);
+
+    // --- [ b2OffsetPos ] ---
+
+    /**
+     * {@code B2_INLINE b2Pos b2OffsetPos( b2Pos p, b2Vec2 d )}
+     *
+     * @param p b2Pos
+     * @param d b2Vec2
+     * @param __result b2Pos
+     * @return b2Pos
+     */
+    public static b2Pos b2OffsetPos(b2Pos p, b2Vec2 d, b2Pos __result) {
+        checkPointers(p, d, __result);
+        nb2OffsetPos(p.address(), d.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Pos b2OffsetPos( b2Pos p, b2Vec2 d )} */
+    public static native void nb2OffsetPos(long p, long d, long __result);
+
+    // --- [ b2LerpPosition ] ---
+
+    /**
+     * {@code B2_INLINE b2Pos b2LerpPosition( b2Pos a, b2Pos b, float t )}
+     *
+     * @param a b2Pos
+     * @param b b2Pos
+     * @param t float
+     * @param __result b2Pos
+     * @return b2Pos
+     */
+    public static b2Pos b2LerpPosition(b2Pos a, b2Pos b, float t, b2Pos __result) {
+        checkPointers(a, b, __result);
+        nb2LerpPosition(a.address(), b.address(), t, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Pos b2LerpPosition( b2Pos a, b2Pos b, float t )} */
+    public static native void nb2LerpPosition(long a, long b, float t, long __result);
+
+    // --- [ b2TransformWorldPoint ] ---
+
+    /**
+     * {@code B2_INLINE b2Pos b2TransformWorldPoint( b2WorldTransform t, b2Vec2 p )}
+     *
+     * @param t b2WorldTransform
+     * @param p b2Vec2
+     * @param __result b2Pos
+     * @return b2Pos
+     */
+    public static b2Pos b2TransformWorldPoint(b2WorldTransform t, b2Vec2 p, b2Pos __result) {
+        checkPointers(t, p, __result);
+        nb2TransformWorldPoint(t.address(), p.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Pos b2TransformWorldPoint( b2WorldTransform t, b2Vec2 p )} */
+    public static native void nb2TransformWorldPoint(long t, long p, long __result);
+
+    // --- [ b2InvTransformWorldPoint ] ---
+
+    /**
+     * {@code B2_INLINE b2Vec2 b2InvTransformWorldPoint( b2WorldTransform t, b2Pos p )}
+     *
+     * @param t b2WorldTransform
+     * @param p b2Pos
+     * @param __result b2Vec2
+     * @return b2Vec2
+     */
+    public static b2Vec2 b2InvTransformWorldPoint(b2WorldTransform t, b2Pos p, b2Vec2 __result) {
+        checkPointers(t, p, __result);
+        nb2InvTransformWorldPoint(t.address(), p.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Vec2 b2InvTransformWorldPoint( b2WorldTransform t, b2Pos p )} */
+    public static native void nb2InvTransformWorldPoint(long t, long p, long __result);
+
+    // --- [ b2InvMulWorldTransforms ] ---
+
+    /**
+     * {@code B2_INLINE b2Transform b2InvMulWorldTransforms( b2WorldTransform A, b2WorldTransform B )}
+     *
+     * @param A b2WorldTransform
+     * @param B b2WorldTransform
+     * @param __result b2Transform
+     * @return b2Transform
+     */
+    public static b2Transform b2InvMulWorldTransforms(b2WorldTransform A, b2WorldTransform B, b2Transform __result) {
+        checkPointers(A, B, __result);
+        nb2InvMulWorldTransforms(A.address(), B.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Transform b2InvMulWorldTransforms( b2WorldTransform A, b2WorldTransform B )} */
+    public static native void nb2InvMulWorldTransforms(long A, long B, long __result);
+
+    // --- [ b2ToRelativeTransform ] ---
+
+    /**
+     * {@code B2_INLINE b2Transform b2ToRelativeTransform( b2WorldTransform t, b2Pos base )}
+     *
+     * @param t b2WorldTransform
+     * @param base b2Pos
+     * @param __result b2Transform
+     * @return b2Transform
+     */
+    public static b2Transform b2ToRelativeTransform(b2WorldTransform t, b2Pos base, b2Transform __result) {
+        checkPointers(t, base, __result);
+        nb2ToRelativeTransform(t.address(), base.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2Transform b2ToRelativeTransform( b2WorldTransform t, b2Pos base )} */
+    public static native void nb2ToRelativeTransform(long t, long base, long __result);
+
+    // --- [ b2MakeWorldTransform ] ---
+
+    /**
+     * {@code B2_INLINE b2WorldTransform b2MakeWorldTransform( b2Transform t )}
+     *
+     * @param t b2Transform
+     * @param __result b2WorldTransform
+     * @return b2WorldTransform
+     */
+    public static b2WorldTransform b2MakeWorldTransform(b2Transform t, b2WorldTransform __result) {
+        checkPointers(t, __result);
+        nb2MakeWorldTransform(t.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2WorldTransform b2MakeWorldTransform( b2Transform t )} */
+    public static native void nb2MakeWorldTransform(long t, long __result);
+    
     // --- [ b2MulMV ] ---
 
     /**
@@ -1388,7 +1654,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE bool b2AABB_Overlaps( b2AABB a, b2AABB b )} */
     public static native boolean nb2AABB_Overlaps(long a, long b);
-
 
     // --- [ b2MakeAABB ] ---
 

@@ -34,7 +34,7 @@ public class DrawStringFcnTest {
         String str = "JNI_B2";
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1, 2)
+                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawStringFcnI func = (p, s, color, context) -> {
@@ -51,7 +51,7 @@ public class DrawStringFcnTest {
         }
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1, 2)
+                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawStringFcn func = DrawStringFcn.create((p, s, color, context) -> {

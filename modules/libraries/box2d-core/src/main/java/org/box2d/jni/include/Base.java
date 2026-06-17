@@ -101,7 +101,21 @@ public final class Base {
     }
     /* {@code B2_API b2Version b2GetVersion( void ); } */
     public static native void nb2GetVersion(long __result);
-    
+
+    // --- [ b2IsDoublePrecision ] ---
+
+    /**
+     * {@code b2IsDoublePrecision( void );}
+     *
+     * @return boolean
+     */
+    public static boolean b2IsDoublePrecision() {
+        return nb2IsDoublePrecision();
+    }
+
+    /* {@code b2IsDoublePrecision( void );} */
+    public static native boolean nb2IsDoublePrecision();
+
     // --- [ b2GetTicks ] ---
 
     /**

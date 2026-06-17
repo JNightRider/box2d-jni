@@ -29,18 +29,11 @@ public interface ConstB2TreeNode extends ConstStruct {
     long categoryBits();
 
     /**
-     * Children (internal node) - 1
+     * Children (internal node)
      *
-     * @return int
+     * @return ConstB2TreeNodeChildren
      */
-    int child1();
-
-    /**
-     * Children (internal node) - 2
-     *
-     * @return int
-     */
-    int child2();
+    ConstB2TreeNodeChildren children();
 
     /**
      * User data (leaf node)

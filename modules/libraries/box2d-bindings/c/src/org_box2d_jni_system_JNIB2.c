@@ -160,3 +160,27 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1VEC2_1PIPV
     UNUSED_PARAMS(__env, clazz)
     ((void (*) (b2Vec2, uintptr_t, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2Vec2*)param0, (uintptr_t)param1, (uint32_t)param2, (uintptr_t)param3);
 }
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_SHAPEID_POS_VEC2_FPF
+ * Signature: (JJJFJJ)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1POS_1VEC2_1FPF
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong param2, jfloat param3, jlong param4, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return ((jfloat) ((float (*) (b2ShapeId, b2Pos, b2Vec2, float, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2Pos*)param1, *(b2Vec2*)param2, (float)param3, (uintptr_t)param4));
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_SHAPEID_SHAPEID_POS_VEC2_PB
+ * Signature: (JJJJJJ)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1SHAPEID_1POS_1VEC2_1PB
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong param2, jlong param3, jlong param4, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return ((jboolean) ((bool (*) (b2ShapeId, b2ShapeId, b2Pos, b2Vec2, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2ShapeId*)param1, *(b2Pos*)param2, *(b2Vec2*)param3, (uintptr_t)param4));
+}

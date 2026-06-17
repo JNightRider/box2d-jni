@@ -76,8 +76,8 @@ public class b2Mat22Test {
                 destroyer.create(() -> b2Mat22.malloc()
                     .cx( /* b2Vec2 */
                         destroyer.create(() -> b2Vec2.malloc()
-                            .x(1)
-                            .y(2)
+                            .x(1f)
+                            .y(2f)
                         )
                     )
                     .cy( /* b2Rot */

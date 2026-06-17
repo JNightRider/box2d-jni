@@ -8,7 +8,7 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef float b2CastResultFcn( b2ShapeId shapeId, b2Vec2 point, b2Vec2 normal, float fraction, void* context ); }
+ * Callback function: {@code typedef float b2CastResultFcn( b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -92,7 +92,7 @@ public abstract class b2CastResultFcn extends Callback implements b2CastResultFc
         /*(non-Javadoc)
          */
         @Override
-        public float invoke(b2ShapeId shapeId, b2Vec2 point, b2Vec2 normal, float fraction, long context) {
+        public float invoke(b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, long context) {
             return delegate.invoke(shapeId, point, normal, fraction, context);
         }
     }

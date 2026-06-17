@@ -8,7 +8,7 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef bool b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Vec2 point, b2Vec2 normal, void* context );}
+ * Callback function: {@code typedef bool b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context );}
  *
  * @author wil
  * @version 1.0.0
@@ -92,7 +92,7 @@ public abstract class b2PreSolveFcn extends Callback implements b2PreSolveFcnI {
         /*(non-Javadoc)
          */
         @Override
-        public boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Vec2 point, b2Vec2 normal, long context) {
+        public boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, long context) {
             return delegate.invoke(shapeIdA, shapeIdB, point, normal, context);
         }
     }

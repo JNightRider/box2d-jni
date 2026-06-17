@@ -77,8 +77,8 @@ public class b2TransformTest {
                 destroyer.create(() -> b2Transform.malloc()
                     .p( /* b2Vec2 */
                         destroyer.create(() -> b2Vec2.malloc()
-                            .x(1)
-                            .y(2)
+                            .x(1f)
+                            .y(2f)
                         )
                     )
                     .q( /* b2Rot */

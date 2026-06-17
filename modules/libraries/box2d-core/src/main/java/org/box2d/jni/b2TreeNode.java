@@ -19,11 +19,7 @@ import static org.box2d.jni.system.Memory.*;
  *     uint64_t categoryBits;
  *     union
  *     {
- *         struct
- *         {
- *             int32_t child1, child2;
- *         } children;
- *
+ *         b2TreeNodeChildren children;
  *         uint64_t userData;
  *     };
  *     union
@@ -38,7 +34,7 @@ import static org.box2d.jni.system.Memory.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
 
@@ -52,8 +48,7 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     private static final int
             AABB,
             CATEGORY_BITS,
-            CHILDREN1,
-            CHILDREN2,
+            CHILDREN,
             USER_DATA,
             PARENT,
             NEXT,
@@ -65,10 +60,7 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
                 __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
                 __member(8),
                 __union(
-                        __struct(
-                                __member(4),
-                                __member(4)
-                        ),
+                        __member(b2TreeNodeChildren.SIZEOF, b2TreeNodeChildren.ALIGNOF),
                         __member(8)
                 ),
                 __union(
@@ -82,15 +74,14 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
         AABB = layout.offsetof(0);
         CATEGORY_BITS = layout.offsetof(1);
 
-        CHILDREN1 = layout.offsetof(4);
-        CHILDREN2 = layout.offsetof(5);
-        USER_DATA = layout.offsetof(6);
+        CHILDREN = layout.offsetof(3);
+        USER_DATA = layout.offsetof(4);
 
-        PARENT = layout.offsetof(8);
-        NEXT = layout.offsetof(9);
+        PARENT = layout.offsetof(6);
+        NEXT = layout.offsetof(7);
 
-        HEIGHT = layout.offsetof(10);
-        FLAGS = layout.offsetof(11);
+        HEIGHT = layout.offsetof(8);
+        FLAGS = layout.offsetof(9);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -130,12 +121,9 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     /** @return Returns the property {@code categoryBits} */
     @Override
     public long categoryBits() { return ncategoryBits(address()); }
-    /** @return Returns the property {@code child1} */
+    /** @return Returns the property {@code children} */
     @Override
-    public int child1() { return nchild1(address()); }
-    /** @return Returns the property {@code child2} */
-    @Override
-    public int child2() { return nchild2(address()); }
+    public b2TreeNodeChildren children() { return nchildren(address()); }
     /** @return Returns the property {@code userData} */
     @Override
     public long userData() { return nuserData(address()); }
@@ -175,24 +163,13 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     }
 
     /**
-     * Set the value of property {@code child1}
+     * Set the value of property {@code children}
      *
      * @param value int
      * @return b2TreeNode
      */
-    public b2TreeNode child1(int value) {
-        nchild1(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code child2}
-     *
-     * @param value int
-     * @return b2TreeNode
-     */
-    public b2TreeNode child2(int value) {
-        nchild2(address(), value);
+    public b2TreeNode children(b2TreeNodeChildren value) {
+        nchildren(address(), value);
         return this;
     }
 
@@ -333,8 +310,7 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
     public static long ncategoryBits(long address) { return memGetLong(address + CATEGORY_BITS); }
-    public static int nchild1(long address) { return memGetInt(address + CHILDREN1); }
-    public static int nchild2(long address) { return memGetInt(address + CHILDREN2); }
+    public static b2TreeNodeChildren nchildren(long address) { return b2TreeNodeChildren.createSafe(() -> address + CHILDREN); }
     public static long nuserData(long address) { return memGetLong(address + USER_DATA); }
     public static int nparent(long address) { return memGetInt(address + PARENT); }
     public static int nnext(long address) { return memGetInt(address + NEXT); }
@@ -343,8 +319,7 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
 
     public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF);}
     public static void ncategoryBits(long address, long value) { memPutLong(address + CATEGORY_BITS, value);}
-    public static void nchild1(long address, int value) { memPutInt(address + CHILDREN1, value);}
-    public static void nchild2(long address, int value) { memPutInt(address + CHILDREN2, value);}
+    public static void nchildren(long address, b2TreeNodeChildren value) { nmemcpy(address + CHILDREN, value.address(), b2TreeNodeChildren.SIZEOF); }
     public static void nuserData(long address, long value) { memPutLong(address + USER_DATA, value);}
     public static void nparent(long address, int value) { memPutInt(address + PARENT, value);}
     public static void nnext(long address, int value) { memPutInt(address + NEXT, value);}

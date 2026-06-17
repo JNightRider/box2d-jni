@@ -16,7 +16,7 @@ import static org.box2d.jni.system.Memory.*;
  * typedef struct b2BodyDef
  * {
  *     b2BodyType type;
- *     b2Vec2 position;
+ *     b2Pos position;
  *     b2Rot rotation;
  *     b2Vec2 linearVelocity;
  *     float angularVelocity;
@@ -74,7 +74,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     static {
         Layout layout = __struct(
                 __member(4),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Rot.SIZEOF, b2Rot.ALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4),
@@ -153,7 +153,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public b2BodyType type() { return ntype(address()); }
     /** @return Returns the property {@code position} */
     @Override
-    public b2Vec2 position() { return nposition(address()); }
+    public b2Pos position() { return nposition(address()); }
     /** @return Returns the property {@code rotation} */
     @Override
     public b2Rot rotation() { return nrotation(address()); }
@@ -219,7 +219,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef position(b2Vec2 value) { nposition(address(), value); return this; }
+    public b2BodyDef position(b2Pos value) { nposition(address(), value); return this; }
     /**
      * Set the value of property {@code rotation}
      *
@@ -420,7 +420,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     // -----------------------------------
 
     public static b2BodyType ntype(long address)                { return b2BodyType.valueOf(memGetInt(address + TYPE));        }
-    public static b2Vec2 nposition(long address)                { return b2Vec2.createSafe(() -> address + POSITION);               }
+    public static b2Pos nposition(long address)                 { return b2Pos.ncreateSafe(() -> address + POSITION);               }
     public static b2Rot nrotation(long address)                 { return b2Rot.createSafe(() -> address + ROTATION);                }
     public static b2Vec2 nlinearVelocity(long address)          { return b2Vec2.createSafe(() -> address + LINEAR_VELOCITY);        }
     public static float nangularVelocity(long address)          { return memGetFloat(address + ANGULAR_VELOCITY);                   }
@@ -440,7 +440,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static int ninternalValue(long address)              { return memGetInt(address + INTERNAL_VALUE);                       }
 
     public static void ntype(long address, b2BodyType value)                { memPutInt(address + TYPE, value.value());                               }
-    public static void nposition(long address, b2Vec2 value)                { nmemcpy(address + POSITION, value.address(), b2Vec2.SIZEOF);            }
+    public static void nposition(long address, b2Pos value)                 { nmemcpy(address + POSITION, value.address(), b2Pos.DSIZEOF);            }
     public static void nrotation(long address, b2Rot value)                 { nmemcpy(address + ROTATION, value.address(), b2Rot.SIZEOF);             }
     public static void linearVelocity(long address, b2Vec2 value)           { nmemcpy(address + LINEAR_VELOCITY, value.address(), b2Vec2.SIZEOF);     }
     public static void nangularVelocity(long address, float value)          { memPutFloat(address + ANGULAR_VELOCITY, value);                               }

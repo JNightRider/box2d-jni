@@ -30,7 +30,7 @@ public class DrawPointFcnTest {
     public void callback() {
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1, 2)
+                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawPointFcnI func = (p, size, color, context) -> {
@@ -47,7 +47,7 @@ public class DrawPointFcnTest {
         }
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1, 2)
+                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawPointFcn func = DrawPointFcn.create((p, size, color, context) -> {

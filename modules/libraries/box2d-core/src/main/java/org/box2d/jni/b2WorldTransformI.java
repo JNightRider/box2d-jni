@@ -5,7 +5,6 @@
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2Transform;
 import org.box2d.jni.readonly.ConstB2WorldTransform;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
@@ -13,18 +12,18 @@ import static org.box2d.jni.libc.LibCString.*;
 
 /**
  * <pre><code>
- * typedef struct b2Transform
+ * typedef struct b2WorldTransform
  * {
- * 	b2Vec2 p;
+ * 	b2Pos p;
  * 	b2Rot q;
- * } b2Transform;
+ * } b2WorldTransform;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Transform extends Struct<b2Transform> implements b2WorldTransform<b2Transform, b2Vec2, b2Rot>, ConstB2Transform {
+public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2WorldTransform<b2WorldTransformI, b2PosI, b2Rot>, ConstB2WorldTransform<b2PosI, b2Rot> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -39,7 +38,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
 
     static {
         Layout layout = __struct(
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2PosI.SIZEOF, b2PosI.ALIGNOF),
                 __member(b2Rot.SIZEOF, b2Rot.ALIGNOF)
         );
 
@@ -55,7 +54,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      *
      * @param ptr A reference pointer.
      */
-    public b2Transform(Pointer ptr) {
+    public b2WorldTransformI(Pointer ptr) {
         super(ptr);
     }
 
@@ -64,7 +63,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      *
      * @param address A virtual memory address
      */
-    public b2Transform(long address) {
+    public b2WorldTransformI(long address) {
         super(address);
     }
 
@@ -76,7 +75,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      *
      * @see Struct#Struct(long, boolean)
      */
-    protected b2Transform(long address, boolean factor) {
+    protected b2WorldTransformI(long address, boolean factor) {
         super(address, factor);
     }
 
@@ -89,8 +88,8 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      * @return b2Transform
      */
     @Override
-    public b2Transform set(
-        b2Vec2 p,
+    public b2WorldTransformI set(
+        b2PosI p,
         b2Rot q
     ) {
         p(p);
@@ -100,7 +99,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     
     /** @return Returns the property {@code p} */
     @Override
-    public b2Vec2 p() { return np(address()); }
+    public b2PosI p() { return np(address()); }
     /** @return Returns the property {@code s} */
     @Override
     public b2Rot q() { return nq(address()); }
@@ -109,19 +108,19 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      * Set the value of property {@code p}
      *
      * @param value The value
-     * @return b2Transform
+     * @return b2WorldTransformI
      */
     @Override
-    public b2Transform p(b2Vec2 value) { np(address(), value); return this; }
+    public b2WorldTransformI p(b2PosI value) { np(address(), value); return this; }
 
     /**
      * Set the value of property {@code q}
      *
      * @param value The value
-     * @return b2Transform
+     * @return b2WorldTransformI
      */
     @Override
-    public b2Transform q(b2Rot value) { nq(address(), value); return this; }
+    public b2WorldTransformI q(b2Rot value) { nq(address(), value); return this; }
     
     /*(non-Javadoc)
      */
@@ -131,54 +130,54 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     /*(non-Javadoc)
      */
     @Override
-    protected b2Transform create(long address, Pointer ptr) {
-        return ptr == null ? new b2Transform(address) : new b2Transform(ptr);
+    protected b2WorldTransformI create(long address, Pointer ptr) {
+        return ptr == null ? new b2WorldTransformI(address) : new b2WorldTransformI(ptr);
     }
     
     // -----------------------------------
 
     /**
      * Internal use of the buffer.
-     * @return b2Transform
+     * @return b2WorldTransformI
      */
-    private static b2Transform factory() {
-        return new b2Transform(-1L, true);
+    private static b2WorldTransformI factory() {
+        return new b2WorldTransformI(-1L, true);
     }
     
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2Transform
+     * @return b2WorldTransformI
      */
-    public static b2Transform createSafe(Pointer ptr) {
+    public static b2WorldTransformI createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2Transform(ptr);
+        return new b2WorldTransformI(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2Transform}.
+     * Reserve memory for the new object {@code b2WorldTransformI}.
      *
      * @param alloc Custom memory manager
-     * @return b2Transform
+     * @return b2WorldTransformI
      */
-    public static b2Transform alloc(AllocFunc alloc) {
-        return new b2Transform(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2WorldTransformI alloc(AllocFunc alloc) {
+        return new b2WorldTransformI(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2Transform}.
+     * Reserve memory for the new object {@code b2WorldTransformI}.
      *
-     * @return b2Transform
+     * @return b2WorldTransformI
      */
-    public static b2Transform malloc() {
-        return new b2Transform(nmalloc(SIZEOF));
+    public static b2WorldTransformI malloc() {
+        return new b2WorldTransformI(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Transform}.
+     * Reserve an amount n of memory for the object {@code b2WorldTransformI}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -188,7 +187,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Transform}.
+     * Reserve an amount n of memory for the object {@code b2WorldTransformI}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -200,20 +199,18 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     
     // -----------------------------------
 
-    public static b2Vec2 np(long address) { return b2Vec2.createSafe(() -> address + P); }
+    public static b2PosI np(long address) { return b2PosI.createSafe(() -> address + P); }
     public static b2Rot nq(long address) { return b2Rot.createSafe(() -> address + Q); }
 
-    public static void np(long address, b2Vec2 value) { nmemcpy(address + P, value.address(), b2Vec2.SIZEOF); }
+    public static void np(long address, b2PosI value) { nmemcpy(address + P, value.address(), b2Vec2.SIZEOF); }
     public static void nq(long address, b2Rot value) { nmemcpy(address + Q, value.address(), b2Rot.SIZEOF); }
 
     // -----------------------------------
     
     /** An array of {@code b2Transform} structs. */
-    public static class Buffer extends StructBuffer<b2Transform, Buffer> implements ConstB2Transform.ConstBuffer<b2Transform, Buffer>, 
-                                                                                    ConstB2WorldTransform.ConstBuffer<b2Transform, Buffer>, 
-                                                                                    JNINative {
+    public static class Buffer extends StructBuffer<b2WorldTransformI, Buffer> implements b2WorldTransformI.ConstBuffer<b2WorldTransformI, Buffer>, JNINative {
         /** An element that provides information about the structure. */
-        private static final b2Transform ELEMENT_FACTORY = b2Transform.factory();
+        private static final b2WorldTransformI ELEMENT_FACTORY = b2WorldTransformI.factory();
 
         /**
          * Create a new buffer.
@@ -241,7 +238,7 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
         /*(non-Jabadoc)
          */
         @Override
-        protected b2Transform getElementFactory() {
+        protected b2WorldTransformI getElementFactory() {
             return ELEMENT_FACTORY;
         }
 

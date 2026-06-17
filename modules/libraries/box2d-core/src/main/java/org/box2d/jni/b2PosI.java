@@ -7,8 +7,6 @@ package org.box2d.jni;
 import java.nio.ByteBuffer;
 
 import org.box2d.jni.system.*;
-
-import org.box2d.jni.readonly.ConstB2Vec2;
 import org.box2d.jni.readonly.ConstB2Pos;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
@@ -16,18 +14,17 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2Vec2
+ * typedef struct b2PosI
  * {
- *	/// coordinates
- *	float x, y;
- * } b2Vec2;
+ * 	double x, y;
+ * } b2PosI;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float>, ConstB2Vec2 {
+public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Double>, ConstB2Pos<Double, Double> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -39,11 +36,11 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     private static final int
             X,
             Y;
-    
+
     static {
         Layout layout = __struct(
-                __member(4),
-                __member(4)
+                __member(8),
+                __member(8)
         );
         
         X = layout.offsetof(0);
@@ -53,33 +50,15 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
         ALIGNOF = layout.getAlignment();
     }
 
-    /**
-     * Generates a reference to the given pointer.
-     *
-     * @param ptr A reference pointer.
-     */
-    public b2Vec2(Pointer ptr) {
+    public b2PosI(Pointer ptr) {
         super(ptr);
     }
 
-    /**
-     * Create a new pointer to the object using its memory address.
-     *
-     * @param address A virtual memory address
-     */
-    public b2Vec2(long address) {
+    public b2PosI(long address) {
         super(address);
     }
 
-    /**
-     * This structure is for internal buffer use.
-     *
-     * @param address A virtual memory address
-     * @param factor boolean
-     *
-     * @see Struct#Struct(long, boolean)
-     */
-    protected b2Vec2(long address, boolean factor) {
+    protected b2PosI(long address, boolean factor) {
         super(address, factor);
     }
 
@@ -89,12 +68,12 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @param x the valur {@code x}
      * @param y the valur {@code y}
      *
-     * @return b2Vec2
+     * @return b2PosI
      */
     @Override
-    public b2Vec2 set(
-        Float x,
-        Float y
+    public b2PosI set(
+        Double x,
+        Double y
     ) {
         x(x);
         y(y);
@@ -103,27 +82,27 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
 
     /** @return Returns the property {@code x} */
     @Override
-    public Float x() { return nx(address()); }
+    public Double x() { return nx(address()); }
     /** @return Returns the property {@code y} */
     @Override
-    public Float y() { return ny(address()); }
+    public Double y() { return ny(address()); }
     
     /**
      * Set the value of property {@code x}
      *
      * @param value The value
-     * @return b2Vec2
+     * @return b2PosI
      */
     @Override
-    public b2Vec2 x(Float value) { nx(address(), value); return this; }
+    public b2PosI x(Double value) { nx(address(), value); return this; }
     /**
      * Set the value of property {@code y}
      *
      * @param value The value
-     * @return b2Vec2
+     * @return b2PosI
      */
     @Override
-    public b2Vec2 y(Float value) { ny(address(), value); return this; }
+    public b2PosI y(Double value) { ny(address(), value); return this; }
     
     /*(non-Javadoc)
      */
@@ -133,8 +112,8 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /*(non-Javadoc)
      */
     @Override
-    protected b2Vec2 create(long address, Pointer ptr) {
-        return ptr == null ? new b2Vec2(address) : new b2Vec2(ptr);
+    protected b2PosI create(long address, Pointer ptr) {
+        return ptr == null ? new b2PosI(address) : new b2PosI(ptr);
     }
 
     // ----------------------------------
@@ -144,10 +123,10 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /**
      * Unary add one vector to another
      *
-     * @param o b2Vec2
-     * @return b2Vec2
+     * @param o b2PosI
+     * @return b2PosI
      */
-    public b2Vec2 add(b2Vec2 o) {
+    public b2PosI add(b2PosI o) {
         nadd(address(), o.address(), address());
         return this;
     }
@@ -155,10 +134,10 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /**
      * Unary subtract one vector from another
      *
-     * @param o b2Vec2
-     * @return b2Vec2
+     * @param o b2PosI
+     * @return b2PosI
      */
-    public b2Vec2 sub(b2Vec2 o) {
+    public b2PosI sub(b2PosI o) {
         nsub(address(), o.address(), address());
         return this;
     }
@@ -166,10 +145,10 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /**
      * Unary multiply a vector by a scalar
      *
-     * @param o b2Vec2
-     * @return b2Vec2
+     * @param o b2PosI
+     * @return b2PosI
      */
-    public b2Vec2 mult(b2Vec2 o) {
+    public b2PosI mult(b2PosI o) {
         nmult(address(), o.address(), address());
         return this;
     }
@@ -177,9 +156,9 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /**
      * Unary negate a vector
      *
-     * @return b2Vec2
+     * @return b2PosI
      */
-    public b2Vec2 neg() {
+    public b2PosI neg() {
         x(-x());
         y(-y());
         return this;
@@ -188,20 +167,20 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /**
      * Binary vector equality
      *
-     * @param o b2Vec2
+     * @param o b2PosI
      * @return boolean
      */
-    public boolean equality(b2Vec2 o) {
+    public boolean equality(b2PosI o) {
         return nequality(address(), o.address());
     }
 
     /**
      * Binary vector inequality
      *
-     * @param o b2Vec2
+     * @param o b2PosI
      * @return boolean
      */
-    public boolean inequality(b2Vec2 o) {
+    public boolean inequality(b2PosI o) {
         return ninequality(address(), o.address());
     }
     
@@ -209,46 +188,46 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
 
     /**
      * Internal use of the buffer.
-     * @return b2Vec2
+     * @return b2PosI
      */
-    private static b2Vec2 factory() {
-        return new b2Vec2(-1L, true);
+    private static b2PosI factory() {
+        return new b2PosI(-1L, true);
     }
 
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2Vec2
+     * @return b2PosI
      */
-    public static b2Vec2 createSafe(Pointer ptr) {
+    public static b2PosI createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2Vec2(ptr);
+        return new b2PosI(ptr);
     }
     
     /**
-     * Reserve memory for the new object {@code b2Vec2}.
+     * Reserve memory for the new object {@code b2PosI}.
      *
      * @param alloc Custom memory manager
-     * @return b2Vec2
+     * @return b2PosI
      */
-    public static b2Vec2 alloc(AllocFunc alloc) {
-        return new b2Vec2(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2PosI alloc(AllocFunc alloc) {
+        return new b2PosI(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2Vec2}.
+     * Reserve memory for the new object {@code b2PosI}.
      *
-     * @return b2Vec2
+     * @return b2PosI
      */
-    public static b2Vec2 malloc() {
-        return new b2Vec2(nmalloc(SIZEOF));
+    public static b2PosI malloc() {
+        return new b2PosI(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     * Reserve an amount n of memory for the object {@code b2PosI}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -258,24 +237,24 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     }
     
     /**
-     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     * Reserve an amount n of memory for the object {@code b2PosI}.
      *
      * @param src source
      * @return Buffer
      */
-    public static Buffer mallocSafe(b2Vec2 ...src) {
+    public static Buffer mallocSafe(b2PosI ...src) {
         if (src == null) {
             return null;
         }
         Buffer ptr = malloc(src.length);
-        for (b2Vec2 v : src) {
-            ptr.put(v);
+        for (b2PosI p : src) {
+            ptr.put(p);
         }
         return ptr;
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     * Reserve an amount n of memory for the object {@code b2PosI}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -286,7 +265,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     }
     
     /**
-     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     * Reserve an amount n of memory for the object {@code b2PosI}.
      *
      * @param address Buffer address
      * @param capacity Number of elements
@@ -312,7 +291,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
         ny(__result, ny(a) * ny(b));
         return __result;
     }
-    public static long nmult(long a, float b, long __result) {
+    public static long nmult(long a, double b, long __result) {
         nx(__result, nx(a) * b);
         ny(__result, ny(a) * b);
         return __result;
@@ -320,20 +299,18 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     public static boolean nequality(long a, long b) { return nx(a) == nx(b) && ny(a) == ny(b); }
     public static boolean ninequality(long a, long b) { return nx(a) != nx(b) || ny(a) != ny(b); }
     
-    public static float nx(long address) { return memGetFloat(address + X); }
-    public static float ny(long address) { return memGetFloat(address + Y); }
+    public static double nx(long address) { return memGetDouble(address + X); }
+    public static double ny(long address) { return memGetDouble(address + Y); }
 
-    public static void nx(long address, float value) { memPutFloat(address + X, value); }
-    public static void ny(long address, float value) { memPutFloat(address + Y, value); }
+    public static void nx(long address, double value) { memPutDouble(address + X, value); }
+    public static void ny(long address, double value) { memPutDouble(address + Y, value); }
 
     // -----------------------------------
     
-    /** An array of {@code b2Vec2} structs. */
-    public static class Buffer extends StructBuffer<b2Vec2, Buffer> implements ConstB2Vec2.ConstBuffer<b2Vec2, Buffer>, 
-                                                                               ConstB2Pos.ConstBuffer<b2Vec2, Buffer>,
-                                                                               JNINative {
+    /** *  An array of {@code b2PosI} structs. */
+    public static class Buffer extends StructBuffer<b2PosI, Buffer> implements b2Pos.ConstBuffer<b2PosI, Buffer>, JNINative {
         /** An element that provides information about the structure. */
-        private static final b2Vec2 ELEMENT_FACTORY = b2Vec2.factory();
+        private static final b2PosI ELEMENT_FACTORY = b2PosI.factory();
 
         /**
          * Create a new buffer.
@@ -370,7 +347,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
         /*(non-Jabadoc)
          */
         @Override
-        protected b2Vec2 getElementFactory() {
+        protected b2PosI getElementFactory() {
             return ELEMENT_FACTORY;
         }
 

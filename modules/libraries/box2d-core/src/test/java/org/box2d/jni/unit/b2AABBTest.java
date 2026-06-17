@@ -76,8 +76,8 @@ public class b2AABBTest {
                 destroyer.create(() -> b2AABB.malloc()
                     .lowerBound(/* b2Vec2 */
                         destroyer.create(() -> b2Vec2.malloc()
-                            .x(1)
-                            .y(2)
+                            .x(1f)
+                            .y(2f)
                         )
                     )
                     .upperBound(/* b2Rot */

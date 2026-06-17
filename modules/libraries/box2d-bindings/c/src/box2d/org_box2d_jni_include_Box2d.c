@@ -143,13 +143,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetJointEvents
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_OverlapAABB
- * Signature: (JJJJJJ)V
+ * Signature: (JJJJJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1OverlapAABB
-    (JNIEnv *__env, jclass clazz, jlong worldId, jlong aabb, jlong filter, jlong fcn, jlong context, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong aabb, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_OverlapAABB(*(b2WorldId*)worldId, *(b2AABB*)aabb, *(b2QueryFilter*)filter, (b2OverlapResultFcn*)fcn, (void*)context );
+    *(b2TreeStats*)__result = b2World_OverlapAABB(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2AABB*)aabb, *(b2QueryFilter*)filter, (b2OverlapResultFcn*)fcn, (void*)context );
 }
 
 /*
@@ -158,10 +158,10 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1OverlapAABB
  * Signature: (JJJJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1OverlapShape
-    (JNIEnv *__env, jclass clazz, jlong worldId, jlong proxy, jlong filter, jlong fcn, jlong context, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong proxy, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_OverlapShape(*(b2WorldId*)worldId, (const b2ShapeProxy*)proxy, *(b2QueryFilter*)filter, (b2OverlapResultFcn*) fcn, (void*) context );
+    *(b2TreeStats*)__result = b2World_OverlapShape(*(b2WorldId*)worldId, *(b2Pos*)origin, (const b2ShapeProxy*)proxy, *(b2QueryFilter*)filter, (b2OverlapResultFcn*) fcn, (void*) context );
 }
 
 /*
@@ -173,7 +173,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CastRay
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong translation, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_CastRay(*(b2WorldId*)worldId, *(b2Vec2*)origin, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultFcn*)fcn, (void*)context);
+    *(b2TreeStats*)__result = b2World_CastRay(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultFcn*)fcn, (void*)context);
 }
 
 /*
@@ -185,43 +185,43 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CastRayClosest
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong translation, jlong filter, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2RayResult*)__result = b2World_CastRayClosest(*(b2WorldId*)worldId, *(b2Vec2*)origin, *(b2Vec2*)translation, *(b2QueryFilter*)filter );
+    *(b2RayResult*)__result = b2World_CastRayClosest(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2Vec2*)translation, *(b2QueryFilter*)filter );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_CastShape
- * Signature: (JJJJJJJ)V
+ * Signature: (JJJJJJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CastShape
-    (JNIEnv *__env, jclass clazz, jlong worldId, jlong proxy, jlong translation, jlong filter, jlong fcn, jlong context, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong proxy, jlong translation, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_CastShape(*(b2WorldId*) worldId, (const b2ShapeProxy*)proxy, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultFcn*)fcn, (void*) context );
+    *(b2TreeStats*)__result = b2World_CastShape(*(b2WorldId*) worldId, *(b2Pos*)origin, (const b2ShapeProxy*)proxy, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultFcn*)fcn, (void*) context );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_CastMover
- * Signature: (JJJJ)F
+ * Signature: (JJJJJ)F
  */
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CastMover
-    (JNIEnv *__env, jclass clazz, jlong worldId, jlong mover, jlong translation, jlong filter)
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong mover, jlong translation, jlong filter)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2World_CastMover(*(b2WorldId*)worldId, (const b2Capsule*)mover, *(b2Vec2*) translation, *(b2QueryFilter*) filter );
+    return (jfloat)b2World_CastMover(*(b2WorldId*)worldId, *(b2Pos*)origin, (const b2Capsule*)mover, *(b2Vec2*) translation, *(b2QueryFilter*) filter );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_CollideMover
- * Signature: (JJJJJ)V
+ * Signature: (JJJJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CollideMover
-    (JNIEnv *__env, jclass clazz, jlong worldId, jlong mover, jlong filter, jlong fcn, jlong context)
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong mover, jlong filter, jlong fcn, jlong context)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_CollideMover(*(b2WorldId*) worldId, (const b2Capsule*)mover, *(b2QueryFilter*) filter, (b2PlaneResultFcn*)fcn, (void*)context );
+    b2World_CollideMover(*(b2WorldId*) worldId, *(b2Pos*)origin, (const b2Capsule*)mover, *(b2QueryFilter*) filter, (b2PlaneResultFcn*)fcn, (void*)context );
 }
 
 /*
@@ -875,7 +875,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetPosition
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Body_GetPosition( *(b2BodyId*)bodyId );
+    *(b2Pos*)__result = b2Body_GetPosition( *(b2BodyId*)bodyId );
 }
 
 /*
@@ -899,7 +899,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetTransform
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Transform*)__result = b2Body_GetTransform( *(b2BodyId*)bodyId );
+    *(b2WorldTransform*)__result = b2Body_GetTransform( *(b2BodyId*)bodyId );
 }
 
 /*
@@ -911,7 +911,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1SetTransform
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong position, jlong rotation)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_SetTransform( *(b2BodyId*)bodyId, *(b2Vec2*)position, *(b2Rot*)rotation );
+    b2Body_SetTransform( *(b2BodyId*)bodyId, *(b2Pos*)position, *(b2Rot*)rotation );
 }
 
 /*
@@ -923,7 +923,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetLocalPoint
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong worldPoint, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Body_GetLocalPoint( *(b2BodyId*)bodyId, *(b2Vec2*)worldPoint );
+    *(b2Vec2*)__result = b2Body_GetLocalPoint( *(b2BodyId*)bodyId, *(b2Pos*)worldPoint );
 }
 
 /*
@@ -935,7 +935,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetWorldPoint
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong localPoint, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Body_GetWorldPoint( *(b2BodyId*)bodyId, *(b2Vec2*)localPoint );
+    *(b2Pos*)__result = b2Body_GetWorldPoint( *(b2BodyId*)bodyId, *(b2Vec2*)localPoint );
 }
 
 /*
@@ -1019,7 +1019,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1SetTargetTransf
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong target, jfloat timeStep, jboolean wake)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_SetTargetTransform( *(b2BodyId*) bodyId, *(b2Transform*) target, timeStep, (bool)wake );
+    b2Body_SetTargetTransform( *(b2BodyId*) bodyId, *(b2WorldTransform*) target, timeStep, (bool)wake );
 }
 
 /*
@@ -1043,7 +1043,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetWorldPointVe
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong worldPoint, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Body_GetWorldPointVelocity( *(b2BodyId*)bodyId, *(b2Vec2*)worldPoint );
+    *(b2Vec2*)__result = b2Body_GetWorldPointVelocity( *(b2BodyId*)bodyId, *(b2Pos*)worldPoint );
 }
 
 /*
@@ -1055,7 +1055,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1ApplyForce
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong force, jlong point, jboolean wake)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_ApplyForce( *(b2BodyId*)bodyId, *(b2Vec2*)force, *(b2Vec2*)point, (bool)wake );
+    b2Body_ApplyForce( *(b2BodyId*)bodyId, *(b2Vec2*)force, *(b2Pos*)point, (bool)wake );
 }
 
 /*
@@ -1103,7 +1103,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1ApplyLinearImpu
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong impulse, jlong point, jboolean wake)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_ApplyLinearImpulse( *(b2BodyId*)bodyId, *(b2Vec2*)impulse, *(b2Vec2*)point, (bool)wake );
+    b2Body_ApplyLinearImpulse( *(b2BodyId*)bodyId, *(b2Vec2*)impulse, *(b2Pos*)point, (bool)wake );
 }
 
 /*
@@ -1156,26 +1156,26 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetRotational
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_GetLocalCenterOfMass
+ * Method:    nb2Body_GetLocalCenter
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetLocalCenterOfMass
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetLocalCenter
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Body_GetLocalCenterOfMass( *(b2BodyId*)bodyId );
+    *(b2Vec2*)__result = b2Body_GetLocalCenter( *(b2BodyId*)bodyId );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_GetWorldCenterOfMass
+ * Method:    nb2Body_GetWorldCenter
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetWorldCenterOfMass
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetWorldCenter
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Body_GetWorldCenterOfMass( *(b2BodyId*)bodyId );
+    *(b2Pos*)__result = b2Body_GetWorldCenter( *(b2BodyId*)bodyId );
 }
 
 /*
@@ -2003,19 +2003,19 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1TestPoint
     (JNIEnv *__env, jclass clazz, jlong shapeId, jlong point)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2Shape_TestPoint( *(b2ShapeId*)shapeId, *(b2Vec2*)point );
+    return (jboolean)b2Shape_TestPoint( *(b2ShapeId*)shapeId, *(b2Pos*)point );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2Shape_RayCast
- * Signature: (JJJ)V
+ * Signature: (JJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1RayCast
-    (JNIEnv *__env, jclass clazz, jlong shapeId, jlong input, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong shapeId, jlong origin, jlong translation, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2CastOutput*)__result = b2Shape_RayCast( *(b2ShapeId*) shapeId, (const b2RayCastInput*)input );
+    *(b2WorldCastOutput*)__result = b2Shape_RayCast( *(b2ShapeId*) shapeId, *(b2Pos*)origin, *(b2Vec2*) translation );
 }
 
 /*
@@ -2231,7 +2231,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1GetClosestPoin
     (JNIEnv *__env, jclass clazz, jlong shapeId, jlong target, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Vec2*)__result = b2Shape_GetClosestPoint( *(b2ShapeId*)shapeId, *(b2Vec2*)target );
+    *(b2Pos*)__result = b2Shape_GetClosestPoint( *(b2ShapeId*)shapeId, *(b2Pos*)target );
 }
 
 /*

@@ -6,6 +6,7 @@ package org.box2d.jni.unit;
 
 import org.box2d.jni.b2AABB;
 import org.box2d.jni.b2TreeNode;
+import org.box2d.jni.b2TreeNodeChildren;
 import org.box2d.jni.b2Vec2;
 
 import org.junit.Assert;
@@ -16,7 +17,7 @@ import org.junit.Test;
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.1
  */
 public class b2TreeNodeTest {
     /**
@@ -33,14 +34,17 @@ public class b2TreeNodeTest {
     private void struct() {
         try (
             b2AABB b0 = b2AABB.malloc()
-                            .lowerBound(b2Vec2.malloc().set(1, 2))
-                            .upperBound(b2Vec2.malloc().set(-2, -4)); 
+                            .lowerBound(b2Vec2.malloc().set(1f, 2f))
+                            .upperBound(b2Vec2.malloc().set(-2f, -4f)); 
+
+            b2TreeNodeChildren children = b2TreeNodeChildren.malloc()
+                    .child1(1)
+                    .child2(4);
 
             b2TreeNode ptr = b2TreeNode.malloc()
                     .aabb(b0)
                     .categoryBits(345L)
-                    .child1(1)
-                    .child2(4)
+                    .children(children)
                     .flags((short) 6)
                     .height((short) 10)
                     .next(56);
@@ -54,8 +58,8 @@ public class b2TreeNodeTest {
             Assert.assertEquals(-4, obj.upperBound().y(), 0);
 
             Assert.assertEquals(345L, ptr.categoryBits());
-            Assert.assertEquals(1, ptr.child1());
-            Assert.assertEquals(4, ptr.child2());
+            Assert.assertEquals(1, ptr.children().child1());
+            Assert.assertEquals(4, ptr.children().child2());
             Assert.assertEquals((short) 6, ptr.flags());
             Assert.assertEquals((short) 10, ptr.height());
             Assert.assertEquals(56, ptr.next());

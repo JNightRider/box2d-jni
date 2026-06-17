@@ -16,26 +16,24 @@ import static org.box2d.jni.system.Memory.*;
  * /// Input for b2ShapeDistance
  * typedef struct b2DistanceInput
  * {
- *     /// The proxy for shape A
- *     b2ShapeProxy proxyA;
- *
- *     /// The proxy for shape B
- *     b2ShapeProxy proxyB;
- *
- *     /// The world transform for shape A
- *     b2Transform transformA;
- *
- *     /// The world transform for shape B
- *     b2Transform transformB;
- *
- *     /// Should the proxy radius be considered?
- *     bool useRadii;
+ * 	/// The proxy for shape A
+ * 	b2ShapeProxy proxyA;
+ * 
+ * 	/// The proxy for shape B
+ * 	b2ShapeProxy proxyB;
+ * 
+ * 	/// Transform of shape B in shape A's frame, the relative pose B in A
+ * 	/// (b2InvMulTransforms( worldA, worldB )). The query is origin independent and runs in frame A.
+ * 	b2Transform transform;
+ * 
+ * 	/// Should the proxy radius be considered?
+ * 	bool useRadii;
  * } b2DistanceInput;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2DistanceInput {
 
@@ -49,8 +47,7 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
     private static final int
             PROXY_A,
             PROXY_B,
-            TRANSFORM_A,
-            TRANSFORM_B,
+            TRANSFORM,
             USE_RADII;
 
     static {
@@ -58,15 +55,13 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
                 __member(b2ShapeProxy.SIZEOF, b2ShapeProxy.ALIGNOF),
                 __member(b2ShapeProxy.SIZEOF, b2ShapeProxy.ALIGNOF),
                 __member(b2Transform.SIZEOF, b2Transform.ALIGNOF),
-                __member(b2Transform.SIZEOF, b2Transform.ALIGNOF),
                 __member(1)
         );
 
         PROXY_A = layout.offsetof(0);
         PROXY_B = layout.offsetof(1);
-        TRANSFORM_A = layout.offsetof(2);
-        TRANSFORM_B = layout.offsetof(3);
-        USE_RADII = layout.offsetof(4);
+        TRANSFORM = layout.offsetof(2);
+        USE_RADII = layout.offsetof(3);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -106,12 +101,9 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
     /** @return Returns the property {@code proxyB} */
     @Override
     public b2ShapeProxy proxyB() { return nproxyB(address()); }
-    /** @return Returns the property {@code transformA} */
+    /** @return Returns the property {@code transform} */
     @Override
-    public b2Transform transformA() { return ntransformA(address()); }
-    /** @return Returns the property {@code transformB} */
-    @Override
-    public b2Transform transformB() { return ntransformB(address()); }
+    public b2Transform transform() { return ntransform(address()); }
     /** @return Returns the property {@code useRadii} */
     @Override
     public boolean useRadii() { return nuseRadii(address()); }
@@ -139,24 +131,13 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
     }
 
     /**
-     * Set the value of property {@code transformA}
+     * Set the value of property {@code transform}
      *
      * @param value b2Transform
      * @return b2DistanceInput
      */
-    public b2DistanceInput transformA(b2Transform value) {
-        ntransformA(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code transformB}
-     *
-     * @param value b2Transform
-     * @return b2DistanceInput
-     */
-    public b2DistanceInput transformB(b2Transform value) {
-        ntransformB(address(), value);
+    public b2DistanceInput transform(b2Transform value) {
+        ntransform(address(), value);
         return this;
     }
 
@@ -253,14 +234,12 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
     
     public static b2ShapeProxy nproxyA(long address) { return b2ShapeProxy.createSafe(() -> address + PROXY_A); }
     public static b2ShapeProxy nproxyB(long address) { return b2ShapeProxy.createSafe(() -> address + PROXY_B); }
-    public static b2Transform ntransformA(long address) { return b2Transform.createSafe(() -> address + TRANSFORM_A); }
-    public static b2Transform ntransformB(long address) { return b2Transform.createSafe(() -> address + TRANSFORM_B); }
+    public static b2Transform ntransform(long address) { return b2Transform.createSafe(() -> address + TRANSFORM); }
     public static boolean nuseRadii(long address) { return memGetByte(address + USE_RADII) != 0; }
 
     public static void nproxyA(long address, b2ShapeProxy value) { nmemcpy(address + PROXY_A, value.address(), b2ShapeProxy.SIZEOF); }
     public static void nproxyB(long address, b2ShapeProxy value) { nmemcpy(address + PROXY_B, value.address(), b2ShapeProxy.SIZEOF); }
-    public static void ntransformA(long address, b2Transform value) { nmemcpy(address + TRANSFORM_A, value.address(), b2Transform.SIZEOF); }
-    public static void ntransformB(long address, b2Transform value) { nmemcpy(address + TRANSFORM_B, value.address(), b2Transform.SIZEOF); }
+    public static void ntransform(long address, b2Transform value) { nmemcpy(address + TRANSFORM, value.address(), b2Transform.SIZEOF); }
     public static void nuseRadii(long address, boolean value) { memPutByte(address + USE_RADII, (byte)(value ? 1 : 0)); }
     
     // -----------------------------------

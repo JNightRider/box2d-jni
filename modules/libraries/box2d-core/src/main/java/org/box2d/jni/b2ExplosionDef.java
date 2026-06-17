@@ -16,7 +16,7 @@ import static org.box2d.jni.system.Memory.*;
  * typedef struct b2ExplosionDef
  * {
  *     uint64_t maskBits;
- *     b2Vec2 position;
+ *     b2Pos position;
  *     float radius;
  *     float falloff;
  *     float impulsePerLength;
@@ -46,7 +46,7 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
     static {
         Layout layout = __struct(
                 __member(VarType.Int64t.sizeof()),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(4),
                 __member(4),
                 __member(4)
@@ -95,7 +95,7 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
     public long maskBits() { return nmaskBits(address()); }
     /** @return Returns the property {@code position} */
     @Override
-    public b2Vec2 position() { return nposition(address()); }
+    public b2Pos position() { return nposition(address()); }
     /** @return Returns the property {@code radius} */
     @Override
     public float radius() { return nradius(address()); }
@@ -123,7 +123,7 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
      * @param value b2Vec2
      * @return b2ExplosionDef
      */
-    public b2ExplosionDef position(b2Vec2 value) {
+    public b2ExplosionDef position(b2Pos value) {
         nposition(address(), value);
         return this;
     }
@@ -242,13 +242,13 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
     // -----------------------------------
 
     public static long nmaskBits(long address)                      { return memGetLong(address + MASK_BITS);            }
-    public static b2Vec2 nposition(long address)                    { return b2Vec2.createSafe(() -> address + POSITION);}
+    public static b2Pos nposition(long address)                     { return b2Pos.ncreateSafe(() -> address + POSITION);}
     public static float nradius(long address)                       { return memGetFloat(address + RADIUS);              }
     public static float nfalloff(long address)                      { return memGetFloat(address + FALLOFF);             }
     public static float nimpulsePerLength(long address)             { return memGetFloat(address + IMPULSE_PER_LENGTH);  }
 
     public static void nmaskBits(long address, long value)          { memPutLong(address + MASK_BITS, value);           }
-    public static void nposition(long address, b2Vec2 value)        { nmemcpy(address + POSITION, value.address(), b2Vec2.SIZEOF); }
+    public static void nposition(long address, b2Pos value)         { nmemcpy(address + POSITION, value.address(), b2Pos.DSIZEOF); }
     public static void nradius(long address, float value)           { memPutFloat(address + RADIUS, value);             }
     public static void nfalloff(long address, float value)          { memPutFloat(address + FALLOFF, value);            }
     public static void nimpulsePerLength(long address, float value) { memPutFloat(address + IMPULSE_PER_LENGTH, value); }

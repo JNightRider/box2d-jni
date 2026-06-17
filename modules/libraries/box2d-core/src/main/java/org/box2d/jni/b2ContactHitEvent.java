@@ -28,7 +28,7 @@ import static org.box2d.jni.system.Memory.*;
  *     /// Point where the shapes hit at the beginning of the time step.
  *     /// This is a mid-point between the two surfaces. It could be at speculative
  *     /// point where the two shapes were not touching at the beginning of the time step.
- *     b2Vec2 point;
+ *     b2Pos point;
  *
  *     /// Normal vector pointing from shape A to shape B
  *     b2Vec2 normal;
@@ -64,7 +64,7 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
                 __member(b2ShapeId.SIZEOF, b2ShapeId.ALIGNOF),
                 __member(b2ShapeId.SIZEOF, b2ShapeId.ALIGNOF),
                 __member(b2ContactId.SIZEOF, b2ContactId.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4)
         );
@@ -115,7 +115,7 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
     /** @return Returns the property {@code contactId} */
     public b2ContactId contactId() { return ncontactId(address());}
     /** @return Returns the property {@code point} */
-    public b2Vec2 point() { return npoint(address());}
+    public b2Pos point() { return npoint(address());}
     /** @return Returns the property {@code normal} */
     public b2Vec2 normal() { return nnormal(address());}
     /** @return Returns the property {@code approachSpeed} */
@@ -160,7 +160,7 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
      * @param value b2Vec2
      * @return b2ContactHitEvent
      */
-    public b2ContactHitEvent point(b2Vec2 value) {
+    public b2ContactHitEvent point(b2Pos value) {
         npoint(address(), value);
         return this;
     }
@@ -272,14 +272,14 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
     public static b2ShapeId nshapeIdA(long address) { return b2ShapeId.createSafe(() -> address + SHAPE_ID_A); }
     public static b2ShapeId nshapeIdB(long address) { return b2ShapeId.createSafe(() -> address + SHAPE_ID_B); }
     public static b2ContactId ncontactId(long address) { return b2ContactId.createSafe(() -> address + CONTACT_ID); }
-    public static b2Vec2 npoint(long address) { return b2Vec2.createSafe(() -> address + POINT); }
+    public static b2Pos npoint(long address) { return b2Pos.ncreateSafe(() -> address + POINT); }
     public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
     public static float napproachSpeed(long address) { return memGetFloat(address + APPROACH_SPEED); }
 
     public static void nshapeIdA(long address, b2ShapeId value) { nmemcpy(address + SHAPE_ID_A, value.address(), b2ShapeId.SIZEOF);}
     public static void nshapeIdB(long address, b2ShapeId value) { nmemcpy(address + SHAPE_ID_B, value.address(), b2ShapeId.SIZEOF);}
     public static void ncontactId(long address, b2ContactId value) { nmemcpy(address + CONTACT_ID, value.address(), b2ContactId.SIZEOF);}
-    public static void npoint(long address, b2Vec2 value) { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF);}
+    public static void npoint(long address, b2Pos value) { nmemcpy(address + POINT, value.address(), b2Pos.DSIZEOF);}
     public static void nnormal(long address, b2Vec2 value) { nmemcpy(address + NORMAL, value.address(), b2Vec2.SIZEOF);}
     public static void napproachSpeed(long address, float value) { memPutFloat(address + APPROACH_SPEED, value);}
 

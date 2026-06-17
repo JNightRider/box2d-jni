@@ -16,7 +16,7 @@ public interface ConstB2RayResult extends ConstStruct {
     /** @return Returns the property {@code shapeId} */
     public ConstB2ShapeId shapeId();
     /** @return Returns the property {@code point} */
-    public ConstB2Vec2 point();
+    public ConstB2Pos point();
     /** @return Returns the property {@code normal} */
     public ConstB2Vec2 normal();
     /** @return Returns the property {@code fraction} */

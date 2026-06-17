@@ -4,6 +4,7 @@
  */
 package org.box2d.jni.unit;
 
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2PreSolveFcn;
 import org.box2d.jni.b2PreSolveFcnI;
 import org.box2d.jni.b2ShapeId;
@@ -22,6 +23,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class b2PreSolveFcnTest {
     /**
      * Initialize all tests.
@@ -31,7 +33,7 @@ public class b2PreSolveFcnTest {
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
                 b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-                b2Vec2 v0 = b2Vec2.malloc().set(1.05f, 0.5f);
+                b2Pos v0 = b2Pos.nmalloc().set(1.05f, 0.5f);
                 b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
             ) {
 
@@ -47,8 +49,8 @@ public class b2PreSolveFcnTest {
                 Assert.assertEquals(89, (int) shapeIdB.index1());
                 Assert.assertEquals(35, (short) shapeIdB.generation());
                 
-                Assert.assertEquals(1.05f, point.x(), 0.0f);
-                Assert.assertEquals(0.5f, point.y(), 0.0f);
+                Assert.assertEquals(1.05f, point.x().floatValue(), 0.0f);
+                Assert.assertEquals(0.5f, point.y().floatValue(), 0.0f);
                 
                 Assert.assertEquals(4.6f, normal.x(), 0.0f);
                 Assert.assertEquals(0.004f, normal.y(), 0.0f);
@@ -57,13 +59,13 @@ public class b2PreSolveFcnTest {
                 return true;
             };
             
-            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_VEC2_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
+            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
             Assert.assertTrue(__result);
         }
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
                 b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-                b2Vec2 v0 = b2Vec2.malloc().set(1.05f, 0.5f);
+                b2Pos v0 = b2Pos.nmalloc().set(1.05f, 0.5f);
                 b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
             ) {
 
@@ -79,8 +81,8 @@ public class b2PreSolveFcnTest {
                 Assert.assertEquals(89, (int) shapeIdB.index1());
                 Assert.assertEquals(35, (short) shapeIdB.generation());
                 
-                Assert.assertEquals(1.05f, point.x(), 0.0f);
-                Assert.assertEquals(0.5f, point.y(), 0.0f);
+                Assert.assertEquals(1.05f, point.x().floatValue(), 0.0f);
+                Assert.assertEquals(0.5f, point.y().floatValue(), 0.0f);
                 
                 Assert.assertEquals(4.6f, normal.x(), 0.0f);
                 Assert.assertEquals(0.004f, normal.y(), 0.0f);
@@ -90,7 +92,7 @@ public class b2PreSolveFcnTest {
             });
             func.byValue(false);
             
-            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_VEC2_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
+            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
             Assert.assertFalse(__result);
         }
         Callbacks.b2FreeCallbacks();

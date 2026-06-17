@@ -5,6 +5,8 @@
 package org.box2d.jni.include;
 
 import org.box2d.jni.system.Library;
+import org.box2d.jni.system.Pointer;
+
 import static org.box2d.jni.include.MathFunctions.*;
 
 /**
@@ -16,9 +18,19 @@ import static org.box2d.jni.include.MathFunctions.*;
  */
 public final class Constants {
     static { Library.initialize(); }
-    
-    /** {@code #define B2_HUGE ( 100000.0f * b2GetLengthUnitsPerMeter() ) } */
-    public static final float B2_HUGE = ( 100000.0f * b2GetLengthUnitsPerMeter() );
+
+    /**
+     * {@code
+     * #if defined( BOX2D_DOUBLE_PRECISION )
+     * #define B2_HUGE ( 1.0e9f * b2GetLengthUnitsPerMeter() )
+     * #else
+     * #define B2_HUGE ( 1.0e5f * b2GetLengthUnitsPerMeter() )
+     * #endif
+     * }
+     */
+    public static final float B2_HUGE = Pointer.BOX2D_DOUBLE_PRECISION
+                            ? (1.0e9f * b2GetLengthUnitsPerMeter())
+                            : (1.0e5f * b2GetLengthUnitsPerMeter());
 
     /** {@code #define B2_MAX_WORKERS 32 } */
     public static final float  B2_MAX_WORKERS = 32;
@@ -69,4 +81,6 @@ public final class Constants {
 
     /** {@code #define B2_TIME_TO_SLEEP 0.5f } */
     public static final float B2_TIME_TO_SLEEP = 0.5f;
+    /** private constructor */
+    private Constants() {}
 }

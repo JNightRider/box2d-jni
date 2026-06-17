@@ -34,6 +34,7 @@ import org.box2d.jni.b2MotionLocks;
 import org.box2d.jni.b2OverlapResultFcnI;
 import org.box2d.jni.b2PlaneResultFcnI;
 import org.box2d.jni.b2Polygon;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2PreSolveFcnI;
 import org.box2d.jni.b2Profile;
 import org.box2d.jni.b2QueryFilter;
@@ -53,7 +54,9 @@ import org.box2d.jni.b2SurfaceMaterial;
 import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2TreeStats;
 import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldCastOutput;
 import org.box2d.jni.b2WorldId;
+import org.box2d.jni.b2WorldTransform;
 
 import org.box2d.jni.readonly.ConstB2BodyDef;
 import org.box2d.jni.readonly.ConstB2Capsule;
@@ -278,9 +281,10 @@ public final class Box2d {
     // --- [ b2World_OverlapAABB ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); }
+     * {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
+     * @param origin b2Pos
      * @param aabb b2AABB
      * @param filter b2QueryFilter
      * @param fcn long
@@ -289,22 +293,23 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_OverlapAABB(b2WorldId worldId, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcnI fcn, long context, b2TreeStats __result) {
-        checkPointers(worldId, aabb, filter, fcn, __result);
-        nb2World_OverlapAABB(worldId.address(), aabb.address(), filter.address(), fcn.address(), context, __result.address());
+    public static b2TreeStats b2World_OverlapAABB(b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcnI fcn, long context, b2TreeStats __result) {
+        checkPointers(worldId, origin,  aabb, filter, fcn, __result);
+        nb2World_OverlapAABB(worldId.address(), origin.address(), aabb.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); } */
-    public static native void nb2World_OverlapAABB(long worldId, long aabb, long filter, long fcn, long context, long __result);
+    /* {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); } } */
+    public static native void nb2World_OverlapAABB(long worldId, long origin, long aabb, long filter, long fcn, long context, long __result);
 
 
     // --- [ b2World_OverlapShape ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); }
+     * {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
+     * @param origin b2Pos
      * @param proxy ConstB2ShapeProxy
      * @param filter b2QueryFilter
      * @param fcn long
@@ -313,22 +318,22 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_OverlapShape(b2WorldId worldId, ConstB2ShapeProxy proxy, b2QueryFilter filter, b2OverlapResultFcnI fcn, long context, b2TreeStats __result) {
-        checkPointers(worldId, proxy, filter, fcn, __result);
-        nb2World_OverlapShape(worldId.address(), proxy.address(), filter.address(), fcn.address(), context, __result.address());
+    public static b2TreeStats b2World_OverlapShape(b2WorldId worldId, b2Pos origin, ConstB2ShapeProxy proxy, b2QueryFilter filter, b2OverlapResultFcnI fcn, long context, b2TreeStats __result) {
+        checkPointers(worldId, origin, proxy, filter, fcn, __result);
+        nb2World_OverlapShape(worldId.address(), origin.address(), proxy.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); } */
-    public static native void nb2World_OverlapShape(long worldId, long proxy, long filter, long fcn, long context, long __result);
+    /* {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context );} */
+    public static native void nb2World_OverlapShape(long worldId, long origin, long proxy, long filter, long fcn, long context, long __result);
 
     // --- [ b2World_CastRay ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); }
+     * {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
-     * @param origin b2Vec2
+     * @param origin b2Pos
      * @param translation b2Vec2
      * @param filter b2QueryFilter
      * @param fcn long
@@ -337,45 +342,47 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_CastRay(b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcnI fcn, long context, b2TreeStats __result) {
+    public static b2TreeStats b2World_CastRay(b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcnI fcn, long context, b2TreeStats __result) {
         checkPointers(worldId, origin, translation, filter, fcn, __result);
         nb2World_CastRay(worldId.address(), origin.address(), translation.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } */
+    /* {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } */
     public static native void nb2World_CastRay(long worldId, long origin, long translation, long filter, long fcn, long context, long __result);
 
 
     // --- [ b2World_CastRayClosest ] ---
 
     /**
-     * {@code B2_API b2RayResult b2World_CastRayClosest( b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter ); }
+     * {@code B2_API b2RayResult b2World_CastRayClosest( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter ); }
      *
      * @param worldId b2WorldId
-     * @param origin b2Vec2
+     * @param origin b2Pos
      * @param translation b2Vec2
      * @param filter b2QueryFilter
      * @param __result store
      *
      * @return b2RayResult
      */
-    public static b2RayResult b2World_CastRayClosest(b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter, b2RayResult __result) {
+    public static b2RayResult b2World_CastRayClosest(b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2RayResult __result) {
         checkPointers(worldId, origin, translation, filter, __result);
         nb2World_CastRayClosest(worldId.address(), origin.address(), translation.address(), filter.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2RayResult b2World_CastRayClosest( b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter ); } */
+    /* {@code B2_API b2RayResult b2World_CastRayClosest( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter ); } */
     public static native void nb2World_CastRayClosest(long worldId, long origin, long translation, long filter, long __result);
 
 
     // --- [ b2World_CastShape ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter,  b2CastResultFcn* fcn, void* context ); }
-     *
+     * {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); }
+     * 
+     * 
      * @param worldId b2WorldId
+     * @param origin b2Pos
      * @param proxy ConstB2ShapeProxy
      * @param translation b2Vec2
      * @param filter b2QueryFilter
@@ -385,54 +392,55 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_CastShape(b2WorldId worldId, ConstB2ShapeProxy proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcnI fcn, long context, b2TreeStats __result) {
-        checkPointers(worldId, proxy, translation, filter, fcn, __result);
-        nb2World_CastShape(worldId.address(), proxy.address(), translation.address(), filter.address(), fcn.address(), context, __result.address());
+    public static b2TreeStats b2World_CastShape(b2WorldId worldId, b2Pos origin, ConstB2ShapeProxy proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcnI fcn, long context, b2TreeStats __result) {
+        checkPointers(worldId, origin, proxy, translation, filter, fcn, __result);
+        nb2World_CastShape(worldId.address(), origin.address(), proxy.address(), translation.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } */
-    public static native void nb2World_CastShape(long worldId, long proxy, long translation, long filter, long fcn, long context, long __result);
+    /* {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } } */
+    public static native void nb2World_CastShape(long worldId, long origin, long proxy, long translation, long filter, long fcn, long context, long __result);
 
     // --- [ b2World_CastMover ] ---
 
     /**
-     * {@code B2_API float b2World_CastMover( b2WorldId worldId, const b2Capsule* mover, b2Vec2 translation, b2QueryFilter filter ); }
+     * {@code B2_API float b2World_CastMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2Vec2 translation, b2QueryFilter filter ); }
      *
      * @param worldId b2WorldId
+     * @param origin b2Pos
      * @param mover ConstB2Capsule
      * @param translation b2Vec2
      * @param filter b2QueryFilter
      *
      * @return float
      */
-    public static float b2World_CastMover(b2WorldId worldId, ConstB2Capsule mover, b2Vec2 translation, b2QueryFilter filter) {
-        checkPointers(worldId, mover, translation, filter);
-        return nb2World_CastMover(worldId.address(), mover.address(), translation.address(), filter.address());
+    public static float b2World_CastMover(b2WorldId worldId, b2Pos origin, ConstB2Capsule mover, b2Vec2 translation, b2QueryFilter filter) {
+        checkPointers(worldId, origin, mover, translation, filter);
+        return nb2World_CastMover(worldId.address(), origin.address(), mover.address(), translation.address(), filter.address());
     }
 
-    /* {@code B2_API float b2World_CastMover( b2WorldId worldId, const b2Capsule* mover, b2Vec2 translation, b2QueryFilter filter ); } */
-    public static native float nb2World_CastMover(long worldId, long mover, long translation, long filter);
+    /* {@code B2_API float b2World_CastMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2Vec2 translation, b2QueryFilter filter ); } */
+    public static native float nb2World_CastMover(long worldId, long origin, long mover, long translation, long filter);
 
     // --- [ b2World_CollideMover ] ---
 
     /**
-     * {@code B2_API void b2World_CollideMover( b2WorldId worldId, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultFcn* fcn, void* context ); }
+     * {@code B2_API void b2World_CollideMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
+     * @param origin b2Pos
      * @param mover ConstB2Capsule
      * @param filter b2QueryFilter
      * @param fcn long
      * @param context long
      */
-    public static void b2World_CollideMover(b2WorldId worldId, ConstB2Capsule mover, b2QueryFilter filter, b2PlaneResultFcnI fcn, long context) {
-        checkPointers(worldId, mover, filter, fcn);
-        nb2World_CollideMover(worldId.address(), mover.address(), filter.address(), fcn.address(), context);
+    public static void b2World_CollideMover(b2WorldId worldId, b2Pos origin, ConstB2Capsule mover, b2QueryFilter filter, b2PlaneResultFcnI fcn, long context) {
+        checkPointers(worldId, origin, mover, filter, fcn);
+        nb2World_CollideMover(worldId.address(), origin.address(), mover.address(), filter.address(), fcn.address(), context);
     }
 
-    /* {@code B2_API void b2World_CollideMover( b2WorldId worldId, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultFcn* fcn,
-     *                                          void* context ); } */
-    public static native void nb2World_CollideMover(long worldId, long mover, long filter, long fcn, long context);
+    /* {@code B2_API void b2World_CollideMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultFcn* fcn, void* context ); } */
+    public static native void nb2World_CollideMover(long worldId, long origin, long mover, long filter, long fcn, long context);
 
     // --- [ b2World_EnableSleeping ] ---
 
@@ -1333,20 +1341,20 @@ public final class Box2d {
     // --- [ b2Body_GetPosition ] ---
 
     /**
-     * {@code B2_API b2Vec2 b2Body_GetPosition( b2BodyId bodyId ); }
+     * {@code B2_API b2Pos b2Body_GetPosition( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      * @param __result store
      *
-     * @return b2Vec2
+     * @return b2Pos
      */
-    public static b2Vec2 b2Body_GetPosition(b2BodyId bodyId, b2Vec2 __result) {
+    public static b2Pos b2Body_GetPosition(b2BodyId bodyId, b2Pos __result) {
         checkPointers(bodyId, __result);
         nb2Body_GetPosition(bodyId.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Vec2 b2Body_GetPosition( b2BodyId bodyId ); } */
+    /* {@code B2_API b2Pos b2Body_GetPosition( b2BodyId bodyId ); } */
     public static native void nb2Body_GetPosition(long bodyId, long __result);
 
     // --- [ b2Body_GetRotation ] ---
@@ -1371,37 +1379,37 @@ public final class Box2d {
     // --- [ b2Body_GetTransform ] ---
 
     /**
-     * {@code B2_API b2Transform b2Body_GetTransform( b2BodyId bodyId ); }
+     * {@code B2_API b2WorldTransform b2Body_GetTransform( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      * @param __result store
      *
-     * @return b2Transform
+     * @return b2WorldTransform
      */
-    public static b2Transform b2Body_GetTransform(b2BodyId bodyId, b2Transform __result) {
+    public static b2WorldTransform b2Body_GetTransform(b2BodyId bodyId, b2WorldTransform __result) {
         checkPointers(bodyId, __result);
         nb2Body_GetTransform(bodyId.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Transform b2Body_GetTransform( b2BodyId bodyId ); } */
+    /* {@code B2_API b2WorldTransform b2Body_GetTransform( b2BodyId bodyId ); } */
     public static native void nb2Body_GetTransform(long bodyId, long __result);
 
     // --- [ b2Body_SetTransform ] ---
 
     /**
-     * {@code B2_API void b2Body_SetTransform( b2BodyId bodyId, b2Vec2 position, b2Rot rotation ); }
+     * {@code B2_API void b2Body_SetTransform( b2BodyId bodyId, b2Pos position, b2Rot rotation ); }
      *
      * @param bodyId b2BodyId
      * @param position b2Vec2
      * @param rotation b2Rot
      */
-    public static void b2Body_SetTransform(b2BodyId bodyId, b2Vec2 position, b2Rot rotation) {
+    public static void b2Body_SetTransform(b2BodyId bodyId, b2Pos position, b2Rot rotation) {
         checkPointers(bodyId, position, rotation);
         nb2Body_SetTransform(bodyId.address(), position.address(), rotation.address());
     }
 
-    /* {@code B2_API void b2Body_SetTransform( b2BodyId bodyId, b2Vec2 position, b2Rot rotation ); } */
+    /* {@code B2_API void b2Body_SetTransform( b2BodyId bodyId, b2Pos position, b2Rot rotation ); } */
     public static native void nb2Body_SetTransform(long bodyId, long position, long rotation);
 
     // --- [ b2Body_GetLocalPoint ] ---
@@ -1410,38 +1418,38 @@ public final class Box2d {
      * {@code B2_API b2Vec2 b2Body_GetLocalPoint( b2BodyId bodyId, b2Vec2 worldPoint ); }
      *
      * @param bodyId b2BodyId
-     * @param worldPoint b2Vec2
+     * @param worldPoint b2Pos
      * @param __result store
      *
      * @return b2Vec2
      */
-    public static b2Vec2 b2Body_GetLocalPoint(b2BodyId bodyId, b2Vec2 worldPoint, b2Vec2 __result) {
+    public static b2Vec2 b2Body_GetLocalPoint(b2BodyId bodyId, b2Pos worldPoint, b2Vec2 __result) {
         checkPointers(bodyId, worldPoint, __result);
         nb2Body_GetLocalPoint(bodyId.address(), worldPoint.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Vec2 b2Body_GetLocalPoint( b2BodyId bodyId, b2Vec2 worldPoint ); } */
+    /* {@code B2_API b2Vec2 b2Body_GetLocalPoint( b2BodyId bodyId, b2Pos worldPoint ); } */
     public static native void nb2Body_GetLocalPoint(long bodyId, long worldPoint, long __result);
 
     // --- [ b2Body_GetWorldPoint ] ---
 
     /**
-     * {@code B2_API b2Vec2 b2Body_GetWorldPoint( b2BodyId bodyId, b2Vec2 localPoint ); }
+     * {@code B2_API b2Pos b2Body_GetWorldPoint( b2BodyId bodyId, b2Vec2 localPoint ); }
      *
      * @param bodyId b2BodyId
      * @param localPoint b2Vec2
      * @param __result store
      *
-     * @return b2Vec2
+     * @return b2Pos
      */
-    public static b2Vec2 b2Body_GetWorldPoint(b2BodyId bodyId, b2Vec2 localPoint, b2Vec2 __result) {
+    public static b2Pos b2Body_GetWorldPoint(b2BodyId bodyId, b2Vec2 localPoint, b2Pos __result) {
         checkPointers(bodyId, localPoint, __result);
         nb2Body_GetWorldPoint(bodyId.address(), localPoint.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Vec2 b2Body_GetWorldPoint( b2BodyId bodyId, b2Vec2 localPoint ); } */
+    /* {@code B2_API b2Pos b2Body_GetWorldPoint( b2BodyId bodyId, b2Vec2 localPoint ); } */
     public static native void nb2Body_GetWorldPoint(long bodyId, long localPoint, long __result);
 
     // --- [ b2Body_GetLocalVector ] ---
@@ -1555,19 +1563,19 @@ public final class Box2d {
     // --- [ b2Body_SetTargetTransform ] ---
 
     /**
-     * {@code B2_API void b2Body_SetTargetTransform( b2BodyId bodyId, b2Transform target, float timeStep, bool wake ); }
+     * {@code B2_API void b2Body_SetTargetTransform( b2BodyId bodyId, b2WorldTransform target, float timeStep, bool wake ); }
      *
      * @param bodyId b2BodyId
-     * @param target b2Transform
+     * @param target b2WorldTransform
      * @param timeStep float
      * @param wake boolean
      */
-    public static void b2Body_SetTargetTransform(b2BodyId bodyId, b2Transform target, float timeStep, boolean wake) {
+    public static void b2Body_SetTargetTransform(b2BodyId bodyId, b2WorldTransform target, float timeStep, boolean wake) {
         checkPointers(bodyId, target);
         nb2Body_SetTargetTransform(bodyId.address(), target.address(), timeStep, wake);
     }
 
-    /* {@code B2_API void b2Body_SetTargetTransform( b2BodyId bodyId, b2Transform target, float timeStep, bool wake ); } */
+    /* {@code B2_API void b2Body_SetTargetTransform( b2BodyId bodyId, b2WorldTransform target, float timeStep, bool wake ); } */
     public static native void nb2Body_SetTargetTransform(long bodyId, long target, float timeStep, boolean wake);
 
     // --- [ b2Body_GetLocalPointVelocity ] ---
@@ -1593,39 +1601,39 @@ public final class Box2d {
     // --- [ b2Body_GetWorldPointVelocity ] ---
 
     /**
-     * {@code B2_API b2Vec2 b2Body_GetWorldPointVelocity( b2BodyId bodyId, b2Vec2 worldPoint ); }
+     * {@code B2_API b2Vec2 b2Body_GetWorldPointVelocity( b2BodyId bodyId, b2Pos worldPoint ); }
      *
      * @param bodyId b2BodyId
-     * @param worldPoint b2Vec2
+     * @param worldPoint b2Pos
      * @param __result store
      *
      * @return b2Vec2
      */
-    public static b2Vec2 b2Body_GetWorldPointVelocity(b2BodyId bodyId, b2Vec2 worldPoint, b2Vec2 __result) {
+    public static b2Vec2 b2Body_GetWorldPointVelocity(b2BodyId bodyId, b2Pos worldPoint, b2Vec2 __result) {
         checkPointers(bodyId, worldPoint, __result);
         nb2Body_GetWorldPointVelocity(bodyId.address(), worldPoint.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Vec2 b2Body_GetWorldPointVelocity( b2BodyId bodyId, b2Vec2 worldPoint ); } */
+    /* {@code B2_API b2Vec2 b2Body_GetWorldPointVelocity( b2BodyId bodyId, b2Pos worldPoint ); } */
     public static native void nb2Body_GetWorldPointVelocity(long bodyId, long worldPoint, long __result);
 
     // --- [ b2Body_ApplyForce ] ---
 
     /**
-     * {@code B2_API void b2Body_ApplyForce( b2BodyId bodyId, b2Vec2 force, b2Vec2 point, bool wake ); }
+     * {@code B2_API void b2Body_ApplyForce( b2BodyId bodyId, b2Vec2 force, b2Pos point, bool wake ); }
      *
      * @param bodyId b2BodyId
      * @param force b2Vec2
      * @param point b2Vec2
      * @param wake boolean
      */
-    public static void b2Body_ApplyForce(b2BodyId bodyId, b2Vec2 force, b2Vec2 point, boolean wake) {
+    public static void b2Body_ApplyForce(b2BodyId bodyId, b2Vec2 force, b2Pos point, boolean wake) {
         checkPointers(bodyId, force, point);
         nb2Body_ApplyForce(bodyId.address(), force.address(), point.address(), wake);
     }
 
-    /* {@code B2_API void b2Body_ApplyForce( b2BodyId bodyId, b2Vec2 force, b2Vec2 point, bool wake ); } */
+    /* {@code B2_API void b2Body_ApplyForce( b2BodyId bodyId, b2Vec2 force, b2Pos point, bool wake ); } */
     public static native void nb2Body_ApplyForce(long bodyId, long force, long point, boolean wake);
 
     // --- [ b2Body_ApplyForceToCenter ] ---
@@ -1680,19 +1688,19 @@ public final class Box2d {
     // --- [ b2Body_ApplyLinearImpulse ] ---
 
     /**
-     * {@code B2_API void b2Body_ApplyLinearImpulse( b2BodyId bodyId, b2Vec2 impulse, b2Vec2 point, bool wake ); }
+     * {@code B2_API void b2Body_ApplyLinearImpulse( b2BodyId bodyId, b2Vec2 impulse, b2Pos point, bool wake ); }
      *
      * @param bodyId b2BodyId
      * @param impulse b2Vec2
-     * @param point b2Vec2
+     * @param point b2Pos
      * @param wake boolean
      */
-    public static void b2Body_ApplyLinearImpulse(b2BodyId bodyId, b2Vec2 impulse, b2Vec2 point, boolean wake) {
+    public static void b2Body_ApplyLinearImpulse(b2BodyId bodyId, b2Vec2 impulse, b2Pos point, boolean wake) {
         checkPointers(bodyId, impulse, point);
         nb2Body_ApplyLinearImpulse(bodyId.address(), impulse.address(), point.address(), wake);
     }
 
-    /* {@code B2_API void b2Body_ApplyLinearImpulse( b2BodyId bodyId, b2Vec2 impulse, b2Vec2 point, bool wake ); } */
+    /* {@code B2_API void b2Body_ApplyLinearImpulse( b2BodyId bodyId, b2Vec2 impulse, b2Pos point, bool wake ); } */
     public static native void nb2Body_ApplyLinearImpulse(long bodyId, long impulse, long point, boolean wake);
 
     // --- [ b2Body_ApplyLinearImpulseToCenter ] ---
@@ -1766,40 +1774,40 @@ public final class Box2d {
     // --- [ b2Body_GetLocalCenterOfMass ] ---
 
     /**
-     * {@code B2_API b2Vec2 b2Body_GetLocalCenterOfMass( b2BodyId bodyId ); }
+     * {@code B2_API b2Vec2 b2Body_GetLocalCenter( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      * @param __result store
      *
      * @return b2Vec2
      */
-    public static b2Vec2 b2Body_GetLocalCenterOfMass(b2BodyId bodyId, b2Vec2 __result) {
+    public static b2Vec2 b2Body_GetLocalCenter(b2BodyId bodyId, b2Vec2 __result) {
         checkPointers(bodyId, __result);
-        nb2Body_GetLocalCenterOfMass(bodyId.address(), __result.address());
+        nb2Body_GetLocalCenter(bodyId.address(), __result.address());
         return __result;
     }
 
     /* {@code B2_API b2Vec2 b2Body_GetLocalCenterOfMass( b2BodyId bodyId ); } */
-    public static native void nb2Body_GetLocalCenterOfMass(long bodyId, long __result);
+    public static native void nb2Body_GetLocalCenter(long bodyId, long __result);
 
     // --- [ b2Body_GetWorldCenterOfMass ] ---
 
     /**
-     * {@code B2_API b2Vec2 b2Body_GetWorldCenterOfMass( b2BodyId bodyId ); }
+     * {@code B2_API b2Pos b2Body_GetWorldCenter( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      * @param __result store
      *
-     * @return b2Vec2
+     * @return b2Pos
      */
-    public static b2Vec2 b2Body_GetWorldCenterOfMass(b2BodyId bodyId, b2Vec2 __result) {
+    public static b2Pos b2Body_GetWorldCenter(b2BodyId bodyId, b2Pos __result) {
         checkPointers(bodyId, __result);
-        nb2Body_GetWorldCenterOfMass(bodyId.address(), __result.address());
+        nb2Body_GetWorldCenter(bodyId.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Vec2 b2Body_GetWorldCenterOfMass( b2BodyId bodyId ); } */
-    public static native void nb2Body_GetWorldCenterOfMass(long bodyId, long __result);
+    /* {@code B2_API b2Pos b2Body_GetWorldCenter( b2BodyId bodyId ); } */
+    public static native void nb2Body_GetWorldCenter(long bodyId, long __result);
 
     // --- [ b2Body_SetMassData ] ---
 
@@ -2972,14 +2980,14 @@ public final class Box2d {
     // --- [ b2Shape_TestPoint ] ---
 
     /**
-     * {@code B2_API bool b2Shape_TestPoint( b2ShapeId shapeId, b2Vec2 point ); }
+     * {@code B2_API bool b2Shape_TestPoint( b2ShapeId shapeId, b2Pos point ); }
      *
      * @param shapeId b2ShapeId
-     * @param point b2Vec2
+     * @param point b2Pos
      *
      * @return boolean
      */
-    public static boolean b2Shape_TestPoint(b2ShapeId shapeId, b2Vec2 point) {
+    public static boolean b2Shape_TestPoint(b2ShapeId shapeId, b2Pos point) {
         checkPointers(shapeId, point);
         return nb2Shape_TestPoint(shapeId.address(), point.address());
     }
@@ -2990,22 +2998,23 @@ public final class Box2d {
     // --- [ b2Shape_RayCast ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2Shape_RayCast( b2ShapeId shapeId, const b2RayCastInput* input ); }
+     * {@code B2_API b2WorldCastOutput b2Shape_RayCast( b2ShapeId shapeId, b2Pos origin, b2Vec2 translation  ); }
      *
      * @param shapeId b2ShapeId
-     * @param input ConstB2RayCastInput
+     * @param origin b2Pos
+     * @param translation b2Vec2 
      * @param __result store
      *
-     * @return b2CastOutput
+     * @return b2WorldCastOutput
      */
-    public static b2CastOutput b2Shape_RayCast(b2ShapeId shapeId, ConstB2RayCastInput input, b2CastOutput __result) {
-        checkPointers(shapeId, input, __result);
-        nb2Shape_RayCast(shapeId.address(), input.address(), __result.address());
+    public static b2WorldCastOutput b2Shape_RayCast(b2ShapeId shapeId, b2Pos origin, b2Vec2 translation , b2WorldCastOutput __result) {
+        checkPointers(shapeId, origin, translation, __result);
+        nb2Shape_RayCast(shapeId.address(), origin.address(), translation.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2CastOutput b2Shape_RayCast( b2ShapeId shapeId, const b2RayCastInput* input ); } */
-    public static native void nb2Shape_RayCast(long shapeId, long input, long __result);
+    /* {@code B2_API b2CastOutput b2Shape_RayCast( b2ShapeId shapeId, b2Pos origin, b2Vec2 translation  ); } */
+    public static native void nb2Shape_RayCast(long shapeId, long origin, long input, long __result);
 
     // --- [ b2Shape_GetCircle ] ---
 
@@ -3314,21 +3323,21 @@ public final class Box2d {
     // --- [ b2Shape_GetClosestPoint ] ---
 
     /**
-     * {@code B2_API b2Vec2 b2Shape_GetClosestPoint( b2ShapeId shapeId, b2Vec2 target ); }
+     * {@code B2_API b2Pos b2Shape_GetClosestPoint( b2ShapeId shapeId, b2Pos target ); }
      *
      * @param shapeId b2ShapeId
-     * @param target b2Vec2
+     * @param target b2Pos
      * @param __result store
      *
-     * @return b2Vec2
+     * @return b2Pos
      */
-    public static b2Vec2 b2Shape_GetClosestPoint(b2ShapeId shapeId, b2Vec2 target, b2Vec2 __result) {
+    public static b2Pos b2Shape_GetClosestPoint(b2ShapeId shapeId, b2Pos target, b2Pos __result) {
         checkPointers(shapeId, target, __result);
         nb2Shape_GetClosestPoint(shapeId.address(), target.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Vec2 b2Shape_GetClosestPoint( b2ShapeId shapeId, b2Vec2 target ); } */
+    /* {@code B2_API b2Pos b2Shape_GetClosestPoint( b2ShapeId shapeId, b2Pos target ); } */
     public static native void nb2Shape_GetClosestPoint(long shapeId, long target, long __result);
 
     // --- [ b2Shape_ApplyWind ] ---

@@ -30,8 +30,8 @@ public class DrawSolidCapsuleFcnTest {
     public void callback() {
         try
         (
-            b2Vec2 v0 = b2Vec2.malloc().set(1, 2);
-            b2Vec2 v1 = b2Vec2.malloc().set(3, 5)
+            b2Vec2 v0 = b2Vec2.malloc().set(1f, 2f);
+            b2Vec2 v1 = b2Vec2.malloc().set(3f, 5f)
         ) {
             DrawSolidCapsuleFcnI func = (p1, p2, radius, color, context) -> {
                 Debug.apiPrint("DrawSolidCapsuleFcnI: p1=" + p1 + ", p2=" + p2 + ", radius=" + radius + ", color=" + color + ", context=" + context);
@@ -49,8 +49,8 @@ public class DrawSolidCapsuleFcnTest {
         }
         try
         (
-            b2Vec2 v0 = b2Vec2.malloc().set(1, 2);
-            b2Vec2 v1 = b2Vec2.malloc().set(3, 5)
+            b2Vec2 v0 = b2Vec2.malloc().set(1f, 2f);
+            b2Vec2 v1 = b2Vec2.malloc().set(3f, 5f)
         ) {
             DrawSolidCapsuleFcn func = DrawSolidCapsuleFcn.create((p1, p2, radius, color, context) -> {
                 Debug.apiPrint("DrawSolidCapsuleFcnI: p1=" + p1 + ", p2=" + p2 + ", radius=" + radius + ", color=" + color + ", context=" + context);

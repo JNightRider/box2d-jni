@@ -14,7 +14,7 @@ import static org.box2d.jni.system.Memory.*;
  * typedef struct b2RecQueryHit
  * {
  *     b2ShapeId shape;
- *     b2Vec2 point;
+ *     b2Pos point;
  *     b2Vec2 normal;
  *     float fraction;
  * } b2RecQueryHit;
@@ -42,7 +42,7 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     static {
         Layout layout = __struct(
                 __member(b2ShapeId.SIZEOF, b2ShapeId.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4)
         );
@@ -87,7 +87,7 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     /** @return Returns the property {@code shape} */
     public b2ShapeId shape() { return nshape(address()); }
     /** @return Returns the property {@code point} */
-    public b2Vec2 point() { return npoint(address()); }
+    public b2Pos point() { return npoint(address()); }
     /** @return Returns the property {@code normal} */
     public b2Vec2 normal() { return nnormal(address()); }
     /** @return Returns the property {@code fraction} */
@@ -107,10 +107,10 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     /**
      * Set the value of property {@code point}
      *
-     * @param value b2Vec2
+     * @param value b2Pos
      * @return b2RecQueryHit
      */
-    public b2RecQueryHit point(b2Vec2 value) {
+    public b2RecQueryHit point(b2Pos value) {
         npoint(address(), value);
         return this;
     }
@@ -154,12 +154,12 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     // -----------------------------------
     
     private static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
-    private static b2Vec2 npoint(long address) { return b2Vec2.createSafe(() -> address + POINT); }
+    private static b2Pos npoint(long address) { return b2Pos.ncreateSafe(() -> address + POINT); }
     private static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
     private static float nfraction(long address) { return memGetFloat(address + FRACTION); }
 
     private static void nshape(long address, b2ShapeId value) { nmemcpy(address + SHAPE, value.address(), b2ShapeId.SIZEOF); }
-    private static void npoint(long address, b2Vec2 value) { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF); }
+    private static void npoint(long address, b2Pos value) { nmemcpy(address + POINT, value.address(), b2Pos.DSIZEOF); }
     private static void nnormal(long address, b2Vec2 value) { nmemcpy(address + NORMAL, value.address(), b2Vec2.SIZEOF); }
     private static void nfraction(long address, float value) { memPutFloat(address + FRACTION, value); }
     

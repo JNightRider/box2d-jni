@@ -41,6 +41,20 @@ static ffi_type ffi_type_b2Vec2 = {
 
 // -----------------------------------------------------
 
+static ffi_type* ffi_type_b2Pos_elements[3] = {
+    &ffi_type_double,
+    &ffi_type_double,
+    NULL
+};
+static ffi_type ffi_type_b2Pos = {
+    .size = 0,
+    .alignment = 0,
+    .type = FFI_TYPE_STRUCT,
+    .elements = ffi_type_b2Pos_elements
+};
+
+// -----------------------------------------------------
+
 static ffi_type* ffi_type_b2Rot_elements[3] = {
     &ffi_type_float,
     &ffi_type_float,
@@ -247,6 +261,18 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2Vec2
 {
     UNUSED_PARAMS(__env, clazz)
     return (jlong) &ffi_type_b2Vec2;
+}
+
+/*
+ * Class:     org_box2d_jni_system_Upcalls
+ * Method:    nffi_type_b2Pos
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2Pos
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong) &ffi_type_b2Pos;
 }
 
 /*

@@ -60,8 +60,7 @@ public class TestDistance {
         b2DistanceInput input = b2DistanceInput.malloc();input.clear();
         input.proxyA(b2MakeProxy( vas, ARRAY_COUNT( vas ), 0.0f , b2ShapeProxy.malloc() ));
         input.proxyB(b2MakeProxy( vbs, ARRAY_COUNT( vbs ), 0.0f, b2ShapeProxy.malloc() ));
-        input.transformA(b2Transform_identity);
-        input.transformB(b2Transform_identity);
+        input.transform(b2Transform_identity);
         input.useRadii(false);
 
         b2SimplexCache cache = b2SimplexCache.malloc();cache.clear();
@@ -86,8 +85,7 @@ public class TestDistance {
         b2ShapeCastPairInput input = b2ShapeCastPairInput.malloc();input.clear();
         input.proxyA(b2MakeProxy( vas, ARRAY_COUNT( vas ), 0.0f, b2ShapeProxy.malloc() ));
         input.proxyB(b2MakeProxy( vbs, ARRAY_COUNT( vbs ), 0.0f, b2ShapeProxy.malloc() ));
-        input.transformA(b2Transform_identity);
-        input.transformB(b2Transform_identity);
+        input.transform(b2Transform_identity);
         input.translationB(b2Vec2.malloc().set( -2.0f, 0.0f ));
         input.maxFraction(1.0f);
 

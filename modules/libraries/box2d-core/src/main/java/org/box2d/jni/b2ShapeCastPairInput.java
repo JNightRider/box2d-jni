@@ -17,8 +17,7 @@ import static org.box2d.jni.system.Memory.*;
  * {
  *     b2ShapeProxy proxyA;
  *     b2ShapeProxy proxyB;
- *     b2Transform transformA;
- *     b2Transform transformB;
+ *     b2Transform transform;
  *     b2Vec2 translationB;
  *     float maxFraction;
  *     bool canEncroach;
@@ -27,7 +26,7 @@ import static org.box2d.jni.system.Memory.*;
  * 
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.2.0
  */
 public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implements ConstB2ShapeCastPairInput {
 
@@ -41,8 +40,7 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
     private static final int
             PROXY_A,
             PROXY_B,
-            TRANSFORM_A,
-            TRANSFORM_B,
+            TRANSFORM,
             TRANSLATION_B,
             MAX_FRACTION,
             CAN_ENCROACH;
@@ -52,7 +50,6 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
                 __member(b2ShapeProxy.SIZEOF, b2ShapeProxy.ALIGNOF),
                 __member(b2ShapeProxy.SIZEOF, b2ShapeProxy.ALIGNOF),
                 __member(b2Transform.SIZEOF, b2Transform.ALIGNOF),
-                __member(b2Transform.SIZEOF, b2Transform.ALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4),
                 __member(1)
@@ -60,11 +57,10 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
 
         PROXY_A = layout.offsetof(0);
         PROXY_B = layout.offsetof(1);
-        TRANSFORM_A = layout.offsetof(2);
-        TRANSFORM_B = layout.offsetof(3);
-        TRANSLATION_B = layout.offsetof(4);
-        MAX_FRACTION = layout.offsetof(5);
-        CAN_ENCROACH = layout.offsetof(6);
+        TRANSFORM = layout.offsetof(2);
+        TRANSLATION_B = layout.offsetof(3);
+        MAX_FRACTION = layout.offsetof(4);
+        CAN_ENCROACH = layout.offsetof(5);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -104,12 +100,9 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
     /** @return Returns the property {@code proxyB} */
     @Override
     public b2ShapeProxy proxyB() { return nproxyB(address()); }
-    /** @return Returns the property {@code transformA} */
+    /** @return Returns the property {@code transform} */
     @Override
-    public b2Transform transformA() { return ntransformA(address()); }
-    /** @return Returns the property {@code transformB} */
-    @Override
-    public b2Transform transformB() { return ntransformB(address()); }
+    public b2Transform transform() { return ntransform(address()); }
     /** @return Returns the property {@code translationB} */
     @Override
     public b2Vec2 translationB() { return ntranslationB(address()); }
@@ -143,24 +136,13 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
     }
 
     /**
-     * Set the value of property {@code transformA}
+     * Set the value of property {@code transform}
      * 
      * @param value b2Transform
      * @return b2ShapeCastPairInput
      */
-    public b2ShapeCastPairInput transformA(b2Transform value) {
-        ntransformA(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code transformB}
-     * 
-     * @param value b2Transform
-     * @return b2ShapeCastPairInput
-     */
-    public b2ShapeCastPairInput transformB(b2Transform value) {
-        ntransformB(address(), value);
+    public b2ShapeCastPairInput transform(b2Transform value) {
+        ntransform(address(), value);
         return this;
     }
 
@@ -279,16 +261,14 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
     
     public static b2ShapeProxy nproxyA(long address) { return b2ShapeProxy.createSafe(() -> address + PROXY_A); }
     public static b2ShapeProxy nproxyB(long address) { return b2ShapeProxy.createSafe(() -> address + PROXY_B); }
-    public static b2Transform ntransformA(long address) { return b2Transform.createSafe(() -> address + TRANSFORM_A); }
-    public static b2Transform ntransformB(long address) { return b2Transform.createSafe(() -> address + TRANSFORM_B); }
+    public static b2Transform ntransform(long address) { return b2Transform.createSafe(() -> address + TRANSFORM); }
     public static b2Vec2 ntranslationB(long address) { return b2Vec2.createSafe(() -> address + TRANSLATION_B); }
     public static float nmaxFraction(long address) { return memGetFloat(address + MAX_FRACTION); }
     public static boolean ncanEncroach(long address) { return memGetByte(address + CAN_ENCROACH) != 0; }
 
     public static void nproxyA(long address, b2ShapeProxy value) { nmemcpy(address + PROXY_A, value.address(), b2ShapeProxy.SIZEOF); }
     public static void nproxyB(long address, b2ShapeProxy value) { nmemcpy(address + PROXY_B, value.address(), b2ShapeProxy.SIZEOF); }
-    public static void ntransformA(long address, b2Transform value) { nmemcpy(address + TRANSFORM_A, value.address(), b2Transform.SIZEOF); }
-    public static void ntransformB(long address, b2Transform value) { nmemcpy(address + TRANSFORM_B, value.address(), b2Transform.SIZEOF); }
+    public static void ntransform(long address, b2Transform value) { nmemcpy(address + TRANSFORM, value.address(), b2Transform.SIZEOF); }
     public static void ntranslationB(long address, b2Vec2 value) { nmemcpy(address + TRANSLATION_B, value.address(), b2Vec2.SIZEOF); }
     public static void nmaxFraction(long address, float value) { memPutFloat(address + MAX_FRACTION, value); }
     public static void ncanEncroach(long address, boolean value) { memPutByte(address + CAN_ENCROACH, (byte)(value ? 1 : 0)); }

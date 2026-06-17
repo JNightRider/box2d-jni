@@ -23,9 +23,10 @@ import org.box2d.jni.b2TOIOutput;
 import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2TreeQueryCallbackFcnI;
 import org.box2d.jni.b2TreeRayCastCallbackFcnI;
-import org.box2d.jni.b2TreeShapeCastCallbackFcn;
+import org.box2d.jni.b2TreeBoxCastCallbackFcnI;
 import org.box2d.jni.b2TreeStats;
 import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 
 import org.box2d.jni.readonly.ConstB2Capsule;
 import org.box2d.jni.readonly.ConstB2ChainSegment;
@@ -312,7 +313,7 @@ public final class Collision {
     // --- [ b2ComputeCircleAABB ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputeCircleAABB( const b2Circle* shape, b2Transform transform ); }
+     * {@code B2_API b2AABB b2ComputeCircleAABB( const b2Circle* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Circle
      * @param transform b2Transform
@@ -320,7 +321,7 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputeCircleAABB(ConstB2Circle shape, b2Transform transform, b2AABB __result) {
+    public static b2AABB b2ComputeCircleAABB(ConstB2Circle shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
         nb2ComputeCircleAABB(shape.address(), transform.address(), __result.address());
         return __result;
@@ -331,7 +332,7 @@ public final class Collision {
     // --- [ b2ComputeCapsuleAABB ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputeCapsuleAABB( const b2Capsule* shape, b2Transform transform ); }
+     * {@code B2_API b2AABB b2ComputeCapsuleAABB( const b2Capsule* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Capsule
      * @param transform b2Transform
@@ -339,7 +340,7 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputeCapsuleAABB(ConstB2Capsule shape, b2Transform transform, b2AABB __result) {
+    public static b2AABB b2ComputeCapsuleAABB(ConstB2Capsule shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
         nb2ComputeCapsuleAABB(shape.address(), transform.address(), __result.address());
         return __result;
@@ -350,7 +351,7 @@ public final class Collision {
     // --- [ b2ComputePolygonAABB ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputePolygonAABB( const b2Polygon* shape, b2Transform transform ); }
+     * {@code B2_API b2AABB b2ComputePolygonAABB( const b2Polygon* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Polygon
      * @param transform b2Transform
@@ -358,7 +359,7 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputePolygonAABB(ConstB2Polygon shape, b2Transform transform, b2AABB __result) {
+    public static b2AABB b2ComputePolygonAABB(ConstB2Polygon shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
         nb2ComputePolygonAABB(shape.address(), transform.address(), __result.address());
         return __result;
@@ -369,7 +370,7 @@ public final class Collision {
     // --- [ b2ComputeSegmentAABB ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputeSegmentAABB( const b2Segment* shape, b2Transform transform ); }
+     * {@code B2_API b2AABB b2ComputeSegmentAABB( const b2Segment* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Segment
      * @param transform b2Transform
@@ -377,7 +378,7 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputeSegmentAABB(ConstB2Segment shape, b2Transform transform, b2AABB __result) {
+    public static b2AABB b2ComputeSegmentAABB(ConstB2Segment shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
         nb2ComputeSegmentAABB(shape.address(), transform.address(), __result.address());
         return __result;
@@ -1263,8 +1264,8 @@ public final class Collision {
     // --- [ b2DynamicTree_ShapeCast ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2DynamicTree_ShapeCast( const b2DynamicTree* tree, const b2ShapeCastInput* input, uint64_t maskBits, b2TreeShapeCastCallbackFcn* callback, void* context ); }
-     *
+     * {@code B2_API b2TreeStats b2DynamicTree_BoxCast( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); }
+     * 
      * @param tree ConstB2DynamicTree
      * @param input ConstB2ShapeCastInput
      * @param maskBits long
@@ -1274,15 +1275,14 @@ public final class Collision {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2DynamicTree_ShapeCast(ConstB2DynamicTree tree, ConstB2ShapeCastInput input, long maskBits, b2TreeShapeCastCallbackFcn callback, long context, b2TreeStats __result) {
+    public static b2TreeStats b2DynamicTree_BoxCast(ConstB2DynamicTree tree, ConstB2ShapeCastInput input, long maskBits, b2TreeBoxCastCallbackFcnI callback, long context, b2TreeStats __result) {
         checkPointers(tree, input, callback, __result);
-        nb2DynamicTree_ShapeCast(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
+        nb2DynamicTree_BoxCast(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2DynamicTree_ShapeCast( const b2DynamicTree* tree, const b2ShapeCastInput* input, uint64_t maskBits,
-     *                                                   b2TreeShapeCastCallbackFcn* callback, void* context ); } */
-    public static native void nb2DynamicTree_ShapeCast(long tree, long input, long maskBits, long callback, long context, long __result);
+    /* {@code B2_API b2TreeStats b2DynamicTree_BoxCast( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_BoxCast(long tree, long input, long maskBits, long callback, long context, long __result);
 
 
     // --- [ b2DynamicTree_GetHeight ] ---

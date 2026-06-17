@@ -103,6 +103,30 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_n2IsValidPla
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2IsValidPosition
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidPosition
+    (JNIEnv *__env, jclass clazz, jlong address)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean)b2IsValidPosition( *(b2Pos*)address );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2IsValidWorldTransform
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidWorldTransform
+    (JNIEnv *__env, jclass clazz, jlong address)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean)b2IsValidWorldTransform( *(b2WorldTransform*)address );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
  * Method:    nb2MinInt
  * Signature: (II)I
  */
@@ -907,6 +931,151 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2InvMulTransfo
     b2Transform* B = (b2Transform*)(uintptr_t)BAddress;
     *ptr = b2InvMulTransforms( *A, *B );
 }
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2ToPos
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2ToPos
+    (JNIEnv *__env, jclass clazz, jlong v, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Pos*)__result = b2ToPos( *(b2Vec2*)v );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2ToVec2
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2ToVec2
+    (JNIEnv *__env, jclass clazz, jlong p, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Vec2*)__result = b2ToVec2( *(b2Pos*)p );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2RoundDownFloat
+ * Signature: (D)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_MathFunctions_nb2RoundDownFloat
+    (JNIEnv *__env, jclass clazz, jdouble x)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat) b2RoundDownFloat(x);
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2RoundUpFloat
+ * Signature: (D)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_MathFunctions_nb2RoundUpFloat
+    (JNIEnv *__env, jclass clazz, jdouble x)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat) b2RoundUpFloat( x );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2SubPos
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2SubPos
+    (JNIEnv *__env, jclass clazz, jlong a, jlong b, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Vec2*)__result = b2SubPos( *(b2Pos*) a, *(b2Pos*) b );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2OffsetPos
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2OffsetPos
+    (JNIEnv *__env, jclass clazz, jlong p, jlong d, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Pos*)__result = b2OffsetPos( *(b2Pos*) p, *(b2Vec2*) d );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2LerpPosition
+ * Signature: (JJFJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2LerpPosition
+    (JNIEnv *__env, jclass clazz, jlong a, jlong b, jfloat t, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Pos*)__result = b2LerpPosition( *(b2Pos*) a, *(b2Pos*) b, t );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2TransformWorldPoint
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2TransformWorldPoint
+    (JNIEnv *__env, jclass clazz, jlong t, jlong p, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Pos*)__result = b2TransformWorldPoint( *(b2WorldTransform*) t, *(b2Vec2*) p );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2InvTransformWorldPoint
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2InvTransformWorldPoint
+    (JNIEnv *__env, jclass clazz, jlong t, jlong p, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Vec2*)__result = b2InvTransformWorldPoint( *(b2WorldTransform*) t, *(b2Pos*) p );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2InvMulWorldTransforms
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2InvMulWorldTransforms
+    (JNIEnv *__env, jclass clazz, jlong A, jlong B, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Transform*)__result = b2InvMulWorldTransforms( *(b2WorldTransform*) A, *(b2WorldTransform*) B );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2ToRelativeTransform
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2ToRelativeTransform
+    (JNIEnv *__env, jclass clazz, jlong t, jlong base, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Transform*)__result = b2ToRelativeTransform( *(b2WorldTransform*)t, *(b2Pos*)base );
+}
+
+/*
+ * Class:     org_box2d_jni_include_MathFunctions
+ * Method:    nb2MakeWorldTransform
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2MakeWorldTransform
+    (JNIEnv *__env, jclass clazz, jlong t, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2WorldTransform*)__result = b2MakeWorldTransform( *(b2Transform*) t );
+}
+
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions

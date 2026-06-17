@@ -32,7 +32,7 @@ public class DrawSolidCircleFcnTest {
     public void callback() {
         try
         (
-            b2Vec2 v = b2Vec2.malloc().set(1, 2);
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
             b2Transform t = b2Transform.malloc().set(v, r)
         ) {
@@ -54,7 +54,7 @@ public class DrawSolidCircleFcnTest {
         }
         try
         (
-            b2Vec2 v = b2Vec2.malloc().set(1, 2);
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
             b2Transform t = b2Transform.malloc().set(v, r)
         ) {

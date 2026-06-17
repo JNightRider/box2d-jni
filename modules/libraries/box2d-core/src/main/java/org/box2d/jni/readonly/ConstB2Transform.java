@@ -27,4 +27,15 @@ public interface ConstB2Transform extends ConstStruct {
      * @return ConstB2Rot
      */
     ConstB2Rot q();
+
+    /**
+     * A template that handles the representation of a constant pointer (buffer)
+     * of constant structures such as {@code ConstB2Transform}
+     *
+     * @param <T> The type of object stored in this buffer
+     * @param <SELF> The type of this buffer
+     */
+    interface ConstBuffer<T extends ConstB2Transform, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
+        /* nothing */
+    }
 }

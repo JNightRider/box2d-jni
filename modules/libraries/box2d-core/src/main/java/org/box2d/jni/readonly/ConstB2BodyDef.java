@@ -30,9 +30,9 @@ public interface ConstB2BodyDef extends ConstStruct {
      * cost of body creation, especially if the body is moved after shapes have
      * been added.</b>
      *
-     * @return
+     * @return ConstB2Pos
      */
-    ConstB2Vec2 position();
+    ConstB2Pos position();
 
     /**
      * The initial world rotation of the body. Use b2MakeRot() if you have an

@@ -42,13 +42,14 @@ import static org.box2d.jni.system.Memory.*;
  *     bool drawContactForces;
  *     bool drawFrictionForces;
  *     bool drawIslands;
+ *     b2Pos origin;
  *     void* context;
  * } b2DebugDraw;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2DebugDraw extends Struct<b2DebugDraw> {
 
@@ -87,6 +88,7 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
             DRAW_CONTACT_FORCES,
             DRAW_FRICTION_FORCES,
             DRAW_ISLANDS,
+            ORIGIN,
             CONTEXT;
 
     static {
@@ -122,6 +124,7 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
                 __member(1),
                 __member(1),
 
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(VarType.Uintptrt.sizeof())
         );
 
@@ -156,7 +159,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
         DRAW_FRICTION_FORCES = layout.offsetof(25);
         DRAW_ISLANDS = layout.offsetof(26);
 
-        CONTEXT = layout.offsetof(27);
+        ORIGIN = layout.offsetof(27);
+        CONTEXT = layout.offsetof(28);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -244,6 +248,8 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     public boolean drawFrictionForces() { return ndrawFrictionForces(address()); }
     /** @return Returns the property {@code drawIslands} */
     public boolean drawIslands() { return ndrawIslands(address()); }
+    /** @return Returns the property {@code origin} */
+    public b2Pos origin() { return norigin(address()); }
     /** @return Returns the property {@code context} */
     public long context() { return ncontext(address()); }
     
@@ -545,6 +551,17 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     }
 
     /**
+     * Set the value of property {@code origin}
+     *
+     * @param value boolean
+     * @return b2DebugDraw
+     */
+    public b2DebugDraw origin(b2Pos value) {
+        norigin(address(), value);
+        return this;
+    }
+
+    /**
      * Set the value of property {@code context}
      *
      * @param value long
@@ -635,70 +652,65 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
 
     // -----------------------------------
     
-    public static long ndrawPolygonFcn(long address)        { return memGetAddress(address + DRAW_POLYGON_FCN); }
-    public static long ndrawSolidPolygonFcn(long address)   { return memGetAddress(address + DRAW_SOLID_POLYGON_FCN); }
-    public static long ndrawCircleFcn(long address)         { return memGetAddress(address + DRAW_CIRCLE_FCN); }
-    public static long ndrawSolidCircleFcn(long address)    { return memGetAddress(address + DRAW_SOLID_CIRCLE_FCN); }
-    public static long ndrawSolidCapsuleFcn(long address)   { return memGetAddress(address + DRAW_SOLID_CAPSULE_FCN); }
-    public static long ndrawLineFcn(long address)           { return memGetAddress(address + DRAW_LINE_FCN); }
-    public static long ndrawTransformFcn(long address)      { return memGetAddress(address + DRAW_TRANSFORM_FCN); }
-    public static long ndrawPointFcn(long address)          { return memGetAddress(address + DRAW_POINT_FCN); }
-    public static long ndrawStringFcn(long address)         { return memGetAddress(address + DRAW_STRING_FCN); }
-
+    public static long ndrawPolygonFcn(long address)        { return memGetAddress(address + DRAW_POLYGON_FCN);         }
+    public static long ndrawSolidPolygonFcn(long address)   { return memGetAddress(address + DRAW_SOLID_POLYGON_FCN);   }
+    public static long ndrawCircleFcn(long address)         { return memGetAddress(address + DRAW_CIRCLE_FCN);          }
+    public static long ndrawSolidCircleFcn(long address)    { return memGetAddress(address + DRAW_SOLID_CIRCLE_FCN);    }
+    public static long ndrawSolidCapsuleFcn(long address)   { return memGetAddress(address + DRAW_SOLID_CAPSULE_FCN);   }
+    public static long ndrawLineFcn(long address)           { return memGetAddress(address + DRAW_LINE_FCN);            }
+    public static long ndrawTransformFcn(long address)      { return memGetAddress(address + DRAW_TRANSFORM_FCN);       }
+    public static long ndrawPointFcn(long address)          { return memGetAddress(address + DRAW_POINT_FCN);           }
+    public static long ndrawStringFcn(long address)         { return memGetAddress(address + DRAW_STRING_FCN);          }
     public static b2AABB ndrawingBounds(long address)       { return b2AABB.createSafe(() -> address + DRAWING_BOUNDS); }
+    public static float nforceScale(long address)           { return memGetFloat(address + FORCE_SCALE);                }
+    public static float njointScale(long address)           { return memGetFloat(address + JOINT_SCALE);                }
+    public static boolean ndrawContacts(long address)       { return memGetByte(address + DRAW_CONTACTS) != 0;          }
+    public static boolean ndrawAnchorA(long address)        { return memGetByte(address + DRAW_ANCHOR_A) != 0;          }
+    public static boolean ndrawShapes(long address)         { return memGetByte(address + DRAW_SHAPES) != 0;            }
+    public static boolean ndrawChainNormals(long address)   { return memGetByte(address + DRAW_CHAIN_NORMALS) != 0;     }
+    public static boolean ndrawJoints(long address)         { return memGetByte(address + DRAW_JOINTS) != 0;            }
+    public static boolean ndrawJointExtras(long address)    { return memGetByte(address + DRAW_JOINT_EXTRAS) != 0;      }
+    public static boolean ndrawBounds(long address)         { return memGetByte(address + DRAW_BOUNDS) != 0;            }
+    public static boolean ndrawMass(long address)           { return memGetByte(address + DRAW_MASS) != 0;              }
+    public static boolean ndrawBodyNames(long address)      { return memGetByte(address + DRAW_BODY_NAMES) != 0;        }
+    public static boolean ndrawGraphColors(long address)    { return memGetByte(address + DRAW_GRAPH_COLORS) != 0;      }
+    public static boolean ndrawContactFeatures(long address){ return memGetByte(address + DRAW_CONTACT_FEATURES) != 0;  }
+    public static boolean ndrawContactNormals(long address) { return memGetByte(address + DRAW_CONTACT_NORMALS) != 0;   }
+    public static boolean ndrawContactForces(long address)  { return memGetByte(address + DRAW_CONTACT_FORCES) != 0;    }
+    public static boolean ndrawFrictionForces(long address) { return memGetByte(address + DRAW_FRICTION_FORCES) != 0;   }
+    public static boolean ndrawIslands(long address)        { return memGetByte(address + DRAW_ISLANDS) != 0;           }
+    public static b2Pos norigin(long address)               { return b2Pos.ncreateSafe(() -> address + ORIGIN);         }
+    public static long ncontext(long address)               { return memGetAddress(address + CONTEXT);                  }
 
-    public static float nforceScale(long address)           { return memGetFloat(address + FORCE_SCALE); }
-    public static float njointScale(long address)           { return memGetFloat(address + JOINT_SCALE); }
-
-    public static boolean ndrawContacts(long address)       { return memGetByte(address + DRAW_CONTACTS) != 0; }
-    public static boolean ndrawAnchorA(long address)        { return memGetByte(address + DRAW_ANCHOR_A) != 0; }
-    public static boolean ndrawShapes(long address)         { return memGetByte(address + DRAW_SHAPES) != 0; }
-    public static boolean ndrawChainNormals(long address)   { return memGetByte(address + DRAW_CHAIN_NORMALS) != 0; }
-    public static boolean ndrawJoints(long address)         { return memGetByte(address + DRAW_JOINTS) != 0; }
-    public static boolean ndrawJointExtras(long address)    { return memGetByte(address + DRAW_JOINT_EXTRAS) != 0; }
-    public static boolean ndrawBounds(long address)         { return memGetByte(address + DRAW_BOUNDS) != 0; }
-    public static boolean ndrawMass(long address)           { return memGetByte(address + DRAW_MASS) != 0; }
-    public static boolean ndrawBodyNames(long address)      { return memGetByte(address + DRAW_BODY_NAMES) != 0; }
-    public static boolean ndrawGraphColors(long address)    { return memGetByte(address + DRAW_GRAPH_COLORS) != 0; }
-    public static boolean ndrawContactFeatures(long address){ return memGetByte(address + DRAW_CONTACT_FEATURES) != 0; }
-    public static boolean ndrawContactNormals(long address) { return memGetByte(address + DRAW_CONTACT_NORMALS) != 0; }
-    public static boolean ndrawContactForces(long address)  { return memGetByte(address + DRAW_CONTACT_FORCES) != 0; }
-    public static boolean ndrawFrictionForces(long address) { return memGetByte(address + DRAW_FRICTION_FORCES) != 0; }
-    public static boolean ndrawIslands(long address)        { return memGetByte(address + DRAW_ISLANDS) != 0; }
-
-    public static long ncontext(long address)               { return memGetAddress(address + CONTEXT); }
-
-    public static void ndrawPolygonFcn(long address, long value)        { memPutAddress(address + DRAW_POLYGON_FCN, value);}
-    public static void ndrawSolidPolygonFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_POLYGON_FCN, value);}
-    public static void ndrawCircleFcn(long address, long value)         { memPutAddress(address + DRAW_CIRCLE_FCN, value);}
-    public static void ndrawSolidCircleFcn(long address, long value)    { memPutAddress(address + DRAW_SOLID_CIRCLE_FCN, value);}
-    public static void ndrawSolidCapsuleFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_CAPSULE_FCN, value);}
-    public static void ndrawLineFcn(long address, long value)           { memPutAddress(address + DRAW_LINE_FCN, value);}
-    public static void ndrawTransformFcn(long address, long value)      { memPutAddress(address + DRAW_TRANSFORM_FCN, value);}
-    public static void ndrawPointFcn(long address, long value)          { memPutAddress(address + DRAW_POINT_FCN, value);}
-    public static void ndrawStringFcn(long address, long value)         { memPutAddress(address + DRAW_STRING_FCN, value);}
+    public static void ndrawPolygonFcn(long address, long value)        { memPutAddress(address + DRAW_POLYGON_FCN, value);                     }
+    public static void ndrawSolidPolygonFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_POLYGON_FCN, value);               }
+    public static void ndrawCircleFcn(long address, long value)         { memPutAddress(address + DRAW_CIRCLE_FCN, value);                      }
+    public static void ndrawSolidCircleFcn(long address, long value)    { memPutAddress(address + DRAW_SOLID_CIRCLE_FCN, value);                }
+    public static void ndrawSolidCapsuleFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_CAPSULE_FCN, value);               }
+    public static void ndrawLineFcn(long address, long value)           { memPutAddress(address + DRAW_LINE_FCN, value);                        }
+    public static void ndrawTransformFcn(long address, long value)      { memPutAddress(address + DRAW_TRANSFORM_FCN, value);                   }
+    public static void ndrawPointFcn(long address, long value)          { memPutAddress(address + DRAW_POINT_FCN, value);                       }
+    public static void ndrawStringFcn(long address, long value)         { memPutAddress(address + DRAW_STRING_FCN, value);                      }
     public static void ndrawingBounds(long address, b2AABB value)       { nmemcpy(address + DRAWING_BOUNDS, value.address(), b2AABB.SIZEOF); }
-
-    public static void nforceScale(long address, float value) { memPutFloat(address + FORCE_SCALE, value);}
-    public static void njointScale(long address, float value) { memPutFloat(address + JOINT_SCALE, value);}
-
-    public static void ndrawContacts(long address, boolean value)   { memPutByte(address + DRAW_CONTACTS, (byte) (value ? 1 : 0));}
-    public static void ndrawAnchorA(long address, boolean value)    { memPutByte(address + DRAW_ANCHOR_A, (byte) (value ? 1 : 0));}
-    public static void ndrawShapes(long address, boolean value)     { memPutByte(address + DRAW_SHAPES, (byte) (value ? 1 : 0));}
-    public static void ndrawChainNormals(long address, boolean value)   { memPutByte(address + DRAW_CHAIN_NORMALS, (byte) (value ? 1 : 0));}
-    public static void ndrawJoints(long address, boolean value)         { memPutByte(address + DRAW_JOINTS, (byte) (value ? 1 : 0));}
-    public static void ndrawJointExtras(long address, boolean value)    { memPutByte(address + DRAW_JOINT_EXTRAS, (byte) (value ? 1 : 0));}
-    public static void ndrawBounds(long address, boolean value) { memPutByte(address + DRAW_BOUNDS, (byte) (value ? 1 : 0));}
-    public static void ndrawMass(long address, boolean value)   { memPutByte(address + DRAW_MASS, (byte) (value ? 1 : 0));}
-    public static void ndrawBodyNames(long address, boolean value)      { memPutByte(address + DRAW_BODY_NAMES, (byte) (value ? 1 : 0));}
-    public static void ndrawGraphColors(long address, boolean value)    { memPutByte(address + DRAW_GRAPH_COLORS, (byte) (value ? 1 : 0));}
-    public static void ndrawContactFeatures(long address, boolean value) { memPutByte(address + DRAW_CONTACT_FEATURES, (byte) (value ? 1 : 0));}
-    public static void ndrawContactNormals(long address, boolean value)  { memPutByte(address + DRAW_CONTACT_NORMALS, (byte) (value ? 1 : 0));}
-    public static void ndrawContactForces(long address, boolean value)   { memPutByte(address + DRAW_CONTACT_FORCES, (byte) (value ? 1 : 0));}
-    public static void ndrawFrictionForces(long address, boolean value)  { memPutByte(address + DRAW_FRICTION_FORCES, (byte) (value ? 1 : 0));}
-    public static void ndrawIslands(long address, boolean value) { memPutByte(address + DRAW_ISLANDS, (byte) (value ? 1 : 0));}
-
-    public static void ncontext(long address, long value) { memPutAddress(address + CONTEXT, value);}
+    public static void nforceScale(long address, float value)           { memPutFloat(address + FORCE_SCALE, value);                            }
+    public static void njointScale(long address, float value)           { memPutFloat(address + JOINT_SCALE, value);                            }
+    public static void ndrawContacts(long address, boolean value)       { memPutByte(address + DRAW_CONTACTS, (byte) (value ? 1 : 0));          }
+    public static void ndrawAnchorA(long address, boolean value)        { memPutByte(address + DRAW_ANCHOR_A, (byte) (value ? 1 : 0));          }
+    public static void ndrawShapes(long address, boolean value)         { memPutByte(address + DRAW_SHAPES, (byte) (value ? 1 : 0));            }
+    public static void ndrawChainNormals(long address, boolean value)   { memPutByte(address + DRAW_CHAIN_NORMALS, (byte) (value ? 1 : 0));     }
+    public static void ndrawJoints(long address, boolean value)         { memPutByte(address + DRAW_JOINTS, (byte) (value ? 1 : 0));            }
+    public static void ndrawJointExtras(long address, boolean value)    { memPutByte(address + DRAW_JOINT_EXTRAS, (byte) (value ? 1 : 0));      }
+    public static void ndrawBounds(long address, boolean value)         { memPutByte(address + DRAW_BOUNDS, (byte) (value ? 1 : 0));            }
+    public static void ndrawMass(long address, boolean value)           { memPutByte(address + DRAW_MASS, (byte) (value ? 1 : 0));              }
+    public static void ndrawBodyNames(long address, boolean value)      { memPutByte(address + DRAW_BODY_NAMES, (byte) (value ? 1 : 0));        }
+    public static void ndrawGraphColors(long address, boolean value)    { memPutByte(address + DRAW_GRAPH_COLORS, (byte) (value ? 1 : 0));      }
+    public static void ndrawContactFeatures(long address, boolean value){ memPutByte(address + DRAW_CONTACT_FEATURES, (byte) (value ? 1 : 0));  }
+    public static void ndrawContactNormals(long address, boolean value) { memPutByte(address + DRAW_CONTACT_NORMALS, (byte) (value ? 1 : 0));   }
+    public static void ndrawContactForces(long address, boolean value)  { memPutByte(address + DRAW_CONTACT_FORCES, (byte) (value ? 1 : 0));    }
+    public static void ndrawFrictionForces(long address, boolean value) { memPutByte(address + DRAW_FRICTION_FORCES, (byte) (value ? 1 : 0));   }
+    public static void ndrawIslands(long address, boolean value)        { memPutByte(address + DRAW_ISLANDS, (byte) (value ? 1 : 0));           }
+    public static void norigin(long address, b2Pos value)               { nmemcpy(address + ORIGIN, value.address(), b2Pos.DSIZEOF);      }
+    public static void ncontext(long address, long value)               { memPutAddress(address + CONTEXT, value);                              }
 
     // -----------------------------------
 

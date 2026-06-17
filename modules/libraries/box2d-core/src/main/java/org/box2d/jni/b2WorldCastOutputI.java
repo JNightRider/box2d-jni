@@ -12,21 +12,21 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2CastOutput
+ * typedef struct b2WorldCastOutput
  * {
- *     b2Vec2 normal;
- *     b2Vec2 point;
- *     float fraction;
- *     int iterations;
- *     bool hit;
- * } b2CastOutput;
+ * 	b2Vec2 normal;	/// The surface normal at the hit point
+ * 	b2Pos point;	/// The surface hit point in world space
+ * 	float fraction; /// The fraction of the input translation at collision
+ * 	int iterations; /// The number of iterations used
+ * 	bool hit;	/// Did the cast hit?
+ * } b2WorldCastOutput;
  * </code></pre>
  * 
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOutput<b2CastOutput, b2Vec2> {
+public class b2WorldCastOutputI extends Struct<b2WorldCastOutputI> implements b2WorldCastOutput<b2WorldCastOutputI, b2Pos> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -45,7 +45,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     static {
         Layout layout = __struct(
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(4),
                 __member(4),
                 __member(1)
@@ -66,7 +66,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      *
      * @param ptr A reference pointer.
      */
-    public b2CastOutput(Pointer ptr) {
+    public b2WorldCastOutputI(Pointer ptr) {
         super(ptr);
     }
 
@@ -75,7 +75,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      *
      * @param address A virtual memory address
      */
-    public b2CastOutput(long address) {
+    public b2WorldCastOutputI(long address) {
         super(address);
     }
 
@@ -85,7 +85,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2CastOutput(long address, boolean factor) {
+    protected b2WorldCastOutputI(long address, boolean factor) {
         super(address, factor);
     }
 
@@ -94,7 +94,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     public b2Vec2 normal() { return nnormal(address()); }
     /** @return Returns the property {@code point} */
     @Override
-    public b2Vec2 point() { return npoint(address()); }
+    public b2Pos point() { return npoint(address()); }
     /** @return Returns the property {@code fraction} */
     @Override
     public float fraction() { return nfraction(address()); }
@@ -109,10 +109,10 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      * Set the value of property {@code normal}
      * 
      * @param value b2Vec2
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
     @Override
-    public b2CastOutput normal(b2Vec2 value) {
+    public b2WorldCastOutputI normal(b2Vec2 value) {
         nnormal(address(), value);
         return this;
     }
@@ -121,10 +121,10 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      * Set the value of property {@code point}
      * 
      * @param value b2Vec2
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
     @Override
-    public b2CastOutput point(b2Vec2 value) {
+    public b2WorldCastOutputI point(b2Pos value) {
         npoint(address(), value);
         return this;
     }
@@ -133,10 +133,10 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      * Set the value of property {@code fraction}
      * 
      * @param value float
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
     @Override
-    public b2CastOutput fraction(float value) {
+    public b2WorldCastOutputI fraction(float value) {
         nfraction(address(), value);
         return this;
     }
@@ -145,10 +145,10 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      * Set the value of property {@code iterations}
      * 
      * @param value int
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
     @Override
-    public b2CastOutput iterations(int value) {
+    public b2WorldCastOutputI iterations(int value) {
         niterations(address(), value);
         return this;
     }
@@ -157,10 +157,10 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
      * Set the value of property {@code hit}
      * 
      * @param value boolean
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
     @Override
-    public b2CastOutput hit(boolean value) {
+    public b2WorldCastOutputI hit(boolean value) {
         nhit(address(), value);
         return this;
     }
@@ -175,8 +175,8 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     /*(non-Javadoc)
      */
     @Override
-    protected b2CastOutput create(long address, Pointer ptr) {
-        return ptr == null ? new b2CastOutput(address) : new b2CastOutput(ptr);
+    protected b2WorldCastOutputI create(long address, Pointer ptr) {
+        return ptr == null ? new b2WorldCastOutputI(address) : new b2WorldCastOutputI(ptr);
     }
 
     // -----------------------------------
@@ -184,46 +184,46 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     /**
      * Internal use of the buffer.
      *
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
-    private static b2CastOutput factory() {
-        return new b2CastOutput(-1L, true);
+    private static b2WorldCastOutputI factory() {
+        return new b2WorldCastOutputI(-1L, true);
     }
 
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
-    public static b2CastOutput createSafe(Pointer ptr) {
+    public static b2WorldCastOutputI createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2CastOutput(ptr);
+        return new b2WorldCastOutputI(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2CastOutput}.
+     * Reserve memory for the new object {@code b2WorldCastOutputI}.
      *
      * @param alloc Custom memory manager
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
-    public static b2CastOutput alloc(AllocFunc alloc) {
-        return new b2CastOutput(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2WorldCastOutputI alloc(AllocFunc alloc) {
+        return new b2WorldCastOutputI(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2CastOutput}.
+     * Reserve memory for the new object {@code b2WorldCastOutputI}.
      *
-     * @return b2CastOutput
+     * @return b2WorldCastOutputI
      */
-    public static b2CastOutput malloc() {
-        return new b2CastOutput(nmalloc(SIZEOF));
+    public static b2WorldCastOutputI malloc() {
+        return new b2WorldCastOutputI(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2CastOutput}.
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutputI}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -233,7 +233,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2CastOutput}.
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutputI}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -246,24 +246,24 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     // -----------------------------------
 
     public static b2Vec2 nnormal(long address)      { return b2Vec2.createSafe(() -> address + NORMAL);      }
-    public static b2Vec2 npoint(long address)       { return b2Vec2.createSafe(() -> address + POINT);       }
+    public static b2Pos npoint(long address)        { return b2Pos.ncreateSafe(() -> address + POINT);       }
     public static float nfraction(long address)     { return memGetFloat(address + FRACTION);                }
     public static int niterations(long address)     { return memGetInt(address + ITERATIONS);                }
     public static boolean nhit(long address)        { return memGetByte(address + HIT) != 0;                 }
 
     public static void nnormal(long address, b2Vec2 value)   { nmemcpy(address + NORMAL, value.address(), b2Vec2.SIZEOF); }
-    public static void npoint(long address, b2Vec2 value)    { nmemcpy(address + POINT, value.address(), b2Vec2.SIZEOF);  }
+    public static void npoint(long address, b2Pos value)     { nmemcpy(address + POINT, value.address(), b2Pos.DSIZEOF);  }
     public static void nfraction(long address, float value)  { memPutFloat(address + FRACTION, value);                          }
     public static void niterations(long address, int value)  { memPutInt(address + ITERATIONS, value);                          }
     public static void nhit(long address, boolean value)     { memPutByte(address + HIT, (byte) (value ? 1 : 0));               }
 
     // -----------------------------------
 
-    /** An array of {@code b2CastOutput} structs. */
-    public static class Buffer extends StructBuffer<b2CastOutput, Buffer> implements JNINative {
+    /** An array of {@code b2WorldCastOutputI} structs. */
+    public static class Buffer extends StructBuffer<b2WorldCastOutputI, Buffer> implements b2WorldCastOutput.ConstBuffer<b2WorldCastOutputI, Buffer>, JNINative {
 
         /** An element that provides information about the structure. */
-        private static final b2CastOutput ELEMENT_FACTORY = b2CastOutput.factory();
+        private static final b2WorldCastOutputI ELEMENT_FACTORY = b2WorldCastOutputI.factory();
 
         /**
          * Create a new buffer.
@@ -291,7 +291,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
         /*(non-Javadoc)
          */
         @Override
-        protected b2CastOutput getElementFactory() {
+        protected b2WorldCastOutputI getElementFactory() {
             return ELEMENT_FACTORY;
         }
 

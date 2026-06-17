@@ -15,7 +15,7 @@ import static org.box2d.jni.system.Memory.*;
  * typedef struct b2BodyMoveEvent
  * {
  *     void* userData;
- *     b2Transform transform;
+ *     b2WorldTransform transform;
  *     b2BodyId bodyId;
  *     bool fellAsleep;
  * } b2BodyMoveEvent;
@@ -43,7 +43,7 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
     static {
         Layout layout = __struct(
                 __member(VarType.Uintptrt.sizeof()),
-                __member(b2Transform.SIZEOF, b2Transform.ALIGNOF),
+                __member(b2WorldTransform.DSIZEOF, b2WorldTransform.DALIGNOF),
                 __member(b2BodyId.SIZEOF, b2BodyId.ALIGNOF),
                 __member(1)
         );
@@ -88,7 +88,7 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
     /** @return Returns the property {@code userData} */
     public long userData() { return nuserData(address()); }
     /** @return Returns the property {@code transform} */
-    public b2Transform transform() { return ntransform(address()); }
+    public b2WorldTransform transform() { return ntransform(address()); }
     /** @return Returns the property {@code bodyId} */
     public b2BodyId bodyId() { return nbodyId(address()); }
     /** @return Returns the property {@code fellAsleep} */
@@ -111,7 +111,7 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
      * @param value b2Transform
      * @return b2BodyMoveEvent
      */
-    public b2BodyMoveEvent transform(b2Transform value) {
+    public b2BodyMoveEvent transform(b2WorldTransform value) {
         ntransform(address(), value);
         return this;
     }
@@ -218,13 +218,13 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
 
     // -----------------------------------
     
-    public static long nuserData(long address)          { return memGetAddress(address + USER_DATA);}
-    public static b2Transform ntransform(long address)  { return b2Transform.createSafe(() -> address + TRANSFORM);}
+    public static long nuserData(long address)              { return memGetAddress(address + USER_DATA);}
+    public static b2WorldTransform ntransform(long address) { return b2WorldTransform.ncreateSafe(() -> address + TRANSFORM);}
     public static b2BodyId nbodyId(long address)        { return b2BodyId.createSafe(() -> address + BODY_ID);}
     public static boolean nfellAsleep(long address)     { return memGetByte(address + FELL_ASLEEP) != 0;}
 
-    public static void nuserData(long address, long value)          { memPutAddress(address + USER_DATA, value);}
-    public static void ntransform(long address, b2Transform value)  { nmemcpy(address + TRANSFORM, value.address(), b2Transform.SIZEOF);}
+    public static void nuserData(long address, long value)              { memPutAddress(address + USER_DATA, value);}
+    public static void ntransform(long address, b2WorldTransform value) { nmemcpy(address + TRANSFORM, value.address(), b2WorldTransform.DSIZEOF);}
     public static void nbodyId(long address, b2BodyId value)        { nmemcpy(address + BODY_ID, value.address(), b2BodyId.SIZEOF);}
     public static void nfellAsleep(long address, boolean value)     { memPutByte(address + FELL_ASLEEP, (byte) (value ? 1 : 0));}
     

@@ -30,7 +30,7 @@ public class DrawCircleFcnTest {
     public void callback() {
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1, 2)
+                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawCircleFcnI func = (center, radius, color, context) -> {
@@ -47,7 +47,7 @@ public class DrawCircleFcnTest {
         }
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1, 2)
+                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawCircleFcn func = DrawCircleFcn.create((center, radius, color, context) -> {

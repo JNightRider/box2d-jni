@@ -35,8 +35,8 @@ public class b2Vec2Test {
         try (b2Vec2 ptr = b2Vec2.malloc()) {
             Assert.assertNotEquals(NULL, ptr.address());
 
-            ptr.x(2);
-            ptr.y(4);
+            ptr.x(2f);
+            ptr.y(4f);
 
             Assert.assertEquals(2, ptr.x(), 0);
             Assert.assertEquals(4, ptr.y(), 0);
@@ -52,13 +52,13 @@ public class b2Vec2Test {
             Assert.assertEquals(0, ptr.x(), 0);
             Assert.assertEquals(0, ptr.y(), 0);
 
-            tmp.x(1).y(10);
+            tmp.x(1f).y(10f);
             ptr.add(tmp);
 
             Assert.assertEquals(1, ptr.x(), 0);
             Assert.assertEquals(10, ptr.y(), 0);
 
-            tmp.x(0.5f).y(2);
+            tmp.x(0.5f).y(2f);
             ptr.sub(tmp);
 
             Assert.assertEquals(0.5f, ptr.x(), 0);
@@ -70,8 +70,8 @@ public class b2Vec2Test {
             
             Assert.assertFalse(ptr.equality(tmp));
             
-            tmp.set(1, 1);
-            ptr.set(1, 1);
+            tmp.set(1f, 1f);
+            ptr.set(1f, 1f);
             Assert.assertTrue(ptr.equality(tmp));
         }
     }
@@ -86,13 +86,13 @@ public class b2Vec2Test {
 
         {
             try (b2Vec2 vec2 = b2Vec2.malloc()) {
-                vec2.x(2).y(3);
+                vec2.x(2f).y(3f);
                 ptr.put(vec2);
             }
         }
         {
             try (b2Vec2 vec2 = b2Vec2.malloc()) {
-                vec2.x(2).y(3);
+                vec2.x(2f).y(3f);
                 ptr.put(vec2);
             }
         }

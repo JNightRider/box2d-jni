@@ -4,6 +4,7 @@
  */
 package org.box2d.jni.function;
 
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.Pointer;
@@ -23,12 +24,12 @@ public interface CPreSolveFcn extends Pointer {
      *
      * @param shapeIdA b2ShapeId
      * @param shapeIdB b2ShapeId
-     * @param point b2Vec2
+     * @param point b2Pos
      * @param normal b2Vec2
      * @param context long
      * @return long
      */
-    boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Vec2 point, b2Vec2 normal, long context);
+    boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

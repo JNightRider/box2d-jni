@@ -20,6 +20,9 @@ public interface Pointer {
     /** Alias for the null pointer address. */
     public static final long NULL = 0L;
     
+    /** Determine if the 2D motor has started using the {@code BOX2D_DOUBLE_PRECISION} indicator. */
+    final boolean BOX2D_DOUBLE_PRECISION = SystemConfig.BOX2D_DOUBLE_PRECISION.get(false);
+    
     /** The pointer size in bytes. Will be 4 on a 32bit JVM and 8 on a 64bit one. */
     int POINTER_SIZE = VarType.Pointer.sizeof();
 

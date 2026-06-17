@@ -17,7 +17,7 @@ import static org.box2d.jni.system.Memory.*;
  *     b2RecQueryType type;
  *     b2QueryFilter filter; // zeroed for the shape local query types
  *     b2AABB aabb;          // overlap AABB
- *     b2Vec2 origin;        // ray and cast origin
+ *     b2Pos origin;         // ray and cast origin
  *     b2Vec2 translation;   // ray and cast translation
  *     b2ShapeId shape;      // target shape for the shape local query types
  *     int hitCount;         // number of recorded results
@@ -26,7 +26,7 @@ import static org.box2d.jni.system.Memory.*;
  * 
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
 
@@ -51,7 +51,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
                 __member(4),
                 __member(b2QueryFilter.SIZEOF, b2QueryFilter.ALIGNOF),
                 __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
-                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(b2ShapeId.SIZEOF, b2ShapeId.ALIGNOF),
                 __member(4)
@@ -104,7 +104,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     /** @return Returns the property {@code aabb} */
     public b2AABB aabb() { return naabb(address()); }
     /** @return Returns the property {@code origin} */
-    public b2Vec2 origin() { return norigin(address()); }
+    public b2Pos origin() { return norigin(address()); }
     /** @return Returns the property {@code translation} */
     public b2Vec2 translation() { return ntranslation(address()); }
     /** @return Returns the property {@code shape} */
@@ -148,10 +148,10 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     /**
      * Set the value of property {@code origin}
      * 
-     * @param value b2Vec2
+     * @param value b2Pos
      * @return b2RecQueryInfo
      */
-    public b2RecQueryInfo origin(b2Vec2 value) {
+    public b2RecQueryInfo origin(b2Pos value) {
         norigin(address(), value);
         return this;
     }
@@ -240,7 +240,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     public static b2RecQueryType ntype(long address) { return b2RecQueryType.valueOf(memGetInt(address + TYPE)); }
     public static b2QueryFilter nfilter(long address) { return b2QueryFilter.createSafe(() -> address + FILTER); }
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
-    public static b2Vec2 norigin(long address) { return b2Vec2.createSafe(() -> address + ORIGIN); }
+    public static b2Pos norigin(long address) { return b2Pos.ncreateSafe(() -> address + ORIGIN); }
     public static b2Vec2 ntranslation(long address) { return b2Vec2.createSafe(() -> address + TRANSLATION); }
     public static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
     public static int nhitCount(long address) { return memGetInt(address + HIT_COUNT); }
@@ -248,7 +248,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     public static void ntype(long address, b2RecQueryType value) { memPutInt(address + TYPE, value.value()); }
     public static void nfilter(long address, b2QueryFilter value) { nmemcpy(address + FILTER, value.address(), b2QueryFilter.SIZEOF); }
     public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF); }
-    public static void norigin(long address, b2Vec2 value) { nmemcpy(address + ORIGIN, value.address(), b2Vec2.SIZEOF); }
+    public static void norigin(long address, b2Pos value) { nmemcpy(address + ORIGIN, value.address(), b2Pos.DSIZEOF); }
     public static void ntranslation(long address, b2Vec2 value) { nmemcpy(address + TRANSLATION, value.address(), b2Vec2.SIZEOF); }
     public static void nshape(long address, b2ShapeId value) { nmemcpy(address + SHAPE, value.address(), b2ShapeId.SIZEOF); }
     public static void nhitCount(long address, int value) { memPutInt(address + HIT_COUNT, value); }

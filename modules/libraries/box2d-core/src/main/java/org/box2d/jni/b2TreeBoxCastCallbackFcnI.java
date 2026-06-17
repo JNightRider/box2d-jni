@@ -7,21 +7,21 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.readonly.ConstB2ShapeCastInput;
+import org.box2d.jni.readonly.ConstB2BoxCastInput;
 import org.box2d.jni.system.CallbackI;
 
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef float b2TreeShapeCastCallbackFcn( const b2ShapeCastInput* input, int proxyId, uint64_t userData, void* context ); }
+ * Callback function: {@code typedef float b2TreeBoxCastCallbackFcn( const b2BoxCastInput* input, int proxyId, uint64_t userData, void* context ); }
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.1
  */
 @FunctionalInterface
-public interface b2TreeShapeCastCallbackFcnI extends CallbackI {
+public interface b2TreeBoxCastCallbackFcnI extends CallbackI {
 
     /**
      * Native callback constructor.
@@ -52,7 +52,7 @@ public interface b2TreeShapeCastCallbackFcnI extends CallbackI {
     @Override
     public default void callback(long resp, long args) {
         float __result = invoke(
-                b2ShapeCastInput.createSafe(() -> memGetAddress(memGetAddress(args))),
+                b2BoxCastInput.createSafe(() -> memGetAddress(memGetAddress(args))),
                 memGetInt(memGetAddress(args + POINTER_SIZE)),
                 memGetLong(memGetAddress(args + 2 * POINTER_SIZE)),
                 memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))
@@ -69,6 +69,6 @@ public interface b2TreeShapeCastCallbackFcnI extends CallbackI {
      * @param context long
      * @return float
      */
-    float invoke(ConstB2ShapeCastInput input, int proxyId, long userData, long context );
+    float invoke(ConstB2BoxCastInput input, int proxyId, long userData, long context );
 }
 

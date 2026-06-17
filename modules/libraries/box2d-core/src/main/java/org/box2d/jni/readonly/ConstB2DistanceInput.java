@@ -30,18 +30,13 @@ public interface ConstB2DistanceInput extends ConstStruct {
     ConstB2ShapeProxy proxyB();
 
     /**
-     * The world transform for shape A
+     * Transform of shape B in shape A's frame, the relative pose B in A
+     * (b2InvMulTransforms( worldA, worldB )). The query is origin independent
+     * and runs in frame A.
      *
      * @return ConstB2Transform
      */
-    ConstB2Transform transformA();
-
-    /**
-     * The world transform for shape B
-     *
-     * @return ConstB2Transform
-     */
-    ConstB2Transform transformB();
+    ConstB2Transform transform();
 
     /**
      * Should the proxy radius be considered?

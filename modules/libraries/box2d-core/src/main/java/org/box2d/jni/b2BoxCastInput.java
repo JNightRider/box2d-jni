@@ -1,0 +1,268 @@
+/*
+ * Copyright Night Rider. All rights reserved.
+ * https://opensource.org/license/bsd-3-clause
+ */
+package org.box2d.jni;
+
+import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2BoxCastInput;
+
+import static org.box2d.jni.libc.LibCStdlib.*;
+import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.Memory.*;
+
+/**
+ * <pre><code>
+ * typedef struct b2BoxCastInput
+ * {
+ *     b2AABB box;
+ *     b2Vec2 translation;
+ *     float maxFraction;
+ * } b2BoxCastInput;
+ * </code></pre>
+ * 
+ * @author wil
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+public class b2BoxCastInput extends Struct<b2BoxCastInput> implements ConstB2BoxCastInput {
+
+    /** The struct size in bytes. */
+    public static final int SIZEOF;
+
+    /** The struct alignment in bytes. */
+    public static final int ALIGNOF;
+
+    /** The struct member offsets. */
+    private static final int
+            BOX,
+            TRANSLATION,
+            MAX_FRACTION;
+
+    static {
+        Layout layout = __struct(
+                __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(4)
+        );
+
+        BOX = layout.offsetof(0);
+        TRANSLATION = layout.offsetof(1);
+        MAX_FRACTION = layout.offsetof(2);
+
+        SIZEOF = layout.getSize();
+        ALIGNOF = layout.getAlignment();
+    }
+
+    /**
+     * Generates a reference to the given pointer.
+     *
+     * @param ptr A reference pointer.
+     */
+    public b2BoxCastInput(Pointer ptr) {
+        super(ptr);
+    }
+
+    /**
+     * Create a new pointer to the object using its memory address.
+     *
+     * @param address A virtual memory address
+     */
+    public b2BoxCastInput(long address) {
+        super(address);
+    }
+
+    /**
+     * This structure is for internal buffer use.
+     *
+     * @param address A virtual memory address
+     * @param factor boolean
+     */
+    protected b2BoxCastInput(long address, boolean factor) {
+        super(address, factor);
+    }
+
+    /** @return Returns the property {@code box} */
+    @Override
+    public b2AABB box() { return nbox(address()); }
+    /** @return Returns the property {@code translation} */
+    @Override
+    public b2Vec2 translation() { return ntranslation(address()); }
+    /** @return Returns the property {@code maxFraction} */
+    @Override
+    public float maxFraction() { return nmaxFraction(address()); }
+
+    /**
+     * Set the value of property {@code box}
+     * 
+     * @param value b2AABB
+     * @return b2BoxCastInput
+     */
+    public b2BoxCastInput box(b2AABB value) {
+        nbox(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code translation}
+     * 
+     * @param value b2Vec2
+     * @return b2BoxCastInput
+     */
+    public b2BoxCastInput translation(b2Vec2 value) {
+        ntranslation(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code maxFraction}
+     * 
+     * @param value float
+     * @return b2BoxCastInput
+     */
+    public b2BoxCastInput maxFraction(float value) {
+        nmaxFraction(address(), value);
+        return this;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    public int sizeof() {
+        return SIZEOF;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    protected b2BoxCastInput create(long address, Pointer ptr) {
+        return ptr == null ? new b2BoxCastInput(address) : new b2BoxCastInput(ptr);
+    }
+
+    // -----------------------------------
+
+    /**
+     * Internal use of the buffer.
+     *
+     * @return b2BoxCastInput
+     */
+    private static b2BoxCastInput factory() {
+        return new b2BoxCastInput(-1L, true);
+    }
+
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2BoxCastInput
+     */
+    public static b2BoxCastInput createSafe(Pointer ptr) {
+        if (ptr == null) {
+            return null;
+        }
+        return new b2BoxCastInput(ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BoxCastInput}.
+     *
+     * @param alloc Custom memory manager
+     * @return b2BoxCastInput
+     */
+    public static b2BoxCastInput alloc(AllocFunc alloc) {
+        return new b2BoxCastInput(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BoxCastInput}.
+     *
+     * @return b2BoxCastInput
+     */
+    public static b2BoxCastInput malloc() {
+        return new b2BoxCastInput(nmalloc(SIZEOF));
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BoxCastInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity) {
+        return new Buffer(nmalloc(capacity * SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BoxCastInput}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, AllocFunc alloc) {
+        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+    }
+
+    // -----------------------------------
+    
+    public static b2AABB nbox(long address) { return b2AABB.createSafe(() -> address + BOX); }
+    public static b2Vec2 ntranslation(long address) { return b2Vec2.createSafe(() -> address + TRANSLATION); }
+    public static float nmaxFraction(long address) { return memGetFloat(address + MAX_FRACTION); }
+
+    public static void nbox(long address, b2AABB value) { nmemcpy(address + BOX, value.address(), b2AABB.SIZEOF); }
+    public static void ntranslation(long address, b2Vec2 value) { nmemcpy(address + TRANSLATION, value.address(), b2Vec2.SIZEOF); }
+    public static void nmaxFraction(long address, float value) { memPutFloat(address + MAX_FRACTION, value); }
+    
+    // -----------------------------------
+
+    /** An array of {@code b2BoxCastInput} structs. */
+    public static class Buffer extends StructBuffer<b2BoxCastInput, Buffer> implements JNINative {
+
+        /** An element that provides information about the structure. */
+        private static final b2BoxCastInput ELEMENT_FACTORY = b2BoxCastInput.factory();
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param remaining int
+         */
+        public Buffer(long address, int remaining) {
+            super(address, remaining);
+        }
+
+        /**
+         * Create a new buffer.
+         *
+         * @param address long
+         * @param mark int
+         * @param position int
+         * @param limit int
+         * @param capacity int
+         */
+        public Buffer(long address, int mark, int position, int limit, int capacity) {
+            super(address, mark, position, limit, capacity);
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected b2BoxCastInput getElementFactory() {
+            return ELEMENT_FACTORY;
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected Buffer self() {
+            return this;
+        }
+
+        /*(non-Javadoc)
+         */
+        @Override
+        protected Buffer create(long address, int mark, int position, int limit, int capacity) {
+            return new Buffer(address, mark, position, limit, capacity);
+        }
+    }
+}
