@@ -16,7 +16,7 @@ This project is written in Java and C11 (C17), and uses CMake and Gradle for com
 
 Make sure you have the necessary tools and the **libffi** library installed on your system before compiling.
 
-### Languages ​​and Tools
+### Languages and Tools
 
 - Java 17 or higher.
 - C17
