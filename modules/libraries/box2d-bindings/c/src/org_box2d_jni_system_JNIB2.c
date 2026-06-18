@@ -108,9 +108,9 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1VEC2_1
 /*
  * Class:     org_box2d_jni_system_JNIB2
  * Method:    invoke_TRANSFORM_PIFIPV
- * Signature: (JJIFIJJ)F
+ * Signature: (JJIFIJJ)V
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1TRANSFORM_1PIFIPV
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1TRANSFORM_1PIFIPV
     (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jfloat param3, jint param4, jlong param5, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
