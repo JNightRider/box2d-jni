@@ -18,11 +18,11 @@ tasks.register('nativesJar', Jar) {
     if (osName.startsWith("Windows")) {
         current = "windows";
     } else if (osName.startsWith("FreeBSD")) {
-        current = "macos";
+        current = "freebsd";
     } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
         current = "linux";
     } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
-        current = "freebsd";
+        current = "macos";
     } else {
         throw new LinkageError("Unknown platform: " + osName);
     }
