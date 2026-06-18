@@ -6,11 +6,24 @@ jar {
     destinationDirectory = file("${rootDir}/lib")
 }
 
+def os = System.getProperty("os.name").toLowerCase()
+def arch = System.getProperty("os.arch").toLowerCase()
+
+def classifier
+if (os.contains("win")) {
+    classifier = "windows_x64"
+} else if (os.contains("mac")) {
+    classifier = "macos_x64"
+} else {
+    classifier = "linux_x64"
+}
+
+
 dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
     testRuntimeOnly files(
-        "${rootDir}/lib/box2d-0.1.0-natives-linux_x64.jar"
+        "${rootDir}/lib/box2d-0.1.0-natives-${classifier}.jar"
     )
     testImplementation(libs.junit4)      // framework for automated testing
 }
