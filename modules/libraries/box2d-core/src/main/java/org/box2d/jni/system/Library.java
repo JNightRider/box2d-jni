@@ -129,7 +129,7 @@ public final class Library {
             __WIN32__.value = true;
         } else if (osName.startsWith("FreeBSD")) {
             platform = "freebsd";
-            suffix   = ".dylib";
+            suffix   = ".so";
             __APPLE__.value = true;
         } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
             platform = "linux";
@@ -137,7 +137,7 @@ public final class Library {
             __LINUX__.value = true;
         } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
             platform = "macos";
-            suffix   = ".so";
+            suffix   = ".dylib";
             __FREE_BSD__.value = true;
         } else {
             throw new LinkageError("Unknown platform: " + osName);
