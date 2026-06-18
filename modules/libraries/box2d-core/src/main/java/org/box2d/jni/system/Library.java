@@ -33,11 +33,17 @@ package org.box2d.jni.system;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Enumeration;
 import java.util.function.Consumer;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import static org.box2d.jni.system.Debug.*;
 
@@ -162,7 +168,9 @@ public final class Library {
         
         String tmpdir  = System.getProperty("java.io.tmpdir");
         String namebin = prefix + name + suffix;
-        
+        debg( module.replace('.', '/') 
+                        + '/' + platform + '/' 
+                        + hardware       + '/');
         String libpath =  '/' + module.replace('.', '/') 
                         + '/' + platform + '/' 
                         + hardware       + '/' + 
@@ -191,6 +199,44 @@ public final class Library {
             System.load(libbin.toAbsolutePath().toString());
         } catch (IOException ex) {
             throw new IllegalStateException(ex);
+        }
+    }
+    
+    private static  void debg(String carpetaRelativa ) {
+
+        try {
+            // 1. Obtener la URL del recurso/carpeta dentro del classpath
+            URL dirURL = Library.class.getClassLoader().getResource(carpetaRelativa);
+            
+            if (dirURL != null && dirURL.getProtocol().equals("jar")) {
+                // 2. Extraer la ruta del archivo JAR desde la URL
+                String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
+                String jarFilePath = URLDecoder.decode(jarPath, StandardCharsets.UTF_8);
+
+                // 3. Abrir el archivo JAR y enumerar sus entradas
+                try (JarFile jar = new JarFile(jarFilePath)) {
+                    Enumeration<JarEntry> entries = jar.entries();
+
+                    while (entries.hasMoreElements()) {
+                        JarEntry entry = entries.nextElement();
+                        String nombreFichero = entry.getName();
+
+                        // Verificar que pertenezca a la subcarpeta buscada y no sea un directorio
+                        if (nombreFichero.startsWith(carpetaRelativa) && !entry.isDirectory()) {
+                            System.out.println("Archivo encontrado: " + nombreFichero);
+
+                            // 4. Leer el contenido del fichero
+                            try (InputStream is = jar.getInputStream(entry)) {
+                                // Aquí puedes procesar el InputStream (ej. leer línea por línea)
+                            }
+                        }
+                    }
+                }
+            } else {
+                System.out.println("No se encontró el JAR en el classpath o no está empaquetado.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
