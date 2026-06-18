@@ -66,8 +66,8 @@ public class DrawPointFcnTest {
                 
                 Assert.assertEquals(0x00cccff, context);
                 
-                Assert.assertEquals(1f, p.x(), 0.0f);
-                Assert.assertEquals(2f, p.y(), 0.0f);
+                Assert.assertEquals(1f, p.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, p.y().floatValue(), 0.0f);
             };
             JNIB2.invoke_VEC2_FIPV(v.address(), 1.1f, b2HexColor.b2_colorBlue, 0x00cccff, func.address());
         }
@@ -83,8 +83,8 @@ public class DrawPointFcnTest {
                 
                 Assert.assertEquals(0x00cccff, context);
                 
-                Assert.assertEquals(1f, p.x(), 0.0f);
-                Assert.assertEquals(2f, p.y(), 0.0f);
+                Assert.assertEquals(1f, p.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, p.y().floatValue(), 0.0f);
             });
             JNIB2.invoke_VEC2_FIPV(v.address(), 1.1f, b2HexColor.b2_colorBlue, 0x00cccff, func.address());
         }

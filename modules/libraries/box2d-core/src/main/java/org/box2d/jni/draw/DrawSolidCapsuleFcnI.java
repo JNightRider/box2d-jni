@@ -33,7 +33,7 @@ package org.box2d.jni.draw;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.function.CDrawSolidCapsuleFcn;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
@@ -43,7 +43,7 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code void ( *DrawSolidCapsuleFcn )( b2Vec2 p1, b2Vec2 p2, float radius, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawSolidCapsuleFcn )( b2Pos p1, b2Pos p2, float radius, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -57,10 +57,10 @@ public interface DrawSolidCapsuleFcnI extends CallbackI, CDrawSolidCapsuleFcn {
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         LongBuffer targs = createLongBuffer(5);
-        targs.put(ffi_type_b2Vec2)
-             .put(ffi_type_b2Vec2)
+        targs.put(ffi_type_b2Pos)
+             .put(ffi_type_b2Pos)
              .put(ffi_type_float)
-             .put(ffi_type_uint32)
+             .put(ffi_type_sint32)
              .put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_void;
@@ -83,14 +83,14 @@ public interface DrawSolidCapsuleFcnI extends CallbackI, CDrawSolidCapsuleFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args), b2Vec2.SIZEOF)
-                        : b2Vec2.createSafe(() -> memGetAddress(args)),
+                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
+                        : b2Pos.ncreateSafe(() -> memGetAddress(args)),
                 isByValue()
-                        ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF)
-                        : b2Vec2.createSafe(() -> memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetFloat(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
-                memGetInt(memGetAddress(args + 3 * VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
+                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
+                        : b2Pos.ncreateSafe(() -> memGetAddress(args + POINTER_SIZE)),
+                memGetFloat(memGetAddress(args + 2 * POINTER_SIZE)),
+                memGetInt(memGetAddress(args + 3 * POINTER_SIZE)),
+                memGetAddress(memGetAddress(args + 4 * POINTER_SIZE))
         );
     }
 }

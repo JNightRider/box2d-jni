@@ -30,11 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Pointer;
 
 /**
- * It represents the read-only function {@code b2DrawSolidCircleFcn} (its
+ * It represents the read-only function {@code DrawSolidCircleFcn} (its
  * structure cannot be modified, only invoked).
  *
  * @author wil
@@ -47,11 +48,12 @@ public interface CDrawSolidCircleFcn extends Pointer {
      * The function of the callback.
      *
      * @param transform b2Transform
+     * @param center b2Vec2
      * @param radius float
      * @param color int
      * @param context long
      */
-    void invoke(b2Transform transform, float radius, int color, long context);
+    void invoke(b2WorldTransform transform, b2Vec2 center, float radius, int color, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

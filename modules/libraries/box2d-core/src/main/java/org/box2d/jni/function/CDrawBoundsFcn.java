@@ -27,33 +27,29 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2WorldTransform;
-import org.box2d.jni.system.Pointer;
+import org.box2d.jni.b2AABB;
 
 /**
- * It represents the read-only function {@code DrawSolidPolygonFcn} (its
- * structure cannot be modified, only invoked).
+ * It represents the read-only function {@code DrawBoundsFcn} (its structure
+ * cannot be modified, only invoked).
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface CDrawSolidPolygonFcn extends Pointer {
+public interface CDrawBoundsFcn {
 
     /**
      * The function of the callback.
      *
-     * @param transform b2WorldTransform
-     * @param vertices long
-     * @param vertexCount int
-     * @param radius float
+     * @param aabb b2AABB
      * @param color int
      * @param context long
      */
-    void invoke(b2WorldTransform transform, long vertices, int vertexCount, float radius, int color, long context);
+    void invoke(b2AABB aabb, int color, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

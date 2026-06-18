@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -46,12 +46,12 @@ public interface CDrawStringFcn extends Pointer {
     /**
      * The function of the callback.
      *
-     * @param p b2Vec2
+     * @param p b2Pos
      * @param s long
      * @param color int
      * @param context long
      */
-    void invoke(b2Vec2 p, long s, int color, long context);
+    void invoke(b2Pos p, long s, int color, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

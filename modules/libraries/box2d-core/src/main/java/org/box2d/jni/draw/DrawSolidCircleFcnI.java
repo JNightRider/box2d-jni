@@ -32,17 +32,17 @@ package org.box2d.jni.draw;
 
 import java.nio.LongBuffer;
 import java.util.function.Function;
+import org.box2d.jni.b2Vec2;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.function.CDrawSolidCircleFcn;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 /**
- * Callback function: {@code void ( *DrawSolidCircleFcn )( b2Transform transform, float radius, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawSolidCircleFcn )( b2WorldTransform transform, b2Vec2 center, float radius, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -55,15 +55,16 @@ public interface DrawSolidCircleFcnI extends CallbackI, CDrawSolidCircleFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(4);
-        targs.put(ffi_type_b2Transform)
+        LongBuffer targs = createLongBuffer(5);
+        targs.put(ffi_type_b2WorldTransform)
+             .put(ffi_type_b2Vec2)
              .put(ffi_type_float)
-             .put(ffi_type_uint32)
+             .put(ffi_type_sint32)
              .put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_void;
 
-        return njniCallbackCreate(instance, rtype, targs, 4);
+        return njniCallbackCreate(instance, rtype, targs, 5);
     };
 
     /**
@@ -81,11 +82,14 @@ public interface DrawSolidCircleFcnI extends CallbackI, CDrawSolidCircleFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Transform.malloc(), () -> memGetAddress(args), b2Transform.SIZEOF)
-                        : b2Transform.createSafe(() -> memGetAddress(args)),
-                memGetFloat(memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
+                        ? memcpy(b2WorldTransform.nmalloc(), () -> memGetAddress(args), b2WorldTransform.DSIZEOF)
+                        : b2WorldTransform.ncreateSafe(() -> memGetAddress(args)),
+                isByValue()
+                        ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args), b2Vec2.SIZEOF)
+                        : b2Vec2.createSafe(() -> memGetAddress(args + POINTER_SIZE)),
+                memGetFloat(memGetAddress(args + 2 * POINTER_SIZE)),
+                memGetInt(memGetAddress(args + 3 * POINTER_SIZE)),
+                memGetAddress(memGetAddress(args + 4 * POINTER_SIZE))
         );
     }
 }

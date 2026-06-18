@@ -30,12 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.draw;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code void ( *DrawSolidPolygonFcn )( b2Transform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color,
+ * Callback function: {@code void ( *DrawSolidPolygonFcn )( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color,
 								void* context ); }
  *
  * @author wil
@@ -46,7 +46,7 @@ public abstract class DrawSolidPolygonFcn extends Callback implements DrawSolidP
     
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue() 
+     * @see DrawSolidPolygonFcn#isByValue() 
      */
     protected boolean byValue;
 
@@ -120,7 +120,7 @@ public abstract class DrawSolidPolygonFcn extends Callback implements DrawSolidP
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2Transform transform, long vertices, int vertexCount, float radius, int color, long context) {
+        public void invoke(b2WorldTransform transform, long vertices, int vertexCount, float radius, int color, long context) {
             delegate.invoke(transform, vertices, vertexCount, radius, color, context);
         }
     }

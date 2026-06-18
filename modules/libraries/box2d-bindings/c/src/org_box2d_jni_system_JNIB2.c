@@ -119,6 +119,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1TRANSFORM_1PIFIPV
 
 /*
  * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_WORLDTRANSFORM_PIFIPV
+ * Signature: (JJIFIJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1WORLDTRANSFORM_1PIFIPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jfloat param3, jint param4, jlong param5, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2WorldTransform, uintptr_t, int32_t, float, int32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2WorldTransform*)param0, (uintptr_t)param1, (int32_t)param2, (float)param3, (int32_t)param4, (uintptr_t)param5);
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
  * Method:    invoke_TRANSFORM_PV
  * Signature: (JJJ)V
  */
@@ -212,3 +224,28 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1SHAP
     UNUSED_PARAMS(__env, clazz)
     return ((jboolean) ((bool (*) (b2ShapeId, b2ShapeId, b2Pos, b2Vec2, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2ShapeId*)param1, *(b2Pos*)param2, *(b2Vec2*)param3, (uintptr_t)param4));
 }
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_WORLDTRANSFORM_PIIPV
+ * Signature: (JJIIJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1WORLDTRANSFORM_1PIIPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jint param3, jlong param4, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2WorldTransform, uintptr_t, uint32_t, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2WorldTransform*)param0, (uintptr_t)param1, (uint32_t)param2, (uint32_t)param3, (uintptr_t)param4);
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_WORLDTRANSFORM__VEC2_FIPV
+ * Signature: (JJFIJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1WORLDTRANSFORM_1_1VEC2_1FIPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jfloat param2, jint param3, jlong param4, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2WorldTransform, b2Vec2, float, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2WorldTransform*)param0, *(b2Vec2*)param1, (float)param2, (uint32_t)param3, (uintptr_t)param4);
+}
+

@@ -41,15 +41,16 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2DebugDraw
  * {
- *     void ( *DrawPolygonFcn )( const b2Vec2* vertices, int vertexCount, b2HexColor color, void* context );
- *     void ( *DrawSolidPolygonFcn )( b2Transform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color, void* context );
- *     void ( *DrawCircleFcn )( b2Vec2 center, float radius, b2HexColor color, void* context );
- *     void ( *DrawSolidCircleFcn )( b2Transform transform, float radius, b2HexColor color, void* context );
- *     void ( *DrawSolidCapsuleFcn )( b2Vec2 p1, b2Vec2 p2, float radius, b2HexColor color, void* context );
- *     void ( *DrawLineFcn )( b2Vec2 p1, b2Vec2 p2, b2HexColor color, void* context );
- *     void ( *DrawTransformFcn )( b2Transform transform, void* context );
- *     void ( *DrawPointFcn )( b2Vec2 p, float size, b2HexColor color, void* context );
- *     void ( *DrawStringFcn )( b2Vec2 p, const char* s, b2HexColor color, void* context );
+ *     void ( *DrawPolygonFcn )( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, b2HexColor color, void* context );
+ *     void ( *DrawSolidPolygonFcn )( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color, void* context );
+ *     void ( *DrawCircleFcn )( b2Pos center, float radius, b2HexColor color, void* context );
+ *     void ( *DrawSolidCircleFcn )( b2WorldTransform transform, b2Vec2 center, float radius, b2HexColor color, void* context );
+ *     void ( *DrawSolidCapsuleFcn )( b2Pos p1, b2Pos p2, float radius, b2HexColor color, void* context );
+ *     void ( *DrawLineFcn )( b2Pos p1, b2Pos p2, b2HexColor color, void* context );
+ *     void ( *DrawTransformFcn )( b2WorldTransform transform, void* context );
+ *     void ( *DrawPointFcn )( b2Pos p, float size, b2HexColor color, void* context );
+ *     void ( *DrawStringFcn )( b2Pos p, const char* s, b2HexColor color, void* context );
+ *     void ( *DrawBoundsFcn )( b2AABB aabb, b2HexColor color, void* context );
  *     b2AABB drawingBounds;
  *     float forceScale;
  *     float jointScale;
@@ -68,7 +69,6 @@ import static org.box2d.jni.system.Memory.*;
  *     bool drawContactForces;
  *     bool drawFrictionForces;
  *     bool drawIslands;
- *     b2Pos origin;
  *     void* context;
  * } b2DebugDraw;
  * </code></pre>
@@ -86,7 +86,7 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     public static final int ALIGNOF;
 
     /** The struct member offsets. */
-    private static final int
+    private static final int 
             DRAW_POLYGON_FCN,
             DRAW_SOLID_POLYGON_FCN,
             DRAW_CIRCLE_FCN,
@@ -96,6 +96,7 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
             DRAW_TRANSFORM_FCN,
             DRAW_POINT_FCN,
             DRAW_STRING_FCN,
+            DRAW_BOUNDS_FCN,
             DRAWING_BOUNDS,
             FORCE_SCALE,
             JOINT_SCALE,
@@ -114,26 +115,23 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
             DRAW_CONTACT_FORCES,
             DRAW_FRICTION_FORCES,
             DRAW_ISLANDS,
-            ORIGIN,
             CONTEXT;
 
     static {
         Layout layout = __struct(
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
-
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
                 __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
-
                 __member(4),
                 __member(4),
-
                 __member(1),
                 __member(1),
                 __member(1),
@@ -149,9 +147,7 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
                 __member(1),
                 __member(1),
                 __member(1),
-
-                __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
-                __member(VarType.Uintptrt.sizeof())
+                __member(POINTER_SIZE)
         );
 
         DRAW_POLYGON_FCN = layout.offsetof(0);
@@ -163,29 +159,29 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
         DRAW_TRANSFORM_FCN = layout.offsetof(6);
         DRAW_POINT_FCN = layout.offsetof(7);
         DRAW_STRING_FCN = layout.offsetof(8);
+        DRAW_BOUNDS_FCN = layout.offsetof(9);
 
-        DRAWING_BOUNDS = layout.offsetof(9);
+        DRAWING_BOUNDS = layout.offsetof(10);
 
-        FORCE_SCALE = layout.offsetof(10);
-        JOINT_SCALE = layout.offsetof(11);
+        FORCE_SCALE = layout.offsetof(11);
+        JOINT_SCALE = layout.offsetof(12);
 
-        DRAW_CONTACTS = layout.offsetof(12);
-        DRAW_ANCHOR_A = layout.offsetof(13);
-        DRAW_SHAPES = layout.offsetof(14);
-        DRAW_CHAIN_NORMALS = layout.offsetof(15);
-        DRAW_JOINTS = layout.offsetof(16);
-        DRAW_JOINT_EXTRAS = layout.offsetof(17);
-        DRAW_BOUNDS = layout.offsetof(18);
-        DRAW_MASS = layout.offsetof(19);
-        DRAW_BODY_NAMES = layout.offsetof(20);
-        DRAW_GRAPH_COLORS = layout.offsetof(21);
-        DRAW_CONTACT_FEATURES = layout.offsetof(22);
-        DRAW_CONTACT_NORMALS = layout.offsetof(23);
-        DRAW_CONTACT_FORCES = layout.offsetof(24);
-        DRAW_FRICTION_FORCES = layout.offsetof(25);
-        DRAW_ISLANDS = layout.offsetof(26);
+        DRAW_CONTACTS = layout.offsetof(13);
+        DRAW_ANCHOR_A = layout.offsetof(14);
+        DRAW_SHAPES = layout.offsetof(15);
+        DRAW_CHAIN_NORMALS = layout.offsetof(16);
+        DRAW_JOINTS = layout.offsetof(17);
+        DRAW_JOINT_EXTRAS = layout.offsetof(18);
+        DRAW_BOUNDS = layout.offsetof(19);
+        DRAW_MASS = layout.offsetof(20);
+        DRAW_BODY_NAMES = layout.offsetof(21);
+        DRAW_GRAPH_COLORS = layout.offsetof(22);
+        DRAW_CONTACT_FEATURES = layout.offsetof(23);
+        DRAW_CONTACT_NORMALS = layout.offsetof(24);
+        DRAW_CONTACT_FORCES = layout.offsetof(25);
+        DRAW_FRICTION_FORCES = layout.offsetof(26);
+        DRAW_ISLANDS = layout.offsetof(27);
 
-        ORIGIN = layout.offsetof(27);
         CONTEXT = layout.offsetof(28);
 
         SIZEOF = layout.getSize();
@@ -220,24 +216,26 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
         super(address, factor);
     }
     
-    /** @return Returns the property {@code drawPolygonFcn} */
-    public long drawPolygonFcn() { return ndrawPolygonFcn(address()); }
-    /** @return Returns the property {@code drawSolidPolygonFcn} */
-    public long drawSolidPolygonFcn() { return ndrawSolidPolygonFcn(address()); }
-    /** @return Returns the property {@code drawCircleFcn} */
-    public long drawCircleFcn() { return ndrawCircleFcn(address()); }
-    /** @return Returns the property {@code drawSolidCircleFcn} */
-    public long drawSolidCircleFcn() { return ndrawSolidCircleFcn(address()); }
-    /** @return Returns the property {@code drawSolidCapsuleFcn} */
-    public long drawSolidCapsuleFcn() { return ndrawSolidCapsuleFcn(address()); }
-    /** @return Returns the property {@code drawLineFcn} */
-    public long drawLineFcn() { return ndrawLineFcn(address()); }
-    /** @return Returns the property {@code drawTransformFcn} */
-    public long drawTransformFcn() { return ndrawTransformFcn(address()); }
-    /** @return Returns the property {@code drawPointFcn} */
-    public long drawPointFcn() { return ndrawPointFcn(address()); }
-    /** @return Returns the property {@code drawStringFcn} */
-    public long drawStringFcn() { return ndrawStringFcn(address()); }
+    /** @return Returns the property {@code DrawPolygonFcn} */
+    public long DrawPolygonFcn() { return nDrawPolygonFcn(address()); }
+    /** @return Returns the property {@code DrawSolidPolygonFcn} */
+    public long DrawSolidPolygonFcn() { return nDrawSolidPolygonFcn(address()); }
+    /** @return Returns the property {@code DrawCircleFcn} */
+    public long DrawCircleFcn() { return nDrawCircleFcn(address()); }
+    /** @return Returns the property {@code DrawSolidCircleFcn} */
+    public long DrawSolidCircleFcn() { return nDrawSolidCircleFcn(address()); }
+    /** @return Returns the property {@code DrawSolidCapsuleFcn} */
+    public long DrawSolidCapsuleFcn() { return nDrawSolidCapsuleFcn(address()); }
+    /** @return Returns the property {@code DrawLineFcn} */
+    public long DrawLineFcn() { return nDrawLineFcn(address()); }
+    /** @return Returns the property {@code DrawTransformFcn} */
+    public long DrawTransformFcn() { return nDrawTransformFcn(address()); }
+    /** @return Returns the property {@code DrawPointFcn} */
+    public long DrawPointFcn() { return nDrawPointFcn(address()); }
+    /** @return Returns the property {@code DrawStringFcn} */
+    public long DrawStringFcn() { return nDrawStringFcn(address()); }
+    /** @return Returns the property {@code DrawBoundsFcn} */
+    public long DrawBoundsFcn() { return nDrawBoundsFcn(address()); }
     /** @return Returns the property {@code drawingBounds} */
     public b2AABB drawingBounds() { return ndrawingBounds(address()); }
     /** @return Returns the property {@code forceScale} */
@@ -274,107 +272,116 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     public boolean drawFrictionForces() { return ndrawFrictionForces(address()); }
     /** @return Returns the property {@code drawIslands} */
     public boolean drawIslands() { return ndrawIslands(address()); }
-    /** @return Returns the property {@code origin} */
-    public b2Pos origin() { return norigin(address()); }
     /** @return Returns the property {@code context} */
     public long context() { return ncontext(address()); }
     
     /**
-     * Set the value of property {@code drawPolygonFcn}
+     * Set the value of property {@code DrawPolygonFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawPolygonFcn(DrawPolygonFcnI value) {
-        ndrawPolygonFcn(address(), value.address());
+    public b2DebugDraw DrawPolygonFcn(DrawPolygonFcnI value) {
+        nDrawPolygonFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawSolidPolygonFcn}
+     * Set the value of property {@code DrawSolidPolygonFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawSolidPolygonFcn(DrawSolidPolygonFcnI value) {
-        ndrawSolidPolygonFcn(address(), value.address());
+    public b2DebugDraw DrawSolidPolygonFcn(DrawSolidPolygonFcnI value) {
+        nDrawSolidPolygonFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawCircleFcn}
+     * Set the value of property {@code DrawCircleFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawCircleFcn(DrawCircleFcnI value) {
-        ndrawCircleFcn(address(), value.address());
+    public b2DebugDraw DrawCircleFcn(DrawCircleFcnI value) {
+        nDrawCircleFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawSolidCircleFcn}
+     * Set the value of property {@code DrawSolidCircleFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawSolidCircleFcn(DrawSolidCircleFcnI value) {
-        ndrawSolidCircleFcn(address(), value.address());
+    public b2DebugDraw DrawSolidCircleFcn(DrawSolidCircleFcnI value) {
+        nDrawSolidCircleFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawSolidCapsuleFcn}
+     * Set the value of property {@code DrawSolidCapsuleFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawSolidCapsuleFcn(DrawSolidCapsuleFcnI value) {
-        ndrawSolidCapsuleFcn(address(), value.address());
+    public b2DebugDraw DrawSolidCapsuleFcn(DrawSolidCapsuleFcnI value) {
+        nDrawSolidCapsuleFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawLineFcn}
+     * Set the value of property {@code DrawLineFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawLineFcn(DrawLineFcnI value) {
-        ndrawLineFcn(address(), value.address());
+    public b2DebugDraw DrawLineFcn(DrawLineFcnI value) {
+        nDrawLineFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawTransformFcn}
+     * Set the value of property {@code DrawTransformFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawTransformFcn(DrawTransformFcnI value) {
-        ndrawTransformFcn(address(), value.address());
+    public b2DebugDraw DrawTransformFcn(DrawTransformFcnI value) {
+        nDrawTransformFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawPointFcn}
+     * Set the value of property {@code DrawPointFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawPointFcn(DrawPointFcnI value) {
-        ndrawPointFcn(address(), value.address());
+    public b2DebugDraw DrawPointFcn(DrawPointFcnI value) {
+        nDrawPointFcn(address(), value.address());
         return this;
     }
 
     /**
-     * Set the value of property {@code drawStringFcn}
+     * Set the value of property {@code DrawStringFcn}
      *
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw drawStringFcn(DrawStringFcnI value) {
-        ndrawStringFcn(address(), value.address());
+    public b2DebugDraw DrawStringFcn(DrawStringFcnI value) {
+        nDrawStringFcn(address(), value.address());
+        return this;
+    }
+    
+    /**
+     * Set the value of property {@code DrawBoundsFcn}
+     *
+     * @param value long
+     * @return b2DebugDraw
+     */
+    public b2DebugDraw DrawBoundsFcn(DrawStringFcnI value) {
+        nDrawBoundsFcn(address(), value.address());
         return this;
     }
 
@@ -577,17 +584,6 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     }
 
     /**
-     * Set the value of property {@code origin}
-     *
-     * @param value boolean
-     * @return b2DebugDraw
-     */
-    public b2DebugDraw origin(b2Pos value) {
-        norigin(address(), value);
-        return this;
-    }
-
-    /**
      * Set the value of property {@code context}
      *
      * @param value long
@@ -678,15 +674,16 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
 
     // -----------------------------------
     
-    public static long ndrawPolygonFcn(long address)        { return memGetAddress(address + DRAW_POLYGON_FCN);         }
-    public static long ndrawSolidPolygonFcn(long address)   { return memGetAddress(address + DRAW_SOLID_POLYGON_FCN);   }
-    public static long ndrawCircleFcn(long address)         { return memGetAddress(address + DRAW_CIRCLE_FCN);          }
-    public static long ndrawSolidCircleFcn(long address)    { return memGetAddress(address + DRAW_SOLID_CIRCLE_FCN);    }
-    public static long ndrawSolidCapsuleFcn(long address)   { return memGetAddress(address + DRAW_SOLID_CAPSULE_FCN);   }
-    public static long ndrawLineFcn(long address)           { return memGetAddress(address + DRAW_LINE_FCN);            }
-    public static long ndrawTransformFcn(long address)      { return memGetAddress(address + DRAW_TRANSFORM_FCN);       }
-    public static long ndrawPointFcn(long address)          { return memGetAddress(address + DRAW_POINT_FCN);           }
-    public static long ndrawStringFcn(long address)         { return memGetAddress(address + DRAW_STRING_FCN);          }
+    public static long nDrawPolygonFcn(long address)        { return memGetAddress(address + DRAW_POLYGON_FCN);         }
+    public static long nDrawSolidPolygonFcn(long address)   { return memGetAddress(address + DRAW_SOLID_POLYGON_FCN);   }
+    public static long nDrawCircleFcn(long address)         { return memGetAddress(address + DRAW_CIRCLE_FCN);          }
+    public static long nDrawSolidCircleFcn(long address)    { return memGetAddress(address + DRAW_SOLID_CIRCLE_FCN);    }
+    public static long nDrawSolidCapsuleFcn(long address)   { return memGetAddress(address + DRAW_SOLID_CAPSULE_FCN);   }
+    public static long nDrawLineFcn(long address)           { return memGetAddress(address + DRAW_LINE_FCN);            }
+    public static long nDrawTransformFcn(long address)      { return memGetAddress(address + DRAW_TRANSFORM_FCN);       }
+    public static long nDrawPointFcn(long address)          { return memGetAddress(address + DRAW_POINT_FCN);           }
+    public static long nDrawStringFcn(long address)         { return memGetAddress(address + DRAW_STRING_FCN);          }
+    public static long nDrawBoundsFcn(long address)         { return memGetAddress(address + DRAW_BOUNDS_FCN);          }
     public static b2AABB ndrawingBounds(long address)       { return b2AABB.createSafe(() -> address + DRAWING_BOUNDS); }
     public static float nforceScale(long address)           { return memGetFloat(address + FORCE_SCALE);                }
     public static float njointScale(long address)           { return memGetFloat(address + JOINT_SCALE);                }
@@ -705,18 +702,18 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     public static boolean ndrawContactForces(long address)  { return memGetByte(address + DRAW_CONTACT_FORCES) != 0;    }
     public static boolean ndrawFrictionForces(long address) { return memGetByte(address + DRAW_FRICTION_FORCES) != 0;   }
     public static boolean ndrawIslands(long address)        { return memGetByte(address + DRAW_ISLANDS) != 0;           }
-    public static b2Pos norigin(long address)               { return b2Pos.ncreateSafe(() -> address + ORIGIN);         }
     public static long ncontext(long address)               { return memGetAddress(address + CONTEXT);                  }
 
-    public static void ndrawPolygonFcn(long address, long value)        { memPutAddress(address + DRAW_POLYGON_FCN, value);                     }
-    public static void ndrawSolidPolygonFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_POLYGON_FCN, value);               }
-    public static void ndrawCircleFcn(long address, long value)         { memPutAddress(address + DRAW_CIRCLE_FCN, value);                      }
-    public static void ndrawSolidCircleFcn(long address, long value)    { memPutAddress(address + DRAW_SOLID_CIRCLE_FCN, value);                }
-    public static void ndrawSolidCapsuleFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_CAPSULE_FCN, value);               }
-    public static void ndrawLineFcn(long address, long value)           { memPutAddress(address + DRAW_LINE_FCN, value);                        }
-    public static void ndrawTransformFcn(long address, long value)      { memPutAddress(address + DRAW_TRANSFORM_FCN, value);                   }
-    public static void ndrawPointFcn(long address, long value)          { memPutAddress(address + DRAW_POINT_FCN, value);                       }
-    public static void ndrawStringFcn(long address, long value)         { memPutAddress(address + DRAW_STRING_FCN, value);                      }
+    public static void nDrawPolygonFcn(long address, long value)        { memPutAddress(address + DRAW_POLYGON_FCN, value);                     }
+    public static void nDrawSolidPolygonFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_POLYGON_FCN, value);               }
+    public static void nDrawCircleFcn(long address, long value)         { memPutAddress(address + DRAW_CIRCLE_FCN, value);                      }
+    public static void nDrawSolidCircleFcn(long address, long value)    { memPutAddress(address + DRAW_SOLID_CIRCLE_FCN, value);                }
+    public static void nDrawSolidCapsuleFcn(long address, long value)   { memPutAddress(address + DRAW_SOLID_CAPSULE_FCN, value);               }
+    public static void nDrawLineFcn(long address, long value)           { memPutAddress(address + DRAW_LINE_FCN, value);                        }
+    public static void nDrawTransformFcn(long address, long value)      { memPutAddress(address + DRAW_TRANSFORM_FCN, value);                   }
+    public static void nDrawPointFcn(long address, long value)          { memPutAddress(address + DRAW_POINT_FCN, value);                       }
+    public static void nDrawStringFcn(long address, long value)         { memPutAddress(address + DRAW_STRING_FCN, value);                      }
+    public static void nDrawBoundsFcn(long address, long value)         { memPutAddress(address + DRAW_BOUNDS_FCN, value);                      }
     public static void ndrawingBounds(long address, b2AABB value)       { nmemcpy(address + DRAWING_BOUNDS, value.address(), b2AABB.SIZEOF); }
     public static void nforceScale(long address, float value)           { memPutFloat(address + FORCE_SCALE, value);                            }
     public static void njointScale(long address, float value)           { memPutFloat(address + JOINT_SCALE, value);                            }
@@ -735,7 +732,6 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
     public static void ndrawContactForces(long address, boolean value)  { memPutByte(address + DRAW_CONTACT_FORCES, (byte) (value ? 1 : 0));    }
     public static void ndrawFrictionForces(long address, boolean value) { memPutByte(address + DRAW_FRICTION_FORCES, (byte) (value ? 1 : 0));   }
     public static void ndrawIslands(long address, boolean value)        { memPutByte(address + DRAW_ISLANDS, (byte) (value ? 1 : 0));           }
-    public static void norigin(long address, b2Pos value)               { nmemcpy(address + ORIGIN, value.address(), b2Pos.DSIZEOF);      }
     public static void ncontext(long address, long value)               { memPutAddress(address + CONTEXT, value);                              }
 
     // -----------------------------------

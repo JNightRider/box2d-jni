@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -46,13 +46,13 @@ public interface CDrawSolidCapsuleFcn extends Pointer {
     /**
      * The function of the callback.
      *
-     * @param p1 b2Vec2
-     * @param p2 b2Vec2
+     * @param p1 b2Pos
+     * @param p2 b2Pos
      * @param radius float
      * @param color int
      * @param context long
      */
-    void invoke(b2Vec2 p1, b2Vec2 p2, float radius, int color, long context);
+    void invoke(b2Pos p1, b2Pos p2, float radius, int color, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -45,10 +46,22 @@ public interface CDrawPolygonFcn extends Pointer {
     /**
      * The function of the callback.
      *
+     * @param transform b2WorldTransform
      * @param vertices long
      * @param vertexCount int
      * @param color long
      * @param context long
      */
-    void invoke( long vertices, int vertexCount, int color, long context );
+    void invoke( b2WorldTransform transform, long vertices, int vertexCount, int color, long context  );
+
+    /**
+     * {@code true} if the function arguments are passed by value (a copy of the
+     * structure), otherwise {@code false} if it is simply a direct reference to
+     * the structure retrieved from libfii.
+     *
+     * @return boolean
+     */
+    default boolean isByValue() {
+        return true;
+    }
 }

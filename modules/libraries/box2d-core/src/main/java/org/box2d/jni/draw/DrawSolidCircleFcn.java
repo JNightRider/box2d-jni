@@ -30,12 +30,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.draw;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code void ( *DrawSolidCircleFcn )( b2Transform transform, float radius, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawSolidCircleFcn )( b2WorldTransform transform, b2Vec2 center, float radius, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -45,7 +46,7 @@ public abstract class DrawSolidCircleFcn extends Callback implements DrawSolidCi
 
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawSolidCircleFcn#isByValue()
      */
     protected boolean byValue;
 
@@ -120,8 +121,8 @@ public abstract class DrawSolidCircleFcn extends Callback implements DrawSolidCi
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2Transform transform, float radius, int color, long context) {
-            delegate.invoke(transform, radius, color, context);
+        public void invoke(b2WorldTransform transform, b2Vec2 center, float radius, int color, long context) {
+            delegate.invoke(transform, center, radius, color, context);
         }
     }
 }

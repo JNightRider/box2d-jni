@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -46,12 +46,12 @@ public interface CDrawCircleFcn extends Pointer {
     /**
      * The function of the callback.
      *
-     * @param center b2Vec2
+     * @param center b2Pos
      * @param radius float
      * @param color int
      * @param context long
      */
-    void invoke(b2Vec2 center, float radius, int color, long context);
+    void invoke(b2Pos center, float radius, int color, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

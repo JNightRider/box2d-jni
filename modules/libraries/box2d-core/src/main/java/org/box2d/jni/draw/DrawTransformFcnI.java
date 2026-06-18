@@ -33,17 +33,16 @@ package org.box2d.jni.draw;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.function.CDrawTransformFcn;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code void ( *DrawTransformFcn )( b2Transform transform, void* context ); }
+ * Callback function: {@code void ( *DrawTransformFcn )( b2WorldTransform transform, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -57,7 +56,7 @@ public interface DrawTransformFcnI extends CallbackI, CDrawTransformFcn {
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         LongBuffer targs = createLongBuffer(2);
-        targs.put(ffi_type_b2Transform)
+        targs.put(ffi_type_b2WorldTransform)
              .put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_void;
@@ -80,9 +79,9 @@ public interface DrawTransformFcnI extends CallbackI, CDrawTransformFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Transform.malloc(), () -> memGetAddress(args), b2Transform.SIZEOF)
-                        : b2Transform.createSafe(() -> memGetAddress(args)),
-                memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))
+                        ? memcpy(b2WorldTransform.nmalloc(), () -> memGetAddress(args), b2WorldTransform.DSIZEOF)
+                        : b2WorldTransform.ncreateSafe(() -> memGetAddress(args)),
+                memGetAddress(memGetAddress(args + POINTER_SIZE))
         );
     }
 }

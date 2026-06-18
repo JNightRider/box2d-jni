@@ -31,25 +31,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2WorldTransform;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2WorldTransform
+ * typedef struct b2LocalManifold
  * {
- * 	b2Pos p;
- * 	b2Rot q;
- * } b2WorldTransform;
+ *     /// The unit normal vector in frame A, points from shape A to shape B
+ *     b2Vec2 normal;
+ *
+ *     /// The manifold points, up to two are possible in 2D
+ *     b2LocalManifoldPoint points[2];
+ *
+ *     /// The number of contacts points, will be 0, 1, or 2
+ *     int pointCount;
+ *
+ * } b2LocalManifold;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
  * @version 1.0.0
  */
-public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2WorldTransform<b2WorldTransformI, b2PosI, b2Rot>, ConstB2WorldTransform<b2PosI, b2Rot> {
+public class b2LocalManifold extends Struct<b2LocalManifold> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -59,17 +66,20 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
 
     /** The struct member offsets. */
     private static final int
-            P,
-            Q;
+            NORMAL,
+            POINTS,
+            POINT_COUNT;
 
     static {
         Layout layout = __struct(
-                __member(b2PosI.SIZEOF, b2PosI.ALIGNOF),
-                __member(b2Rot.SIZEOF, b2Rot.ALIGNOF)
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __array(b2LocalManifoldPoint.SIZEOF, b2LocalManifoldPoint.ALIGNOF, 2),
+                __member(4)
         );
 
-        P = layout.offsetof(0);
-        Q = layout.offsetof(1);
+        NORMAL = layout.offsetof(0);
+        POINTS = layout.offsetof(1);
+        POINT_COUNT = layout.offsetof(2);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -80,7 +90,7 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
      *
      * @param ptr A reference pointer.
      */
-    public b2WorldTransformI(Pointer ptr) {
+    public b2LocalManifold(Pointer ptr) {
         super(ptr);
     }
 
@@ -89,7 +99,7 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
      *
      * @param address A virtual memory address
      */
-    public b2WorldTransformI(long address) {
+    public b2LocalManifold(long address) {
         super(address);
     }
 
@@ -98,112 +108,110 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
      *
      * @param address A virtual memory address
      * @param factor boolean
-     *
-     * @see Struct#Struct(long, boolean)
      */
-    protected b2WorldTransformI(long address, boolean factor) {
+    protected b2LocalManifold(long address, boolean factor) {
         super(address, factor);
     }
 
-    /**
-     * Initializes this struct with the specified values.
-     *
-     * @param p the valur {@code p}
-     * @param q the valur {@code q}
-     *
-     * @return b2Transform
-     */
-    @Override
-    public b2WorldTransformI set(
-        b2PosI p,
-        b2Rot q
-    ) {
-        p(p);
-        q(q);
-        return this;
-    }
-    
-    /** @return Returns the property {@code p} */
-    @Override
-    public b2PosI p() { return np(address()); }
-    /** @return Returns the property {@code s} */
-    @Override
-    public b2Rot q() { return nq(address()); }
-    
-    /**
-     * Set the value of property {@code p}
-     *
-     * @param value The value
-     * @return b2WorldTransformI
-     */
-    @Override
-    public b2WorldTransformI p(b2PosI value) { np(address(), value); return this; }
+    /** @return Returns the property {@code normal} */
+    public b2Vec2 normal() { return nnormal(address()); }
+    /** @return Returns the property {@code points} */
+    public b2LocalManifoldPoint.Buffer points() { return npoints(address()); }
+    /** @return Returns the property {@code pointCount} */
+    public int pointCount() { return npointCount(address()); }
 
     /**
-     * Set the value of property {@code q}
+     * Set the value of property {@code normal}
      *
-     * @param value The value
-     * @return b2WorldTransformI
+     * @param value b2Vec2
+     * @return b2LocalManifold
      */
-    @Override
-    public b2WorldTransformI q(b2Rot value) { nq(address(), value); return this; }
-    
-    /*(non-Javadoc)
-     */
-    @Override
-    public int sizeof() { return SIZEOF; }
- 
-    /*(non-Javadoc)
-     */
-    @Override
-    protected b2WorldTransformI create(long address, Pointer ptr) {
-        return ptr == null ? new b2WorldTransformI(address) : new b2WorldTransformI(ptr);
+    public b2LocalManifold normal(b2Vec2 value) {
+        nnormal(address(), value);
+        return this;
     }
-    
+
+    /**
+     * Set the value of property {@code points}
+     *
+     * @param value b2LocalManifoldPoint.Buffer
+     * @return b2LocalManifold
+     */
+    public b2LocalManifold points(b2LocalManifoldPoint.Buffer value) {
+        npoints(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code pointCount}
+     *
+     * @param value int
+     * @return b2LocalManifold
+     */
+    public b2LocalManifold pointCount(int value) {
+        npointCount(address(), value);
+        return this;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    public int sizeof() {
+        return SIZEOF;
+    }
+
+    /*(non-Javadoc)
+     */
+    @Override
+    protected b2LocalManifold create(long address, Pointer ptr) {
+        return ptr == null ? new b2LocalManifold(address) : new b2LocalManifold(ptr);
+    }
+
     // -----------------------------------
 
     /**
      * Internal use of the buffer.
-     * @return b2WorldTransformI
+     *
+     * @return b2LocalManifold
      */
-    private static b2WorldTransformI factory() {
-        return new b2WorldTransformI(-1L, true);
+    private static b2LocalManifold factory() {
+        return new b2LocalManifold(-1L, true);
     }
-    
+
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2WorldTransformI
+     * @return b2LocalManifold
      */
-    public static b2WorldTransformI createSafe(Pointer ptr) {
+    public static b2LocalManifold createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2WorldTransformI(ptr);
+        return new b2LocalManifold(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2WorldTransformI}.
+     * Reserve memory for the new object {@code b2LocalManifold}.
      *
      * @param alloc Custom memory manager
-     * @return b2WorldTransformI
+     * @return b2LocalManifold
      */
-    public static b2WorldTransformI alloc(AllocFunc alloc) {
-        return new b2WorldTransformI(alloc.alloc(ALIGNOF, SIZEOF, 1));
+    public static b2LocalManifold alloc(AllocFunc alloc) {
+        return new b2LocalManifold(alloc.alloc(ALIGNOF, SIZEOF, 1));
     }
 
     /**
-     * Reserve memory for the new object {@code b2WorldTransformI}.
+     * Reserve memory for the new object {@code b2LocalManifold}.
      *
-     * @return b2WorldTransformI
+     * @return b2LocalManifold
      */
-    public static b2WorldTransformI malloc() {
-        return new b2WorldTransformI(nmalloc(SIZEOF));
+    public static b2LocalManifold malloc() {
+        return new b2LocalManifold(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2WorldTransformI}.
+     * Reserve an amount n of memory for the object {@code b2LocalManifold}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -213,7 +221,7 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2WorldTransformI}.
+     * Reserve an amount n of memory for the object {@code b2LocalManifold}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -222,21 +230,24 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
     }
-    
-    // -----------------------------------
-
-    public static b2PosI np(long address) { return b2PosI.createSafe(() -> address + P); }
-    public static b2Rot nq(long address) { return b2Rot.createSafe(() -> address + Q); }
-
-    public static void np(long address, b2PosI value) { nmemcpy(address + P, value.address(), b2PosI.SIZEOF); }
-    public static void nq(long address, b2Rot value) { nmemcpy(address + Q, value.address(), b2Rot.SIZEOF); }
 
     // -----------------------------------
     
-    /** An array of {@code b2Transform} structs. */
-    public static class Buffer extends StructBuffer<b2WorldTransformI, Buffer> implements b2WorldTransformI.ConstBuffer<b2WorldTransformI, Buffer>, JNINative {
+    public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
+    public static b2LocalManifoldPoint.Buffer npoints(long address) { return b2LocalManifoldPoint.createSafe(address + POINTS, 2); }
+    public static int npointCount(long address) { return memGetInt(address + POINT_COUNT); }
+
+    public static void nnormal(long address, b2Vec2 value) { nmemcpy(address + NORMAL, value.address(), b2Vec2.SIZEOF); }
+    public static void npoints(long address, b2LocalManifoldPoint.Buffer value) { nmemcpy(address + POINTS, value.address(), 2 * b2LocalManifoldPoint.SIZEOF); }
+    public static void npointCount(long address, int value) { memPutInt(address + POINT_COUNT, value); }
+    
+    // -----------------------------------
+
+    /** An array of {@code b2LocalManifold} structs. */
+    public static class Buffer extends StructBuffer<b2LocalManifold, Buffer> implements JNINative {
+
         /** An element that provides information about the structure. */
-        private static final b2WorldTransformI ELEMENT_FACTORY = b2WorldTransformI.factory();
+        private static final b2LocalManifold ELEMENT_FACTORY = b2LocalManifold.factory();
 
         /**
          * Create a new buffer.
@@ -261,25 +272,25 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
             super(address, mark, position, limit, capacity);
         }
 
-        /*(non-Jabadoc)
+        /*(non-Javadoc)
          */
         @Override
-        protected b2WorldTransformI getElementFactory() {
+        protected b2LocalManifold getElementFactory() {
             return ELEMENT_FACTORY;
         }
 
-        /*(non-Jabadoc)
+        /*(non-Javadoc)
          */
         @Override
         protected Buffer self() {
             return this;
         }
 
-        /*(non-Jabadoc)
+        /*(non-Javadoc)
          */
         @Override
         protected Buffer create(long address, int mark, int position, int limit, int capacity) {
             return new Buffer(address, mark, position, limit, capacity);
-        }        
+        }
     }
 }

@@ -30,12 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.draw;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code void ( *DrawLineFcn )( b2Vec2 p1, b2Vec2 p2, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawLineFcn )( b2Pos p1, b2Pos p2, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -45,7 +45,7 @@ public abstract class DrawLineFcn extends Callback implements DrawLineFcnI {
 
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawLineFcn#isByValue()
      */
     protected boolean byValue;
 
@@ -120,7 +120,7 @@ public abstract class DrawLineFcn extends Callback implements DrawLineFcnI {
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2Vec2 p1, b2Vec2 p2, int color, long context) {
+        public void invoke(b2Pos p1, b2Pos p2, int color, long context) {
             delegate.invoke(p1, p2, color, context);
         }
     }

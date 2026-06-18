@@ -36,7 +36,7 @@ import org.box2d.jni.b2CollisionPlane;
 import org.box2d.jni.b2DistanceOutput;
 import org.box2d.jni.b2DynamicTree;
 import org.box2d.jni.b2Hull;
-import org.box2d.jni.b2Manifold;
+import org.box2d.jni.b2LocalManifold;
 import org.box2d.jni.b2MassData;
 import org.box2d.jni.b2PlaneSolverResult;
 import org.box2d.jni.b2Polygon;
@@ -797,280 +797,265 @@ public final class Collision {
     // --- [ b2CollideCircles ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideCircles( const b2Circle* circleA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollideCircles( const b2Circle* circleA, const b2Circle* circleB, b2Transform xf );}
      *
      * @param circleA ConstB2Circle
-     * @param xfA b2Transform
      * @param circleB ConstB2Circle
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideCircles(ConstB2Circle circleA, b2Transform xfA, ConstB2Circle circleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(circleA, xfA, circleB, xfB, __result);
-        nb2CollideCircles(circleA.address(), xfA.address(), circleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideCircles(ConstB2Circle circleA, ConstB2Circle circleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(circleA, circleB, xf, __result);
+        nb2CollideCircles(circleA.address(), circleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideCircles( const b2Circle* circleA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); } */
-    public static native void nb2CollideCircles(long circleA, long xfA, long circleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideCircles( const b2Circle* circleA, const b2Circle* circleB, b2Transform xf );} */
+    public static native void nb2CollideCircles(long circleA, long circleB, long xf, long __result);
 
 
     // --- [ b2CollideCapsuleAndCircle ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideCapsuleAndCircle( const b2Capsule* capsuleA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollideCapsuleAndCircle( const b2Capsule* capsuleA, const b2Circle* circleB, b2Transform xf ); }
      *
      * @param capsuleA ConstB2Capsule
-     * @param xfA b2Transform
      * @param circleB ConstB2Circle
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideCapsuleAndCircle(ConstB2Capsule capsuleA, b2Transform xfA, ConstB2Circle circleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(capsuleA, xfA, circleB, xfB, __result);
-        nb2CollideCapsuleAndCircle(capsuleA.address(), xfA.address(), circleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideCapsuleAndCircle(ConstB2Capsule capsuleA, ConstB2Circle circleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(capsuleA, circleB, xf, __result);
+        nb2CollideCapsuleAndCircle(capsuleA.address(), circleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideCapsuleAndCircle( const b2Capsule* capsuleA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); } */
-    public static native void nb2CollideCapsuleAndCircle(long capsuleA, long xfA, long circleB, long xfB, long __result);
-
+    /* {@code B2_API b2LocalManifold b2CollideCapsuleAndCircle( const b2Capsule* capsuleA, const b2Circle* circleB, b2Transform xf ); } */
+    public static native void nb2CollideCapsuleAndCircle(long capsuleA, long circleB, long xf, long __result);
 
     // --- [ b2CollideSegmentAndCircle ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideSegmentAndCircle( const b2Segment* segmentA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); }
-     *
+     * {@code B2_API b2LocalManifold b2CollideSegmentAndCircle( const b2Segment* segmentA, const b2Circle* circleB, b2Transform xf ); }
+     * 
      * @param segmentA ConstB2Segment
-     * @param xfA b2Transform
      * @param circleB ConstB2Circle
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideSegmentAndCircle(ConstB2Segment segmentA, b2Transform xfA, ConstB2Circle circleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(segmentA, xfA, circleB, xfB, __result);
-        nb2CollideSegmentAndCircle(segmentA.address(), xfA.address(), circleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideSegmentAndCircle(ConstB2Segment segmentA, ConstB2Circle circleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(segmentA, circleB, xf, __result);
+        nb2CollideSegmentAndCircle(segmentA.address(), circleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideSegmentAndCircle( const b2Segment* segmentA, b2Transform xfA, const b2Circle* circleB,  b2Transform xfB ); } */
-    public static native void nb2CollideSegmentAndCircle(long segmentA, long xfA, long circleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideSegmentAndCircle( const b2Segment* segmentA, const b2Circle* circleB, b2Transform xf ); } } */
+    public static native void nb2CollideSegmentAndCircle(long segmentA, long circleB, long xf, long __result);
 
 
     // --- [ b2CollidePolygonAndCircle ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollidePolygonAndCircle( const b2Polygon* polygonA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollidePolygonAndCircle( const b2Polygon* polygonA, const b2Circle* circleB, b2Transform xf ); }
      *
      * @param polygonA ConstB2Polygon
-     * @param xfA b2Transform
      * @param circleB ConstB2Circle
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollidePolygonAndCircle(ConstB2Polygon polygonA, b2Transform xfA, ConstB2Circle circleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(polygonA, xfA, circleB, xfB, __result);
-        nb2CollidePolygonAndCircle(polygonA.address(), xfA.address(), circleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollidePolygonAndCircle(ConstB2Polygon polygonA, ConstB2Circle circleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(polygonA, circleB, xf, __result);
+        nb2CollidePolygonAndCircle(polygonA.address(), circleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollidePolygonAndCircle( const b2Polygon* polygonA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); } */
-    public static native void nb2CollidePolygonAndCircle(long polygonA, long xfA, long circleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollidePolygonAndCircle( const b2Polygon* polygonA, const b2Circle* circleB, b2Transform xf ); } */
+    public static native void nb2CollidePolygonAndCircle(long polygonA, long circleB, long xf, long __result);
 
 
     // --- [ b2CollideCapsules ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideCapsules( const b2Capsule* capsuleA, b2Transform xfA, const b2Capsule* capsuleB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollideCapsules( const b2Capsule* capsuleA, const b2Capsule* capsuleB, b2Transform xf ); }
      *
      * @param capsuleA ConstB2Capsule
-     * @param xfA b2Transform
      * @param capsuleB ConstB2Capsule
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideCapsules(ConstB2Capsule capsuleA, b2Transform xfA, ConstB2Capsule capsuleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(capsuleA, xfA, capsuleB, xfB, __result);
-        nb2CollideCapsules(capsuleA.address(), xfA.address(), capsuleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideCapsules(ConstB2Capsule capsuleA, ConstB2Capsule capsuleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(capsuleA, capsuleB, xf, __result);
+        nb2CollideCapsules(capsuleA.address(), capsuleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideCapsules( const b2Capsule* capsuleA, b2Transform xfA, const b2Capsule* capsuleB, b2Transform xfB ); } */
-    public static native void nb2CollideCapsules(long capsuleA, long xfA, long capsuleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideCapsules( const b2Capsule* capsuleA, const b2Capsule* capsuleB, b2Transform xf ); } */
+    public static native void nb2CollideCapsules(long capsuleA, long capsuleB, long xf, long __result);
 
 
     // --- [ b2CollideSegmentAndCapsule ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideSegmentAndCapsule( const b2Segment* segmentA, b2Transform xfA, const b2Capsule* capsuleB,  b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollideSegmentAndCapsule( const b2Segment* segmentA, const b2Capsule* capsuleB, b2Transform xf ); }
      *
      * @param segmentA ConstB2Segment
-     * @param xfA b2Transform
      * @param capsuleB ConstB2Capsule
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideSegmentAndCapsule(ConstB2Segment segmentA, b2Transform xfA, ConstB2Capsule capsuleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(segmentA, xfA, capsuleB, xfB, __result);
-        nb2CollideSegmentAndCapsule(segmentA.address(), xfA.address(), capsuleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideSegmentAndCapsule(ConstB2Segment segmentA, ConstB2Capsule capsuleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(segmentA, capsuleB, xf, __result);
+        nb2CollideSegmentAndCapsule(segmentA.address(), capsuleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideSegmentAndCapsule( const b2Segment* segmentA, b2Transform xfA, const b2Capsule* capsuleB,  b2Transform xfB ); } */
-    public static native void nb2CollideSegmentAndCapsule(long segmentA, long xfA, long capsuleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideSegmentAndCapsule( const b2Segment* segmentA, const b2Capsule* capsuleB, b2Transform xf ); } */
+    public static native void nb2CollideSegmentAndCapsule(long segmentA, long capsuleB, long xf, long __result);
 
     // --- [ b2CollidePolygonAndCapsule ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollidePolygonAndCapsule( const b2Polygon* polygonA, b2Transform xfA, const b2Capsule* capsuleB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollidePolygonAndCapsule( const b2Polygon* polygonA, const b2Capsule* capsuleB, b2Transform xf ); }
      *
      * @param polygonA ConstB2Polygon
-     * @param xfA b2Transform
      * @param capsuleB ConstB2Capsule
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollidePolygonAndCapsule(ConstB2Polygon polygonA, b2Transform xfA, ConstB2Capsule capsuleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(polygonA, xfA, capsuleB, xfB, __result);
-        nb2CollidePolygonAndCapsule(polygonA.address(), xfA.address(), capsuleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollidePolygonAndCapsule(ConstB2Polygon polygonA, ConstB2Capsule capsuleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(polygonA, capsuleB, xf, __result);
+        nb2CollidePolygonAndCapsule(polygonA.address(), capsuleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollidePolygonAndCapsule( const b2Polygon* polygonA, b2Transform xfA, const b2Capsule* capsuleB,
-     *                                                      b2Transform xfB ); } */
-    public static native void nb2CollidePolygonAndCapsule(long polygonA, long xfA, long capsuleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollidePolygonAndCapsule( const b2Polygon* polygonA, const b2Capsule* capsuleB, b2Transform xf ); }  */
+    public static native void nb2CollidePolygonAndCapsule(long polygonA, long capsuleB, long xf, long __result);
 
 
     // --- [ b2CollidePolygons ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollidePolygons( const b2Polygon* polygonA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollidePolygons( const b2Polygon* polygonA, const b2Polygon* polygonB, b2Transform xf ); }
      *
      * @param polygonA ConstB2Polygon
-     * @param xfA b2Transform
      * @param polygonB ConstB2Polygon
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollidePolygons(ConstB2Polygon polygonA, b2Transform xfA, ConstB2Polygon polygonB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(polygonA, xfA, polygonB, xfB, __result);
-        nb2CollidePolygons(polygonA.address(), xfA.address(), polygonB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollidePolygons(ConstB2Polygon polygonA, ConstB2Polygon polygonB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(polygonA, polygonB, xf, __result);
+        nb2CollidePolygons(polygonA.address(), polygonB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollidePolygons( const b2Polygon* polygonA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB ); } */
-    public static native void nb2CollidePolygons(long polygonA, long xfA, long polygonB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollidePolygons( const b2Polygon* polygonA, const b2Polygon* polygonB, b2Transform xf ); } */
+    public static native void nb2CollidePolygons(long polygonA, long polygonB, long xf, long __result);
 
 
     // --- [ b2CollideSegmentAndPolygon ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideSegmentAndPolygon( const b2Segment* segmentA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollideSegmentAndPolygon( const b2Segment* segmentA, const b2Polygon* polygonB, b2Transform xf ); }
      *
      * @param segmentA ConstB2Segment
-     * @param xfA b2Transform
      * @param polygonB ConstB2Polygon
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideSegmentAndPolygon(ConstB2Segment segmentA, b2Transform xfA, ConstB2Polygon polygonB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(segmentA, xfA, polygonB, xfB, __result);
-        nb2CollideSegmentAndPolygon(segmentA.address(), xfA.address(), polygonB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideSegmentAndPolygon(ConstB2Segment segmentA, ConstB2Polygon polygonB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(segmentA, polygonB, xf, __result);
+        nb2CollideSegmentAndPolygon(segmentA.address(), polygonB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideSegmentAndPolygon( const b2Segment* segmentA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB ); } */
-    public static native void nb2CollideSegmentAndPolygon(long segmentA, long xfA, long polygonB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideSegmentAndPolygon( const b2Segment* segmentA, const b2Polygon* polygonB, b2Transform xf ); } */
+    public static native void nb2CollideSegmentAndPolygon(long segmentA, long polygonB, long xf, long __result);
 
 
     // --- [ b2CollideChainSegmentAndCircle ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideChainSegmentAndCircle( const b2ChainSegment* segmentA, b2Transform xfA, const b2Circle* circleB, b2Transform xfB ); }
+     * {@code B2_API b2LocalManifold b2CollideChainSegmentAndCircle( const b2ChainSegment* segmentA, const b2Circle* circleB, b2Transform xf ); }
      *
      * @param segmentA ConstB2ChainSegment
-     * @param xfA b2Transform
      * @param circleB ConstB2Circle
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideChainSegmentAndCircle(ConstB2ChainSegment segmentA, b2Transform xfA, ConstB2Circle circleB, b2Transform xfB, b2Manifold __result) {
-        checkPointers(segmentA, xfA, circleB, xfB, __result);
-        nb2CollideChainSegmentAndCircle(segmentA.address(), xfA.address(), circleB.address(), xfB.address(), __result.address());
+    public static b2LocalManifold b2CollideChainSegmentAndCircle(ConstB2ChainSegment segmentA, ConstB2Circle circleB, b2Transform xf, b2LocalManifold __result) {
+        checkPointers(segmentA, circleB, xf, __result);
+        nb2CollideChainSegmentAndCircle(segmentA.address(), circleB.address(), xf.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideChainSegmentAndCircle( const b2ChainSegment* segmentA, b2Transform xfA, const b2Circle* circleB,
-     *                                                          b2Transform xfB ); } */
-    public static native void nb2CollideChainSegmentAndCircle(long segmentA, long xfA, long circleB, long xfB, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideChainSegmentAndCircle( const b2ChainSegment* segmentA, const b2Circle* circleB, b2Transform xf ); } */
+    public static native void nb2CollideChainSegmentAndCircle(long segmentA, long circleB, long xf, long __result);
 
 
     // --- [ b2CollideChainSegmentAndCapsule ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideChainSegmentAndCapsule( const b2ChainSegment* segmentA, b2Transform xfA, const b2Capsule* capsuleB,  b2Transform xfB, b2SimplexCache* cache ); }
+     * {@code B2_API b2LocalManifold b2CollideChainSegmentAndCapsule( const b2ChainSegment* segmentA, const b2Capsule* capsuleB, b2Transform xf, b2SimplexCache* cache ); }
      *
      * @param segmentA ConstB2ChainSegment
-     * @param xfA b2Transform
      * @param capsuleB ConstB2Capsule
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param cache b2SimplexCache
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideChainSegmentAndCapsule(ConstB2ChainSegment segmentA, b2Transform xfA, ConstB2Capsule capsuleB, b2Transform xfB, b2SimplexCache cache, b2Manifold __result) {
-        checkPointers(segmentA, xfA, capsuleB, xfB, cache, __result);
-        nb2CollideChainSegmentAndCapsule(segmentA.address(), xfA.address(), capsuleB.address(), xfB.address(), cache.address(), __result.address());
+    public static b2LocalManifold b2CollideChainSegmentAndCapsule(ConstB2ChainSegment segmentA, ConstB2Capsule capsuleB, b2Transform xf, b2SimplexCache cache, b2LocalManifold __result) {
+        checkPointers(segmentA, capsuleB, xf, cache, __result);
+        nb2CollideChainSegmentAndCapsule(segmentA.address(), capsuleB.address(), xf.address(), cache.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideChainSegmentAndCapsule( const b2ChainSegment* segmentA, b2Transform xfA, const b2Capsule* capsuleB,  b2Transform xfB, b2SimplexCache* cache ); } */
-    public static native void nb2CollideChainSegmentAndCapsule(long segmentA, long xfA, long capsuleB, long xfB, long cache, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideChainSegmentAndCapsule( const b2ChainSegment* segmentA, const b2Capsule* capsuleB, b2Transform xf, b2SimplexCache* cache ); } */
+    public static native void nb2CollideChainSegmentAndCapsule(long segmentA, long capsuleB, long xf, long cache, long __result);
 
 
     // --- [ b2CollideChainSegmentAndPolygon ] ---
 
     /**
-     * {@code B2_API b2Manifold b2CollideChainSegmentAndPolygon( const b2ChainSegment* segmentA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB, b2SimplexCache* cache ); }
+     * {@code B2_API b2LocalManifold b2CollideChainSegmentAndPolygon( const b2ChainSegment* segmentA, const b2Polygon* polygonB, b2Transform xf, b2SimplexCache* cache ); }
      *
      * @param segmentA ConstB2ChainSegment
-     * @param xfA b2Transform
      * @param polygonB ConstB2Polygon
-     * @param xfB b2Transform
+     * @param xf b2Transform
      * @param cache b2SimplexCache
      * @param __result store
      *
-     * @return b2Manifold
+     * @return b2LocalManifold
      */
-    public static b2Manifold b2CollideChainSegmentAndPolygon(ConstB2ChainSegment segmentA, b2Transform xfA, ConstB2Polygon polygonB, b2Transform xfB, b2SimplexCache cache, b2Manifold __result) {
-        checkPointers(segmentA, xfA, polygonB, xfB, cache, __result);
-        nb2CollideChainSegmentAndPolygon(segmentA.address(), xfA.address(), polygonB.address(), xfB.address(), cache.address(), __result.address());
+    public static b2LocalManifold b2CollideChainSegmentAndPolygon(ConstB2ChainSegment segmentA, ConstB2Polygon polygonB, b2Transform xf, b2SimplexCache cache, b2LocalManifold __result) {
+        checkPointers(segmentA, polygonB, xf, cache, __result);
+        nb2CollideChainSegmentAndPolygon(segmentA.address(), polygonB.address(), xf.address(), cache.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2Manifold b2CollideChainSegmentAndPolygon( const b2ChainSegment* segmentA, b2Transform xfA, const b2Polygon* polygonB, b2Transform xfB, b2SimplexCache* cache ); } */
-    public static native void nb2CollideChainSegmentAndPolygon(long segmentA, long xfA, long polygonB, long xfB, long cache, long __result);
+    /* {@code B2_API b2LocalManifold b2CollideChainSegmentAndPolygon( const b2ChainSegment* segmentA, const b2Polygon* polygonB, b2Transform xf, b2SimplexCache* cache ); } */
+    public static native void nb2CollideChainSegmentAndPolygon(long segmentA, long polygonB, long xf, long cache, long __result);
 
     // --- [ b2DynamicTree_Create ] ---
 

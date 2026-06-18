@@ -30,22 +30,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.draw;
 
-import org.box2d.jni.b2Pos;
+import org.box2d.jni.b2AABB;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
+
 /**
- * Callback function: {@code void ( *DrawStringFcn )( b2Pos p, const char* s, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawBoundsFcn )( b2AABB aabb, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class DrawStringFcn extends Callback implements DrawStringFcnI {
+public abstract class DrawBoundsFcn extends Callback implements DrawBoundsFcnI {
 
     /**
      * Callback flag
-     * @see DrawStringFcn#isByValue()
+     * @see b2CustomFilterFcnI#isByValue()
      */
     protected boolean byValue;
 
@@ -54,14 +55,14 @@ public abstract class DrawStringFcn extends Callback implements DrawStringFcnI {
      *
      * @param address A virtual memory address
      */
-    public DrawStringFcn(long address) {
+    public DrawBoundsFcn(long address) {
         super(address);
     }
 
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawBoundsFcn#isByValue()
      *
      * @param byValue boolean
      */
@@ -77,18 +78,18 @@ public abstract class DrawStringFcn extends Callback implements DrawStringFcnI {
     }
 
     /**
-     * Create a new empty object of type {@code DrawStringFcn}.
+     * Create a new empty object of type {@code DrawBoundsFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return DrawStringFcn
+     * @return DrawBoundsFcn
      */
-    public static DrawStringFcn create(DrawStringFcnI delegate) {
+    public static DrawBoundsFcn create(DrawBoundsFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof DrawStringFcn) {
-            return (DrawStringFcn) delegate;
+        if (delegate instanceof DrawBoundsFcn) {
+            return (DrawBoundsFcn) delegate;
         }
 
         long address = delegate.address();
@@ -101,18 +102,17 @@ public abstract class DrawStringFcn extends Callback implements DrawStringFcnI {
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends DrawStringFcn {
-
+    private static final class Container extends DrawBoundsFcn {
         /**The dynamic or lambda function. */
-        private final DrawStringFcnI delegate;
+        private final DrawBoundsFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>DrawStringFcn</code> function.
+         * Create a new container to handle the <code>DrawBoundsFcn</code> function.
          *
          * @param address long
-         * @param delegate DrawStringFcn|function
+         * @param delegate DrawBoundsFcnI|function
          */
-        public Container(long address, DrawStringFcnI delegate) {
+        public Container(long address, DrawBoundsFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -120,8 +120,8 @@ public abstract class DrawStringFcn extends Callback implements DrawStringFcnI {
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2Pos p, long s, int color, long context) {
-            delegate.invoke(p, s, color, context);
+        public void invoke(b2AABB aabb, int color, long context) {
+            delegate.invoke(aabb, color, context);
         }
     }
 }

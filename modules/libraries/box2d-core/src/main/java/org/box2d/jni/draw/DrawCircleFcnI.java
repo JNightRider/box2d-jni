@@ -32,7 +32,8 @@ package org.box2d.jni.draw;
 
 import java.nio.LongBuffer;
 import java.util.function.Function;
-import org.box2d.jni.b2Vec2;
+
+import org.box2d.jni.b2Pos;
 
 import org.box2d.jni.function.CDrawCircleFcn;
 import org.box2d.jni.system.CallbackI;
@@ -43,7 +44,7 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code void ( *DrawCircleFcn )( b2Vec2 center, float radius, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawCircleFcn )( b2Pos center, float radius, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -57,7 +58,7 @@ public interface DrawCircleFcnI extends CallbackI, CDrawCircleFcn {
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         LongBuffer targs = createLongBuffer(4);
-        targs.put(ffi_type_b2Vec2)
+        targs.put(ffi_type_b2Pos)
              .put(ffi_type_float)
              .put(ffi_type_uint32)
              .put(ffi_type_pointer);
@@ -82,8 +83,8 @@ public interface DrawCircleFcnI extends CallbackI, CDrawCircleFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args), b2Vec2.SIZEOF)
-                        : b2Vec2.createSafe(() -> 0),
+                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
+                        : b2Pos.ncreateSafe(() -> 0),
                 memGetFloat(memGetAddress(args + VarType.Uintptrt.sizeof())),
                 memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
                 memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))

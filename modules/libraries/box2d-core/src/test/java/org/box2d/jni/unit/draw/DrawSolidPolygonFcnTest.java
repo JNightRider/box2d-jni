@@ -36,6 +36,7 @@ import org.box2d.jni.b2Transform;
 import org.box2d.jni.draw.DrawSolidPolygonFcn;
 import org.box2d.jni.draw.DrawSolidPolygonFcnI;
 import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNIB2;
@@ -50,6 +51,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class DrawSolidPolygonFcnTest {
     /**
      * Initialize all tests.
@@ -61,14 +63,14 @@ public class DrawSolidPolygonFcnTest {
             b2Vec2.Buffer buffer = b2Vec2.malloc(10);
             b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2Transform t = b2Transform.malloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
         ) {
             buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set(-0.5f, -3.5f));
             buffer.put(b2Vec2.malloc().set(6f, 8f));
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
-
+            System.out.println("t: " + t.getClass());
             DrawSolidPolygonFcnI func = (transform, vertices, vertexCount, radius, color, context) -> {
                 Debug.apiPrint("DrawSolidPolygonFcnI: transform=" + transform + ", vertices=" + vertices + "vertexCount=" + vertexCount + ", radius=" + radius + ", color=" + color + ", context=" + context);
 
@@ -78,8 +80,8 @@ public class DrawSolidPolygonFcnTest {
                 Assert.assertEquals(0xFFFFl, context);
                 Assert.assertEquals(buffer.address(), vertices);
                 
-                Assert.assertEquals(1f, transform.p().x(), 0.0f);
-                Assert.assertEquals(2f, transform.p().y(), 0.0f);
+                Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);
                 Assert.assertEquals(4f, transform.q().c(), 0.0f);
                 Assert.assertEquals(6f, transform.q().s(), 0.0f);
 
@@ -102,7 +104,7 @@ public class DrawSolidPolygonFcnTest {
                 Assert.assertEquals(-34.89f, vb.y(), 0.0f);
             };
 
-            JNIB2.invoke_TRANSFORM_PIFIPV(t.address(), buffer.address(), 10, 10.5f, b2HexColor.b2_colorGreen, 0xFFFFl, func.address());
+            JNIB2.invoke_WORLDTRANSFORM_PIFIPV(t.address(), buffer.address(), 10, 10.5f, b2HexColor.b2_colorGreen, 0xFFFFl, func.address());
         }
         try
         (
@@ -126,8 +128,9 @@ public class DrawSolidPolygonFcnTest {
                 Assert.assertEquals(0xFFFFl, context);
                 Assert.assertEquals(buffer.address(), vertices);
 
-                Assert.assertEquals(1f, transform.p().x(), 0.0f);
-                Assert.assertEquals(2f, transform.p().y(), 0.0f);
+                System.out.println(transform.p().x().floatValue() + ", " + transform.p().y().floatValue());
+                Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);
                 Assert.assertEquals(4f, transform.q().c(), 0.0f);
                 Assert.assertEquals(6f, transform.q().s(), 0.0f);
                 
@@ -151,7 +154,7 @@ public class DrawSolidPolygonFcnTest {
             });
             func.byValue(false);
 
-            JNIB2.invoke_TRANSFORM_PIFIPV(t.address(), buffer.address(), 10, 10.5f, b2HexColor.b2_colorGreen, 0xFFFFl, func.address());
+            JNIB2.invoke_WORLDTRANSFORM_PIFIPV(t.address(), buffer.address(), 10, 10.5f, b2HexColor.b2_colorGreen, 0xFFFFl, func.address());
         }
         Callbacks.b2FreeCallbacks();
     }

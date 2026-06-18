@@ -28,41 +28,48 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.function;
-
-import org.box2d.jni.b2WorldTransform;
-import org.box2d.jni.system.Pointer;
+package org.box2d.jni.readonly;
 
 /**
- * It represents the read-only function {@code DrawSolidPolygonFcn} (its
- * structure cannot be modified, only invoked).
+ * Interface that is responsible for representing a native object that is a
+ * constant of type <code>b2LocalManifoldPoint</code>. (native type: const b2LocalManifoldPoint)
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface CDrawSolidPolygonFcn extends Pointer {
+public interface ConstB2LocalManifoldPoint extends ConstStruct {
 
     /**
-     * The function of the callback.
+     * Contact point in frame A
      *
-     * @param transform b2WorldTransform
-     * @param vertices long
-     * @param vertexCount int
-     * @param radius float
-     * @param color int
-     * @param context long
+     * @return ConstB2Vec2
      */
-    void invoke(b2WorldTransform transform, long vertices, int vertexCount, float radius, int color, long context);
+    ConstB2Vec2 point();
 
     /**
-     * {@code true} if the function arguments are passed by value (a copy of the
-     * structure), otherwise {@code false} if it is simply a direct reference to
-     * the structure retrieved from libfii.
+     * The separation of the contact point, negative if penetrating. May be
+     * positive or negative.
      *
-     * @return boolean
+     * @return float
      */
-    default boolean isByValue() {
-        return true;
+    float separation();
+
+    /**
+     * Uniquely identifies a contact point between two shapes
+     *
+     * @return short
+     */
+    short id();
+    
+    /**
+     * A template that handles the representation of a constant pointer (buffer)
+     * of constant structures such as {@code ConstB2LocalManifoldPoint}
+     *
+     * @param <T> The type of object stored in this buffer
+     * @param <SELF> The type of this buffer
+     */
+    interface ConstBuffer<T extends ConstB2LocalManifoldPoint, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
+        /* nothing */
     }
 }

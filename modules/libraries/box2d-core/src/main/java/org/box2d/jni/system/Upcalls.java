@@ -158,7 +158,7 @@ public final class Upcalls {
     public static final long ffi_type_b2Vec2 = nffi_type_b2Vec2();
     public static native long nffi_type_b2Vec2();
     
-    public static final long ffi_type_b2Pos = BOX2D_DOUBLE_PRECISION ? nffi_type_b2Pos() : nffi_type_b2Vec2() ;
+    public static final long ffi_type_b2Pos = nffi_type_b2Pos() ;
     public static native long nffi_type_b2Pos();
     
     public static final long ffi_type_b2Rot = nffi_type_b2Rot();
@@ -166,6 +166,12 @@ public final class Upcalls {
     
     public static final long ffi_type_b2Transform = nffi_type_b2Transform();
     public static native long nffi_type_b2Transform();
+    
+    public static final long ffi_type_b2WorldTransform = nffi_type_b2WorldTransform();
+    public static native long nffi_type_b2WorldTransform();
+    
+    public static final long ffi_type_b2AABB = nffi_type_b2AABB();
+    public static native long nffi_type_b2AABB();
     
     // -----------------------------------
     

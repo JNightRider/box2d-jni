@@ -56,7 +56,7 @@ public class DrawCircleFcnTest {
     public void callback() {
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawCircleFcnI func = (center, radius, color, context) -> {
@@ -66,14 +66,14 @@ public class DrawCircleFcnTest {
                 
                 Assert.assertEquals(0x00fffl, context);
                 
-                Assert.assertEquals(1f, center.x(), 0.0f);
-                Assert.assertEquals(2f, center.y(), 0.0f);
+                Assert.assertEquals(1f, center.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, center.y().floatValue(), 0.0f);
             };
             JNIB2.invoke_VEC2_FIPV(v.address(), 10.5f, b2HexColor.b2_colorRed, 0x00fffl, func.address());
         }
         try
         (
-                b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
+            b2Vec2 v = b2Vec2.malloc().set(1f, 2f)
         ) {
 
             DrawCircleFcn func = DrawCircleFcn.create((center, radius, color, context) -> {
@@ -83,8 +83,8 @@ public class DrawCircleFcnTest {
                 
                 Assert.assertEquals(0x00fffl, context);
                 
-                Assert.assertEquals(1f, center.x(), 0.0f);
-                Assert.assertEquals(2f, center.y(), 0.0f);
+                Assert.assertEquals(1f, center.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, center.y().floatValue(), 0.0f);
             });
             func.byValue(false);
             JNIB2.invoke_VEC2_FIPV(v.address(), 10.5f, b2HexColor.b2_colorRed, 0x00fffl, func.address());

@@ -65,10 +65,10 @@ public class DrawLineFcnTest {
                 
                 Assert.assertEquals(0x0CDDCCl, context);
                 
-                Assert.assertEquals(1f, p1.x(), 0.0f);
-                Assert.assertEquals(2f, p1.y(), 0.0f);
-                Assert.assertEquals(3f, p2.x(), 0.0f);
-                Assert.assertEquals(5f, p2.y(), 0.0f);
+                Assert.assertEquals(1f, p1.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, p1.y().floatValue(), 0.0f);
+                Assert.assertEquals(3f, p2.x().floatValue(), 0.0f);
+                Assert.assertEquals(5f, p2.y().floatValue(), 0.0f);
             };
             JNIB2.invoke_VEC2_VEC2_IPV(v0.address(), v1.address(), b2HexColor.b2_colorBlue, 0x0CDDCCl, func.address());
         }

@@ -28,41 +28,64 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.function;
+package org.box2d.jni.draw;
 
-import org.box2d.jni.b2WorldTransform;
-import org.box2d.jni.system.Pointer;
+import java.nio.LongBuffer;
+import java.util.function.Function;
+
+import org.box2d.jni.b2AABB;
+
+import org.box2d.jni.function.CDrawBoundsFcn;
+import org.box2d.jni.system.CallbackI;
+import org.box2d.jni.system.VarType;
+
+import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.Memory.*;
+import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * It represents the read-only function {@code DrawSolidPolygonFcn} (its
- * structure cannot be modified, only invoked).
+ * Callback function: {@code void ( *DrawBoundsFcn )( b2AABB aabb, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface CDrawSolidPolygonFcn extends Pointer {
+@FunctionalInterface
+public interface DrawBoundsFcnI extends CallbackI, CDrawBoundsFcn {
 
     /**
-     * The function of the callback.
-     *
-     * @param transform b2WorldTransform
-     * @param vertices long
-     * @param vertexCount int
-     * @param radius float
-     * @param color int
-     * @param context long
+     * Native callback constructor.
      */
-    void invoke(b2WorldTransform transform, long vertices, int vertexCount, float radius, int color, long context);
+    Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
+        LongBuffer targs = createLongBuffer(3);
+        targs.put(ffi_type_b2AABB)
+             .put(ffi_type_sint32)
+             .put(ffi_type_pointer);
+        targs.flip();
+        long rtype = ffi_type_void;
+
+        return njniCallbackCreate(instance, rtype, targs, 3);
+    };
 
     /**
-     * {@code true} if the function arguments are passed by value (a copy of the
-     * structure), otherwise {@code false} if it is simply a direct reference to
-     * the structure retrieved from libfii.
+     * A handler for the native class constructor.
      *
-     * @return boolean
+     * @return Function|new
      */
-    default boolean isByValue() {
-        return true;
+    @Override
+    public default Function<CallbackI, Long> __constructor() {
+        return CONSTRUCTOR;
+    }
+
+    /*(non-Javadoc)*/
+    @Override
+    public default void callback(long resp, long args) {
+        invoke(
+                isByValue()
+                        ? memcpy(b2AABB.malloc(), () -> memGetAddress(args), b2AABB.SIZEOF)
+                        : b2AABB.createSafe(() -> 0),
+                memGetInt(memGetAddress(args + VarType.Uintptrt.sizeof())),
+                memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
+        );
     }
 }

@@ -30,11 +30,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit.draw;
 
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2Rot;
-import org.box2d.jni.b2Transform;
 import org.box2d.jni.draw.DrawTransformFcn;
 import org.box2d.jni.draw.DrawTransformFcnI;
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNIB2;
@@ -49,6 +49,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class DrawTransformFcnTest {
     /**
      * Initialize all tests.
@@ -57,15 +58,15 @@ public class DrawTransformFcnTest {
     public void callback() {
         try
         (
-            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
+            b2Pos v = b2Pos.nmalloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2Transform t = b2Transform.malloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
         ) {
 
             DrawTransformFcnI func = (transform, context) -> {
                 Debug.apiPrint("DrawTransformFcnI: transform=" + transform + ", context=" + context);
-                Assert.assertEquals(1f, transform.p().x(), 0.0f);
-                Assert.assertEquals(2f, transform.p().y(), 0.0f);
+                Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);
                 Assert.assertEquals(4f, transform.q().c(), 0.0f);
                 Assert.assertEquals(6f, transform.q().s(), 0.0f);                
                 Assert.assertEquals(0x0ddccc, context);
@@ -74,15 +75,15 @@ public class DrawTransformFcnTest {
         }
         try
         (
-            b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
+            b2Pos v = b2Pos.nmalloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2Transform t = b2Transform.malloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
         ) {
 
             DrawTransformFcn func = DrawTransformFcn.create((transform, context) -> {
                 Debug.apiPrint("DrawTransformFcn: transform=" + transform + ", context=" + context);
-                Assert.assertEquals(1f, transform.p().x(), 0.0f);
-                Assert.assertEquals(2f, transform.p().y(), 0.0f);
+                Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);
                 Assert.assertEquals(4f, transform.q().c(), 0.0f);
                 Assert.assertEquals(6f, transform.q().s(), 0.0f);                
                 Assert.assertEquals(0x0ddccc, context);

@@ -30,13 +30,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.draw;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 
 /**
- * Callback function: {@code void ( *DrawCircleFcn )( b2Vec2 center, float radius, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawCircleFcn )( b2Pos center, float radius, b2HexColor color, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -46,7 +46,7 @@ public abstract class DrawCircleFcn extends Callback implements DrawCircleFcnI {
 
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawCircleFcn#isByValue()
      */
     protected boolean byValue;
 
@@ -120,7 +120,7 @@ public abstract class DrawCircleFcn extends Callback implements DrawCircleFcnI {
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2Vec2 center, float radius, int color, long context) {
+        public void invoke(b2Pos center, float radius, int color, long context) {
             delegate.invoke(center, radius, color, context);
         }
     }

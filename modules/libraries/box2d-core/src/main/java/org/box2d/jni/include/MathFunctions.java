@@ -1492,6 +1492,26 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Transform b2InvMulWorldTransforms( b2WorldTransform A, b2WorldTransform B )} */
     public static native void nb2InvMulWorldTransforms(long A, long B, long __result);
 
+    // --- [ b2OffsetWorldTransform ] ---
+
+    /**
+     * {@code B2_INLINE b2WorldTransform b2OffsetWorldTransform( b2WorldTransform A, b2Transform B ); }
+     *
+     * @param A b2WorldTransform
+     * @param B b2Transform
+     * @param __result store
+     *
+     * @return b2WorldTransform
+     */
+    public static b2WorldTransform b2OffsetWorldTransform(b2WorldTransform A, b2Transform B, b2WorldTransform __result) {
+        checkPointers(A, B, __result);
+        nb2OffsetWorldTransform(A.address(), B.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2WorldTransform b2OffsetWorldTransform( b2WorldTransform A, b2Transform B ); } */
+    public static native void nb2OffsetWorldTransform(long A, long B, long __result);
+
     // --- [ b2ToRelativeTransform ] ---
 
     /**

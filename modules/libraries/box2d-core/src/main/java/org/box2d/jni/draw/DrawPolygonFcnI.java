@@ -33,15 +33,17 @@ package org.box2d.jni.draw;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
+import org.box2d.jni.b2WorldTransform;
+
 import org.box2d.jni.function.CDrawPolygonFcn;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
+import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code void ( *DrawPolygonFcn )( const b2Vec2* vertices, int vertexCount, b2HexColor color, void* context ); }
+ * Callback function: {@code void ( *DrawPolygonFcn )( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, b2HexColor color,  void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -54,15 +56,16 @@ public interface DrawPolygonFcnI extends CallbackI, CDrawPolygonFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(4);
-        targs.put(ffi_type_pointer)
+        LongBuffer targs = createLongBuffer(5);
+        targs.put(ffi_type_b2WorldTransform)
+             .put(ffi_type_pointer)
              .put(ffi_type_sint32)
              .put(ffi_type_sint32)
              .put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_void;
         
-        return njniCallbackCreate(instance, rtype, targs, 4);
+        return njniCallbackCreate(instance, rtype, targs, 5);
     };
 
     /**
@@ -79,10 +82,13 @@ public interface DrawPolygonFcnI extends CallbackI, CDrawPolygonFcn {
     @Override
     public default void callback(long resp, long args) {
         invoke(
-                memGetAddress(memGetAddress(args)),
-                memGetInt(memGetAddress(args + VarType.Pointer.sizeof())),
-                memGetInt(memGetAddress(args + 2 * VarType.Pointer.sizeof())),
-                memGetAddress(memGetAddress(args + 3 * VarType.Pointer.sizeof()))
+                isByValue()
+                        ? memcpy(b2WorldTransform.nmalloc(), () -> memGetAddress(args), b2WorldTransform.DSIZEOF)
+                        : b2WorldTransform.ncreateSafe(() -> memGetAddress(args)),
+                memGetAddress(memGetAddress(args + POINTER_SIZE)),
+                memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
+                memGetInt(memGetAddress(args + 3 * POINTER_SIZE)),
+                memGetAddress(memGetAddress(args + 4 * POINTER_SIZE))
         );
     }
 }

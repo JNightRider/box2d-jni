@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Pointer;
 /**
  * It represents the read-only function {@code DrawTransformFcn} (its
@@ -45,10 +45,10 @@ public interface CDrawTransformFcn extends Pointer {
     /**
      * The function of the callback.
      *
-     * @param transform b2Transform
+     * @param transform b2WorldTransform
      * @param context long
      */
-    void invoke(b2Transform transform, long context);
+    void invoke(b2WorldTransform transform, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the

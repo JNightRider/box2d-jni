@@ -38,78 +38,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <ffi.h>
 
 #include "common_tools.h"
+#include "glue.h"
+
 #include "box2d/jni/org_box2d_jni_system_Upcalls.h"
-
-static ffi_type* ffi_type_b2ShapeId_elements[4] = {
-    &ffi_type_sint32,
-    &ffi_type_uint16,
-    &ffi_type_uint16,
-    NULL
-};
-static ffi_type ffi_type_b2ShapeId = {
-    .size = 0,
-    .alignment = 0,
-    .type = FFI_TYPE_STRUCT,
-    .elements = ffi_type_b2ShapeId_elements
-};
-
-// -----------------------------------------------------
-
-static ffi_type* ffi_type_b2Vec2_elements[3] = {
-    &ffi_type_float,
-    &ffi_type_float,
-    NULL
-};
-static ffi_type ffi_type_b2Vec2 = {
-    .size = 0,
-    .alignment = 0,
-    .type = FFI_TYPE_STRUCT,
-    .elements = ffi_type_b2Vec2_elements
-};
-
-// -----------------------------------------------------
-
-static ffi_type* ffi_type_b2Pos_elements[3] = {
-    &ffi_type_double,
-    &ffi_type_double,
-    NULL
-};
-static ffi_type ffi_type_b2Pos = {
-    .size = 0,
-    .alignment = 0,
-    .type = FFI_TYPE_STRUCT,
-    .elements = ffi_type_b2Pos_elements
-};
-
-// -----------------------------------------------------
-
-static ffi_type* ffi_type_b2Rot_elements[3] = {
-    &ffi_type_float,
-    &ffi_type_float,
-    NULL
-};
-static ffi_type ffi_type_b2Rot = {
-    .size = 0,
-    .alignment = 0,
-    .type = FFI_TYPE_STRUCT,
-    .elements = ffi_type_b2Rot_elements
-};
-
-// -----------------------------------------------------
-
-static ffi_type* ffi_type_b2Transform_elements[3] = {
-    &ffi_type_b2Vec2,
-    &ffi_type_b2Rot,
-    NULL
-};
-static ffi_type ffi_type_b2Transform = {
-    .size = 0,
-    .alignment = 0,
-    .type = FFI_TYPE_STRUCT,
-    .elements = ffi_type_b2Transform_elements
-};
-
-// -----------------------------------------------------
 
 /*
  * Class:     org_box2d_jni_system_Upcalls
@@ -325,6 +256,30 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2Transfor
 {
     UNUSED_PARAMS(__env, clazz)
     return (jlong) &ffi_type_b2Transform;
+}
+
+/*
+ * Class:     org_box2d_jni_system_Upcalls
+ * Method:    nffi_type_b2WorldTransform
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2WorldTransform
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong) &ffi_type_b2WorldTransform;
+}
+
+/*
+ * Class:     org_box2d_jni_system_Upcalls
+ * Method:    nffi_type_b2AABB
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2AABB
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong) &ffi_type_b2AABB;
 }
 
 /*

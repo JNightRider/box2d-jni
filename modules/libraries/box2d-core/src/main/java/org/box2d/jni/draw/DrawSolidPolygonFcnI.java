@@ -33,17 +33,16 @@ package org.box2d.jni.draw;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.function.CDrawSolidPolygonFcn;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code void ( *DrawSolidPolygonFcn )( b2Transform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color,
+ * Callback function: {@code void ( *DrawSolidPolygonFcn )( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color,
 								void* context ); }
  *
  * @author wil
@@ -60,9 +59,9 @@ public interface DrawSolidPolygonFcnI extends CallbackI, CDrawSolidPolygonFcn {
         LongBuffer targs = createLongBuffer(6);
         targs.put(ffi_type_b2Transform)
              .put(ffi_type_pointer)
-             .put(ffi_type_uint32)
+             .put(ffi_type_sint32)
              .put(ffi_type_float)
-             .put(ffi_type_uint32)
+             .put(ffi_type_sint32)
              .put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_void;
@@ -85,13 +84,13 @@ public interface DrawSolidPolygonFcnI extends CallbackI, CDrawSolidPolygonFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Transform.malloc(), () -> memGetAddress(args), b2Transform.SIZEOF)
-                        : b2Transform.createSafe(() -> 0),
-                memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
-                memGetFloat(memGetAddress(args + 3 * VarType.Uintptrt.sizeof())),
-                memGetInt(memGetAddress(args + 4 * VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 5 * VarType.Uintptrt.sizeof()))
+                        ? memcpy(b2WorldTransform.nmalloc(), () -> memGetAddress(args), b2WorldTransform.DSIZEOF)
+                        : b2WorldTransform.ncreateSafe(() -> 0),
+                memGetAddress(memGetAddress(args + POINTER_SIZE)),
+                memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
+                memGetFloat(memGetAddress(args + 3 * POINTER_SIZE)),
+                memGetInt(memGetAddress(args + 4 * POINTER_SIZE)),
+                memGetAddress(memGetAddress(args + 5 * POINTER_SIZE))
         );
     }
 }

@@ -30,12 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.draw;
 
-import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code void ( *DrawTransformFcn )( b2Transform transform, void* context ); }
+ * Callback function: {@code void ( *DrawTransformFcn )( b2WorldTransform transform, void* context ); }
  *
  * @author wil
  * @version 1.0.0
@@ -45,7 +45,7 @@ public abstract class DrawTransformFcn extends Callback implements DrawTransform
 
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawTransformFcn#isByValue()
      */
     protected boolean byValue;
 
@@ -120,7 +120,7 @@ public abstract class DrawTransformFcn extends Callback implements DrawTransform
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2Transform transform, long context) {
+        public void invoke(b2WorldTransform transform, long context) {
             delegate.invoke(transform, context);
         }
     }

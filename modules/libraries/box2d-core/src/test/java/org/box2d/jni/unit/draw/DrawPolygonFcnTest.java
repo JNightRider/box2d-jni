@@ -31,12 +31,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.unit.draw;
 
 import org.box2d.jni.b2HexColor;
+import org.box2d.jni.b2Pos;
+import org.box2d.jni.b2Rot;
 import org.box2d.jni.draw.DrawPolygonFcn;
 import org.box2d.jni.draw.DrawPolygonFcnI;
 import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
-import org.box2d.jni.system.JNI;
+import org.box2d.jni.system.JNIB2;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,6 +51,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class DrawPolygonFcnTest {
 
     /**
@@ -55,18 +59,28 @@ public class DrawPolygonFcnTest {
      */
     @Test
     public void callback() {
-        try
-        (
+        try (
                 b2Vec2.Buffer buffer = b2Vec2.malloc(10);
-        ) {
+                b2WorldTransform t = b2WorldTransform.nmalloc().
+                set(b2Pos.nmalloc()
+                           .set(1f, 2f),
+                    b2Rot.malloc()
+                           .set(4f, 5f)
+                )
+            ) {
             buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set((float) -Math.PI, (float) Math.PI));
             buffer.put(b2Vec2.malloc().set(6f, 8f));
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
 
-            DrawPolygonFcnI func = (vertices, vertexCount, color, context) -> {
+            DrawPolygonFcnI func = (transform, vertices, vertexCount, color, context) -> {
                 Debug.apiPrint("DrawPolygonFcnI: vertices=" + vertices + ", vertexCount=" + vertexCount + ", color=" + color);
+
+                Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);
+                Assert.assertEquals(4f, transform.q().c(), 0.0f);
+                Assert.assertEquals(5f, transform.q().s(), 0.0f);
 
                 Assert.assertEquals(b2HexColor.b2_colorBlue, color);
                 Assert.assertEquals(0xFFFFl, context);
@@ -91,11 +105,17 @@ public class DrawPolygonFcnTest {
                 Assert.assertEquals(-34.89f, v.y(), 0.0f);
             };
 
-            JNI.invokePIIPV(buffer.address(), 10, b2HexColor.b2_colorBlue, 0xFFFFl, func.address());
+            JNIB2.invoke_WORLDTRANSFORM_PIIPV(t.address(), buffer.address(), 10, b2HexColor.b2_colorBlue, 0xFFFFl, func.address());
         }
         try
         (
-                b2Vec2.Buffer buffer = b2Vec2.malloc(10);
+            b2Vec2.Buffer buffer = b2Vec2.malloc(10);
+            b2WorldTransform t = b2WorldTransform.nmalloc()
+                    .set(b2Pos.nmalloc()
+                           .set(1f, 2f),
+                         b2Rot.malloc()
+                                .set(4f, 5f)
+                    )
         ) {
             buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set((float) -Math.PI, (float) Math.PI));
@@ -103,8 +123,13 @@ public class DrawPolygonFcnTest {
             buffer.put(b2Vec2.malloc().set(1.4f, -34.89f));
             buffer.flip();
 
-            DrawPolygonFcn func = DrawPolygonFcn.create((vertices, vertexCount, color, context) -> {
+            DrawPolygonFcn func = DrawPolygonFcn.create((transform, vertices, vertexCount, color, context) -> {
                 Debug.apiPrint("DrawPolygonFcn: vertices=" + vertices + ", vertexCount=" + vertexCount + ", color=" + color);
+
+                Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);
+                Assert.assertEquals(4f, transform.q().c(), 0.0f);
+                Assert.assertEquals(5f, transform.q().s(), 0.0f);
 
                 Assert.assertEquals(b2HexColor.b2_colorRed, color);
                 Assert.assertEquals(0xFFFFl, context);
@@ -128,8 +153,9 @@ public class DrawPolygonFcnTest {
                 Assert.assertEquals(1.4f, v.x(), 0.0f);
                 Assert.assertEquals(-34.89f, v.y(), 0.0f);
             });
+            func.byValue(false);
 
-            JNI.invokePIIPV(buffer.address(), 10, b2HexColor.b2_colorRed, 0xFFFFl, func.address());
+            JNIB2.invoke_WORLDTRANSFORM_PIIPV(t.address(), buffer.address(), 10, b2HexColor.b2_colorRed, 0xFFFFl, func.address());
         }
         Callbacks.b2FreeCallbacks();
     }

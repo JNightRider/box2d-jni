@@ -70,8 +70,8 @@ public class DrawStringFcnTest {
                 
                 Assert.assertEquals(0xDDDEEEl, context);
                 
-                Assert.assertEquals(1f, p.x(), 0.0f);
-                Assert.assertEquals(2f, p.y(), 0.0f);
+                Assert.assertEquals(1f, p.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, p.y().floatValue(), 0.0f);
             };
             JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
         }
@@ -87,8 +87,8 @@ public class DrawStringFcnTest {
                 
                 Assert.assertEquals(0xDDDEEEl, context);
                 
-                Assert.assertEquals(1f, p.x(), 0.0f);
-                Assert.assertEquals(2f, p.y(), 0.0f);
+                Assert.assertEquals(1f, p.x().floatValue(), 0.0f);
+                Assert.assertEquals(2f, p.y().floatValue(), 0.0f);
             });
             JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
         }

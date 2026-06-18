@@ -30,11 +30,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Vec2;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.system.Pointer;
 
 /**
- * It represents the read-only function {@code b2DrawPointFcn} (its
+ * It represents the read-only function {@code DrawPointFcn} (its
  * structure cannot be modified, only invoked).
  *
  * @author wil
@@ -46,12 +46,12 @@ public interface CDrawPointFcn extends Pointer {
     /**
      * The function of the callback.
      *
-     * @param p b2Vec2
+     * @param p b2Pos
      * @param size float
      * @param color int
      * @param context long
      */
-    void invoke(b2Vec2 p, float size, int color, long context);
+    void invoke(b2Pos p, float size, int color, long context);
 
     /**
      * {@code true} if the function arguments are passed by value (a copy of the
