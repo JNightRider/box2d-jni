@@ -128,7 +128,7 @@ public final class Library {
             suffix   = ".dll";
             __WIN32__.value = true;
         } else if (osName.startsWith("FreeBSD")) {
-            platform = "macos";
+            platform = "freebsd";
             suffix   = ".dylib";
             __APPLE__.value = true;
         } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
@@ -136,7 +136,7 @@ public final class Library {
             suffix   = ".so";
             __LINUX__.value = true;
         } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
-            platform = "freebsd";
+            platform = "macos";
             suffix   = ".so";
             __FREE_BSD__.value = true;
         } else {
