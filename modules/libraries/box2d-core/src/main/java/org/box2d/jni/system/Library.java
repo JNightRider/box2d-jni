@@ -124,7 +124,7 @@ public final class Library {
         String platform, suffix, prefix = "lib";
         if (osName.startsWith("Windows")) {
             platform = "windows";
-            prefix   = "";
+//            prefix   = "";
             suffix   = ".dll";
             __WIN32__.value = true;
         } else if (osName.startsWith("FreeBSD")) {
