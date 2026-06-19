@@ -292,7 +292,8 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @return b2PosI
      */
     public static b2PosI alloc(AllocFunc alloc) {
-        return new b2PosI(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2PosI(() -> address);
     }
 
     /**

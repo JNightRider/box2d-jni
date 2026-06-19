@@ -472,7 +472,8 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
      * @return b2RayResult
      */
     public static b2WorldDef alloc(AllocFunc alloc) {
-        return new b2WorldDef(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2WorldDef(() -> address);
     }
 
     /**

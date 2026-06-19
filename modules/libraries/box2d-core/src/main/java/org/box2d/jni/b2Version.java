@@ -205,7 +205,8 @@ public class b2Version extends Struct<b2Version> {
      * @return b2Version
      */
     public static b2Version alloc(AllocFunc alloc) {
-        return new b2Version(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Version(() -> address);
     }
 
     /**

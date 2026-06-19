@@ -294,7 +294,8 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @return b2Vec2
      */
     public static b2Vec2 alloc(AllocFunc alloc) {
-        return new b2Vec2(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Vec2(() -> address);
     }
 
     /**

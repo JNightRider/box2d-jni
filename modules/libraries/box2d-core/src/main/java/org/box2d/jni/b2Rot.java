@@ -187,7 +187,8 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
      * @return b2Rot
      */
     public static b2Rot alloc(AllocFunc alloc) {
-        return new b2Rot(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Rot(() -> address);
     }
 
     /**

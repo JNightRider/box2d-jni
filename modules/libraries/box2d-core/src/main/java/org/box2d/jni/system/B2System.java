@@ -37,10 +37,12 @@ import java.util.function.Function;
  * @author wil
  * @param <T>
  */
-public final class SystemConfig<T> {
+public final class B2System<T> {
 
-    public static final SystemConfig<Boolean> BOX2D_DOUBLE_PRECISION = new SystemConfig<>("org.box2d.jni.BOX2D_DOUBLE_PRECISION", StateInit.BOOLEAN);
+    public static final B2System<Boolean> BOX2D_DOUBLE_PRECISION = new B2System<>("org.box2d.jni.BOX2D_DOUBLE_PRECISION", StateInit.BOOLEAN);
 
+    public static final B2System<Integer> STACK_SIZE = new B2System<>("org.box2d.jni.STACK_SIZE", StateInit.INT);
+    
     private interface StateInit<T> extends Function<String, T> {
 
         StateInit<Boolean> BOOLEAN = property -> {
@@ -57,7 +59,7 @@ public final class SystemConfig<T> {
 
     private volatile T state;
 
-    SystemConfig(String property, StateInit<? extends T> init) {
+    B2System(String property, StateInit<? extends T> init) {
         this.property = property;
         this.state = init.apply(property);
     }

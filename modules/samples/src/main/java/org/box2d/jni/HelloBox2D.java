@@ -31,12 +31,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import org.box2d.jni.system.Callbacks;
+import org.box2d.jni.system.ArenaAlloc;
+
 import static org.box2d.jni.b2BodyType.*;
 
 import static org.box2d.jni.include.Box2d.*;
 import static org.box2d.jni.include.Collision.*;
 import static org.box2d.jni.include.MathFunctions.*;
 import static org.box2d.jni.include.Types.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 
 /**
  * This is a good example of how to get up and running with Box2D - <b>HelloBox2D</b>.
@@ -84,11 +87,13 @@ public class HelloBox2D {
         int subStepCount = 4;
 
         for (int i = 0; i < 90; ++i) {
-            b2World_Step(worldId, timeStep, subStepCount);
-            b2Pos position = b2Body_GetPosition(bodyId, b2Pos.nmalloc());
-            b2Rot rotation = b2Body_GetRotation(bodyId, b2Rot.malloc());
+            try (ArenaAlloc arena = allocPush()) {
+                b2World_Step(worldId, timeStep, subStepCount);
+                b2Pos position = b2Body_GetPosition(bodyId, b2Pos.nalloc(arena::ncalloc));
+                b2Rot rotation = b2Body_GetRotation(bodyId, b2Rot.alloc(arena::ncalloc));
 
-            System.out.printf("%4.2f %4.2f %4.2f\n", position.x(), position.y(), b2Rot_GetAngle(rotation));
+                System.out.printf("%4.2f %4.2f %4.2f\n", position.x(), position.y(), b2Rot_GetAngle(rotation));
+            }
         }
 
         b2DestroyWorld(worldId);

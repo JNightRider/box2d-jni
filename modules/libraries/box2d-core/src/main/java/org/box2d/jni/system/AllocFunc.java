@@ -27,15 +27,27 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.system;
 
 /**
+ * An interface responsible for preparing memory through a provider or native
+ * Arena.
  *
  * @author wil
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @FunctionalInterface
 public interface AllocFunc {
-    
-    long alloc(int alignment, int sizeof, long num);
+
+    /**
+     * Reserve memory according to the needs of the data structure.
+     *
+     * @param alignment int
+     * @param num int
+     * @param size int
+     * @return long
+     */
+    long alloc(int alignment, int num, int size);
 }
