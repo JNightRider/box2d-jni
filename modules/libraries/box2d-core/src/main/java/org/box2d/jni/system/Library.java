@@ -121,7 +121,7 @@ public final class Library {
         
         boolean is64Bit = osArch.contains("64") || osArch.startsWith("armv8");
 
-        String platform, suffix, prefix = "lib";
+        String platform, suffix;
         if (osName.startsWith("Windows")) {
             platform = "windows";
             suffix   = ".dll";
@@ -159,8 +159,10 @@ public final class Library {
             hardware = is64Bit ? "x64" : "x86";
         }
         
+        String precision = SystemConfig.BOX2D_DOUBLE_PRECISION.get(false) ? "_Dp" : "_Sp";
+        
         String tmpdir  = System.getProperty("java.io.tmpdir");
-        String namebin = prefix + name + suffix;
+        String namebin = "lib" + name + precision + suffix;
         
         String libpath =  '/' + module.replace('.', '/') 
                         + '/' + platform + '/' 

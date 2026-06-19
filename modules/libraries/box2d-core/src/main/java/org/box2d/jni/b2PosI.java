@@ -76,14 +76,32 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
         ALIGNOF = layout.getAlignment();
     }
 
+    /**
+     * Generates a reference to the given pointer.
+     *
+     * @param ptr A reference pointer.
+     */
     public b2PosI(Pointer ptr) {
         super(ptr);
     }
 
+    /**
+     * Create a new pointer to the object using its memory address.
+     *
+     * @param address A virtual memory address
+     */
     public b2PosI(long address) {
         super(address);
     }
 
+    /**
+     * This structure is for internal buffer use.
+     *
+     * @param address A virtual memory address
+     * @param factor boolean
+     *
+     * @see Struct#Struct(long, boolean)
+     */
     protected b2PosI(long address, boolean factor) {
         super(address, factor);
     }
@@ -98,8 +116,25 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      */
     @Override
     public b2PosI set(
-        Double x,
-        Double y
+        Number x,
+        Number y
+    ) {
+        x(x.doubleValue());
+        y(y.doubleValue());
+        return this;
+    }
+    
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param x the valur {@code x}
+     * @param y the valur {@code y}
+     *
+     * @return b2PosI
+     */
+    public b2PosI set(
+        double x,
+        double y
     ) {
         x(x);
         y(y);
@@ -121,6 +156,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      */
     @Override
     public b2PosI x(Double value) { nx(address(), value); return this; }
+    public b2PosI x(double value) { nx(address(), value); return this; }
     /**
      * Set the value of property {@code y}
      *
@@ -129,6 +165,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      */
     @Override
     public b2PosI y(Double value) { ny(address(), value); return this; }
+    public b2PosI y(double value) { ny(address(), value); return this; }
     
     /*(non-Javadoc)
      */

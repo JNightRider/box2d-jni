@@ -45,6 +45,8 @@ nbbuild/
 
 ### box2d ###
 modules/libraries/box2d-bindings/c/build/
+modules/libraries/box2d-bindings/c/build-Dp/
+modules/libraries/box2d-bindings/c/build-Sp/
 modules/libraries/box2d-bindings/c/extern/
 
 ### box2d-jni ###

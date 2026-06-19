@@ -72,8 +72,8 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      * @return b2Pos
      */
     SELF set(
-        X x,
-        Y y
+        Number x,
+        Number y
     );
 
     /**

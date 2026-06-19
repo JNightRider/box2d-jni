@@ -75,7 +75,7 @@ public final class MathFunctions {
     public static final b2Mat22 b2Mat22_zero = b2Mat22.malloc();
 
     /** Native bindings: {@code static const b2Pos b2Pos_zero = { 0.0f, 0.0f };} */
-    public static final b2Pos b2Pos_zero = b2Pos.nmalloc().set( 0.0f, 0.0f );
+    public static final b2Pos b2Pos_zero = b2Pos.nmalloc().set( 0.0, 0.0f );
     /** Native bindings: {@code static const b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };} */
     public static final b2WorldTransform b2WorldTransform_identity = b2WorldTransform.nmalloc();
 

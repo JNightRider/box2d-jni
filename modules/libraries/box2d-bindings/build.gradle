@@ -8,6 +8,11 @@ def osArch = System.getProperty("os.arch")
 def is64Bit = osArch.contains("64") || osArch.startsWith("armv8")
 def osName = System.getProperty("os.name")
 
+def nativeVariants = [
+    [name: 'Sp', precision: 'OFF'],
+    [name: 'Dp', precision: 'ON']
+]
+
 tasks.withType(JavaCompile).configureEach {
     dependsOn('buildJNI')
 }
@@ -50,33 +55,42 @@ tasks.register('nativesJar', Jar) {
     def outDir = new File(rootDir, 'lib');
     destinationDirectory.set(outDir)
 
-    def dir = layout.projectDirectory.file('c/build/natives')
-    from(dir.asFile) {
-        into 'org/box2d/jni/natives/' + current + '/' + platform
-        include '**/*.so', '**/*.dll', '**/*.dylib'
+    nativeVariants.each { variant ->
+        def dir = layout.projectDirectory.file("c/build-${variant.name}/natives")
+        from(dir.asFile) {
+            into 'org/box2d/jni/natives/' + current + '/' + platform
+            include '**/*.so', '**/*.dll', '**/*.dylib'
+        }
     }
 }
 
-tasks.register('configureCMake', Exec) {
-    workingDir layout.projectDirectory.file('c').asFile
-    commandLine(
-            'cmake',
-            '-S', '.',
-            '-B', 'build',
-            '-DCMAKE_BUILD_TYPE=Release',
-            '-DCMAKE_C_FLAGS=-Wno-format-truncation'
-    )
+nativeVariants.each { variant ->
+    tasks.register("configureCMake${variant.name}", Exec) {
+        workingDir layout.projectDirectory.file('c').asFile
+        commandLine(
+                'cmake',
+                '-S', '.',
+                '-B', "build-${variant.name}",
+                '-DCMAKE_BUILD_TYPE=Release',
+                '-DCMAKE_C_FLAGS=-Wno-format-truncation',
+                "-DBOX2D_DOUBLE_PRECISION=${variant.precision}",
+                "-DBINDINGS_SUFFIX=_${variant.name}"
+        )
+    }
 }
 
-tasks.register('buildCMake', Exec) {
-    dependsOn ('configureCMake')
+nativeVariants.each { variant ->
 
-    workingDir layout.projectDirectory.file('c').asFile
-    commandLine(
-            'cmake',
-            '--build', 'build',
-            '--config', 'Release'
-    )
+    tasks.register("buildCMake${variant.name}", Exec) {
+        dependsOn("configureCMake${variant.name}")
+
+        workingDir layout.projectDirectory.file('c').asFile
+        commandLine(
+                'cmake',
+                '--build', "build-${variant.name}",
+                '--config', 'Release'
+        )
+    }
 }
 
 // Register tasks to download ZIP archives:
@@ -103,17 +117,28 @@ tasks.register('unpackBox2dSource', Copy) {
 }
 
 // build JNI and CMake
-buildCMake.mustRunAfter configureCMake
-configureCMake.mustRunAfter unpackBox2dSource
+
 unpackBox2dSource.mustRunAfter downloadBox2dZip
-nativesJar.mustRunAfter buildCMake
+nativeVariants.each { variant ->
+    tasks.named("configureCMake${variant.name}") {
+        mustRunAfter unpackBox2dSource
+    }
+    tasks.named("buildCMake${variant.name}") {
+        mustRunAfter "configureCMake${variant.name}"
+    }
+    nativesJar.mustRunAfter "buildCMake${variant.name}"
+}
 
 tasks.register('buildJNI') {
-    dependsOn 'downloadBox2dZip',
-            'unpackBox2dSource',
-            'configureCMake',
-            'buildCMake',
-            'nativesJar'
+    dependsOn(
+        'downloadBox2dZip',
+        'unpackBox2dSource',
+        'configureCMakeSp',
+        'configureCMakeDp',
+        'buildCMakeSp',
+        'buildCMakeDp',
+        'nativesJar'
+    )
 }
 
 // Register cleanup tasks:
@@ -121,7 +146,8 @@ clean.dependsOn('cleanNative')
 
 tasks.register('cleanNative', Delete) {
     delete(
-        layout.projectDirectory.dir('c/build'),
+        layout.projectDirectory.dir('c/build-Sp'),
+        layout.projectDirectory.dir('c/build-Dp'),
         layout.projectDirectory.dir('c/extern'),
         layout.projectDirectory.dir('c/include/box2d')
     )

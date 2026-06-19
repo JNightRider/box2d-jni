@@ -25,6 +25,10 @@ add_library(box2d-bindings SHARED
     box2d/org_box2d_jni_include_Types.c
 )
 
+set_target_properties(box2d-bindings PROPERTIES
+    OUTPUT_NAME "box2d-bindings${BINDINGS_SUFFIX}"
+)
+
 target_include_directories(box2d-bindings
     PUBLIC
         ${CMAKE_SOURCE_DIR}/include
@@ -36,6 +40,12 @@ target_link_libraries(box2d-bindings
         box2d
         PkgConfig::FFI
 )
+
+if(BOX2D_DOUBLE_PRECISION)
+    target_compile_definitions(box2d-bindings
+        PRIVATE BOX2D_DOUBLE_PRECISION
+    )
+endif()
 
 if(UNIX AND NOT APPLE)
     target_link_libraries(box2d-bindings PRIVATE m)

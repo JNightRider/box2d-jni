@@ -59,7 +59,7 @@ public class HelloBox2D {
         b2WorldId worldId = b2CreateWorld(worldDef, b2WorldId.malloc());
 
         b2BodyDef groundBodyDef = b2DefaultBodyDef(b2BodyDef.malloc());
-        groundBodyDef.position(b2Vec2.malloc().set(0.0f, -10.0f));
+        groundBodyDef.position(b2Pos.nmalloc().set(0.0f, -10.0f));
 
         b2BodyId groundId = b2CreateBody(worldId, groundBodyDef, b2BodyId.malloc());
         b2Polygon groundBox = b2MakeBox(50.0f, 10.0f, b2Polygon.malloc());
@@ -69,7 +69,7 @@ public class HelloBox2D {
 
         b2BodyDef bodyDef = b2DefaultBodyDef(b2BodyDef.malloc());
         bodyDef.type(b2_dynamicBody);
-        bodyDef.position(b2Vec2.malloc().set(0.0f, 4.0f));
+        bodyDef.position(b2Pos.nmalloc().set(0.0f, 4.0f));
         b2BodyId bodyId = b2CreateBody(worldId, bodyDef, b2BodyId.malloc());
 
         b2Polygon dynamicBox = b2MakeBox(1.0f, 1.0f, b2Polygon.malloc());
@@ -87,6 +87,7 @@ public class HelloBox2D {
             b2World_Step(worldId, timeStep, subStepCount);
             b2Pos position = b2Body_GetPosition(bodyId, b2Pos.nmalloc());
             b2Rot rotation = b2Body_GetRotation(bodyId, b2Rot.malloc());
+
             System.out.printf("%4.2f %4.2f %4.2f\n", position.x(), position.y(), b2Rot_GetAngle(rotation));
         }
 

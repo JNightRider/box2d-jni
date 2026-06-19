@@ -119,8 +119,25 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      */
     @Override
     public b2Vec2 set(
-        Float x,
-        Float y
+        Number x,
+        Number y
+    ) {
+        x(x.floatValue());
+        y(y.floatValue());
+        return this;
+    }
+
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param x the valur {@code x}
+     * @param y the valur {@code y}
+     *
+     * @return b2Vec2
+     */
+    public b2Vec2 set(
+        float x,
+        float y
     ) {
         x(x);
         y(y);
@@ -142,6 +159,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      */
     @Override
     public b2Vec2 x(Float value) { nx(address(), value); return this; }
+    public b2Vec2 x(float value) { nx(address(), value); return this; }
     /**
      * Set the value of property {@code y}
      *
@@ -150,6 +168,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      */
     @Override
     public b2Vec2 y(Float value) { ny(address(), value); return this; }
+    public b2Vec2 y(float value) { ny(address(), value); return this; }
     
     /*(non-Javadoc)
      */
