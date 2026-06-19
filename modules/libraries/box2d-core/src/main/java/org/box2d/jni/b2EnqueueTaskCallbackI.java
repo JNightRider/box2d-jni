@@ -56,7 +56,7 @@ public interface b2EnqueueTaskCallbackI extends CallbackI, CEnqueueTaskCallback 
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(3);
+        LongBuffer targs = memCreateLongBuffer(3);
         targs.put(ffi_type_pointer)
              .put(ffi_type_pointer)
              .put(ffi_type_pointer);

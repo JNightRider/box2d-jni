@@ -59,7 +59,7 @@ public interface DrawSolidPolygonFcnI extends CallbackI, CDrawSolidPolygonFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(6);
+        LongBuffer targs = memCreateLongBuffer(6);
         targs.put(ffi_type_b2Transform)
              .put(ffi_type_pointer)
              .put(ffi_type_sint32)

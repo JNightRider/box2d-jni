@@ -53,7 +53,7 @@ public interface b2TreeRayCastCallbackFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(4);
+        LongBuffer targs = memCreateLongBuffer(4);
         targs.put(ffi_type_pointer)
              .put(ffi_type_sint32)
              .put(ffi_type_uint64)

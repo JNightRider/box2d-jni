@@ -36,7 +36,6 @@ import java.util.function.Function;
 import org.box2d.jni.b2Pos;
 import org.box2d.jni.function.CDrawLineFcn;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
@@ -56,7 +55,7 @@ public interface DrawLineFcnI extends CallbackI, CDrawLineFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(4);
+        LongBuffer targs = memCreateLongBuffer(4);
         targs.put(ffi_type_b2Pos)
              .put(ffi_type_b2Pos)
              .put(ffi_type_sint32)

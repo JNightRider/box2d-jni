@@ -56,7 +56,7 @@ public interface DrawSolidCapsuleFcnI extends CallbackI, CDrawSolidCapsuleFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(5);
+        LongBuffer targs = memCreateLongBuffer(5);
         targs.put(ffi_type_b2Pos)
              .put(ffi_type_b2Pos)
              .put(ffi_type_float)

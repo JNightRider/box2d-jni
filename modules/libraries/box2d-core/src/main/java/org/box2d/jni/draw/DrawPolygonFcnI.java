@@ -58,7 +58,7 @@ public interface DrawPolygonFcnI extends CallbackI, CDrawPolygonFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(5);
+        LongBuffer targs = memCreateLongBuffer(5);
         targs.put(ffi_type_b2WorldTransform)
              .put(ffi_type_pointer)
              .put(ffi_type_sint32)

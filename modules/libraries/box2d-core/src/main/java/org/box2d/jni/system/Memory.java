@@ -78,7 +78,7 @@ public final class Memory {
         return result;
     }
 
-    public static LongBuffer createLongBuffer(int size) {
+    public static LongBuffer memCreateLongBuffer(int size) {
         ByteBuffer byteBuffer = memCreateByteBuffer(size, Long.BYTES);
         LongBuffer result = byteBuffer.asLongBuffer();
 

@@ -57,7 +57,7 @@ public interface DrawSolidCircleFcnI extends CallbackI, CDrawSolidCircleFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(5);
+        LongBuffer targs = memCreateLongBuffer(5);
         targs.put(ffi_type_b2WorldTransform)
              .put(ffi_type_b2Vec2)
              .put(ffi_type_float)

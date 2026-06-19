@@ -53,7 +53,7 @@ public interface b2TaskCallbackI extends CallbackI, CTaskCallback {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(1);
+        LongBuffer targs = memCreateLongBuffer(1);
         targs.put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_void;

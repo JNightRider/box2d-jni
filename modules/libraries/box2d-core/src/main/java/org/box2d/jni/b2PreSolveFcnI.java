@@ -55,7 +55,7 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(5);
+        LongBuffer targs = memCreateLongBuffer(5);
         targs.put(ffi_type_b2ShapeId)
              .put(ffi_type_b2ShapeId)
              .put(ffi_type_b2Pos)

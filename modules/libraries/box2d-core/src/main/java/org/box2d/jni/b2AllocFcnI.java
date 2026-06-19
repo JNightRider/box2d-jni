@@ -53,7 +53,7 @@ public interface b2AllocFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(2);
+        LongBuffer targs = memCreateLongBuffer(2);
         targs.put(ffi_type_size_t)
              .put(ffi_type_sint32);
         targs.flip();

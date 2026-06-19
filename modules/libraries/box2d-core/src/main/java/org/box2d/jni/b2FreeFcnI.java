@@ -40,7 +40,7 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void b2FreeFcn( void* mem, unsigned int size ); }
+ * Callback function: {@code typedef void b2FreeFcn( void* mem, size_t size ); }
  * 
  * @author wil
  * @version 1.0.0
@@ -53,7 +53,7 @@ public interface b2FreeFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(2);
+        LongBuffer targs = memCreateLongBuffer(2);
         targs.put(ffi_type_pointer)
              .put(ffi_type_size_t);
         targs.flip();

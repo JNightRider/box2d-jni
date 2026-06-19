@@ -54,7 +54,7 @@ public interface b2RestitutionCallbackI extends CallbackI, CRestitutionCallback 
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(4);
+        LongBuffer targs = memCreateLongBuffer(4);
         targs.put(ffi_type_float)
              .put(ffi_type_uint64)
              .put(ffi_type_float)

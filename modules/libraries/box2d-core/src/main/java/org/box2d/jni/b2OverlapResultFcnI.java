@@ -55,7 +55,7 @@ public interface b2OverlapResultFcnI extends CallbackI, COverlapResultFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(2);
+        LongBuffer targs = memCreateLongBuffer(2);
         targs.put(ffi_type_b2ShapeId)
              .put(ffi_type_pointer);
         targs.flip();

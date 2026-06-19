@@ -155,8 +155,16 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @return b2PosI
      */
     @Override
-    public b2PosI x(Double value) { nx(address(), value); return this; }
+    public b2PosI x(Number value) { nx(address(), value.doubleValue()); return this; }
+
+    /**
+     * Set the value of property {@code x}
+     *
+     * @param value The value
+     * @return b2PosI
+     */
     public b2PosI x(double value) { nx(address(), value); return this; }
+
     /**
      * Set the value of property {@code y}
      *
@@ -164,7 +172,14 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @return b2PosI
      */
     @Override
-    public b2PosI y(Double value) { ny(address(), value); return this; }
+    public b2PosI y(Number value) { ny(address(), value.doubleValue()); return this; }
+
+    /**
+     * Set the value of property {@code y}
+     *
+     * @param value The value
+     * @return b2PosI
+     */
     public b2PosI y(double value) { ny(address(), value); return this; }
     
     /*(non-Javadoc)

@@ -52,7 +52,7 @@ public interface b2TreeQueryCallbackFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(3);
+        LongBuffer targs = memCreateLongBuffer(3);
         targs.put(ffi_type_sint32)
              .put(ffi_type_uint64)
              .put(ffi_type_pointer);

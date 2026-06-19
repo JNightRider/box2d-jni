@@ -54,7 +54,7 @@ public interface b2PlaneResultFcnI extends CallbackI, CPlaneResultFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(3);
+        LongBuffer targs = memCreateLongBuffer(3);
         targs.put(ffi_type_b2ShapeId)
              .put(ffi_type_pointer)
              .put(ffi_type_pointer);

@@ -99,7 +99,7 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      *
      * @return b2Pos
      */
-    SELF x(X value);
+    SELF x(Number value);
 
     /**
      * Set the y coordinate.
@@ -108,7 +108,14 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      *
      * @return b2Pos
      */
-    SELF y(Y value);
+    SELF y(Number value);
+
+    /**
+     * Returns {@code sizeof(struct)}.
+     *
+     * @return long
+     */
+    int sizeof();
 
     /**
      * Create a reference to a pointer to access its properties.

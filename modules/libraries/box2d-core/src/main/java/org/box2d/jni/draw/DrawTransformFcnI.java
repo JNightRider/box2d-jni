@@ -58,7 +58,7 @@ public interface DrawTransformFcnI extends CallbackI, CDrawTransformFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(2);
+        LongBuffer targs = memCreateLongBuffer(2);
         targs.put(ffi_type_b2WorldTransform)
              .put(ffi_type_pointer);
         targs.flip();

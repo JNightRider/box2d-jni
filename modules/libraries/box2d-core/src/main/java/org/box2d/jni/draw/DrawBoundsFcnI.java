@@ -57,7 +57,7 @@ public interface DrawBoundsFcnI extends CallbackI, CDrawBoundsFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(3);
+        LongBuffer targs = memCreateLongBuffer(3);
         targs.put(ffi_type_b2AABB)
              .put(ffi_type_sint32)
              .put(ffi_type_pointer);

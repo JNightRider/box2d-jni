@@ -55,7 +55,7 @@ public interface b2CustomFilterFcnI extends CallbackI, CCustomFilterFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(3);
+        LongBuffer targs = memCreateLongBuffer(3);
         targs.put(ffi_type_b2ShapeId)
              .put(ffi_type_b2ShapeId)
              .put(ffi_type_pointer);

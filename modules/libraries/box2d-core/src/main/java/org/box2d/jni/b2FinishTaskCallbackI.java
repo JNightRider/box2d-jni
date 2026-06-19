@@ -54,7 +54,7 @@ public interface b2FinishTaskCallbackI extends CallbackI, CFinishTaskCallback {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = createLongBuffer(2);
+        LongBuffer targs = memCreateLongBuffer(2);
         targs.put(ffi_type_pointer)
              .put(ffi_type_pointer);
         targs.flip();
