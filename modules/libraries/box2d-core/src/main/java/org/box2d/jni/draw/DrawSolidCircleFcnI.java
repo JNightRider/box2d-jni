@@ -32,9 +32,11 @@ package org.box2d.jni.draw;
 
 import java.nio.LongBuffer;
 import java.util.function.Function;
-import org.box2d.jni.b2Vec2;
 
+import org.box2d.jni.b2Transform;
+import org.box2d.jni.b2Vec2;
 import org.box2d.jni.b2WorldTransform;
+import org.box2d.jni.b2WorldTransformI;
 import org.box2d.jni.function.CDrawSolidCircleFcn;
 import org.box2d.jni.system.CallbackI;
 
@@ -80,10 +82,15 @@ public interface DrawSolidCircleFcnI extends CallbackI, CDrawSolidCircleFcn {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
+        b2WorldTransform __arg1 = BOX2D_DOUBLE_PRECISION
+                        ? (isByValue()
+                                ? memcpy(b2WorldTransformI.malloc(), () -> memGetAddress(args), b2WorldTransformI.SIZEOF)
+                                : b2WorldTransformI.createSafe(() -> memGetAddress(args)))
+                        : (isByValue()
+                                ? memcpy(b2Transform.malloc(), () -> memGetAddress(args), b2Transform.SIZEOF)
+                                : b2Transform.createSafe(() -> memGetAddress(args)));
         invoke(
-                isByValue()
-                        ? memcpy(b2WorldTransform.nmalloc(), () -> memGetAddress(args), b2WorldTransform.DSIZEOF)
-                        : b2WorldTransform.ncreateSafe(() -> memGetAddress(args)),
+                __arg1,
                 isByValue()
                         ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args), b2Vec2.SIZEOF)
                         : b2Vec2.createSafe(() -> memGetAddress(args + POINTER_SIZE)),

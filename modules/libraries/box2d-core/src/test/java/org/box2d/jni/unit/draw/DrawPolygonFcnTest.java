@@ -75,7 +75,7 @@ public class DrawPolygonFcnTest {
             buffer.flip();
 
             DrawPolygonFcnI func = (transform, vertices, vertexCount, color, context) -> {
-                Debug.apiPrint("DrawPolygonFcnI: vertices=" + vertices + ", vertexCount=" + vertexCount + ", color=" + color);
+                Debug.apiPrint("DrawPolygonFcnI: transform=" + transform + ", vertices=" + vertices + ", vertexCount=" + vertexCount + ", color=" + color);
 
                 Assert.assertEquals(1f, transform.p().x().floatValue(), 0.0f);
                 Assert.assertEquals(2f, transform.p().y().floatValue(), 0.0f);

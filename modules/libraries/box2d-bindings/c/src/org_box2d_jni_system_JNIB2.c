@@ -234,7 +234,10 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1WORLDTRANSFORM_1P
     (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jint param2, jint param3, jlong param4, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
-    ((void (*) (b2WorldTransform, uintptr_t, uint32_t, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2WorldTransform*)param0, (uintptr_t)param1, (uint32_t)param2, (uint32_t)param3, (uintptr_t)param4);
+    b2WorldTransform* ptr = (b2WorldTransform*)param0;
+    printf(">>>>>>>>>>>>> x=%f, y=%f, c=%f, s=%f, sizeof=%d", ptr->p.x,  ptr->p.y,  ptr->q.c,  ptr->q.s, sizeof(b2WorldTransform));
+
+    ((void (*) (b2WorldTransform, uintptr_t, jint, jint, uintptr_t)) (uintptr_t)__functionAddress) (*(b2WorldTransform*)param0, (uintptr_t)param1, param2, param3, (uintptr_t)param4);
 }
 
 /*
