@@ -35,35 +35,49 @@ endif()
 # Dependencies
 # libffi
 include(ExternalProject)
+set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
 
 if(UNIX AND NOT APPLE)
-    set(LIBFFI_CFLAGS "-fPIC")
+	ExternalProject_Add(libffi_project
+		SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
+
+		CONFIGURE_COMMAND
+			./configure
+			--prefix=${LIBFFI_PREFIX}
+			--disable-shared
+			--enable-static
+			--disable-docs
+			CFLAGS=-fPIC
+
+		BUILD_COMMAND make -j
+		INSTALL_COMMAND make install
+
+		BUILD_BYPRODUCTS
+			${LIBFFI_PREFIX}/lib/libffi.a
+
+		BUILD_IN_SOURCE 1
+	)
 else()
-    set(LIBFFI_CFLAGS "")
+	find_program(BASH_EXECUTABLE bash)
+
+	ExternalProject_Add(libffi_project
+		SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
+
+		CONFIGURE_COMMAND
+			${BASH_EXECUTABLE}  -lc "./configure --prefix=${LIBFFI_PREFIX} --disable-shared --enable-static --disable-docs"
+
+		BUILD_COMMAND
+			${BASH_EXECUTABLE}  -lc "make -j"
+
+		INSTALL_COMMAND
+			${BASH_EXECUTABLE}  -lc "make install"
+
+		BUILD_BYPRODUCTS
+			${LIBFFI_PREFIX}/lib/libffi.a
+
+		BUILD_IN_SOURCE 1
+	)
 endif()
-
-
-
-set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
-ExternalProject_Add(libffi_project
-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
-
-    CONFIGURE_COMMAND
-		CFLAGS=${LIBFFI_CFLAGS}
-        ./configure
-        --prefix=${LIBFFI_PREFIX}
-        --disable-shared
-        --enable-static
-		--disable-docs
-
-    BUILD_COMMAND make -j
-    INSTALL_COMMAND make install
-
-	BUILD_BYPRODUCTS
-        ${LIBFFI_PREFIX}/lib/libffi.a
-
-    BUILD_IN_SOURCE 1
-)
 
 add_library(ffi STATIC IMPORTED GLOBAL)
 set_target_properties(ffi PROPERTIES
