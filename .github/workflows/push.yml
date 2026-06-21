@@ -18,10 +18,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libffi-dev \
-            pkg-config \
-            cmake
-      
+            cmake \
+            autoconf \
+            automake \
+            libtool \
+            texinfo \
+            build-essential
+
       - uses: gradle/actions/setup-gradle@v4
       - name: Verify toolchain
         run: |
@@ -67,10 +70,11 @@ jobs:
           update: true
           path-type: inherit
           install: >
+            base-devel
             mingw-w64-x86_64-toolchain
-            mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-libffi
+            mingw-w64-x86_64-autotools
             mingw-w64-x86_64-pkgconf
+            mingw-w64-x86_64-cmake
 
       - uses: gradle/actions/setup-gradle@v6
 
@@ -119,7 +123,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install libffi pkg-config cmake
+          brew install \
+            autoconf \
+            automake \
+            libtool \
+            texinfo \
+            pkg-config \
+            cmake
 
       - uses: gradle/actions/setup-gradle@v6
 

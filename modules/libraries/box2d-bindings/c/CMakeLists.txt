@@ -19,13 +19,6 @@ set(BINDINGS_SUFFIX "" CACHE STRING "Native library suffix")
 # Configure JNI headers
 find_package(JNI REQUIRED)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(FFI REQUIRED IMPORTED_TARGET libffi)
-
-if(NOT JNI_FOUND)
-    message(FATAL_ERROR "No JNI found, please configure your JAVA_HOME")
-endif()
-
 # Box2D configuration for JNI
 set(BOX2D_SAMPLES OFF CACHE BOOL "" FORCE)
 set(BOX2D_BENCHMARKS OFF CACHE BOOL "" FORCE)
@@ -39,7 +32,41 @@ if(NOT DEFINED BOX2D_DOUBLE_PRECISION)
     set(BOX2D_DOUBLE_PRECISION OFF CACHE BOOL "" FORCE)
 endif()
 
-# Dependencies - Box2D
+# Dependencies
+# libffi
+include(ExternalProject)
+
+if(UNIX AND NOT APPLE)
+    set(LIBFFI_CFLAGS "-fPIC")
+else()
+    set(LIBFFI_CFLAGS "")
+endif()
+
+set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
+ExternalProject_Add(libffi_project
+    SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
+
+    CONFIGURE_COMMAND
+        ./configure
+        --prefix=${LIBFFI_PREFIX}
+        --disable-shared
+        --enable-static
+		CFLAGS=${LIBFFI_CFLAGS}
+
+    BUILD_COMMAND make -j
+    INSTALL_COMMAND make install
+
+    BUILD_IN_SOURCE 1
+)
+
+add_library(ffi STATIC IMPORTED GLOBAL)
+set_target_properties(ffi PROPERTIES
+    IMPORTED_LOCATION
+        ${LIBFFI_PREFIX}/lib/libffi.a
+)
+add_dependencies(ffi libffi_project)
+
+# box2d
 add_subdirectory(extern/box2d)
 
 # Modules

@@ -43,9 +43,11 @@ import org.box2d.jni.b2Vec2;
 import org.box2d.jni.b2WorldTransform;
 
 import org.box2d.jni.readonly.ConstB2Vec2;
+import org.box2d.jni.system.ArenaAlloc;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 
 /**
  * Vector math types and functions
@@ -75,37 +77,24 @@ public final class MathFunctions {
     public static final b2Mat22 b2Mat22_zero = b2Mat22.malloc();
 
     /** Native bindings: {@code static const b2Pos b2Pos_zero = { 0.0f, 0.0f };} */
-    public static final b2Pos b2Pos_zero = b2Pos.nmalloc().set( 0.0, 0.0f );
+    public static final b2Pos b2Pos_zero = b2Pos.nmalloc().set( 0.0f, 0.0f );
     /** Native bindings: {@code static const b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };} */
     public static final b2WorldTransform b2WorldTransform_identity = b2WorldTransform.nmalloc();
 
     static {
-        try
-        (
-            b2Vec2 vtmp = b2Vec2.malloc();
-            b2Rot rtmp = b2Rot.malloc()
-        ) {
-            vtmp.set(0.0f, 0.0f);
-            rtmp.set(1.0f, 0.0f);
-            b2Transform_identity.set(vtmp, rtmp);
-        }
-        try
-        (
-            b2Vec2 vtmp0 = b2Vec2.malloc();
-            b2Vec2 vtmp1 = b2Vec2.malloc()
-        ) {
-            vtmp0.set(0.0f, 0.0f);
-            vtmp1.set(0.0f, 0.0f);
-            b2Mat22_zero.set(vtmp0, vtmp1);
-        }
-        try
-        (
-            b2Pos vtmp = b2Pos.nmalloc();
-            b2Rot rtmp = b2Rot.malloc()
-        ) {
-            vtmp.set(0.0f, 0.0f);
-            rtmp.set(1.0f, 0.0f);
-            b2WorldTransform_identity.set(vtmp, rtmp);
+        try (ArenaAlloc arena = allocPush()) {
+            b2Transform_identity.set(
+                b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f),
+                b2Rot.alloc(arena::ncalloc).set(1.0f, 0.0f)
+            );
+            b2Mat22_zero.set(
+                b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f),
+                b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f)
+            );
+            b2WorldTransform_identity.set(
+                b2Pos.nalloc(arena::ncalloc).set(0.0f, 0.0f),
+                b2Rot.alloc(arena::ncalloc).set(1.0f, 0.0f)
+            );
         }
     }
 

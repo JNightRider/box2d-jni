@@ -66,6 +66,11 @@ tasks.register('nativesJar', Jar) {
 
 nativeVariants.each { variant ->
     tasks.register("configureCMake${variant.name}", Exec) {
+        dependsOn(
+            'unpackBox2dSource',
+            'unpackLibffiSource'
+        )
+
         workingDir layout.projectDirectory.file('c').asFile
         commandLine(
                 'cmake',
@@ -94,26 +99,48 @@ nativeVariants.each { variant ->
 }
 
 // Register tasks to download ZIP archives:
-def box2dTag = findProperty('box2d.source.code')
+def box2dTag = findProperty('box2d.jni.lib.box2d')
+def libffiTag = findProperty('box2d.jni.lib.libffi')
 
 tasks.register('downloadBox2dZip', Download) {
     src "https://github.com/JNightRider/box2d/archive/refs/tags/${box2dTag}.zip"
-    dest file(layout.projectDirectory.file("downloads/${box2dTag}.zip"))
+    dest file(layout.projectDirectory.file("downloads/box2d-${box2dTag}.zip"))
+    overwrite false
+}
+tasks.register('downloadLibffiTarGz', Download) {
+    src "https://github.com/libffi/libffi/releases/download/v${libffiTag}/libffi-${libffiTag}.tar.gz"
+    dest file(layout.projectDirectory.file("downloads/libffi-${libffiTag}.tar.gz"))
     overwrite false
 }
 
 tasks.register('unpackBox2dSource', Copy) {
     dependsOn 'downloadBox2dZip'
     from (zipTree(downloadBox2dZip.dest)) {
-        include(
-                "box2d-${box2dTag}/**",
-        )
+        include("box2d-${box2dTag}/**")
         eachFile { fcd ->
-            fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
+            fcd.relativePath = new RelativePath(
+                true,
+                fcd.relativePath.segments.drop(1)
+            )
         }
         includeEmptyDirs = false
     }
     into layout.projectDirectory.dir('c/extern/box2d')
+}
+
+tasks.register('unpackLibffiSource', Copy) {
+    dependsOn 'downloadLibffiTarGz'
+    from(tarTree(resources.gzip(downloadLibffiTarGz.dest))) {
+        include("libffi-*/**")
+        eachFile { fcd ->
+            fcd.relativePath = new RelativePath(
+                true,
+                fcd.relativePath.segments.drop(1)
+            )
+        }
+        includeEmptyDirs = false
+    }
+    into layout.projectDirectory.dir('c/extern/libffi')
 }
 
 // build JNI and CMake
@@ -132,7 +159,9 @@ nativeVariants.each { variant ->
 tasks.register('buildJNI') {
     dependsOn(
         'downloadBox2dZip',
+        'downloadLibffiTarGz',
         'unpackBox2dSource',
+        'unpackLibffiSource',
         'configureCMakeSp',
         'configureCMakeDp',
         'buildCMakeSp',

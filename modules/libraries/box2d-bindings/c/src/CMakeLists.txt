@@ -31,14 +31,16 @@ set_target_properties(box2d-bindings PROPERTIES
 
 target_include_directories(box2d-bindings
     PUBLIC
+        ${LIBFFI_PREFIX}/include
         ${CMAKE_SOURCE_DIR}/include
     PRIVATE
         ${JNI_INCLUDE_DIRS}
 )
+
 target_link_libraries(box2d-bindings
     PRIVATE
         box2d
-        PkgConfig::FFI
+        ffi
 )
 
 if(BOX2D_DOUBLE_PRECISION)
