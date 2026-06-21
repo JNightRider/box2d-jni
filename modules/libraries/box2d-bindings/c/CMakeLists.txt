@@ -37,7 +37,9 @@ endif()
 include(ExternalProject)
 set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
 
-if(UNIX AND NOT APPLE)
+if(UNIX OR APPLE)
+	message(STATUS "Compiling libffi on Unix")
+
 	ExternalProject_Add(libffi_project
 		SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
 
@@ -57,26 +59,26 @@ if(UNIX AND NOT APPLE)
 
 		BUILD_IN_SOURCE 1
 	)
-else()
-	find_program(BASH_EXECUTABLE bash)
+elseif(MINGW)
+	message(STATUS "Compiling libffi on Windows with MINGW")
 
+	find_program(BASH_EXECUTABLE bash)
 	ExternalProject_Add(libffi_project
 		SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
 
 		CONFIGURE_COMMAND
 			${BASH_EXECUTABLE}  -lc "./configure --prefix=${LIBFFI_PREFIX} --disable-shared --enable-static --disable-docs"
 
-		BUILD_COMMAND
-			${BASH_EXECUTABLE}  -lc "make -j"
-
-		INSTALL_COMMAND
-			${BASH_EXECUTABLE}  -lc "make install"
+		BUILD_COMMAND ${BASH_EXECUTABLE}  -lc "make -j"
+		INSTALL_COMMAND ${BASH_EXECUTABLE}  -lc "make install"
 
 		BUILD_BYPRODUCTS
 			${LIBFFI_PREFIX}/lib/libffi.a
 
 		BUILD_IN_SOURCE 1
 	)
+else()
+	message(FATAL_ERROR "GNU|MINGW tools are required to compile this project.")
 endif()
 
 add_library(ffi STATIC IMPORTED GLOBAL)

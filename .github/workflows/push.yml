@@ -5,53 +5,53 @@ name: CI at GitHub
 on: [push, workflow_dispatch]
 
 jobs:
-#  Java21-Linux:
-#    if: contains(toJson(github.event.commits), '[ci skip] ') == false
-#    runs-on: ubuntu-22.04
-#    steps:
-#      - uses: actions/checkout@v6
-#      - uses: actions/setup-java@v5
-#        with:
-#          distribution: 'zulu'
-#          java-version: 21
-#      - name: Install dependencies
-#        run: |
-#          sudo apt-get update
-#          sudo apt-get install -y \
-#            cmake \
-#            autoconf \
-#            automake \
-#            libtool \
-#            texinfo \
-#            build-essential
-#
-#      - uses: gradle/actions/setup-gradle@v4
-#      - name: Verify toolchain
-#        run: |
-#          java -version
-#          echo "JAVA_HOME=$JAVA_HOME"
-#          gcc --version
-#          cmake --version
-#          pkg-config --modversion libffi
-#      
-#      - name: gradlew build
-#        #if: "!startsWith(github.ref, 'refs/tags/')"
-#        run: |
-#          ./gradlew build \
-#            --console=plain
-#      - name: Upload jars
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: box2d-jni-linux
-#          path: lib/*.jar
-#      - if: failure()
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: test-report
-#          path: |
-#            modules/libraries/box2d-core/build/reports/tests/test
-#          if-no-files-found: ignore
-#          
+  Java21-Linux:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            autoconf \
+            automake \
+            libtool \
+            texinfo \
+            build-essential
+
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify toolchain
+        run: |
+          java -version
+          echo "JAVA_HOME=$JAVA_HOME"
+          gcc --version
+          cmake --version
+          pkg-config --modversion libffi
+      
+      - name: gradlew build
+        #if: "!startsWith(github.ref, 'refs/tags/')"
+        run: |
+          ./gradlew build \
+            --console=plain
+      - name: Upload jars
+        uses: actions/upload-artifact@v7
+        with:
+          name: box2d-jni-linux
+          path: lib/*.jar
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report
+          path: |
+            modules/libraries/box2d-core/build/reports/tests/test
+          if-no-files-found: ignore
+          
   Java21-Windows64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: windows-latest
@@ -109,56 +109,56 @@ jobs:
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
   
-#  Java21-MacOS:
-#    if: contains(toJson(github.event.commits), '[ci skip] ') == false
-#    runs-on: macos-26-intel
-#
-#    steps:
-#      - uses: actions/checkout@v6
-#
-#      - uses: actions/setup-java@v5
-#        with:
-#          distribution: 'zulu'
-#          java-version: 21
-#
-#      - name: Install dependencies
-#        run: |
-#          brew install \
-#            autoconf \
-#            automake \
-#            libtool \
-#            texinfo \
-#            pkg-config \
-#            cmake
-#
-#      - uses: gradle/actions/setup-gradle@v6
-#
-#      - name: Verify toolchain
-#        run: |
-#          java -version
-#          echo "JAVA_HOME=$JAVA_HOME"
-#          clang --version
-#          cmake --version
-#          pkg-config --version
-#          pkg-config --modversion libffi
-#
-#      - name: gradlew build
-#        #if: startsWith(github.ref, 'refs/tags/')
-#        run: |
-#          ./gradlew build \
-#            --console=plain
-#
-#      - name: Upload jars
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: box2d-jni-macos
-#          path: lib/*.jar
-#
-#      - name: Upload test report
-#        if: failure()
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: test-report-macos
-#          path: |
-#            modules/libraries/box2d-core/build/reports/tests/test
-#          if-no-files-found: ignore
+  Java21-MacOS:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    runs-on: macos-26-intel
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+
+      - name: Install dependencies
+        run: |
+          brew install \
+            autoconf \
+            automake \
+            libtool \
+            texinfo \
+            pkg-config \
+            cmake
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Verify toolchain
+        run: |
+          java -version
+          echo "JAVA_HOME=$JAVA_HOME"
+          clang --version
+          cmake --version
+          pkg-config --version
+          pkg-config --modversion libffi
+
+      - name: gradlew build
+        #if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          ./gradlew build \
+            --console=plain
+
+      - name: Upload jars
+        uses: actions/upload-artifact@v7
+        with:
+          name: box2d-jni-macos
+          path: lib/*.jar
+
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-macos
+          path: |
+            modules/libraries/box2d-core/build/reports/tests/test
+          if-no-files-found: ignore
