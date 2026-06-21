@@ -59,6 +59,9 @@ ExternalProject_Add(libffi_project
     BUILD_COMMAND make -j
     INSTALL_COMMAND make install
 
+	BUILD_BYPRODUCTS
+        ${LIBFFI_PREFIX}/lib/libffi.a
+
     BUILD_IN_SOURCE 1
 )
 
