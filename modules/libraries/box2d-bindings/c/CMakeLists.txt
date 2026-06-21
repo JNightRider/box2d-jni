@@ -42,16 +42,19 @@ else()
     set(LIBFFI_CFLAGS "")
 endif()
 
+
+
 set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
 ExternalProject_Add(libffi_project
     SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
 
     CONFIGURE_COMMAND
+		CFLAGS=${LIBFFI_CFLAGS}
         ./configure
         --prefix=${LIBFFI_PREFIX}
         --disable-shared
         --enable-static
-		CFLAGS=${LIBFFI_CFLAGS}
+		--disable-docs
 
     BUILD_COMMAND make -j
     INSTALL_COMMAND make install
