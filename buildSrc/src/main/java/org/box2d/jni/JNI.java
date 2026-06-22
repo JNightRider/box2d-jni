@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import electrostatic4j.snaploader.platform.util.NativeVariant;
+import org.box2d.jni.android.ABI;
 
 /**
  *
@@ -54,6 +55,18 @@ public final class JNI {
         return new Flavor[] {
             Flavor.valueOf(String.valueOf(type))
         };
+    }
+    
+    public static ABI[] makeABI(Object type) {
+        if (type == null) {
+            return ABI.values();
+        }
+        for (var abi : ABI.values()) {
+            if (abi.getName().equals(String.valueOf(type))) {
+                return new ABI[] {abi};
+            }
+        }
+        throw new IllegalStateException("ABI: " + type);
     }
         
     public static String makePathLib() {

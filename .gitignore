@@ -1,6 +1,7 @@
 .gradle
 build/
 lib/
+local.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

@@ -1,4 +1,3 @@
-import electrostatic4j.snaploader.platform.util.NativeVariant
 import static org.box2d.jni.JNI.*
 
 plugins {
@@ -81,8 +80,11 @@ tasks.register('unpackLibffiSource', Copy) {
 }
 
 // build JNI and CMake
-if (NativeVariant.Os.isDesktop()) {
-    apply from: layout.projectDirectory.file("scripts/desktop.gradle")
+
+apply from: layout.projectDirectory.file("scripts/desktop.gradle")
+
+if (findProperty("box2d.jni.android")) {
+    apply from: layout.projectDirectory.file("scripts/android.gradle")
 }
 
 unpackBox2dSource.mustRunAfter downloadBox2dZip
