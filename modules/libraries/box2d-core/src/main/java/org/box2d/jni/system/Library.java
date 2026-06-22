@@ -159,7 +159,7 @@ public final class Library {
             hardware = is64Bit ? "x64" : "x86";
         }
         
-        String precision = B2System.BOX2D_DOUBLE_PRECISION.get(false) ? "_Dp" : "_Sp";
+        String precision = B2System.BOX2D_DOUBLE_PRECISION.get(false) ? "_ReleaseDp" : "_ReleaseSp";
         
         String tmpdir  = System.getProperty("java.io.tmpdir");
         String namebin = "lib" + name + precision + suffix;

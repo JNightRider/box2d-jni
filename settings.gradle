@@ -1,6 +1,25 @@
+// global build settings for the Box2d-JNI Project
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google() // to find plugins released to Google's Maven Repository
+        mavenCentral()
+    }
+}
+
 rootProject.name = 'box2d-jni '
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
 
 include ':modules:libraries:box2d-core'
 include ':modules:libraries:box2d-bindings'
+//include ':modules:libraries:box2d-android'
 
 include ':modules:samples'

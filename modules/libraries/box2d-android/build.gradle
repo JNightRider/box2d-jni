@@ -1,0 +1,33 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+android {
+    namespace "org.box2d.jni"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 33
+        targetSdk = 36
+        versionCode = 1
+
+        externalNativeBuild {
+            cmake {
+                arguments "-DBOX2D_DOUBLE_PRECISION=ON"
+                cppFlags ""
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "${rootDir}/modules/libraries/box2d-bindings/c/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+}

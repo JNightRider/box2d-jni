@@ -1,17 +1,16 @@
+import electrostatic4j.snaploader.platform.util.NativeVariant
+import static org.box2d.jni.JNI.*
+
 plugins {
     alias(libs.plugins.download)
 }
 
 description = 'box2d-jni bindings'
 
-def osArch = System.getProperty("os.arch")
-def is64Bit = osArch.contains("64") || osArch.startsWith("armv8")
-def osName = System.getProperty("os.name")
-
-def nativeVariants = [
-    [name: 'Sp', precision: 'OFF'],
-    [name: 'Dp', precision: 'ON']
-]
+def b2bt        = findProperty('box2d.jni.bt')
+def b2flavor    = findProperty('box2d.jni.flavor')
+def b2box2dTag  = findProperty('box2d.jni.lib.box2d')
+def b2libffiTag = findProperty('box2d.jni.lib.libffi')
 
 tasks.withType(JavaCompile).configureEach {
     dependsOn('buildJNI')
@@ -19,104 +18,42 @@ tasks.withType(JavaCompile).configureEach {
 
 // C/C++ compilation (Box2d| JNI )
 tasks.register('nativesJar', Jar) {
-    def current = null
-    if (osName.startsWith("Windows")) {
-        current = "windows";
-    } else if (osName.startsWith("FreeBSD")) {
-        current = "freebsd";
-    } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
-        current = "linux";
-    } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
-        current = "macos";
-    } else {
-        throw new LinkageError("Unknown platform: " + osName);
-    }
-
-    def platform = null
-    if (osArch.startsWith("arm") || osArch.startsWith("aarch")) {
-        platform = is64Bit ? "arm" : "aarch";
-    } else if (osArch.startsWith("ppc")) {
-        if (!"ppc64le".equals(osArch)) {
-            throw new UnsupportedOperationException("Only PowerPC 64 LE is supported.");
-        }
-        platform = "ppc";
-    } else if (osArch.startsWith("riscv")) {
-        if (!"riscv64".equals(osArch)) {
-            throw new UnsupportedOperationException("Only RISC-V 64 is supported.");
-        }
-        platform = "riscv";
-    } else {
-        platform = is64Bit ? "x64" : "x86";
-    }
+    def lib = makePathLib()
 
     archiveBaseName.set('box2d')
-    archiveClassifier.set("natives-${current}_${platform}")
+    archiveClassifier.set("natives-${lib.substring(1, lib.length()).replace('/', '_')}")
 
     def outDir = new File(rootDir, 'lib');
     destinationDirectory.set(outDir)
 
-    nativeVariants.each { variant ->
-        def dir = layout.projectDirectory.file("c/build-${variant.name}/natives")
-        from(dir.asFile) {
-            into 'org/box2d/jni/natives/' + current + '/' + platform
-            include '**/*.so', '**/*.dll', '**/*.dylib'
+    makeBuildType(b2bt).each { type ->
+        makeFlavor(b2flavor).each { variant ->
+            def dir = layout.projectDirectory.file("c/build-${type.name}${variant.name}/natives")
+            from(dir.asFile) {
+                into "org/box2d/jni/natives${lib}"
+                include '**/*.so', '**/*.dll', '**/*.dylib'
+            }
         }
     }
 }
 
-nativeVariants.each { variant ->
-    tasks.register("configureCMake${variant.name}", Exec) {
-        dependsOn(
-            'unpackBox2dSource',
-            'unpackLibffiSource'
-        )
-
-        workingDir layout.projectDirectory.file('c').asFile
-        commandLine(
-                'cmake',
-                '-S', '.',
-                '-B', "build-${variant.name}",
-                '-DCMAKE_BUILD_TYPE=Release',
-                '-DCMAKE_C_FLAGS=-Wno-format-truncation',
-                "-DBOX2D_DOUBLE_PRECISION=${variant.precision}",
-                "-DBINDINGS_SUFFIX=_${variant.name}"
-        )
-    }
-}
-
-nativeVariants.each { variant ->
-
-    tasks.register("buildCMake${variant.name}", Exec) {
-        dependsOn("configureCMake${variant.name}")
-
-        workingDir layout.projectDirectory.file('c').asFile
-        commandLine(
-                'cmake',
-                '--build', "build-${variant.name}",
-                '--config', 'Release'
-        )
-    }
-}
-
 // Register tasks to download ZIP archives:
-def box2dTag = findProperty('box2d.jni.lib.box2d')
-def libffiTag = findProperty('box2d.jni.lib.libffi')
 
 tasks.register('downloadBox2dZip', Download) {
-    src "https://github.com/JNightRider/box2d/archive/refs/tags/${box2dTag}.zip"
-    dest file(layout.projectDirectory.file("downloads/box2d-${box2dTag}.zip"))
+    src "https://github.com/JNightRider/box2d/archive/refs/tags/${b2box2dTag}.zip"
+    dest file(layout.projectDirectory.file("downloads/box2d-${b2box2dTag}.zip"))
     overwrite false
 }
 tasks.register('downloadLibffiTarGz', Download) {
-    src "https://github.com/libffi/libffi/releases/download/v${libffiTag}/libffi-${libffiTag}.tar.gz"
-    dest file(layout.projectDirectory.file("downloads/libffi-${libffiTag}.tar.gz"))
+    src "https://github.com/libffi/libffi/releases/download/v${b2libffiTag}/libffi-${b2libffiTag}.tar.gz"
+    dest file(layout.projectDirectory.file("downloads/libffi-${b2libffiTag}.tar.gz"))
     overwrite false
 }
 
 tasks.register('unpackBox2dSource', Copy) {
     dependsOn 'downloadBox2dZip'
     from (zipTree(downloadBox2dZip.dest)) {
-        include("box2d-${box2dTag}/**")
+        include("box2d-${b2box2dTag}/**")
         eachFile { fcd ->
             fcd.relativePath = new RelativePath(
                 true,
@@ -144,42 +81,43 @@ tasks.register('unpackLibffiSource', Copy) {
 }
 
 // build JNI and CMake
-
-unpackBox2dSource.mustRunAfter downloadBox2dZip
-nativeVariants.each { variant ->
-    tasks.named("configureCMake${variant.name}") {
-        mustRunAfter unpackBox2dSource
-    }
-    tasks.named("buildCMake${variant.name}") {
-        mustRunAfter "configureCMake${variant.name}"
-    }
-    nativesJar.mustRunAfter "buildCMake${variant.name}"
+if (NativeVariant.Os.isDesktop()) {
+    apply from: layout.projectDirectory.file("scripts/desktop.gradle")
 }
 
+unpackBox2dSource.mustRunAfter downloadBox2dZip
+
 tasks.register('buildJNI') {
-    dependsOn(
+    def deps = [
         'downloadBox2dZip',
         'downloadLibffiTarGz',
         'unpackBox2dSource',
-        'unpackLibffiSource',
-        'configureCMakeSp',
-        'configureCMakeDp',
-        'buildCMakeSp',
-        'buildCMakeDp',
-        'nativesJar'
-    )
+        'unpackLibffiSource'
+    ]
+    makeBuildType(b2bt).each { type ->
+        makeFlavor(b2flavor).each { variant ->
+            deps.add("configureCMake${type.name}${variant.name}")
+            deps.add("buildCMake${type.name}${variant.name}")
+        }
+    }
+    deps.add('nativesJar')
+    dependsOn(deps)
 }
 
 // Register cleanup tasks:
 clean.dependsOn('cleanNative')
 
 tasks.register('cleanNative', Delete) {
-    delete(
-        layout.projectDirectory.dir('c/build-Sp'),
-        layout.projectDirectory.dir('c/build-Dp'),
+    def dir = [
         layout.projectDirectory.dir('c/extern'),
         layout.projectDirectory.dir('c/include/box2d')
-    )
+    ]
+    makeBuildType(b2bt).each { type ->
+        makeFlavor(b2flavor).each { variant ->
+            dir.add(layout.projectDirectory.dir("c/build-${type.name}${variant.name}"))
+        }
+    }
+    delete( dir )
     if (Boolean.valueOf(findProperty('box2d.source.code.autoremove'))) {
         delete layout.projectDirectory.dir('downloads')
     }
