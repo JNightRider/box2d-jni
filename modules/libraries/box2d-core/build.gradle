@@ -26,7 +26,7 @@ dependencies {
 
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
-    testImplementation files(
+    testRuntimeOnly files(
         "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseDp.jar",
         "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseSp.jar"
     )
@@ -57,13 +57,6 @@ tasks.withType(JavaExec).configureEach { // Java runtime options:
 }
 
 // test
-
-tasks.named('compileTestJava') {
-    dependsOn(
-        project(':modules:libraries:box2d-bindings')
-                .tasks.named('nativesJar')
-    )
-}
 
 tasks.withType(Test).configureEach {
     if (enableNativeAccess) {
