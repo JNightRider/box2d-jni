@@ -9,7 +9,7 @@ jsnaploader   = "1.1.1-stable"
 [libraries]
 guava           = { module = "com.google.guava:guava",                  version.ref = "guava"       }
 junit4          = { module = "junit:junit",                             version.ref = "junit4"      }
-jsnaploader     = { module = "io.github.electrostat-lab:jsnaploader",   version.ref="jsnaploader"   }
+jsnaploader     = { module = "io.github.electrostat-lab:jsnaploader",   version.ref = "jsnaploader" }
 
 [bundles]
 

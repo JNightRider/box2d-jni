@@ -98,7 +98,7 @@ buildTypes.each { type ->
                         "-DANDROID_PLATFORM=${androidPlatform}",
                         "-DB2_ENABLE_ASSERT=${type.flag}",
                         "-DBOX2D_DOUBLE_PRECISION=${variant.precision}",
-                        "-DBINDINGS_SUFFIX=-_${type.name}${variant.name}",
+                        "-DBINDINGS_SUFFIX=_${type.name}${variant.name}",
                         "-DANDROID_TOOLCHAIN_BIN=${makeToolchainBin(ndkHome, abi)}",
                         "-DAUTOTOOLS_HOST=${abi.host.name}",
                         "-DCLANG_TRIPLE=${abi.clang.name}",
@@ -120,22 +120,37 @@ buildTypes.each { type ->
 }
 
 // C/C++ compilation (Box2d| JNI )
-tasks.register('nativesJar', Jar) {
-    archiveBaseName.set('box2d')
-    archiveClassifier.set("natives-android")
-
-    def outDir = new File(rootDir, 'lib');
-    destinationDirectory.set(outDir)
-
+tasks.register('nativesJar') {
+    def deps = []
     buildTypes.each { type ->
         flavors.each { variant ->
             android.each { abi ->
+                deps.add("nativesJar${abi.name}${type.name}${variant.name}")
+            }
+        }
+    }
+    dependsOn(deps)
+}
+
+buildTypes.each { type ->
+    flavors.each { variant ->
+        android.each { abi ->
+            tasks.register("nativesJar${abi.name}${type.name}${variant.name}", Jar) {
+                dependsOn("buildCMake${abi.name}${type.name}${variant.name}")
+
+                archiveBaseName.set("box2d-android-natives-${abi.abi}")
+
+                def outDir = new File(rootDir, 'lib');
+                destinationDirectory.set(outDir)
+                archiveClassifier.set("${type.name}${variant.name}")
+
                 def dir = new File(rootDir, "modules/libraries/box2d-bindings/c/build/build-${abi.name}${type.name}${variant.name}/natives")
                 from(dir) {
                     into "org/box2d/jni/natives/${abi.name}"
-                    include '**/*.so', '**/*.dll', '**/*.dylib'
+                    include "**/*${variant.name}.so"
+                    include "**/*${variant.name}.dll"
+                    include "**/*${variant.name}.dylib"
                 }
-
             }
         }
     }

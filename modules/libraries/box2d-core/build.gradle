@@ -13,17 +13,22 @@ def classifier
 if (os.contains("win")) {
     classifier = "windows_x64"
 } else if (os.contains("mac")) {
-    classifier = "macos_x64"
+    classifier = "osx_x64"
 } else {
     classifier = "linux_x64"
 }
 
 
 dependencies {
+    dependencies {
+        implementation "io.github.electrostat-lab:snaploader:1.1.1-stable"
+    }
+
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
-    testRuntimeOnly files(
-        "${rootDir}/lib/box2d-0.1.0-natives-${classifier}.jar"
+    testImplementation files(
+        "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseDp.jar",
+        "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseSp.jar"
     )
     testImplementation(libs.junit4)      // framework for automated testing
 }
@@ -50,6 +55,16 @@ tasks.withType(JavaExec).configureEach { // Java runtime options:
         jvmArgs('--enable-native-access=ALL-UNNAMED') // suppress System::load() warning
     }
 }
+
+// test
+
+tasks.named('compileTestJava') {
+    dependsOn(
+        project(':modules:libraries:box2d-bindings')
+                .tasks.named('nativesJar')
+    )
+}
+
 tasks.withType(Test).configureEach {
     if (enableNativeAccess) {
         jvmArgs('--enable-native-access=ALL-UNNAMED') // suppress System::load() warning

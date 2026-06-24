@@ -19,21 +19,34 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 // C/C++ compilation (Box2d| JNI )
-tasks.register('nativesJar', Jar) {
-    def lib = makePathLib()
-
-    archiveBaseName.set('box2d')
-    archiveClassifier.set("natives-${lib.substring(1, lib.length()).replace('/', '_')}")
-
-    def outDir = new File(rootDir, 'lib');
-    destinationDirectory.set(outDir)
-
+tasks.register('nativesJar') {
+    def deps = []
     buildTypes.each { type ->
         flavors.each { variant ->
+            deps.add("nativesJar${type.name}${variant.name}")
+        }
+    }
+    dependsOn(deps)
+}
+
+buildTypes.each { type ->
+    flavors.each { variant ->
+        tasks.register("nativesJar${type.name}${variant.name}", Jar) {
+            dependsOn("buildCMake${type.name}${variant.name}")
+
+            def lib = makePathLib()
+            archiveBaseName.set("box2d-natives-${lib.substring(1, lib.length()).replace('/', '_')}")
+
+            def outDir = new File(rootDir, 'lib');
+            destinationDirectory.set(outDir)
+            archiveClassifier.set("${type.name}${variant.name}")
+
             def dir = layout.projectDirectory.file("c/build/build-${type.name}${variant.name}/natives")
             from(dir.asFile) {
                 into "org/box2d/jni/natives${lib}"
-                include '**/*.so', '**/*.dll', '**/*.dylib'
+                include "**/*${variant.name}.so"
+                include "**/*${variant.name}.dll"
+                include "**/*${variant.name}.dylib"
             }
         }
     }
@@ -121,9 +134,6 @@ buildTypes.each { type ->
         }
         tasks.named("buildCMake${type.name}${variant.name}") {
             mustRunAfter "configureCMake${type.name}${variant.name}"
-        }
-        tasks.named("nativesJar") {
-            mustRunAfter "buildCMake${type.name}${variant.name}"
         }
     }
 }
