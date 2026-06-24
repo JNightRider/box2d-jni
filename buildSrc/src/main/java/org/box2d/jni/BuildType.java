@@ -35,8 +35,8 @@ package org.box2d.jni;
  * @author wil
  */
 public enum BuildType {
-    Debug("Debug", ""),   // for development, debugging, and functional testing
-    Release("Release", ""); // for performance testing and production
+    Debug("Debug", "ON"),   // for development, debugging, and functional testing
+    Release("Release", "OFF"); // for performance testing and production
     
     private final String name;
     private final String flag;

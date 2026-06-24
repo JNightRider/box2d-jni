@@ -34,12 +34,32 @@ package org.box2d.jni.android;
  *
  * @author wil
  */
-public enum ABI {
-    arm64_v8a(Host.aarch64_linux_android, "arm64-v8a", "Android_ARM7"),
-    armeabi_v7a(Host.arm_linux_androideabi, "armeabi-v7a", "Android_ARM7"),
-    x86(Host.i686_linux_android, "x86", "Android_X86"),
-    x86_64(Host.x86_64_linux_android, "x86_64", "Android_X86_64");
-    
+public enum AndroidAbi {
+    arm64_v8a(
+        Host.aarch64_linux_android,
+        Clang.aarch64_linux_android,
+        "arm64-v8a",
+        "Android_ARM8"
+    ),
+    armeabi_v7a(
+        Host.arm_linux_androideabi,
+        Clang.armv7a_linux_androideabi,
+        "armeabi-v7a",
+        "Android_ARM7"
+    ),
+    x86(
+        Host.i686_linux_android,
+        Clang.i686_linux_android,
+        "x86",
+        "Android_X86"
+    ),
+    x86_64(
+        Host.x86_64_linux_android,
+        Clang.x86_64_linux_android,
+        "x86_64",
+        "Android_X86_64"
+    );
+
     public static enum Host {
         arm_linux_androideabi("arm-linux-androideabi"), // 32-bit ARM
         aarch64_linux_android("aarch64-linux-android"), // 64-bit ARM
@@ -62,12 +82,37 @@ public enum ABI {
         }
     }
     
+    public static enum Clang {
+        armv7a_linux_androideabi("armv7a-linux-androideabi"),
+        aarch64_linux_android("aarch64-linux-android"),
+        i686_linux_android("i686-linux-android"),
+        x86_64_linux_android("x86_64-linux-android");
+        
+        private final String name;
+
+        private Clang(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public String toString() {
+            return "clang=" +  name;
+        }
+    }
+    
     private final Host host;
+    private final Clang clang;
+    
     private final String abi;
     private final String name;
 
-    private ABI(Host host, String abi, String name) {
+    private AndroidAbi(Host host, Clang clang, String abi, String name) {
         this.host = host;
+        this.clang = clang;
         this.abi = abi;
         this.name = name;
     }
@@ -78,6 +123,10 @@ public enum ABI {
 
     public String getName() {
         return name;
+    }
+
+    public Clang getClang() {
+        return clang;
     }
 
     public Host getHost() {

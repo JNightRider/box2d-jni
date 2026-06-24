@@ -20,6 +20,6 @@ dependencyResolutionManagement {
 
 include ':modules:libraries:box2d-core'
 include ':modules:libraries:box2d-bindings'
-//include ':modules:libraries:box2d-android'
+include ':modules:libraries:box2d-android'
 
 include ':modules:samples'

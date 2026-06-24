@@ -29,52 +29,72 @@ if(NOT DEFINED BOX2D_DOUBLE_PRECISION)
     set(BOX2D_DOUBLE_PRECISION OFF CACHE BOOL "" FORCE)
 endif()
 
-#find_library(log-lib log)
+if(TYPE_DEBUG)
+    set(CMAKE_BUILD_TYPE Debug)
+    set(B2_ENABLE_ASSERT ON)
+else()
+    set(CMAKE_BUILD_TYPE Release)
+    set(B2_ENABLE_ASSERT OFF)
+endif()
 
 # Dependencies
 # libffi
 include(ExternalProject)
 set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
 
-# #if(CMAKE_SYSTEM_NAME STREQUAL "Android")
-#     message(STATUS "Compiling libffi on Android")
+if(CMAKE_SYSTEM_NAME STREQUAL "Android")
+    find_library(log-lib log)
 
-#     ExternalProject_Add(libffi_project
-#         SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
-#         CONFIGURE_COMMAND
-#             ./configure
-#             --host=aarch64-linux-android
-#             --prefix=${LIBFFI_PREFIX}
-#             --disable-shared
-#             --enable-static
-#             --disable-docs
+    message(STATUS "Compiling libffi on Android")
+    
+    set(AUTOTOOLS_HOST "" CACHE STRING "Autotools host triplet")
+    set(CLANG_TRIPLE "" CACHE STRING "Clang triple prefix")
+    set(ANDROID_TOOLCHAIN_BIN "" CACHE STRING "toolchain bin")
 
-#         BUILD_COMMAND make -j
-#         INSTALL_COMMAND make install
+    if(NOT ANDROID_TOOLCHAIN_BIN)
+        message(FATAL_ERROR "ANDROID_TOOLCHAIN_BIN not set")
+    endif()
 
-#         BUILD_BYPRODUCTS
-#             ${LIBFFI_PREFIX}/lib/libffi.a
+    if(NOT AUTOTOOLS_HOST)
+        message(FATAL_ERROR "AUTOTOOLS_HOST not set")
+    endif()
 
-#         BUILD_IN_SOURCE 1
-#     )
-# else()
+    if(NOT CLANG_TRIPLE)
+        message(FATAL_ERROR "CLANG_TRIPLE not set")
+    endif()
 
-# Configure JNI headers
-find_package(JNI REQUIRED)
+    set(ANDROID_TOOLCHAIN_BIN
+    ${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin)
 
-if(UNIX OR APPLE)
-    message(STATUS "Compiling libffi on Unix")
+    set(ANDROID_CC
+        ${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_NATIVE_API_LEVEL}-clang)
+
+    set(ANDROID_CXX
+        ${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_NATIVE_API_LEVEL}-clang++)
+
+    message(STATUS "CC=${CMAKE_C_COMPILER}")
+    message(STATUS "SYSROOT=${CMAKE_SYSROOT}")
+    message(STATUS "SYSROOT=${CMAKE_AR}")
+    message(STATUS "ANDROID_TOOLCHAIN_BIN=${ANDROID_TOOLCHAIN_BIN}")
+    message(STATUS "ANDROID_CC=${ANDROID_CC}")
+    message(STATUS "ANDROID_CXX=${ANDROID_CXX}")
 
     ExternalProject_Add(libffi_project
         SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
         CONFIGURE_COMMAND
+            env
+            CC=${ANDROID_CC}
+            CXX=${ANDROID_CXX}
+            AR=${CMAKE_AR}
+            RANLIB=${CMAKE_RANLIB}
             ./configure
+            --host=${AUTOTOOLS_HOST}
             --prefix=${LIBFFI_PREFIX}
             --disable-shared
             --enable-static
             --disable-docs
             CFLAGS=-fPIC
-
+        
         BUILD_COMMAND make -j
         INSTALL_COMMAND make install
 
@@ -83,25 +103,51 @@ if(UNIX OR APPLE)
 
         BUILD_IN_SOURCE 1
     )
-elseif(MINGW)
-    message(STATUS "Compiling libffi on Windows with MINGW")
-
-    find_program(BASH_EXECUTABLE bash)
-    ExternalProject_Add(libffi_project
-        SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
-        CONFIGURE_COMMAND
-            ${BASH_EXECUTABLE}  -lc "./configure --prefix=${LIBFFI_PREFIX} --disable-shared --enable-static --disable-docs"
-
-        BUILD_COMMAND ${BASH_EXECUTABLE}  -lc "make -j"
-        INSTALL_COMMAND ${BASH_EXECUTABLE}  -lc "make install"
-
-        BUILD_BYPRODUCTS
-            ${LIBFFI_PREFIX}/lib/libffi.a
-
-        BUILD_IN_SOURCE 1
-    )
 else()
-    message(FATAL_ERROR "GNU|MINGW tools are required to compile this project.")
+    # Configure JNI headers
+    find_package(JNI REQUIRED)
+
+    if(UNIX OR APPLE)
+        message(STATUS "Compiling libffi on Unix")
+
+        ExternalProject_Add(libffi_project
+            SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
+            CONFIGURE_COMMAND
+                ./configure
+                --prefix=${LIBFFI_PREFIX}
+                --disable-shared
+                --enable-static
+                --disable-docs
+                CFLAGS=-fPIC
+
+            BUILD_COMMAND make -j
+            INSTALL_COMMAND make install
+
+            BUILD_BYPRODUCTS
+                ${LIBFFI_PREFIX}/lib/libffi.a
+
+            BUILD_IN_SOURCE 1
+        )
+    elseif(MINGW)
+        message(STATUS "Compiling libffi on Windows with MINGW")
+
+        find_program(BASH_EXECUTABLE bash)
+        ExternalProject_Add(libffi_project
+            SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
+            CONFIGURE_COMMAND
+                ${BASH_EXECUTABLE}  -lc "./configure --prefix=${LIBFFI_PREFIX} --disable-shared --enable-static --disable-docs"
+
+            BUILD_COMMAND ${BASH_EXECUTABLE}  -lc "make -j"
+            INSTALL_COMMAND ${BASH_EXECUTABLE}  -lc "make install"
+
+            BUILD_BYPRODUCTS
+                ${LIBFFI_PREFIX}/lib/libffi.a
+
+            BUILD_IN_SOURCE 1
+        )
+    else()
+        message(FATAL_ERROR "GNU|MINGW tools are required to compile this project.")
+    endif()
 endif()
 
 add_library(ffi STATIC IMPORTED GLOBAL)

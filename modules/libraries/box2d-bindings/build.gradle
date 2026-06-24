@@ -11,6 +11,9 @@ def b2flavor    = findProperty('box2d.jni.flavor')
 def b2box2dTag  = findProperty('box2d.jni.lib.box2d')
 def b2libffiTag = findProperty('box2d.jni.lib.libffi')
 
+def buildTypes = makeBuildType(b2bt)
+def flavors = makeFlavor(b2flavor)
+
 tasks.withType(JavaCompile).configureEach {
     dependsOn('buildJNI')
 }
@@ -25,9 +28,9 @@ tasks.register('nativesJar', Jar) {
     def outDir = new File(rootDir, 'lib');
     destinationDirectory.set(outDir)
 
-    makeBuildType(b2bt).each { type ->
-        makeFlavor(b2flavor).each { variant ->
-            def dir = layout.projectDirectory.file("c/build-${type.name}${variant.name}/natives")
+    buildTypes.each { type ->
+        flavors.each { variant ->
+            def dir = layout.projectDirectory.file("c/build/build-${type.name}${variant.name}/natives")
             from(dir.asFile) {
                 into "org/box2d/jni/natives${lib}"
                 include '**/*.so', '**/*.dll', '**/*.dylib'
@@ -81,10 +84,48 @@ tasks.register('unpackLibffiSource', Copy) {
 
 // build JNI and CMake
 
-apply from: layout.projectDirectory.file("scripts/desktop.gradle")
+buildTypes.each { type ->
+    flavors.each { variant ->
+        tasks.register("configureCMake${type.name}${variant.name}", Exec) {
+            dependsOn(
+                'unpackBox2dSource',
+                'unpackLibffiSource'
+            )
 
-if (findProperty("box2d.jni.android")) {
-    apply from: layout.projectDirectory.file("scripts/android.gradle")
+            workingDir layout.projectDirectory.file('c').asFile
+            commandLine(
+                    'cmake',
+                    '-S', '.',
+                    '-B', "build/build-${type.name}${variant.name}",
+                    "-DCMAKE_BUILD_TYPE=${type.name}",
+                    '-DCMAKE_C_FLAGS=-Wno-format-truncation',
+                    "-DB2_ENABLE_ASSERT=${type.flag}",
+                    "-DBOX2D_DOUBLE_PRECISION=${variant.precision}",
+                    "-DBINDINGS_SUFFIX=_${type.name}${variant.name}"
+            )
+        }
+
+        tasks.register("buildCMake${type.name}${variant.name}", Exec) {
+            dependsOn("configureCMake${type.name}${variant.name}")
+
+            workingDir layout.projectDirectory.file('c').asFile
+            commandLine(
+                    'cmake',
+                    '--build', "build/build-${type.name}${variant.name}",
+                    '--config', 'Release'
+            )
+        }
+
+        tasks.named("configureCMake${type.name}${variant.name}") {
+            mustRunAfter 'unpackBox2dSource'
+        }
+        tasks.named("buildCMake${type.name}${variant.name}") {
+            mustRunAfter "configureCMake${type.name}${variant.name}"
+        }
+        tasks.named("nativesJar") {
+            mustRunAfter "buildCMake${type.name}${variant.name}"
+        }
+    }
 }
 
 unpackBox2dSource.mustRunAfter downloadBox2dZip
@@ -96,12 +137,18 @@ tasks.register('buildJNI') {
         'unpackBox2dSource',
         'unpackLibffiSource'
     ]
-    makeBuildType(b2bt).each { type ->
-        makeFlavor(b2flavor).each { variant ->
+    buildTypes.each { type ->
+        flavors.each { variant ->
             deps.add("configureCMake${type.name}${variant.name}")
             deps.add("buildCMake${type.name}${variant.name}")
         }
     }
+
+    def android = findProperty("box2d.jni.android")
+    if (android && Boolean.valueOf(android.toString())) {
+        deps.add(':modules:libraries:box2d-android:buildJNI')
+    }
+
     deps.add('nativesJar')
     dependsOn(deps)
 }
@@ -112,13 +159,10 @@ clean.dependsOn('cleanNative')
 tasks.register('cleanNative', Delete) {
     def dir = [
         layout.projectDirectory.dir('c/extern'),
-        layout.projectDirectory.dir('c/include/box2d')
+        layout.projectDirectory.dir('c/include/box2d'),
+        layout.projectDirectory.dir("c/build")
     ]
-    makeBuildType(b2bt).each { type ->
-        makeFlavor(b2flavor).each { variant ->
-            dir.add(layout.projectDirectory.dir("c/build-${type.name}${variant.name}"))
-        }
-    }
+
     delete( dir )
     if (Boolean.valueOf(findProperty('box2d.source.code.autoremove'))) {
         delete layout.projectDirectory.dir('downloads')

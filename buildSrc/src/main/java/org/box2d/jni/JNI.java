@@ -31,7 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import electrostatic4j.snaploader.platform.util.NativeVariant;
-import org.box2d.jni.android.ABI;
+
+import org.box2d.jni.android.AndroidAbi;
 
 /**
  *
@@ -57,16 +58,54 @@ public final class JNI {
         };
     }
     
-    public static ABI[] makeABI(Object type) {
+    public static AndroidAbi[] makeAndroidAbi(Object type) {
         if (type == null) {
-            return ABI.values();
+            return AndroidAbi.values();
         }
-        for (var abi : ABI.values()) {
+        for (var abi : AndroidAbi.values()) {
             if (abi.getName().equals(String.valueOf(type))) {
-                return new ABI[] {abi};
+                return new AndroidAbi[] {
+                    abi
+                };
             }
         }
-        throw new IllegalStateException("ABI: " + type);
+        return AndroidAbi.values();
+    }
+    
+    public static AndroidAbi makeABI(Object name) {
+        if (name == null)
+            return null;
+        
+        for (var abi : AndroidAbi.values()) {
+            if (abi.getName().equals(String.valueOf(name))) {
+                return abi;
+            }
+        }
+        throw new IllegalStateException("ABI: " + name);
+    }
+    
+    public static String makeToolchainBin(Object ndkhome, AndroidAbi abi) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ndkhome)
+          .append("/toolchains/llvm/prebuilt");
+        
+        if (NativeVariant.Os.isWindows())
+        {
+            sb.append("/windows-x86_64");
+        } 
+        else if (NativeVariant.Os.isMac())
+        {
+            if (NativeVariant.Cpu.isARM()) {
+                sb.append("/darwin-arm64");
+            } else {
+                sb.append("/darwin-x86_64");
+            }
+        } else {
+            sb.append("/linux-x86_64");
+        }
+        
+        sb.append("/bin");        
+        return String.valueOf(sb);
     }
         
     public static String makePathLib() {
@@ -81,9 +120,6 @@ public final class JNI {
         } else if (NativeVariant.Os.isWindows()) {
             buffer.append('/')
                   .append("windows");
-        } else if (NativeVariant.Os.isAndroid()) {
-            buffer.append('/')
-                  .append("android");
         } else {
             throw new IllegalStateException("The platform is not supported: " + System.getProperty("os.name"));
         }
