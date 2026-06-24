@@ -46,7 +46,7 @@ public abstract class DrawBoundsFcn extends Callback implements DrawBoundsFcnI {
 
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawBoundsFcn#isByValue()
      */
     protected boolean byValue;
 

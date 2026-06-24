@@ -71,14 +71,14 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
     /**
      * Returns the {@code sizeof} a single element in the buffer.
      *
-     * @return
+     * @return int
      */
     public abstract int sizeof();
 
     /**
      * Returns the buffer's base address. [INTERNAL USE ONLY]
      *
-     * @return
+     * @return long
      */
     @Override
     public long address0() {
@@ -88,7 +88,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
     /**
      * Returns the memory address at the current buffer position.
      *
-     * @return
+     * @return long
      */
     @Override
     public long address() {
@@ -98,8 +98,8 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
     /**
      * Returns the memory address at the specified buffer position.
      *
-     * @param position
-     * @return
+     * @param position int
+     * @return long
      */
     public long address(int position) {
         return address.get() + Integer.toUnsignedLong(position) * sizeof();

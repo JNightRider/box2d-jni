@@ -61,7 +61,7 @@ public abstract class DrawSolidCapsuleFcn extends Callback implements DrawSolidC
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawSolidCapsuleFcn#isByValue()
      *
      * @param byValue boolean
      */

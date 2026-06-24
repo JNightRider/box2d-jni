@@ -31,10 +31,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.system;
 
 /**
- *
+ * Class responsible for providing native methods that reference calls to native
+ * functions or members.
+ * 
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class JNI {
+    
+    static {
+        Library.initialize();
+    }
     
     public static native long invokeJIP(long param0, int param1, long __functionAddress);    
     public static native void invokeJJV(long param0, long param1, long __functionAddress);

@@ -62,7 +62,7 @@ public abstract class DrawSolidPolygonFcn extends Callback implements DrawSolidP
     /**
      * Modify the way arguments are provided for the invoked function.
      * 
-     * @see b2CustomFilterFcnI#isByValue() 
+     * @see DrawSolidPolygonFcn#isByValue() 
      * 
      * @param byValue boolean
      */

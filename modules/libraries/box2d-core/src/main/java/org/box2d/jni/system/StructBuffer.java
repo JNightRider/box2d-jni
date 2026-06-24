@@ -365,7 +365,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
     /**
      * Returns a sequential {@code Stream} with this struct buffer as its
      * source.
-     * @return 
+     * @return Stream
      */
     public Stream<T> stream() {
         return StreamSupport.stream(spliterator(), false);
@@ -373,7 +373,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
 
     /**
      * Returns a parallel {@code Stream} with this struct buffer as its source.
-     * @return 
+     * @return Stream
      */
     public Stream<T> parallelStream() {
         return StreamSupport.stream(spliterator(), true);

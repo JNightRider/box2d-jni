@@ -61,7 +61,7 @@ public abstract class DrawLineFcn extends Callback implements DrawLineFcnI {
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawLineFcn#isByValue()
      *
      * @param byValue boolean
      */

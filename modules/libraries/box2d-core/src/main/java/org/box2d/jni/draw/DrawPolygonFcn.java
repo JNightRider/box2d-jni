@@ -61,7 +61,7 @@ public abstract class DrawPolygonFcn extends Callback implements DrawPolygonFcnI
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawPolygonFcn#isByValue()
      *
      * @param byValue boolean
      */

@@ -31,8 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.system;
 
 /**
+ * An enumerated class that provides the size in bytes of different data types
+ * in C.
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public enum VarType {
     Int8t("byte|int8_t") {

@@ -62,7 +62,7 @@ public abstract class DrawSolidCircleFcn extends Callback implements DrawSolidCi
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawSolidCircleFcn#isByValue()
      *
      * @param byValue boolean
      */

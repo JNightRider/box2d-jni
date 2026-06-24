@@ -61,7 +61,7 @@ public abstract class DrawStringFcn extends Callback implements DrawStringFcnI {
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawStringFcn#isByValue()
      *
      * @param byValue boolean
      */

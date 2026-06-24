@@ -79,7 +79,7 @@ public interface ConstB2BodyDef extends ConstStruct {
     /**
      * The initial angular velocity of the body. Radians per second.
      *
-     * @return
+     * @return float
      */
     float angularVelocity();
 
@@ -159,23 +159,23 @@ public interface ConstB2BodyDef extends ConstStruct {
      * detection against dynamic and kinematic bodies, but not other bullet
      * bodies.
      * <p>
-     * @warning Bullets should be used sparingly. They are not a solution for
-     * general dynamic-versus-dynamic continuous collision. They do not
-     * guarantee accurate collision if both bodies are fast moving because the
-     * bullet does a continuous check after all non-bullet bodies have moved.
-     * You could get unlucky and have the bullet body end a time step very close
-     * to a non-bullet body and the non-bullet body then moves over the bullet
-     * body. In continuous collision, initial overlap is ignored to avoid
-     * freezing bodies in place. I do not recommend using them for game
-     * projectiles if precise collision timing is needed. Instead consider using
-     * a ray or shape cast. You can use a marching ray or shape cast for
-     * projectile that moves over time. If you want a fast moving projectile to
-     * collide with a fast moving target, you need to consider the relative
-     * movement in your ray or shape cast. This is out of the scope of Box2D. So
-     * what are good use cases for bullets? Pinball games or games with dynamic
-     * containers that hold other objects. It should be a use case where it
-     * doesn't break the
+     * Bullets should be used sparingly. They are not a solution for general
+     * dynamic-versus-dynamic continuous collision. They do not guarantee
+     * accurate collision if both bodies are fast moving because the bullet does
+     * a continuous check after all non-bullet bodies have moved. You could get
+     * unlucky and have the bullet body end a time step very close to a
+     * non-bullet body and the non-bullet body then moves over the bullet body.
+     * In continuous collision, initial overlap is ignored to avoid freezing
+     * bodies in place. I do not recommend using them for game projectiles if
+     * precise collision timing is needed. Instead consider using a ray or shape
+     * cast. You can use a marching ray or shape cast for projectile that moves
+     * over time. If you want a fast moving projectile to collide with a fast
+     * moving target, you need to consider the relative movement in your ray or
+     * shape cast. This is out of the scope of Box2D. So what are good use cases
+     * for bullets? Pinball games or games with dynamic containers that hold
+     * other objects. It should be a use case where it doesn't break the
      * </p>
+     *
      * @return boolean
      */
     boolean isBullet();

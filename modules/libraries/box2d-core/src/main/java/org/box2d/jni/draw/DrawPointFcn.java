@@ -61,7 +61,7 @@ public abstract class DrawPointFcn extends Callback implements DrawPointFcnI {
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawPointFcn#isByValue()
      *
      * @param byValue boolean
      */

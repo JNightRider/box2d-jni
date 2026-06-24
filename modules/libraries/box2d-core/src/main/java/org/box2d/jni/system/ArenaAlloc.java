@@ -37,8 +37,15 @@ import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Debug.*;
 
 /**
+ * An off-heap memory stack.
+ *
+ * <p>
+ * This class should be used in a thread-local manner for stack allocations.
+ * </p>
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class ArenaAlloc extends Uintptr implements AutoCloseable {
 

@@ -38,8 +38,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * A small utility for generating logs with a specific format and colors (if
+ * supported).
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class Debug {
 

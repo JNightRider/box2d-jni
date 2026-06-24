@@ -40,8 +40,26 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Pointer.*;
 
 /**
+ * This class manages the callbacks configured for Box2D; it provides mechanisms
+ * to create a closure with the required function characteristics, cache the
+ * reference, and subsequently release it from memory.
+ *
+ * <pre><code>
+ * for:  (int)(*function)( const char*, const char*, int );
+ * 
+ * LongBuffer targs = memCreateLongBuffer(3);
+ * targs.put(ffi_type_pointer)
+ *      .put(ffi_type_pointer)
+ *      .put(ffi_type_sint32);
+ * targs.flip();
+ * long rtype = ffi_type_uint32;
+ *
+ * long __functionAddress = njniCallbackCreate(instance, rtype, targs, 3);
+ * </code></pre>
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class Upcalls {
     static {

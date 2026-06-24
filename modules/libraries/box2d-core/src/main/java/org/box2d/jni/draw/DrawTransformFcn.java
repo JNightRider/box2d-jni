@@ -61,7 +61,7 @@ public abstract class DrawTransformFcn extends Callback implements DrawTransform
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawTransformFcn#isByValue()
      *
      * @param byValue boolean
      */

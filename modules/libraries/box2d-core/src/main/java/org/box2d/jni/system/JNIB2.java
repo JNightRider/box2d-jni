@@ -31,8 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.system;
 
 /**
- *
+ * Class responsible for providing native methods that reference calls to native
+ * functions or members (Box2d).
+ * 
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class JNIB2 {
 

@@ -48,6 +48,12 @@ tasks.withType(JavaCompile).configureEach  {
     options.headerOutputDirectory = outputFile
 }
 
+tasks.withType(Javadoc).configureEach {
+    failOnError = false
+
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
 Boolean enableNativeAccess = JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)
 
 tasks.withType(JavaExec).configureEach { // Java runtime options:

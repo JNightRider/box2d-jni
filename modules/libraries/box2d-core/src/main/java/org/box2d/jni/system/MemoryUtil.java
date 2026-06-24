@@ -42,8 +42,12 @@ import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Pointer.*;
 
 /**
+ * A utility class responsible for manipulating references and managing the
+ * representation of pointers in C and the JVM.
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class MemoryUtil {
     static {

@@ -83,7 +83,7 @@ public interface ConstUintptrBuffer<SELF extends ConstUintptrBuffer<SELF>> exten
     /**
      * Returns the buffer's base address. [INTERNAL USE ONLY]
      *
-     * @return
+     * @return long
      */
     long address0();
 }

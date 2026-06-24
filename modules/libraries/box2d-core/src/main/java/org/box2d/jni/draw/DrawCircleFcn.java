@@ -62,7 +62,7 @@ public abstract class DrawCircleFcn extends Callback implements DrawCircleFcnI {
     /**
      * Modify the way arguments are provided for the invoked function.
      *
-     * @see b2CustomFilterFcnI#isByValue()
+     * @see DrawCircleFcn#isByValue()
      *
      * @param byValue boolean
      */
