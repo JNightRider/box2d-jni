@@ -74,7 +74,7 @@ import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
 
 /**
- * Class that represents the {@code collision.h} header of box2d.
+ * Class that represents the {@code <collision.h>} header of box2d.
  *
  * @author wil
  * @version 1.0.0

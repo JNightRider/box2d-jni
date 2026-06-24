@@ -1,3 +1,5 @@
+import electrostatic4j.snaploader.platform.util.NativeVariant
+
 description = 'box2d-jni core'
 
 jar {
@@ -6,18 +8,19 @@ jar {
     destinationDirectory = file("${rootDir}/lib")
 }
 
-def os = System.getProperty("os.name").toLowerCase()
-def arch = System.getProperty("os.arch").toLowerCase()
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
 
 def classifier
-if (os.contains("win")) {
+if (NativeVariant.Os.isWindows()) {
     classifier = "windows_x64"
-} else if (os.contains("mac")) {
+} else if (NativeVariant.Os.isMac()) {
     classifier = "osx_x64"
 } else {
     classifier = "linux_x64"
 }
-
 
 dependencies {
     dependencies {

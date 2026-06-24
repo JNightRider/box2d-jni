@@ -194,6 +194,18 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
     /**
      * Reserve memory for the new object {@code b2Rot}.
      *
+     * @param alloc arena
+     * @return b2Rot
+     */
+    public static b2Rot malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Rot(() -> ptr);
+    }
+    
+    
+    /**
+     * Reserve memory for the new object {@code b2Rot}.
+     *
      * @return b2Rot
      */
     public static b2Rot malloc() {

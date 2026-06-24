@@ -33,7 +33,7 @@ package org.box2d.jni.unit;
 import org.box2d.jni.b2Rot;
 import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2Vec2;
-import org.box2d.jni.system.Destroyer;
+import org.box2d.jni.system.ArenaAlloc;
 import static org.box2d.jni.system.Pointer.*;
 
 import org.junit.Assert;
@@ -97,40 +97,40 @@ public class b2TransformTest {
         Assert.assertNotEquals(NULL, ptr.address());
         Assert.assertEquals(5, ptr.remaining());
 
-        try (Destroyer.Default destroyer = new Destroyer.Default()) {
+        try (ArenaAlloc alloc = ArenaAlloc.allocPush()) {
             // 1
             ptr.put(
-                destroyer.create(() -> b2Transform.malloc()
+                 b2Transform.malloc(alloc)
                     .p( /* b2Vec2 */
-                        destroyer.create(() -> b2Vec2.malloc()
+                         b2Vec2.malloc(alloc)
                             .x(1f)
                             .y(2f)
-                        )
+                        
                     )
                     .q( /* b2Rot */
-                        destroyer.create(() -> b2Rot.malloc()
+                        b2Rot.malloc(alloc)
                             .c(0.3f)
                             .s(1.5f)
-                        )
+                        
                     )
-                ));
+                );
 
             // 2
             ptr.put(
-                destroyer.create(() -> b2Transform.malloc()
+                b2Transform.malloc(alloc)
                     .p( /* b2Vec2 */
-                        destroyer.create(() -> b2Vec2.malloc()
+                        b2Vec2.malloc(alloc)
                             .x(5.5f)
                             .y(2.5f)
-                        )
+                        
                     )
                     .q( /* b2Rot */
-                        destroyer.create(() -> b2Rot.malloc()
+                        b2Rot.malloc(alloc)
                             .c(3.3f)
                             .s(10.5f)
-                        )
+                        
                     )
-                ));
+                );
         }
 
         ptr.flip();

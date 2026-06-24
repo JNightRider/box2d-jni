@@ -187,7 +187,8 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
      * @return b2AABB
      */
     public static b2AABB alloc(AllocFunc alloc) {
-        return new b2AABB(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2AABB(() -> address);
     }
 
     /**

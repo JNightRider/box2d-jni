@@ -34,7 +34,7 @@ package org.box2d.jni.readonly;
  * Interface that is responsible for representing a native object that is a
  * constant of type <code>Struct</code>. (native type: const struct*|struct[])
  *
- * @param <T>
+ * @param <T> Data type managed by the buffer
  * @param <SELF> type|{@code const void*}
  *
  * @author wil

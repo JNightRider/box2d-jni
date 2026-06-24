@@ -39,9 +39,13 @@ import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Debug.apiLog;
 
 /**
+ * Base class of custom buffers with an API that mirrors {@code java.nio} for convenience.
  *
+ * @param <SELF> The object that implements the buffer
+ * 
  * @author wil
- * @param <SELF>
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Uintptr implements ConstUintptrBuffer<SELF> {
 

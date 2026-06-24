@@ -184,7 +184,8 @@ public class b2Mat22 extends Struct<b2Mat22> {
      * @return b2Mat22
      */
     public static b2Mat22 alloc(AllocFunc alloc) {
-        return new b2Mat22(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Mat22(() -> address);
     }
 
     /**
@@ -194,6 +195,17 @@ public class b2Mat22 extends Struct<b2Mat22> {
      */
     public static b2Mat22 malloc() {
         return new b2Mat22(nmalloc(SIZEOF));
+    }
+    
+    /**
+     * Reserve memory for the new object {@code b2Mat22}.
+     *
+     * @param alloc arena
+     * @return b2Mat22
+     */
+    public static b2Mat22 malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Mat22(() -> ptr);
     }
 
     /**

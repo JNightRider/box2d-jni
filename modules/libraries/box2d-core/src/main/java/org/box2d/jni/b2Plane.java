@@ -172,9 +172,21 @@ public class b2Plane extends Struct<b2Plane> implements ConstB2Plane {
      * @return b2Plane
      */
     public static b2Plane alloc(AllocFunc alloc) {
-        return new b2Plane(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Plane(() -> address);
     }
 
+    /**
+     * Reserve memory for the new object {@code b2Plane}.
+     *
+     * @param alloc arena
+     * @return b2Plane
+     */
+    public static b2Plane malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Plane(() -> ptr);
+    }
+    
     /**
      * Reserve memory for the new object {@code b2Plane}.
      *

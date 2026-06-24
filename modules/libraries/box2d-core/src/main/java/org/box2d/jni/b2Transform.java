@@ -191,9 +191,21 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      * @return b2Transform
      */
     public static b2Transform alloc(AllocFunc alloc) {
-        return new b2Transform(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Transform(() -> address);
     }
 
+    /**
+     * Reserve memory for the new object {@code b2Transform}.
+     *
+     * @param alloc arena
+     * @return b2Transform
+     */
+    public static b2Transform malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Transform(() -> ptr);
+    }
+    
     /**
      * Reserve memory for the new object {@code b2Transform}.
      *

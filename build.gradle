@@ -1,13 +1,12 @@
 allprojects {
 
     group = 'org.box2d.jni'
-    version ='0.1.0'
+    version ='1.0.0'
 }
 
 subprojects {
-    if(! project.name.equals('box2d-android')) {
-        apply plugin: 'java'
-        apply plugin: 'java-library'
-        apply plugin: 'application'
-    }
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'application'
+    apply plugin: 'maven-publish'
 }

@@ -33,8 +33,11 @@ package org.box2d.jni.libc;
 import org.box2d.jni.system.Library;
 
 /**
+ * Implementation of C libraries: {@code <stdlib.h>}
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class LibCStdlib {
     static {

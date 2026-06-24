@@ -36,7 +36,7 @@ import org.box2d.jni.system.Pointer;
 import static org.box2d.jni.include.MathFunctions.*;
 
 /**
- * Class that represents the {@code constants.h} header of box2d.
+ * Class that represents the {@code <constants.h>} header of box2d.
  *
  * @author wil
  * @version 1.0.0

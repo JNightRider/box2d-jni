@@ -50,7 +50,7 @@ import static org.box2d.jni.system.Checks.*;
 import static org.box2d.jni.system.ArenaAlloc.*;
 
 /**
- * Vector math types and functions
+ * Class that represents the {@code <math_functions.h>} header of box2d.
  *
  * @author wil
  * @version 1.0.0

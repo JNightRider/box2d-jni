@@ -34,8 +34,11 @@ import org.box2d.jni.system.Library;
 import org.box2d.jni.system.Pointer;
 
 /**
+ * Implementation of C libraries: {@code <string.h>}
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class LibCString {
     static {

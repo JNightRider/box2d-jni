@@ -40,8 +40,9 @@ import static org.box2d.jni.libc.LibCString.*;
 
 /**
  * Base class of struct custom buffers.
- * @param <T>
- * @param <SELF>
+ *
+ * @param <T> Data type managed by the buffer
+ * @param <SELF> The object that implements the buffer
  * 
  * @author wil
  * @version 1.0.0
