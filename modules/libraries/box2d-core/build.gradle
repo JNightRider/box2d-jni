@@ -28,8 +28,7 @@ javadocJar {
     archiveBaseName.set(baseName)
 }
 
-def releaseJars = fileTree("${rootDir}/lib") {
-    include("${baseName}-*.jar")
+def jars = fileTree("${rootDir}/lib") {
     exclude("*Debug*")
 }
 
@@ -40,11 +39,14 @@ publishing {
             from components.java
             groupId = groupID
 
-            releaseJars.each { jar ->
-                def len = jar.name.length()
-                def clazzifier = jar.name.substring(len - 13, len - 4)
+            jars.each {jar ->
+                def name = jar.name
+                def indexof = name.indexOf(version)
+                def classifierId = name.substring(indexof + version.length() + 1, name.length() - 4)
+
+                println("[maven] classifier: ${classifierId}");
                 artifact(jar) {
-                    classifier = clazzifier
+                    classifier classifierId
                 }
             }
 
@@ -101,6 +103,17 @@ publishMavenPublicationToMavenLocal.doLast {
     println 'installed locally as ' + baseName
 }
 
+// Register publishing tasks:
+
+tasks.register('install') {
+    dependsOn 'publishMavenPublicationToMavenLocal'
+    description = 'Installs the Maven artifacts to the local repository.'
+}
+tasks.register('release') {
+    dependsOn 'publishMavenPublicationToCentralRepository'
+    description = 'Stages the Maven artifacts to the Central Publisher Portal.'
+}
+
 def classifier
 if (NativeVariant.Os.isWindows()) {
     classifier = "windows_x64"
@@ -118,8 +131,8 @@ dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
     testRuntimeOnly files(
-        "${rootDir}/lib/box2d-jni-${classifier}-1.0.0-ReleaseDp.jar",
-        "${rootDir}/lib/box2d-jni-${classifier}-1.0.0-ReleaseSp.jar"
+        "${rootDir}/lib/box2d-jni-${jjVersion}-${classifier}_ReleaseDp.jar",
+        "${rootDir}/lib/box2d-jni-${jjVersion}-${classifier}_ReleaseSp.jar"
     )
     testImplementation(libs.junit4)      // framework for automated testing
 }
