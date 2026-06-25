@@ -35,7 +35,7 @@ buildTypes.each { type ->
             dependsOn("buildCMake${type.name}${variant.name}")
 
             def lib = makePathLib()
-            archiveBaseName.set("box2d-natives-${lib.substring(1, lib.length()).replace('/', '_')}")
+            archiveBaseName.set("${artifact}-${lib.substring(1, lib.length()).replace('/', '_')}")
 
             def outDir = new File(rootDir, 'lib');
             destinationDirectory.set(outDir)

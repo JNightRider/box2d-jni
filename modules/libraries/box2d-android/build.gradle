@@ -82,7 +82,7 @@ buildTypes.each { type ->
                 dependsOn(
                     ':modules:libraries:box2d-bindings:unpackBox2dSource',
                     ':modules:libraries:box2d-bindings:unpackLibffiSource',
-                        ':modules:libraries:box2d-core:classes'
+                    ':modules:libraries:box2d-core:classes'
                 )
 
                 workingDir new File(rootDir.absolutePath, "modules/libraries/box2d-bindings/c")
@@ -138,7 +138,7 @@ buildTypes.each { type ->
             tasks.register("nativesJar${abi.name}${type.name}${variant.name}", Jar) {
                 dependsOn("buildCMake${abi.name}${type.name}${variant.name}")
 
-                archiveBaseName.set("box2d-android-natives-${abi.abi}")
+                archiveBaseName.set("${artifact}-android-${abi.abi}")
 
                 def outDir = new File(rootDir, 'lib');
                 destinationDirectory.set(outDir)

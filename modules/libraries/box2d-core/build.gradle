@@ -2,15 +2,103 @@ import electrostatic4j.snaploader.platform.util.NativeVariant
 
 description = 'box2d-jni core'
 
-jar {
-    archiveBaseName = "box2d"
-    archiveClassifier = "core"
-    destinationDirectory = file("${rootDir}/lib")
+ext {
+    baseName = "${artifact}" // for artifacts
+    groupID = 'io.github.jnightrider'
+    websiteUrl = 'https://github.com/JNightRider/box2d-jni'
 }
 
 java {
     withSourcesJar()
     withJavadocJar()
+}
+jar {
+    archiveBaseName = baseName
+    doLast {
+        println "built using Java ${JavaVersion.current()} (${System.getProperty("java.vendor")})"
+    }
+    manifest {
+        attributes 'Created-By': "${JavaVersion.current()} (${System.getProperty("java.vendor")})"
+    }
+}
+sourcesJar {
+    archiveBaseName.set(baseName)
+}
+javadocJar {
+    archiveBaseName.set(baseName)
+}
+
+def releaseJars = fileTree("${rootDir}/lib") {
+    include("${baseName}-*.jar")
+    exclude("*Debug*")
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = artifact
+            from components.java
+            groupId = groupID
+
+            releaseJars.each { jar ->
+                def len = jar.name.length()
+                def clazzifier = jar.name.substring(len - 13, len - 4)
+                artifact(jar) {
+                    classifier = clazzifier
+                }
+            }
+
+            pom {
+                description = 'an implementation of the Box2D physics engine for Java (JNI)'
+                developers {
+                    developer {
+                        email = 'nightrid34@gmail.com'
+                        id = 'jnightrider'
+                        name = 'wil'
+                    }
+                }
+                inceptionYear = '2026'
+                licenses {
+                    license {
+                        distribution = 'repo'
+                        name = 'BSD-3 License'
+                        url = 'https://opensource.org/license/bsd-3-clause'
+                    }
+                }
+                name = groupID + ':' + artifact
+                scm {
+                    connection = 'scm:git:git://github.com/JNightRider/box2d-jni.git'
+                    developerConnection = 'scm:git:ssh://github.com/JNightRider/box2d-jni.git'
+                    url = websiteUrl + '/tree/master/modules/libraries'
+                }
+                url = websiteUrl
+            }
+            version = jjVersion
+        }
+    }
+
+    repositories {
+        maven { // the staging repo of the Sonatype Central Publisher Portal
+
+            // Staging to the Central Publisher Portal relies on the existence of 2 properties
+            // (centralUsername and centralPassword)
+            // which should be set in the ~/.gradle/gradle.properties file
+            // or by -P options on the command line.
+
+            credentials {
+                username = project.hasProperty('centralUsername') ? centralUsername : 'Unknown user'
+                password = project.hasProperty('centralPassword') ? centralPassword : 'Unknown password'
+            }
+            name = 'Central'
+            url = jjVersion.endsWith("SNAPSHOT")
+                    ? uri("https://repo.miempresa.com/snapshots")
+                    : uri("https://repo.miempresa.com/releases")
+        }
+    }
+}
+publishMavenPublicationToMavenLocal.dependsOn('assemble')
+publishMavenPublicationToMavenLocal.doLast {
+    println 'installed locally as ' + baseName
 }
 
 def classifier
@@ -30,8 +118,8 @@ dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
     testRuntimeOnly files(
-        "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseDp.jar",
-        "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseSp.jar"
+        "${rootDir}/lib/box2d-jni-${classifier}-1.0.0-ReleaseDp.jar",
+        "${rootDir}/lib/box2d-jni-${classifier}-1.0.0-ReleaseSp.jar"
     )
     testImplementation(libs.junit4)      // framework for automated testing
 }

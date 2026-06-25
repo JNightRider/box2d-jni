@@ -63,8 +63,8 @@ dependencies {
     implementation project(":modules:libraries:box2d-core")
     implementation "io.github.electrostat-lab:snaploader:1.1.1-stable"
     runtimeOnly files(
-        "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseDp.jar",
-        "${rootDir}/lib/box2d-natives-${classifier}-0.1.0-ReleaseSp.jar"
+        "${rootDir}/lib/box2d-jni-${classifier}-1.0.0-ReleaseDp.jar",
+        "${rootDir}/lib/box2d-jni-${classifier}-1.0.0-ReleaseSp.jar"
     )
 }
 
