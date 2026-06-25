@@ -1,4 +1,5 @@
 import electrostatic4j.snaploader.platform.util.NativeVariant
+import org.box2d.jni.BuildSrc
 
 description = 'box2d-jni core'
 
@@ -42,11 +43,11 @@ publishing {
             jars.each {jar ->
                 def name = jar.name
                 def indexof = name.indexOf(version)
-                def classifierId = name.substring(indexof + version.length() + 1, name.length() - 4)
+                def classifierIdJar = name.substring(indexof + version.length() + 1, name.length() - 4)
 
-                println("[maven] classifier: ${classifierId}");
+                println("[maven] classifier: ${classifierIdJar}");
                 artifact(jar) {
-                    classifier classifierId
+                    classifier = classifierIdJar
                 }
             }
 
@@ -93,14 +94,34 @@ publishing {
             }
             name = 'Central'
             url = jjVersion.endsWith("SNAPSHOT")
-                    ? uri("https://repo.miempresa.com/snapshots")
-                    : uri("https://repo.miempresa.com/releases")
+                    ? uri("https://central.sonatype.com/repository/maven-snapshots/")
+                    : uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
         }
     }
 }
+
 publishMavenPublicationToMavenLocal.dependsOn('assemble')
 publishMavenPublicationToMavenLocal.doLast {
     println 'installed locally as ' + baseName
+}
+
+// Register tasks to sign artifacts for publication:
+
+// Signing relies on the existence of 2 properties
+// (signingKeyEncoded and signingPassword)
+// which should be set in the ~/.gradle/gradle.properties file
+// or by -P options on the command line.
+
+signing {
+    String signingKey = BuildSrc.decodeBase64(findProperty('signingKeyEncoded'))
+    String signingPassword = findProperty('signingPassword')
+    useInMemoryPgpKeys(signingKey, signingPassword)
+
+    sign configurations.archives
+    sign publishing.publications.maven
+}
+tasks.withType(Sign).configureEach {
+    onlyIf { project.hasProperty('signingKeyEncoded') }
 }
 
 // Register publishing tasks:
@@ -113,6 +134,9 @@ tasks.register('release') {
     dependsOn 'publishMavenPublicationToCentralRepository'
     description = 'Stages the Maven artifacts to the Central Publisher Portal.'
 }
+
+install.mustRunAfter build
+release.mustRunAfter build
 
 def classifier
 if (NativeVariant.Os.isWindows()) {

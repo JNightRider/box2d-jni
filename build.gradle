@@ -1,12 +1,12 @@
 allprojects {
-
     group = 'org.box2d.jni'
     version = "${jjVersion}"
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'java-library'
-    apply plugin: 'application'
-    apply plugin: 'maven-publish'
+    apply plugin: 'java'            // to build JVM
+    apply plugin: 'java-library'    // to build JVM libraries
+    apply plugin: 'application'     // to build JVM applications
+    apply plugin: 'maven-publish'   // to publish artifacts to Maven repositories
+    apply plugin: 'signing'         // to sign artifacts for publication
 }
