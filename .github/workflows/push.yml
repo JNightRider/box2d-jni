@@ -12,8 +12,7 @@ jobs:
       - uses: actions/checkout@v6
       - name: Extract version from tag
         run: |
-          BXO2D_JNIVERSION="${GITHUB_REF_NAME#v}"
-          echo "BXO2D_JNIVERSION=BXO2D_JNIVERSION" >> "$GITHUB_ENV"
+          echo "${GITHUB_REF_NAME#v}"
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
