@@ -15,7 +15,12 @@ def buildTypes = makeBuildType(b2bt)
 def flavors = makeFlavor(b2flavor)
 
 tasks.withType(JavaCompile).configureEach {
-    dependsOn('buildJNI')
+    def desk = findProperty('box2d.jni.desktop')
+    if (desk && Boolean.valueOf(desk.toString())) {
+        dependsOn('buildJNI')
+    } else {
+        println('Skip native compilation for desktops...')
+    }
 }
 
 // C/C++ compilation (Box2d| JNI )
@@ -157,6 +162,8 @@ tasks.register('buildJNI') {
     def android = findProperty("box2d.jni.android")
     if (android && Boolean.valueOf(android.toString())) {
         deps.add(':modules:libraries:box2d-android:buildJNI')
+    } else {
+        println('Skip native compilation for Android...')
     }
 
     deps.add('nativesJar')
