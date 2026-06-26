@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
+      - name: Extract version from tag
+        run: |
+          BXO2D_JNIVERSION="${GITHUB_REF_NAME#v}"
+          echo "BXO2D_JNIVERSION=BXO2D_JNIVERSION" >> "$GITHUB_ENV"
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
