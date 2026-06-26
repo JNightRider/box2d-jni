@@ -210,7 +210,7 @@ jobs:
             -Pbox2d.jni.android=false \
             -Pbox2d.jni.desktop=false \
             install \
-            --console=plain \            
+            --console=plain \
             -PsigningKeyEncoded="${{ secrets.SIGNING_KEY_ENCODED }}" \
             -PsigningPassword="${{ secrets.SIGNING_PASSWORD }}" \
             -PcentralUsername="${{ secrets.CENTRAL_USERNAME }}" \
