@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
-      - name: Extract version from tag
-        run: |
-          echo "${GITHUB_REF_NAME#v}"
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -38,11 +35,11 @@ jobs:
           pkg-config --modversion libffi
       
       - name: gradlew build
-        #if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=true build \
             --console=plain
       - name: Upload jars
+        if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v7
         with:
           name: box2d-jni-linux_x64
@@ -91,13 +88,13 @@ jobs:
           pkg-config --modversion libffi
 
       - name: gradlew build
-        #if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
 
       - name: Upload jars
+        if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v7
         with:
           name: box2d-jni-windows64
@@ -146,12 +143,12 @@ jobs:
           pkg-config --modversion libffi
 
       - name: gradlew build
-        #if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
 
       - name: Upload jars
+        if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v7
         with:
           name: box2d-jni-macos_64
@@ -167,6 +164,7 @@ jobs:
           if-no-files-found: ignore
 
   publish:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
     needs:
       - Java21-Linux64
       - Java21-Windows64
@@ -207,25 +205,14 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
       - name: Publish to Maven Central
-        #if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |          
           ./gradlew \
             -Pbox2d.jni.android=false \
             -Pbox2d.jni.desktop=false \
-            install \
+            release \
             --console=plain \
             -PsigningKeyEncoded="${{ secrets.SIGNING_KEY_ENCODED }}" \
             -PsigningPassword="${{ secrets.SIGNING_PASSWORD }}" \
             -PcentralUsername="${{ secrets.CENTRAL_USERNAME }}" \
             -PcentralPassword="${{ secrets.CENTRAL_PASSWORD }}"
-      - name: Upload test report
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: test-report-publish
-          path: |
-            build/reports/problems/
-          if-no-files-found: ignore
-      - name: Verify installation
-        run: |
-          ls -R ~/.m2/repository/io/github/jnightrider
