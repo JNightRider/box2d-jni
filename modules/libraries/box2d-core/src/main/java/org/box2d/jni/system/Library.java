@@ -135,7 +135,7 @@ public final class Library {
             suffix   = ".so";
             __LINUX__.value = true;
         } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
-            platform = "macos";
+            platform = "osx";
             suffix   = ".dylib";
             __FREE_BSD__.value = true;
         } else {
