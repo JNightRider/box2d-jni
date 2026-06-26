@@ -37,7 +37,7 @@ jobs:
       - name: gradlew build
         #if: "!startsWith(github.ref, 'refs/tags/')"
         run: |
-          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true build \
+          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=true build \
             --console=plain
       - name: Upload jars
         uses: actions/upload-artifact@v7
@@ -91,7 +91,7 @@ jobs:
         #if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
-            ./gradlew -Pbox2d.jni.bt=Release build \
+            ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
 
       - name: Upload jars
@@ -145,7 +145,7 @@ jobs:
       - name: gradlew build
         #if: startsWith(github.ref, 'refs/tags/')
         run: |
-          ./gradlew -Pbox2d.jni.bt=Release build \
+          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
 
       - name: Upload jars
@@ -206,10 +206,8 @@ jobs:
           java-version: 21
 
 
-#      - uses: gradle/actions/setup-gradle@v6
-#
-#
-#      - name: Publish to Maven Central
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Publish to Maven Central
 #        env:
 #          ORG_GRADLE_PROJECT_centralUsername: ${{ secrets.CENTRAL_USERNAME }}
 #          ORG_GRADLE_PROJECT_centralPassword: ${{ secrets.CENTRAL_PASSWORD }}
@@ -217,7 +215,8 @@ jobs:
 #          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 #          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
 #
-#        run: |
-#          ./gradlew \
-#            :modules:libraries:box2d-core:release \
-#            --console=plain
+        run: |
+          ./gradlew \
+            build \
+            -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false \
+            --console=plain
