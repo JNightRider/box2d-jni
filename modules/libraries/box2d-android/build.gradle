@@ -138,11 +138,13 @@ buildTypes.each { type ->
             tasks.register("nativesJar${abi.name}${type.name}${variant.name}", Jar) {
                 dependsOn("buildCMake${abi.name}${type.name}${variant.name}")
 
-                archiveBaseName.set("${artifact}-android")
+                archiveBaseName.set("${artifact}")
 
                 def outDir = new File(rootDir, 'lib');
                 destinationDirectory.set(outDir)
-                archiveClassifier.set("${abi.abi}${type.name}${variant.name}")
+
+                def typeName = type == org.box2d.jni.BuildType.Debug ? type.name : ''
+                archiveClassifier.set("android_${abi.abi}${typeName}${variant.name}")
 
                 def dir = new File(rootDir, "modules/libraries/box2d-bindings/c/build/build-${abi.name}${type.name}${variant.name}/natives")
                 from(dir) {

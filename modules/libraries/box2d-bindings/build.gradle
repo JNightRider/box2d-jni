@@ -44,7 +44,9 @@ buildTypes.each { type ->
 
             def outDir = new File(rootDir, 'lib');
             destinationDirectory.set(outDir)
-            archiveClassifier.set("${lib.substring(1, lib.length()).replace('/', '_')}_${type.name}${variant.name}")
+
+            def typeName = type == org.box2d.jni.BuildType.Debug ? "_${type.name}" : ''
+            archiveClassifier.set("${lib.substring(1, lib.length()).replace('/', '_')}${typeName}${variant.name}")
 
             def dir = layout.projectDirectory.file("c/build/build-${type.name}${variant.name}/natives")
             from(dir.asFile) {
