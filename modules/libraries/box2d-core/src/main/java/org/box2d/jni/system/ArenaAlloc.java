@@ -49,7 +49,7 @@ import static org.box2d.jni.system.Debug.*;
  */
 public final class ArenaAlloc extends Uintptr implements AutoCloseable {
 
-    private static final int DEFAULT_STACK_SIZE = B2System.STACK_SIZE.get(64) * 1024;
+    private static final int DEFAULT_STACK_SIZE = Sys.STACK_SIZE.get(64) * 1024;
     private static final int DEFAULT_STACK_FRAMES = 8;
 
     private static final ThreadLocal<ArenaAlloc> TLS = ThreadLocal.withInitial(ArenaAlloc::create);

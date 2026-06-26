@@ -40,6 +40,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.function.Consumer;
 
 import static org.box2d.jni.system.Debug.*;
+import static org.box2d.jni.system.Sys.*;
 
 /**
  * Initializes the Box2d-JNI shared library and handles loading additional
@@ -50,25 +51,17 @@ import static org.box2d.jni.system.Debug.*;
  * @since 1.0.0
  */
 public final class Library {
-    
-    public static final Define __WIN32__    = new Define(false);
-    public static final Define __LINUX__    = new Define(false);
-    public static final Define __APPLE__    = new Define(false);
-    public static final Define __FREE_BSD__ = new Define(false);
-    
-    private static final String B2JNI_LIB_PATH  = "box2d.jni.path";
-    private static final String B2JNI_LIB_NAME  = "box2d.jni.name";
-    
+
     public static final String JNI_LIBRARY_NAME = "box2d-jni";
-    
+
     static {
-        String libpath = System.getProperty(B2JNI_LIB_PATH),
-               libname = System.getProperty(B2JNI_LIB_NAME);
+        String libpath = Sys.B2JNI_LIB_PATH.get(null),
+               libname = Sys.B2JNI_LIB_NAME.get(null);
 
         apiLog("Initializing box2d-jni v1.0.0");
         
         if (libpath == null && libname == null) {
-            loadSystem("org.box2d.jni.natives", "box2d-bindings");
+            loadSystem("/org/box2d/jni/natives", "box2d-bindings");
         } else {
             if (libpath == null) {
                 System.loadLibrary(libname);
@@ -82,19 +75,7 @@ public final class Library {
             }
         }
     }
-    
-    public static final class Define {
-        private boolean value;
-
-        public Define(boolean value) {
-            this.value = value;
-        }
-
-        public boolean get() {
-            return value;
-        }
-    }
-    
+        
     /** Private constructor for internal use. */
     private Library() {}
 
@@ -116,60 +97,51 @@ public final class Library {
         String name
     ) throws UnsatisfiedLinkError
     {
-        String osArch = System.getProperty("os.arch");
-        String osName = System.getProperty("os.name");
+        Platform platform = Platform.get();
+        Platform.Architecture arch = Platform.getArchitecture();
         
-        boolean is64Bit = osArch.contains("64") || osArch.startsWith("armv8");
+        apiLog("Platform: ");
+        apiLogMore("OS: %c{" + platform.getName() + "}", Color.PURPLE);
+        apiLogMore("ARCH: %c{" + arch.getName() + "}", Color.PURPLE);
+        apiLogMore("VM: %c{" + Platform.getJavaName() + "}", Color.PURPLE);
+        apiLogMore("VM Ver: %c{" + Platform.getJavaVersion() + "}", Color.PURPLE);
+        
+        boolean dprecision = BOX2D_DOUBLE_PRECISION.get(false),
+                ndebug     = BOX2D_NDEBUG.get(false);
+        
+        String precision = dprecision
+                ? "Dp" 
+                : "Sp",
 
-        String platform, suffix;
-        if (osName.startsWith("Windows")) {
-            platform = "windows";
-            suffix   = ".dll";
-            __WIN32__.value = true;
-        } else if (osName.startsWith("FreeBSD")) {
-            platform = "freebsd";
-            suffix   = ".so";
-            __APPLE__.value = true;
-        } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
-            platform = "linux";
-            suffix   = ".so";
-            __LINUX__.value = true;
-        } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
-            platform = "osx";
-            suffix   = ".dylib";
-            __FREE_BSD__.value = true;
-        } else {
-            throw new LinkageError("Unknown platform: " + osName);
+               compilation = ndebug
+                ? "Debug"
+                : "Release";
+        
+        StringBuilder builLibPath = new StringBuilder();
+        builLibPath.append(module)
+                .append('/')
+                .append(platform.getNativePath())
+                .append('/')
+                .append(
+                    platform != Platform.Android 
+                        ? arch.getName() 
+                        : getAndroidArch()
+                );
+        
+        
+        String libname = System.mapLibraryName("box2d-bindings_" + compilation + precision);
+        if (platform == Platform.WINDOWS && !libname.startsWith("lib")) {
+            libname = "lib" + libname;
         }
         
-        String hardware;
-        if (osArch.startsWith("arm") || osArch.startsWith("aarch")) {
-            hardware = is64Bit ? "arm" : "aarch";
-        } else if (osArch.startsWith("ppc")) {
-            if (!"ppc64le".equals(osArch)) {
-                throw new UnsupportedOperationException("Only PowerPC 64 LE is supported.");
-            }
-            hardware = "ppc";
-        } else if (osArch.startsWith("riscv")) {
-            if (!"riscv64".equals(osArch)) {
-                throw new UnsupportedOperationException("Only RISC-V 64 is supported.");
-            }
-            hardware = "riscv";
-        } else {
-            hardware = is64Bit ? "x64" : "x86";
-        }
+        builLibPath.append('/')
+                   .append(libname);
         
-        String precision = B2System.BOX2D_DOUBLE_PRECISION.get(false) ? "_ReleaseDp" : "_ReleaseSp";
+        String libpath = String.valueOf(builLibPath);
         
-        String tmpdir  = System.getProperty("java.io.tmpdir");
-        String namebin = "lib" + name + precision + suffix;
-        
-        String libpath =  '/' + module.replace('.', '/') 
-                        + '/' + platform + '/' 
-                        + hardware       + '/' + 
-                        (namebin);
-        
-        apiLog("locate libpath : " + libpath);
+        apiLog("Library: ");
+        apiLogMore("Jar Path: " + module);
+        apiLogMore("Library Directory: " + libpath);
         
         try (InputStream io = context.getResourceAsStream(libpath)) {
             if (io == null) {
@@ -177,21 +149,34 @@ public final class Library {
                 return;
             }
             
-            Path path = Paths.get(tmpdir).resolve(JNI_LIBRARY_NAME);
+            Path path = Paths.get(
+                System.getProperty("java.io.tmpdir")
+            ).resolve(JNI_LIBRARY_NAME);
 
             if (! Files.exists(path)) {
                 Files.createDirectory(path);
             }
 
-            apiLog("temporary directory created : " + path.toAbsolutePath().toString());
+            apiLogMore("Temporary directory created: %c{" + path.toAbsolutePath().toString() + "}", Color.CYAN);
 
-            Path libbin = path.resolve(namebin);
+            Path libbin = path.resolve(libname);
             Files.copy(io, libbin, StandardCopyOption.REPLACE_EXISTING);
 
-            apiLogMore("libbin: " + libbin.toAbsolutePath().toString());
+            apiLogMore("Extracted library absolute path: %c{" + libbin.toAbsolutePath().toString() + "}", Color.CYAN);
             System.load(libbin.toAbsolutePath().toString());
         } catch (IOException ex) {
             throw new IllegalStateException(ex);
+        }
+    }
+    
+    private static String getAndroidArch() {
+        switch (Platform.getArchitecture()) {
+            case ARM32: return "Android_ARM7";
+            case ARM64: return "Android_ARM8";
+            case X86: return "Android_X86";
+            case X64: return "Android_X86_64";
+            default:
+                throw new AssertionError("arch: " + Platform.getArchitecture());
         }
     }
 }

@@ -41,11 +41,17 @@ import java.util.function.Function;
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class B2System<T> {
+public final class Sys<T> {
 
-    public static final B2System<Boolean> BOX2D_DOUBLE_PRECISION = new B2System<>("org.box2d.jni.BOX2D_DOUBLE_PRECISION", StateInit.BOOLEAN);
+    public static final Sys<String> B2JNI_LIB_PATH = new Sys<>("box2d.jni.path", StateInit.STRING);
+    
+    public static final Sys<String> B2JNI_LIB_NAME = new Sys<>("box2d.jni.name", StateInit.STRING);
+    
+    public static final Sys<Boolean> BOX2D_DOUBLE_PRECISION = new Sys<>("BOX2D_JNI_DOUBLE_PRECISION", StateInit.BOOLEAN);
+    
+    public static final Sys<Boolean> BOX2D_NDEBUG = new Sys<>("BOX2D_JNI_NDEBUG", StateInit.BOOLEAN);
 
-    public static final B2System<Integer> STACK_SIZE = new B2System<>("org.box2d.jni.STACK_SIZE", StateInit.INT);
+    public static final Sys<Integer> STACK_SIZE = new Sys<>("BOX2D_JNI_STACK_SIZE", StateInit.INT);
     
     private interface StateInit<T> extends Function<String, T> {
 
@@ -63,7 +69,7 @@ public final class B2System<T> {
 
     private volatile T state;
 
-    B2System(String property, StateInit<? extends T> init) {
+    Sys(String property, StateInit<? extends T> init) {
         this.property = property;
         this.state = init.apply(property);
     }
@@ -108,7 +114,6 @@ public final class B2System<T> {
         if (state0 == null) {
             state0 = defaultValue;
         }
-
         return state0;
     }
 }

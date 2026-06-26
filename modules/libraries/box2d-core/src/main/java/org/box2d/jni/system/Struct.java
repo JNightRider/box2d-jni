@@ -61,7 +61,7 @@ import static org.box2d.jni.system.Pointer.*;
  */
 public abstract class Struct<SELF extends Struct<SELF>> extends Uintptr implements ConstStruct, AutoCloseable, Pointer {
     
-    protected static final int DEFAULT_PACK_ALIGNMENT = Library.__WIN32__.get()? 8 : 0x4000_0000;
+    protected static final int DEFAULT_PACK_ALIGNMENT = Platform.get() == Platform.WINDOWS ? 8 : 0x4000_0000;
     protected static final int DEFAULT_ALIGN_AS       = 0;
     
     static {
