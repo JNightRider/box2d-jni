@@ -109,7 +109,7 @@ jobs:
 #            modules/libraries/box2d-core/build/reports/tests/test
 #          if-no-files-found: ignore
   
-  Java21-MacOS:
+  Java21-MacOSX64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: macos-26-intel
 

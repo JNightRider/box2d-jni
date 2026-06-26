@@ -133,7 +133,7 @@ public final class JNI {
                   .append("riscv");
         } else if(NativeVariant.Cpu.isX86()) {
             buffer.append('/')
-                  .append("x86");
+                  .append(is64Bit ? "x64" : "x86");
         } else if(NativeVariant.Cpu.isAMD()) {
             buffer.append('/')
                   .append("x64");
