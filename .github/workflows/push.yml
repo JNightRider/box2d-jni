@@ -206,7 +206,7 @@ jobs:
           if-no-files-found: ignore
 
   publish:
-    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    if: startsWith(github.ref, 'refs/tags/')
     needs:
       - Java21-Linux64
       - Java21-Windows64
@@ -247,7 +247,6 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
       - name: Publish to Maven Central
-        if: startsWith(github.ref, 'refs/tags/')
         run: |          
           ./gradlew \
             -Pbox2d.jni.android=false \
