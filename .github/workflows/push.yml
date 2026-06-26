@@ -219,9 +219,9 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: test-report-macos
+          name: test-report-publish
           path: |
-            modules/libraries/box2d-core/build/reports/tests/test
+            build/reports/problems/
           if-no-files-found: ignore
       - name: Verify installation
         run: |
