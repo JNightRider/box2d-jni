@@ -48,12 +48,12 @@ public final class BuildSrc {
      * @param encodedText the text to decode (may be {@code null})
      * @return a String or {@code null}
      */
-    public static String decodeBase64(String encodedText) {
+    public static String decodeBase64(Object encodedText) {
         String result;
         if (encodedText == null) {
             result = null;
         } else {
-            byte[] decoded = Base64.getDecoder().decode(encodedText);
+            byte[] decoded = Base64.getDecoder().decode(String.valueOf(encodedText));
             result = new String(decoded);
         }
 
