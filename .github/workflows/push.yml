@@ -238,6 +238,10 @@ jobs:
           path: lib
 
       # Maven - Publication
+      - name: Verify lib artifacts
+        run: |
+          ls -R lib
+          find lib -type f -name "*.jar"
       - name: Show artifacts
         run: |
           ls -lah lib
