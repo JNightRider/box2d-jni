@@ -9,4 +9,9 @@ subprojects {
     apply plugin: 'application'     // to build JVM applications
     apply plugin: 'maven-publish'   // to publish artifacts to Maven repositories
     apply plugin: 'signing'         // to sign artifacts for publication
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 }

@@ -118,15 +118,16 @@ public final class Library {
                 : "Release";
         
         StringBuilder builLibPath = new StringBuilder();
-        builLibPath.append(module)
-                .append('/')
-                .append(platform.getNativePath())
-                .append('/')
-                .append(
-                    platform != Platform.Android 
-                        ? arch.getName() 
-                        : getAndroidArch()
-                );
+        builLibPath.append(module);
+        if (platform != Platform.Android) {
+            builLibPath.append('/')
+                       .append(platform.getNativePath())
+                       .append('/')
+                       .append(arch.getName());            
+        } else {
+            builLibPath.append('/')
+                       .append(getAndroidArch() );
+        }
         
         
         String libname = System.mapLibraryName("box2d-bindings_" + compilation + precision);

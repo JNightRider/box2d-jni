@@ -58,10 +58,14 @@ public final class Debug {
         WHITE("\u001B[37m", "\u001B[47m"),
         NULL("\u001B[0m", "\u001B[0m");
 
-        private static final BiFunction<String, Color, String> FCOLOR = (text, color) -> color.getColor() + text + NULL.getColor();
-        private static final BiFunction<String, Color, String> FBACKGROUND = (text, color) -> color.getBackground() + text + NULL.getBackground();
+        private static final BiFunction<String, Color, String> FCOLOR = (text, color) -> color == null
+                ? text : color.getColor() + text + NULL.getColor();
+
+        private static final BiFunction<String, Color, String> FBACKGROUND = (text, color) -> color == null
+                ? text : color.getBackground() + text + NULL.getBackground();
 
         private static final Map<String, BiFunction<String, Color, String>> MAP = new HashMap<>();
+        private static final Boolean ANDROIDX = Platform.get() == Platform.Android;
 
         static {
             MAP.put("c", FCOLOR);
@@ -97,7 +101,7 @@ public final class Debug {
 
                 BiFunction<String, Color, String> format = MAP.get(name);
                 if (format != null) {
-                    String chars = format.apply(param, colors[index++]);
+                    String chars = format.apply(param, ANDROIDX ? null : colors[index++]);
                     m.appendReplacement(
                             buffer,
                             Matcher.quoteReplacement(chars)
@@ -112,7 +116,7 @@ public final class Debug {
 
     protected static Boolean DEBUG;
     private static final PrintStream DEBUG_STREAM = System.out;
-
+    
     static {
         DEBUG = true;
     }

@@ -104,39 +104,41 @@ public enum Platform {
     private static final Platform current;
 
     static {
-        String javaVersion = System.getProperty("java.version");
-        Matcher matcher = Pattern
-            .compile("^([1-9][0-9]*)(?:(?:\\.0)*\\.[1-9][0-9]*)*(?:-[a-zA-Z0-9]+)?")
-            .matcher(javaVersion);
-
-        if (!matcher.find()) {
-            if (javaVersion.startsWith("1.")) {
-                if (!javaVersion.startsWith("1.8.")) {
-                    throw new UnsupportedOperationException("JDK 8 or newer is required.");
-                }
-            }
-            throw new IllegalStateException("Failed to parse java.version: " + javaVersion);
-        }
-
-        JAVA_VERSION = Math.max(8, Integer.parseInt(matcher.group(1)));
         JAVA_NAME = System.getProperty("java.vm.name");
-
-        String osName = System.getProperty("os.name");
-      
-        if (osName.startsWith("Windows")) {
-            current = WINDOWS;
-        } else if (osName.startsWith("FreeBSD")) {
-            current = FREEBSD;
-        } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
-            current = LINUX;
-        } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
-            current = MACOSX;
-        } else if (JAVA_NAME.contains("Dalvik")) {
+        if (JAVA_NAME.contains("Dalvik")) {
             current = Android;
-        }else {
-            throw new LinkageError("Unknown platform: " + osName);
+            JAVA_VERSION = 0;
+        } else {
+            String javaVersion = System.getProperty("java.version");
+            Matcher matcher = Pattern
+                .compile("^([1-9][0-9]*)(?:(?:\\.0)*\\.[1-9][0-9]*)*(?:-[a-zA-Z0-9]+)?")
+                .matcher(javaVersion);
+
+            if (!matcher.find()) {
+                if (javaVersion.startsWith("1.")) {
+                    if (!javaVersion.startsWith("1.8.")) {
+                        throw new UnsupportedOperationException("JDK 8 or newer is required.");
+                    }
+                }
+                throw new IllegalStateException("Failed to parse java.version: " + javaVersion);
+            }
+
+            JAVA_VERSION = Math.max(8, Integer.parseInt(matcher.group(1)));
+
+            String osName = System.getProperty("os.name");
+
+            if (osName.startsWith("Windows")) {
+                current = WINDOWS;
+            } else if (osName.startsWith("FreeBSD")) {
+                current = FREEBSD;
+            } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
+                current = LINUX;
+            } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
+                current = MACOSX;
+            } else {
+                throw new LinkageError("Unknown platform: " + osName);
+            }
         }
-        
     }
 
     public static int getJavaVersion() {
