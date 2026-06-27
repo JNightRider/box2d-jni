@@ -120,38 +120,35 @@ buildTypes.each { type ->
 }
 
 // C/C++ compilation (Box2d| JNI )
-tasks.register('nativesJar') {
+
+tasks.register("nativesJar", Zip) {
     def deps = []
     buildTypes.each { type ->
         flavors.each { variant ->
             android.each { abi ->
-                deps.add("nativesJar${abi.name}${type.name}${variant.name}")
+                deps.add("buildCMake${abi.name}${type.name}${variant.name}")
             }
         }
     }
+
     dependsOn(deps)
-}
+    def outDir = new File(rootDir, 'lib');
 
-buildTypes.each { type ->
-    flavors.each { variant ->
-        android.each { abi ->
-            tasks.register("nativesJar${abi.name}${type.name}${variant.name}", Jar) {
-                dependsOn("buildCMake${abi.name}${type.name}${variant.name}")
+    archiveBaseName.set("${artifact}")
+    destinationDirectory.set(outDir)
 
-                archiveBaseName.set("${artifact}")
+    archiveClassifier.set("android")
+    archiveExtension.set('aar')
 
-                def outDir = new File(rootDir, 'lib');
-                destinationDirectory.set(outDir)
-
-                def typeName = type == org.box2d.jni.BuildType.Debug ? type.name : ''
-                archiveClassifier.set("android_${abi.abi}${typeName}${variant.name}")
-
+    from(layout.projectDirectory.file("src/main/AndroidManifest.xml"))
+    buildTypes.each { type ->
+        flavors.each { variant ->
+            android.each { abi ->
                 def dir = new File(rootDir, "modules/libraries/box2d-bindings/c/build/build-${abi.name}${type.name}${variant.name}/natives")
+                println("Include: ${dir}")
                 from(dir) {
-                    into "org/box2d/jni/natives/${abi.name}"
+                    into "jni/${abi.abi}"
                     include "**/*${variant.name}.so"
-                    include "**/*${variant.name}.dll"
-                    include "**/*${variant.name}.dylib"
                 }
             }
         }

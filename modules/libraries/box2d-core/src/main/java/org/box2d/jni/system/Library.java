@@ -61,7 +61,7 @@ public final class Library {
         apiLog("Initializing box2d-jni v1.0.0");
         
         if (libpath == null && libname == null) {
-            loadSystem("/org/box2d/jni/natives", "box2d-bindings");
+            loadSystem("org/box2d/jni/natives", "box2d-bindings");
         } else {
             if (libpath == null) {
                 System.loadLibrary(libname);
@@ -119,14 +119,18 @@ public final class Library {
         
         StringBuilder builLibPath = new StringBuilder();
         builLibPath.append(module);
-        if (platform != Platform.Android) {
+        if (platform == Platform.Android) {
+            try {
+                System.loadLibrary("box2d-bindings_" + compilation + precision);
+                return;
+            } catch (Exception e) {
+                apiErro("The library does not exist on the system: box2d-bindings_" + compilation + precision );
+            }
+        } else {
             builLibPath.append('/')
                        .append(platform.getNativePath())
                        .append('/')
-                       .append(arch.getName());            
-        } else {
-            builLibPath.append('/')
-                       .append(getAndroidArch() );
+                       .append(arch.getName());  
         }
         
         
@@ -144,9 +148,9 @@ public final class Library {
         apiLogMore("Jar Path: " + module);
         apiLogMore("Library Directory: " + libpath);
         
-        try (InputStream io = context.getResourceAsStream(libpath)) {
+        try (InputStream io = context.getClassLoader().getResourceAsStream(libpath)) {
             if (io == null) {
-                apiErro("No existe la biblioteca en el classpath: " + libpath);
+                apiErro("The library does not exist on the classpath: " + libpath);
                 return;
             }
             
@@ -164,20 +168,9 @@ public final class Library {
             Files.copy(io, libbin, StandardCopyOption.REPLACE_EXISTING);
 
             apiLogMore("Extracted library absolute path: %c{" + libbin.toAbsolutePath().toString() + "}", Color.CYAN);
-            System.load(libbin.toAbsolutePath().toString());
+            load.accept(libbin.toAbsolutePath().toString());
         } catch (IOException ex) {
             throw new IllegalStateException(ex);
-        }
-    }
-    
-    private static String getAndroidArch() {
-        switch (Platform.getArchitecture()) {
-            case ARM32: return "Android_ARM7";
-            case ARM64: return "Android_ARM8";
-            case X86: return "Android_X86";
-            case X64: return "Android_X86_64";
-            default:
-                throw new AssertionError("arch: " + Platform.getArchitecture());
         }
     }
 }
