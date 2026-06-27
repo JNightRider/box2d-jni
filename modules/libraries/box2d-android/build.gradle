@@ -140,7 +140,7 @@ tasks.register("nativesJar", Zip) {
     archiveClassifier.set("android")
     archiveExtension.set('aar')
 
-    from(layout.projectDirectory.file("src/main/AndroidManifest.xml"))
+    from(layout.projectDirectory.file('src/main/AndroidManifest.xml'))
     buildTypes.each { type ->
         flavors.each { variant ->
             android.each { abi ->

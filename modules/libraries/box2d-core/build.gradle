@@ -48,6 +48,9 @@ publishing {
                 println("[maven] classifier: ${classifierIdJar}");
                 artifact(jar) {
                     classifier = classifierIdJar
+                    if (name.endsWith(".aar")) {
+                        extension = "aar"
+                    }
                 }
             }
 
@@ -148,8 +151,6 @@ if (NativeVariant.Os.isWindows()) {
 }
 
 dependencies {
-    implementation(libs.jsnaploader)
-
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
     testRuntimeOnly files(

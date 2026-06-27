@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.box2d.jni.natives.android" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.box2d.jni">
+</manifest>
