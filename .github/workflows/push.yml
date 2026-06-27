@@ -77,7 +77,7 @@ jobs:
           pkg-config --modversion libffi
       
       - name: gradlew build
-        #if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=true build \
             --console=plain
@@ -130,7 +130,7 @@ jobs:
           pkg-config --modversion libffi
 
       - name: gradlew build
-        #if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
@@ -185,7 +185,7 @@ jobs:
           pkg-config --modversion libffi
 
       - name: gradlew build
-        #if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
@@ -250,15 +250,15 @@ jobs:
           distribution: zulu
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
-#      - name: Publish to Maven Central
-#        run: |
-#          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false build
-#          ./gradlew \
-#            -Pbox2d.jni.android=false \
-#            -Pbox2d.jni.desktop=false \
-#            release \
-#            --console=plain \
-#            -PsigningKeyEncoded="${{ secrets.SIGNING_KEY_ENCODED }}" \
-#            -PsigningPassword="${{ secrets.SIGNING_PASSWORD }}" \
-#            -PcentralUsername="${{ secrets.CENTRAL_USERNAME }}" \
-#            -PcentralPassword="${{ secrets.CENTRAL_PASSWORD }}"
+      - name: Publish to Maven Central
+        run: |
+          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false build
+          ./gradlew \
+            -Pbox2d.jni.android=false \
+            -Pbox2d.jni.desktop=false \
+            release \
+            --console=plain \
+            -PsigningKeyEncoded="${{ secrets.SIGNING_KEY_ENCODED }}" \
+            -PsigningPassword="${{ secrets.SIGNING_PASSWORD }}" \
+            -PcentralUsername="${{ secrets.CENTRAL_USERNAME }}" \
+            -PcentralPassword="${{ secrets.CENTRAL_PASSWORD }}"
