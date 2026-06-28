@@ -7,8 +7,6 @@ subprojects {
     apply plugin: 'java'            // to build JVM
     apply plugin: 'java-library'    // to build JVM libraries
     apply plugin: 'application'     // to build JVM applications
-    apply plugin: 'maven-publish'   // to publish artifacts to Maven repositories
-    apply plugin: 'signing'         // to sign artifacts for publication
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
