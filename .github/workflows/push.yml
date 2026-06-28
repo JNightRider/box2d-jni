@@ -208,7 +208,7 @@ jobs:
           if-no-files-found: ignore
 
   publish:
-    if: startsWith(github.ref, 'refs/tags/')
+    #if: startsWith(github.ref, 'refs/tags/')
     needs:
       - Java21-Linux64
       - Java21-Windows64
