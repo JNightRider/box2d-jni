@@ -252,7 +252,7 @@ jobs:
           distribution: zulu
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
-      - name: Publish to Maven Central
+      - name: JReleaser config check
         env:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
@@ -260,8 +260,18 @@ jobs:
           JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PASSWORD }}
         run: |
-          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false build \
-            --console=plain
           ./gradlew jreleaserConfig --console=plain
-          ./gradlew publish --console=plain
+
+      - name: Debug artifacts
+        run: |
+          ls -R build
+          ls -R build/publications || true
+          ls -R build/libs || true
+
+      - name: Publish to Maven Central
+        run: |
+          ./gradlew clean publish --console=plain
+
+      - name: Deploy to Maven Central
+        run: |
           ./gradlew jreleaserDeploy --console=plain
