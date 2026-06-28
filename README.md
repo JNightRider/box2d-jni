@@ -20,11 +20,29 @@ Make sure you have the necessary tools and the **libffi** library installed on y
 
 - Java 17 or higher.
 - C17
+- CMake
 
 ### Libraries
 
 - [Box2d](https://box2d.org/)
 - [Libffi](https://sourceware.org/libffi/)
+
+## Supported Platforms
+
+Box2d-JNI has been ported to many different platforms.
+
+At the time of release, the following basic configurations have been
+tested:
+
+| Architecture   | Operating System            | Compiler |
+|----------------|-----------------------------|----------|
+| AArch32(ARM32) | Linux/Android (arm64_v8a)   | Clang    |
+| AArch64(ARM64) | Linux/Android (armeabi_v7a) | Clang    |
+| X86            | Linux/Android (x86)         | Clang    |
+| X86-64         | Linux/Android (x86_64)      | Clang    |
+| X86-64         | Linux                       | GCC      |
+| X86-64         | Windows/MinGW               | GCC      |
+| X86-64         | Mac OSX                     | GCC      |
 
 ## Starting Box2d-JNI
 
