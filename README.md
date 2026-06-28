@@ -1,5 +1,8 @@
 # Box2d JNI
 
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jnightrider/box2d-jni)](https://central.sonatype.com/artifact/io.github.jnightrider/box2d-jni/versions)
+[![License: BSD](https://img.shields.io/badge/License-BSD--3-yel)](https://opensource.org/license/BSD-3-clause)
+
 The Box2d-JNI Project provides JVM bindings for [Box2d](https://github.com/erincatto/box2d) Physics Library, to facilitate 
 physics simulation in JVM languages such as Java and Kotlin.
 
