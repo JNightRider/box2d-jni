@@ -210,11 +210,11 @@ jobs:
           update: true
           path-type: inherit
           install: >
-            base-devel
             mingw-w64-clang-aarch64-toolchain
-            mingw-w64-clang-aarch64-autotools
+            mingw-w64-clang-aarch64-clang
             mingw-w64-clang-aarch64-pkgconf
             mingw-w64-clang-aarch64-cmake
+            mingw-w64-clang-aarch64-autotools
       - name: Verify toolchain
         shell: msys2 {0}
         run: |
