@@ -258,19 +258,26 @@ jobs:
           echo $env:PROCESSOR_IDENTIFIER
           
 
-      - name: Clean PATH (important)
-        shell: msys2 {0}
-        run: |
-          export PATH=/clangarm64/bin:/usr/bin:/bin
-          hash -r
-
-          which gcc || true
-          which clang
+#      - name: Clean PATH (important)
+#        shell: msys2 {0}
+#        run: |
+#          export PATH=/clangarm64/bin:/usr/bin:/bin
+#          hash -r
+#
+#          which gcc || true
+#          which clang
       - uses: gradle/actions/setup-gradle@v6
       - name: gradlew build
         #if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
+            export PATH=/clangarm64/bin:/usr/bin:/bin
+            export CC=clang
+            export CXX=clang++
+            export LD=ld.lld
+            export AR=llvm-ar
+            export RANLIB=llvm-ranlib
+            export NM=llvm-nm
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
       - name: Upload jars        
