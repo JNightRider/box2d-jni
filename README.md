@@ -28,10 +28,10 @@ tested:
 | X86            | Linux/Android (x86)         | Clang    | `:android(@aar)`          |
 | X86-64         | Linux/Android (x86_64)      | Clang    | `:android(@aar)`          |
 | X86-64         | Linux                       | GCC      | `:linux_x64(Dp/Sp)`       |
-| X86-64         | Windows/MinGW               | GCC      | `:windows_x64(Dp/Sp)`     |
-| X86-64         | Mac OSX                     | Clang    | `:osx_x64(Dp/Sp)`         |
 | aarch64        | Linux                       | GCC      | `:linux_aarch64(Dp/Sp)`   |
+| X86-64         | Windows/MinGW               | GCC      | `:windows_x64(Dp/Sp)`     |
 | aarch64        | Windows/MinGW               | Clang    | `:windows_aarch64(Dp/Sp)` |
+| X86-64         | Mac OSX                     | Clang    | `:osx_x64(Dp/Sp)`         |
 | aarch64        | Mac OSX                     | Clang    | `:osx_aarch64(Dp/Sp)`     |
 
 ## Starting Box2d-JNI
