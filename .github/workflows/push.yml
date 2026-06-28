@@ -264,13 +264,11 @@ jobs:
 
       - name: Debug artifacts
         run: |
-          ls -R build
-          ls -R build/publications || true
-          ls -R build/libs || true
+          ls -R libs || true
 
       - name: Publish to Maven Central
         run: |
-          ./gradlew clean publish --console=plain
+          ./gradlew publish --console=plain
 
       - name: Deploy to Maven Central
         run: |
