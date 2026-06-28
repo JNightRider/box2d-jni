@@ -9,7 +9,7 @@ jobs:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -25,7 +25,7 @@ jobs:
             texinfo \
             build-essential
 
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Verify toolchain
         run: |
           java -version
@@ -42,7 +42,7 @@ jobs:
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: test-report
+          name: test-report-linux
           path: |
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
@@ -51,7 +51,7 @@ jobs:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -91,7 +91,7 @@ jobs:
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: test-report
+          name: test-report-linux
           path: |
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
@@ -100,6 +100,7 @@ jobs:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: ubuntu-22.04-arm
     steps:
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -114,7 +115,6 @@ jobs:
             libtool \
             texinfo \
             build-essential
-      - uses: actions/checkout@v7
       - uses: gradle/actions/setup-gradle@v6
       - name: Verify toolchain
         run: |
@@ -137,7 +137,7 @@ jobs:
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: test-report
+          name: test-report-linux
           path: |
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
@@ -147,8 +147,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v6
-
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -165,9 +164,7 @@ jobs:
             mingw-w64-x86_64-autotools
             mingw-w64-x86_64-pkgconf
             mingw-w64-x86_64-cmake
-
       - uses: gradle/actions/setup-gradle@v6
-
       - name: Verify toolchain
         shell: msys2 {0}
         run: |
@@ -176,20 +173,77 @@ jobs:
           cmake --version
           pkg-config --version
           pkg-config --modversion libffi
-
       - name: gradlew build
         if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
-
       - name: Upload jars        
         uses: actions/upload-artifact@v7
         with:
           name: box2d-jni-windows64
           path: lib/*.jar
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-windows
+          path: |
+            modules/libraries/box2d-core/build/reports/tests/test
+          if-no-files-found: ignore
 
+  Java21-Windows_ARM64:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    runs-on: windows-11-arm
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: CLANGARM64
+          update: true
+          path-type: inherit
+          install: >
+            base-devel
+            mingw-w64-clang-aarch64-toolchain
+            mingw-w64-clang-aarch64-autotools
+            mingw-w64-clang-aarch64-pkgconf
+            mingw-w64-clang-aarch64-cmake
+            mingw-w64-clang-aarch64-libffi
+      - name: Verify toolchain
+        shell: msys2 {0}
+        run: |
+            java -version
+            clang --version
+            clang -dumpmachine
+            cmake --version
+            pkg-config --version
+            pkg-config --modversion libffi
+      - name: Verify environment
+        shell: msys2 {0}
+        run: |
+          echo "MSYSTEM=$MSYSTEM"
+          which clang
+          clang -dumpmachine
+          uname -m
+      - uses: gradle/actions/setup-gradle@v6
+      - name: gradlew build
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: msys2 {0}
+        run: |
+            ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
+            --console=plain
+      - name: Upload jars        
+        uses: actions/upload-artifact@v7
+        with:
+          name: box2d-jni-windows_arm64
+          path: lib/*.jar
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
@@ -203,7 +257,7 @@ jobs:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: macos-26-intel
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -249,6 +303,7 @@ jobs:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: macos-26
     steps:
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
@@ -262,7 +317,6 @@ jobs:
             texinfo \
             pkg-config \
             cmake
-      - uses: actions/checkout@v7
       - uses: gradle/actions/setup-gradle@v6
       - name: Verify toolchain
         run: |
@@ -283,7 +337,7 @@ jobs:
       - name: Upload jars        
         uses: actions/upload-artifact@v7
         with:
-          name: box2d-jni-macos_64
+          name: box2d-jni-macos_arm64
           path: lib/*.jar
       - name: Upload test report
         if: failure()
@@ -300,14 +354,16 @@ jobs:
       - Java21-Linux64
       - Java21-Linux_ARM64
       - Java21-Windows64
+      - Java21-Windows_ARM64
       - Java21-MacOSX64
+      - Java21-MacOSX_ARM64
     
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # include: lib | Linux
-      - name: Download Linux x64 | Android artifacts
+      - name: Download Linux x64 | Android artifacts       
         uses: actions/download-artifact@v7
         with:
           name: box2d-jni-linux_x64
@@ -319,18 +375,28 @@ jobs:
           path: lib
 
 
-      # include: lib | Windows x64
+      # include: lib | Windows
       - name: Download Windows x64 artifacts
         uses: actions/download-artifact@v7
         with:
           name: box2d-jni-windows64
           path: lib
+      - name: Download Windows arm64 artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: box2d-jni-windows_arm64
+          path: lib
 
-      # include: lib | Macos x64 
+      # include: lib | Macos
       - name: Download macOS x64 artifacts
         uses: actions/download-artifact@v7
         with:
           name: box2d-jni-macos_64
+          path: lib
+      - name: Download macOS arm64 artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: box2d-jni-macos_arm64
           path: lib
 
       # Maven - Publication
