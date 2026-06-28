@@ -207,10 +207,14 @@ jobs:
       - uses: msys2/setup-msys2@v2
         with:
           msystem: CLANGARM64
+          update: true
           path-type: inherit
-          pacboy: >-
-            toolchain:p
-            make:p
+          install: >
+            base-devel
+            mingw-w64-clang-aarch64-toolchain
+            mingw-w64-clang-aarch64-autotools
+            mingw-w64-clang-aarch64-pkgconf
+            mingw-w64-clang-aarch64-cmake
       - name: Verify toolchain
         shell: msys2 {0}
         run: |
@@ -226,6 +230,34 @@ jobs:
           which clang
           clang -dumpmachine
           uname -m
+          
+      - name: Debug toolchain
+        shell: msys2 {0}
+        run: |
+          echo "PATH=$PATH"
+
+          which gcc
+          gcc -dumpmachine
+
+          which clang
+          clang -dumpmachine
+
+          which ld
+          ld --version
+
+          which ar
+          which ranlib
+          which nm
+
+          gcc -print-prog-name=ld
+      - name: Verify Windows architecture
+        shell: powershell
+        run: |
+          systeminfo | Select-String "System Type"
+          echo $env:PROCESSOR_ARCHITECTURE
+          echo $env:PROCESSOR_IDENTIFIER
+          
+          
       - uses: gradle/actions/setup-gradle@v6
       - name: gradlew build
         #if: startsWith(github.ref, 'refs/tags/')
