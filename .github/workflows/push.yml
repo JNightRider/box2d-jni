@@ -77,7 +77,7 @@ jobs:
           pkg-config --modversion libffi
       
       - name: gradlew build
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=true build \
             --console=plain
@@ -174,7 +174,7 @@ jobs:
           pkg-config --version
           pkg-config --modversion libffi
       - name: gradlew build
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
@@ -234,7 +234,7 @@ jobs:
           uname -m
       - uses: gradle/actions/setup-gradle@v6
       - name: gradlew build
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
@@ -281,7 +281,7 @@ jobs:
           pkg-config --version
           pkg-config --modversion libffi
       - name: gradlew build
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             --console=plain
@@ -349,7 +349,7 @@ jobs:
           if-no-files-found: ignore
 
   publish:
-    if: startsWith(github.ref, 'refs/tags/')
+    
     needs:
       - Java21-Linux64
       - Java21-Linux_ARM64
@@ -413,6 +413,7 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
       - name: Publish to Maven Central
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}

@@ -1,19 +1,12 @@
 ## Catalog of libraries and plugins used to build and run the Box2d-JNI project
 
 [versions]
-
-guava         = "33.4.6-jre"
-junit4        = "4.13.2"
-jsnaploader   = "1.1.1-stable"
+junit4 = "4.13.2"
 
 [libraries]
-guava           = { module = "com.google.guava:guava",                  version.ref = "guava"       }
-junit4          = { module = "junit:junit",                             version.ref = "junit4"      }
-jsnaploader     = { module = "io.github.electrostat-lab:snaploader",    version.ref = "jsnaploader" }
+junit4 = { module = "junit:junit", version.ref = "junit4" }
 
 [bundles]
 
 [plugins]
-
-download        = { id = "de.undercouch.download",  version = "5.7.0"   }
-android-library = { id = "com.android.library",     version = "9.1.0"  }
+download = { id = "de.undercouch.download", version = "5.7.0" }

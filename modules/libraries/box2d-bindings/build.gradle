@@ -1,4 +1,4 @@
-import static org.box2d.jni.JNI.*
+import static org.box2d.jni.BuildSrc.*
 
 plugins {
     alias(libs.plugins.download)
@@ -39,7 +39,7 @@ buildTypes.each { type ->
         tasks.register("nativesJar${type.name}${variant.name}", Jar) {
             dependsOn("buildCMake${type.name}${variant.name}")
 
-            def lib = makePathLib()
+            def lib = makeJARPathLib()
             archiveBaseName.set("${artifact}")
 
             def outDir = new File(rootDir, 'lib');

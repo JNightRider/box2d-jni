@@ -125,22 +125,10 @@ jreleaser {
     }
 }
 
-def classifier
-if (NativeVariant.Os.isWindows()) {
-    classifier = "windows_x64"
-} else if (NativeVariant.Os.isMac()) {
-    classifier = "osx_x64"
-} else {
-    classifier = "linux_x64"
-}
-
 dependencies {
     // Keep the normal natives artifact on the classpath for fallback/runtime parity.
     testRuntimeOnly project(':modules:libraries:box2d-bindings')
-    testRuntimeOnly files(
-        "${rootDir}/lib/box2d-jni-${jjVersion}-${classifier}Dp.jar",
-        "${rootDir}/lib/box2d-jni-${jjVersion}-${classifier}Sp.jar"
-    )
+    testRuntimeOnly fileTree(dir: "${rootDir}/lib", include: ['*.jar'])
     testImplementation(libs.junit4)      // framework for automated testing
 }
 

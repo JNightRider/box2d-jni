@@ -31,8 +31,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.android;
 
 /**
+ * Android ABI for Box2d-JNI
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public enum AndroidAbi {
     arm64_v8a(

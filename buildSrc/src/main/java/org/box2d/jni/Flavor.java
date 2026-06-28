@@ -31,29 +31,57 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 /**
+ * Enumerated class defining the {@code flavors}
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public enum Flavor {
-    Dp("Dp", "ON"), // double-precision locations
-    Sp("Sp", "OFF"); // single-precision locations
+    /**
+     * double-precision locations
+     */
+    Dp("Dp", "ON"),
+    /**
+     * single-precision locations
+     */
+    Sp("Sp", "OFF");
     
+    /** Flavor name. */
     private final String name;
+    /** Compilation flag. */
     private final String precision;
 
+    /**
+     * Constructor.
+     *
+     * @param name String
+     * @param flag String
+     */
     private Flavor(String name, String precision) {
         this.name = name;
         this.precision = precision;
     }
 
+     /**
+     * Returns the flavor name.
+     *
+     * @return String
+     */
     public String getName() {
         return name;
     }
-
+    /**
+     * Returns the flavor flag.
+     *
+     * @return String
+     */
     public String getPrecision() {
         return precision;
     }
 
+    /*(non-Javadoc)
+     */
     @Override
     public String toString() {
         return "flavors: " + name + ":" + precision;
