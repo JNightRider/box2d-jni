@@ -22,7 +22,7 @@ Make sure you have the necessary tools and the **libffi** library installed on y
 ### Languages and Tools
 
 - Java 17 or higher.
-- C17
+- C11
 - CMake
 
 ### Libraries
