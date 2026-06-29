@@ -184,8 +184,20 @@ public class b2BodyId extends Struct<b2BodyId> implements ConstB2BodyId {
      * @return b2BodyId
      */
     public static b2BodyId alloc(AllocFunc alloc) {
-        return new b2BodyId(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long ptr = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return ptr == NULL ? null : new b2BodyId(() -> ptr);
     }
+
+    /**
+     * Reserve memory for the new object {@code b2BodyId}.
+     *
+     * @param alloc arena
+     * @return b2BodyId
+     */
+    public static b2BodyId malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2BodyId(() -> ptr);
+    }    
 
     /**
      * Reserve memory for the new object {@code b2BodyId}.
@@ -214,9 +226,22 @@ public class b2BodyId extends Struct<b2BodyId> implements ConstB2BodyId {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
 
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyId}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+    
     // -----------------------------------
 
     public static int nindex1(long address) { return memGetInt(address + INDEX1); }

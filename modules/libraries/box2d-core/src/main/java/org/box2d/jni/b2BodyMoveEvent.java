@@ -68,7 +68,7 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
 
     static {
         Layout layout = __struct(
-                __member(VarType.Uintptrt.sizeof()),
+                __member(POINTER_SIZE),
                 __member(b2WorldTransform.DSIZEOF, b2WorldTransform.DALIGNOF),
                 __member(b2BodyId.SIZEOF, b2BodyId.ALIGNOF),
                 __member(1)
@@ -209,9 +209,21 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
      * @return b2BodyMoveEvent
      */
     public static b2BodyMoveEvent alloc(AllocFunc alloc) {
-        return new b2BodyMoveEvent(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long ptr = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return ptr == NULL ? null : new b2BodyMoveEvent(() -> ptr);
     }
 
+    /**
+     * Reserve memory for the new object {@code b2BodyMoveEvent}.
+     *
+     * @param alloc arena
+     * @return b2BodyMoveEvent
+     */
+    public static b2BodyMoveEvent malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2BodyMoveEvent(() -> ptr);
+    }   
+    
     /**
      * Reserve memory for the new object {@code b2BodyMoveEvent}.
      *
@@ -239,9 +251,22 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
 
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyMoveEvent}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+    
     // -----------------------------------
     
     public static long nuserData(long address)              { return memGetAddress(address + USER_DATA);}

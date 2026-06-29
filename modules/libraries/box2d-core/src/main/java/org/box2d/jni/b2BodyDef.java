@@ -108,8 +108,8 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
                 __member(4),
                 __member(4),
                 __member(4),
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
                 __member(b2MotionLocks.SIZEOF, b2MotionLocks.ALIGNOF),
                 __member(1),
                 __member(1),
@@ -410,9 +410,22 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @return b2BodyDef
      */
     public static b2BodyDef alloc(AllocFunc alloc) {
-        return new b2BodyDef(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long ptr = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return ptr == NULL ? null : new b2BodyDef(() -> ptr);
     }
 
+    /**
+     * Reserve memory for the new object {@code b2BodyDef}.
+     *
+     * @param alloc arena
+     * @return b2BodyDef
+     */
+    public static b2BodyDef malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2BodyDef(() -> ptr);
+    }
+    
+    
     /**
      * Reserve memory for the new object {@code b2BodyDef}.
      *
@@ -440,7 +453,20 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer( alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyDef}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

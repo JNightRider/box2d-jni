@@ -297,7 +297,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
         return address == NULL ? null : new b2Vec2(() -> address);
     }
-    
+
     /**
      * Reserve memory for the new object {@code b2Vec2}.
      *
@@ -307,7 +307,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     public static b2Vec2 malloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Vec2(() -> ptr);
-    }    
+    }
 
     /**
      * Reserve memory for the new object {@code b2Vec2}.
@@ -353,9 +353,22 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Vec2}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     /**
      * Reserve an amount n of memory for the object {@code b2Vec2}.
      *

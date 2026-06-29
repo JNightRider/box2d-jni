@@ -66,7 +66,7 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
 
     static {
         Layout layout = __struct(
-                __member(VarType.Uintptrt.sizeof()),
+                __member(POINTER_SIZE),
                 __member(4)
         );
 
@@ -177,8 +177,20 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
      * @return b2BodyEvents
      */
     public static b2BodyEvents alloc(AllocFunc alloc) {
-        return new b2BodyEvents(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long ptr = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return ptr == NULL ? null : new b2BodyEvents(() -> ptr);
     }
+    
+    /**
+     * Reserve memory for the new object {@code b2BodyEvents}.
+     *
+     * @param alloc arena
+     * @return b2BodyEvents
+     */
+    public static b2BodyEvents malloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2BodyEvents(() -> ptr);
+    }    
 
     /**
      * Reserve memory for the new object {@code b2BodyEvents}.
@@ -207,9 +219,22 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
 
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyEvents}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+    
     // -----------------------------------
     
     public static long nmoveEvents(long address) { return memGetAddress(address + MOVE_EVENTS); }
