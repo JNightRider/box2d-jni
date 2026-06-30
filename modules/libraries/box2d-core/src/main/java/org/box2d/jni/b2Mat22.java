@@ -203,7 +203,7 @@ public class b2Mat22 extends Struct<b2Mat22> {
      * @param alloc arena
      * @return b2Mat22
      */
-    public static b2Mat22 malloc(ArenaAlloc alloc) {
+    public static b2Mat22 calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Mat22(() -> ptr);
     }
@@ -226,9 +226,22 @@ public class b2Mat22 extends Struct<b2Mat22> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Mat22}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static b2Vec2 ncx(long address) { return b2Vec2.createSafe(() -> address + CX); }

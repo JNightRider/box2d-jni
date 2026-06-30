@@ -202,7 +202,19 @@ public class b2ContactEndTouchEvent extends Struct<b2ContactEndTouchEvent> {
      * @return b2ContactEndTouchEvent
      */
     public static b2ContactEndTouchEvent alloc(AllocFunc alloc) {
-        return new b2ContactEndTouchEvent(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2ContactEndTouchEvent(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ContactEndTouchEvent}.
+     *
+     * @param alloc arena
+     * @return b2ContactEndTouchEvent
+     */
+    public static b2ContactEndTouchEvent calloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2ContactEndTouchEvent(() -> ptr);
     }
 
     /**
@@ -232,7 +244,20 @@ public class b2ContactEndTouchEvent extends Struct<b2ContactEndTouchEvent> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ContactEndTouchEvent}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

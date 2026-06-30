@@ -80,10 +80,10 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     static {
 
         Layout layout = __struct(
-                __member(VarType.Uintptrt.sizeof()),
-                __member(VarType.Uintptrt.sizeof()),
+                __member(POINTER_SIZE),
+                __member(POINTER_SIZE),
                 __member(4),
-                __member(VarType.Uintptrt.sizeof()),
+                __member(POINTER_SIZE),
                 __member(4),
                 __member(b2Filter.SIZEOF, b2Filter.ALIGNOF),
                 __member(1),
@@ -306,7 +306,19 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
      * @return b2ChainDef
      */
     public static b2ChainDef alloc(AllocFunc alloc) {
-        return new b2ChainDef(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2ChainDef(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ChainDef}.
+     *
+     * @param alloc arena
+     * @return b2ChainDef
+     */
+    public static b2ChainDef calloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2ChainDef(() -> ptr);
     }
 
     /**
@@ -336,7 +348,20 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer( alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ChainDef}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

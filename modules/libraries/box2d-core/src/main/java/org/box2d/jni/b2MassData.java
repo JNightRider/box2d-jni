@@ -192,7 +192,19 @@ public class b2MassData extends Struct<b2MassData> {
      * @return b2MassData
      */
     public static b2MassData alloc(AllocFunc alloc) {
-        return new b2MassData(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2MassData(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2MassData}.
+     *
+     * @param arean arena
+     * @return b2MassData
+     */
+    public static b2MassData calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2MassData(() -> ptr);
     }
 
     /**
@@ -222,7 +234,20 @@ public class b2MassData extends Struct<b2MassData> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2MassData}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

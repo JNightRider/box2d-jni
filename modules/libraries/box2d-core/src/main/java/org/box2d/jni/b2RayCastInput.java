@@ -135,6 +135,7 @@ public class b2RayCastInput extends Struct<b2RayCastInput> implements ConstB2Ray
     @Override
     public b2Vec2 translation() { return ntranslation(address()); }
     /** @return Returns the property {@code maxFraction} */
+    @Override
     public float maxFraction() { return nmaxFraction(address()); }
 
     /**
@@ -215,7 +216,19 @@ public class b2RayCastInput extends Struct<b2RayCastInput> implements ConstB2Ray
      * @return b2RayCastInput
      */
     public static b2RayCastInput alloc(AllocFunc alloc) {
-        return new b2RayCastInput(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2RayCastInput(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RayCastInput}.
+     *
+     * @param arean arena
+     * @return b2RayCastInput
+     */
+    public static b2RayCastInput calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2RayCastInput(() -> ptr);
     }
 
     /**
@@ -245,9 +258,22 @@ public class b2RayCastInput extends Struct<b2RayCastInput> implements ConstB2Ray
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2RayCastInput}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static b2Vec2 norigin(long address)         { return b2Vec2.createSafe(() -> address + ORIGIN);           }

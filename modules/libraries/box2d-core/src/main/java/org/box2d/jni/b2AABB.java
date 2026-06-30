@@ -197,7 +197,7 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
      * @param alloc arena
      * @return b2AABB
      */
-    public static b2AABB malloc(ArenaAlloc alloc) {
+    public static b2AABB calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2AABB(() -> ptr);
     }   
@@ -240,8 +240,8 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
     

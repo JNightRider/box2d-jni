@@ -194,7 +194,7 @@ public class b2BodyId extends Struct<b2BodyId> implements ConstB2BodyId {
      * @param alloc arena
      * @return b2BodyId
      */
-    public static b2BodyId malloc(ArenaAlloc alloc) {
+    public static b2BodyId calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2BodyId(() -> ptr);
     }    
@@ -237,8 +237,8 @@ public class b2BodyId extends Struct<b2BodyId> implements ConstB2BodyId {
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
     

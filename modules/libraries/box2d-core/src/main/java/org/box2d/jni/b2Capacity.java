@@ -241,7 +241,7 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
      * @param alloc arena
      * @return b2Capacity
      */
-    public static b2Capacity malloc(ArenaAlloc alloc) {
+    public static b2Capacity calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Capacity(() -> ptr);
     }
@@ -284,8 +284,8 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
 

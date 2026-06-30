@@ -204,7 +204,19 @@ public class b2SimplexCache extends Struct<b2SimplexCache> implements ConstB2Sim
      * @return b2SimplexCache
      */
     public static b2SimplexCache alloc(AllocFunc alloc) {
-        return new b2SimplexCache(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2SimplexCache(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2SimplexCache}.
+     *
+     * @param arean arena
+     * @return b2SimplexCache
+     */
+    public static b2SimplexCache calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2SimplexCache(() -> ptr);
     }
 
     /**
@@ -234,7 +246,20 @@ public class b2SimplexCache extends Struct<b2SimplexCache> implements ConstB2Sim
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2SimplexCache}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

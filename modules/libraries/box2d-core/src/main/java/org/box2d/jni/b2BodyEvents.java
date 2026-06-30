@@ -187,7 +187,7 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
      * @param alloc arena
      * @return b2BodyEvents
      */
-    public static b2BodyEvents malloc(ArenaAlloc alloc) {
+    public static b2BodyEvents calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2BodyEvents(() -> ptr);
     }    
@@ -230,8 +230,8 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
     

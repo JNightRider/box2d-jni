@@ -639,7 +639,19 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @return b2DebugDraw
      */
     public static b2DebugDraw alloc(AllocFunc alloc) {
-        return new b2DebugDraw(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2DebugDraw(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2DebugDraw}.
+     *
+     * @param arean arena
+     * @return b2DebugDraw
+     */
+    public static b2DebugDraw calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2DebugDraw(() -> ptr);
     }
 
     /**
@@ -669,7 +681,20 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2DebugDraw}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

@@ -268,7 +268,19 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
      * @return b2RayResult
      */
     public static b2RayResult alloc(AllocFunc alloc) {
-        return new b2RayResult(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2RayResult(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RayResult}.
+     *
+     * @param arean arena
+     * @return b2RayResult
+     */
+    public static b2RayResult calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2RayResult(() -> ptr);
     }
 
     /**
@@ -298,7 +310,20 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2RayResult}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

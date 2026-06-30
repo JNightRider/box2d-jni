@@ -197,7 +197,7 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
      * @param alloc arena
      * @return b2Rot
      */
-    public static b2Rot malloc(ArenaAlloc alloc) {
+    public static b2Rot calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Rot(() -> ptr);
     }
@@ -230,9 +230,22 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Rot}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static float nc(long address) { return memGetFloat(address + C); }

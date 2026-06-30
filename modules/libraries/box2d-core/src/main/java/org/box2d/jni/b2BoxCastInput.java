@@ -206,7 +206,7 @@ public class b2BoxCastInput extends Struct<b2BoxCastInput> implements ConstB2Box
      * @param alloc arena
      * @return b2BoxCastInput
      */
-    public static b2BoxCastInput malloc(ArenaAlloc alloc) {
+    public static b2BoxCastInput calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2BoxCastInput(() -> ptr);
     }
@@ -249,8 +249,8 @@ public class b2BoxCastInput extends Struct<b2BoxCastInput> implements ConstB2Box
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
 

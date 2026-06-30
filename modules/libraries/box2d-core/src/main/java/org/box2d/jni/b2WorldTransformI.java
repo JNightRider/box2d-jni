@@ -190,7 +190,19 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
      * @return b2WorldTransformI
      */
     public static b2WorldTransformI alloc(AllocFunc alloc) {
-        return new b2WorldTransformI(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2WorldTransformI(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldTransformI}.
+     *
+     * @param arean arena
+     * @return b2WorldTransformI
+     */
+    public static b2WorldTransformI calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2WorldTransformI(() -> ptr);
     }
 
     /**
@@ -220,9 +232,22 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldTransformI}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static b2PosI np(long address) { return b2PosI.createSafe(() -> address + P); }

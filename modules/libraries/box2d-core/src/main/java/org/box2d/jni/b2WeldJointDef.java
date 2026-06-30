@@ -250,7 +250,19 @@ public class b2WeldJointDef extends Struct<b2WeldJointDef> implements ConstB2Wel
      * @return b2WeldJointDef
      */
     public static b2WeldJointDef alloc(AllocFunc alloc) {
-        return new b2WeldJointDef(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2WeldJointDef(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WeldJointDef}.
+     *
+     * @param arean arena
+     * @return b2WeldJointDef
+     */
+    public static b2WeldJointDef calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2WeldJointDef(() -> ptr);
     }
 
     /**
@@ -280,7 +292,20 @@ public class b2WeldJointDef extends Struct<b2WeldJointDef> implements ConstB2Wel
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WeldJointDef}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

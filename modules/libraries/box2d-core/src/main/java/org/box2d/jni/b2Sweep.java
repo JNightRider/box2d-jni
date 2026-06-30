@@ -257,7 +257,19 @@ public class b2Sweep extends Struct<b2Sweep> implements ConstB2Sweep {
      * @return b2Sweep
      */
     public static b2Sweep alloc(AllocFunc alloc) {
-        return new b2Sweep(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Sweep(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Sweep}.
+     *
+     * @param arean arena
+     * @return b2Sweep
+     */
+    public static b2Sweep calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Sweep(() -> ptr);
     }
 
     /**
@@ -287,7 +299,20 @@ public class b2Sweep extends Struct<b2Sweep> implements ConstB2Sweep {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Sweep}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

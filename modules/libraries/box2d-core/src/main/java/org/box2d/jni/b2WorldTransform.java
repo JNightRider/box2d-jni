@@ -32,6 +32,7 @@ package org.box2d.jni;
 
 import org.box2d.jni.readonly.ConstB2WorldTransform;
 import org.box2d.jni.system.AllocFunc;
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -127,6 +128,16 @@ public interface b2WorldTransform<SELF extends b2WorldTransform<SELF, P, Q>, P e
      */
     static b2WorldTransform nalloc(AllocFunc alloc) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.alloc(alloc) : b2Transform.alloc(alloc);
+    }
+    
+    /**
+     * Reserve memory for the new object {@code b2WorldTransform}.
+     *
+     * @param arean arena
+     * @return b2WorldTransform
+     */
+    static b2WorldTransform ncalloc(ArenaAlloc arean) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.calloc(arean) : b2Transform.calloc(arean);
     }
 
     /**

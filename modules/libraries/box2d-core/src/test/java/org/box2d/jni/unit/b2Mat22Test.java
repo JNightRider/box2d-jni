@@ -99,14 +99,14 @@ public class b2Mat22Test {
         try (ArenaAlloc alloc = ArenaAlloc.allocPush()) {
             // 1
             ptr.put(
-                    b2Mat22.malloc(alloc)
+                    b2Mat22.calloc(alloc)
                             .cx( /* b2Vec2 */
-                                    b2Vec2.malloc(alloc)
+                                    b2Vec2.calloc(alloc)
                                             .x(1f)
                                             .y(2f)
                             )
                             .cy( /* b2Rot */
-                                    b2Vec2.malloc(alloc)
+                                    b2Vec2.calloc(alloc)
                                             .x(0.3f)
                                             .y(1.5f)
                             )
@@ -114,14 +114,14 @@ public class b2Mat22Test {
 
             // 2
             ptr.put(
-                    b2Mat22.malloc(alloc)
+                    b2Mat22.calloc(alloc)
                             .cx( /* b2Vec2 */
-                                    b2Vec2.malloc(alloc)
+                                    b2Vec2.calloc(alloc)
                                             .x(5.5f)
                                             .y(2.5f)
                             )
                             .cy( /* b2Rot */
-                                    b2Vec2.malloc(alloc)
+                                    b2Vec2.calloc(alloc)
                                             .x(3.3f)
                                             .y(10.5f)
                             )

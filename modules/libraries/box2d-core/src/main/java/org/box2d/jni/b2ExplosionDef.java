@@ -232,7 +232,19 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
      * @return b2ExplosionDef
      */
     public static b2ExplosionDef alloc(AllocFunc alloc) {
-        return new b2ExplosionDef(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2ExplosionDef(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ExplosionDef}.
+     *
+     * @param arean arena
+     * @return b2ExplosionDef
+     */
+    public static b2ExplosionDef calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2ExplosionDef(() -> ptr);
     }
 
     /**
@@ -262,7 +274,20 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ExplosionDef}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

@@ -182,7 +182,7 @@ public class b2Plane extends Struct<b2Plane> implements ConstB2Plane {
      * @param alloc arena
      * @return b2Plane
      */
-    public static b2Plane malloc(ArenaAlloc alloc) {
+    public static b2Plane calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Plane(() -> ptr);
     }
@@ -214,9 +214,22 @@ public class b2Plane extends Struct<b2Plane> implements ConstB2Plane {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Plane}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }

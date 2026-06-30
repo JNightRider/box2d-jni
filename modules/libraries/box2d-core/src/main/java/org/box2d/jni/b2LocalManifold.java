@@ -198,7 +198,19 @@ public class b2LocalManifold extends Struct<b2LocalManifold> {
      * @return b2LocalManifold
      */
     public static b2LocalManifold alloc(AllocFunc alloc) {
-        return new b2LocalManifold(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2LocalManifold(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2LocalManifold}.
+     *
+     * @param arean arena
+     * @return b2LocalManifold
+     */
+    public static b2LocalManifold calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2LocalManifold(() -> ptr);
     }
 
     /**
@@ -228,7 +240,20 @@ public class b2LocalManifold extends Struct<b2LocalManifold> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2LocalManifold}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

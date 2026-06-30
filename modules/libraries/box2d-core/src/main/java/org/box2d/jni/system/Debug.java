@@ -65,7 +65,7 @@ public final class Debug {
                 ? text : color.getBackground() + text + NULL.getBackground();
 
         private static final Map<String, BiFunction<String, Color, String>> MAP = new HashMap<>();
-        private static final Boolean ANDROIDX = Platform.get() == Platform.Android;
+        private static final Boolean SKIP_COLOR = Platform.get() == Platform.Android;
 
         static {
             MAP.put("c", FCOLOR);
@@ -101,7 +101,7 @@ public final class Debug {
 
                 BiFunction<String, Color, String> format = MAP.get(name);
                 if (format != null) {
-                    String chars = format.apply(param, ANDROIDX ? null : colors[index++]);
+                    String chars = format.apply(param, SKIP_COLOR ? null : colors[index++]);
                     m.appendReplacement(
                             buffer,
                             Matcher.quoteReplacement(chars)

@@ -198,14 +198,14 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     /**
      * Reserve memory for the new object {@code b2Transform}.
      *
-     * @param alloc arena
+     * @param arean arena
      * @return b2Transform
      */
-    public static b2Transform malloc(ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static b2Transform calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Transform(() -> ptr);
     }
-    
+
     /**
      * Reserve memory for the new object {@code b2Transform}.
      *
@@ -233,9 +233,22 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Transform}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static b2Vec2 np(long address) { return b2Vec2.createSafe(() -> address + P); }

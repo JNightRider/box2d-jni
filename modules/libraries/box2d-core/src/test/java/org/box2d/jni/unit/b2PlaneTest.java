@@ -92,9 +92,9 @@ public class b2PlaneTest {
         try (ArenaAlloc alloc = ArenaAlloc.allocPush()) {
             // 1
             ptr.put(
-                b2Plane.malloc(alloc)
+                b2Plane.calloc(alloc)
                     .normal(/* b2Vec2 */
-                         b2Vec2.malloc(alloc)
+                         b2Vec2.calloc(alloc)
                             .x(1f)
                             .y(2f)
                         
@@ -104,9 +104,9 @@ public class b2PlaneTest {
 
             // 2
             ptr.put(
-                 b2Plane.malloc(alloc)
+                 b2Plane.calloc(alloc)
                     .normal(/* b2Vec2 */
-                        b2Vec2.malloc(alloc)
+                        b2Vec2.calloc(alloc)
                             .x(5.5f)
                             .y(2.5f)
                         

@@ -32,6 +32,7 @@ package org.box2d.jni;
 
 import org.box2d.jni.readonly.ConstB2Pos;
 import org.box2d.jni.system.AllocFunc;
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -135,6 +136,16 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      */
     static b2Pos nalloc(AllocFunc alloc) {
         return BOX2D_DOUBLE_PRECISION ? b2PosI.alloc(alloc) : b2Vec2.alloc(alloc);
+    }
+    
+    /**
+     * Reserve memory for the new object {@code b2Pos}.
+     *
+     * @param arean arena
+     * @return b2Pos
+     */
+    static b2Pos ncalloc(ArenaAlloc arean) {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.calloc(arean) : b2Vec2.calloc(arean);
     }
 
     /**

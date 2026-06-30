@@ -32,6 +32,7 @@ package org.box2d.jni;
 
 import org.box2d.jni.readonly.ConstB2WorldCastOutput;
 import org.box2d.jni.system.AllocFunc;
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -169,6 +170,16 @@ public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, 
      */
     static b2WorldCastOutput nalloc(AllocFunc alloc) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.alloc(alloc) : b2CastOutput.alloc(alloc);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldCastOutput}.
+     *
+     * @param arean arena
+     * @return b2WorldCastOutput
+     */
+    static b2WorldCastOutput ncalloc(ArenaAlloc arean) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.calloc(arean) : b2CastOutput.calloc(arean);
     }
 
     /**

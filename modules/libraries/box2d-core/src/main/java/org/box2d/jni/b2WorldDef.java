@@ -446,7 +446,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /**
      * Internal use of the buffer.
      *
-     * @return b2RayResult
+     * @return b2WorldDef
      */
     private static b2WorldDef factory() {
         return new b2WorldDef(-1L, true);
@@ -456,7 +456,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2RayResult
+     * @return b2WorldDef
      */
     public static b2WorldDef createSafe(Pointer ptr) {
         if (ptr == null) {
@@ -466,10 +466,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     }
 
     /**
-     * Reserve memory for the new object {@code b2RayResult}.
+     * Reserve memory for the new object {@code b2WorldDef}.
      *
      * @param alloc Custom memory manager
-     * @return b2RayResult
+     * @return b2WorldDef
      */
     public static b2WorldDef alloc(AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
@@ -477,16 +477,27 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     }
 
     /**
-     * Reserve memory for the new object {@code b2RayResult}.
+     * Reserve memory for the new object {@code b2WorldDef}.
      *
-     * @return b2RayResult
+     * @param arean arena
+     * @return b2WorldDef
+     */
+    public static b2WorldDef calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2WorldDef(() -> ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldDef}.
+     *
+     * @return b2WorldDef
      */
     public static b2WorldDef malloc() {
         return new b2WorldDef(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2RayResult}.
+     * Reserve an amount n of memory for the object {@code b2WorldDef}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -496,16 +507,29 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2RayResult}.
+     * Reserve an amount n of memory for the object {@code b2WorldDef}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldDef}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
+
     // -----------------------------------
 
     public static b2Vec2 ngravity(long address)                 { return b2Vec2.createSafe(() -> address + GRAVITY);            }

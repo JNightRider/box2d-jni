@@ -226,7 +226,7 @@ public class b2Capsule extends Struct<b2Capsule> implements ConstB2Capsule {
      * @param alloc arena
      * @return b2Capsule
      */
-    public static b2Capsule malloc(ArenaAlloc alloc) {
+    public static b2Capsule calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Capsule(() -> ptr);
     }
@@ -269,8 +269,8 @@ public class b2Capsule extends Struct<b2Capsule> implements ConstB2Capsule {
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
 

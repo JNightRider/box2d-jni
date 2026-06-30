@@ -253,7 +253,19 @@ public class b2ContactEvents extends Struct<b2ContactEvents> {
      * @return b2ContactEvents
      */
     public static b2ContactEvents alloc(AllocFunc alloc) {
-        return new b2ContactEvents(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2ContactEvents(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ContactEvents}.
+     *
+     * @param alloc arena
+     * @return b2ContactEvents
+     */
+    public static b2ContactEvents calloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2ContactEvents(() -> ptr);
     }
 
     /**
@@ -283,7 +295,20 @@ public class b2ContactEvents extends Struct<b2ContactEvents> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ContactEvents}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

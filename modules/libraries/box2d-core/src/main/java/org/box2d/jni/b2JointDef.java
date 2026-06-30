@@ -83,7 +83,7 @@ public class b2JointDef extends Struct<b2JointDef> implements ConstB2JointDef {
 
     static {
         Layout layout = __struct(
-                __member(VarType.Uintptrt.sizeof()),
+                __member(POINTER_SIZE),
                 __member(b2BodyId.SIZEOF, b2BodyId.ALIGNOF),
                 __member(b2BodyId.SIZEOF, b2BodyId.ALIGNOF),
                 __member(b2Transform.SIZEOF, b2Transform.ALIGNOF),
@@ -340,7 +340,19 @@ public class b2JointDef extends Struct<b2JointDef> implements ConstB2JointDef {
      * @return b2JointDef
      */
     public static b2JointDef alloc(AllocFunc alloc) {
-        return new b2JointDef(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2JointDef(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2JointDef}.
+     *
+     * @param arean arena
+     * @return b2JointDef
+     */
+    public static b2JointDef calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2JointDef(() -> ptr);
     }
 
     /**
@@ -370,7 +382,20 @@ public class b2JointDef extends Struct<b2JointDef> implements ConstB2JointDef {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2JointDef}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

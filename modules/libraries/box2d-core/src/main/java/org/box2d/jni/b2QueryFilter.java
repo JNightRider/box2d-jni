@@ -176,7 +176,19 @@ public class b2QueryFilter extends Struct<b2QueryFilter> {
      * @return b2QueryFilter
      */
     public static b2QueryFilter alloc(AllocFunc alloc) {
-        return new b2QueryFilter(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2QueryFilter(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2QueryFilter}.
+     *
+     * @param arean arena
+     * @return b2QueryFilter
+     */
+    public static b2QueryFilter calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2QueryFilter(() -> ptr);
     }
 
     /**
@@ -206,7 +218,20 @@ public class b2QueryFilter extends Struct<b2QueryFilter> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2QueryFilter}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

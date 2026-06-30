@@ -236,7 +236,19 @@ public class b2WorldCastOutputI extends Struct<b2WorldCastOutputI> implements b2
      * @return b2WorldCastOutputI
      */
     public static b2WorldCastOutputI alloc(AllocFunc alloc) {
-        return new b2WorldCastOutputI(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2WorldCastOutputI(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldCastOutputI}.
+     *
+     * @param arean arena
+     * @return b2WorldCastOutputI
+     */
+    public static b2WorldCastOutputI calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2WorldCastOutputI(() -> ptr);
     }
 
     /**
@@ -266,7 +278,20 @@ public class b2WorldCastOutputI extends Struct<b2WorldCastOutputI> implements b2
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutputI}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

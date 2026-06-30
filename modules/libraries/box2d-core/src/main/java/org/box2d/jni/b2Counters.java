@@ -364,7 +364,19 @@ public class b2Counters extends Struct<b2Counters> {
      * @return b2Counters
      */
     public static b2Counters alloc(AllocFunc alloc) {
-        return new b2Counters(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2Counters(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Counters}.
+     *
+     * @param alloc arena
+     * @return b2Counters
+     */
+    public static b2Counters calloc(ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Counters(() -> ptr);
     }
 
     /**
@@ -394,7 +406,20 @@ public class b2Counters extends Struct<b2Counters> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Counters}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
     }
 
     // -----------------------------------

@@ -100,15 +100,15 @@ public class b2TransformTest {
         try (ArenaAlloc alloc = ArenaAlloc.allocPush()) {
             // 1
             ptr.put(
-                 b2Transform.malloc(alloc)
+                 b2Transform.calloc(alloc)
                     .p( /* b2Vec2 */
-                         b2Vec2.malloc(alloc)
+                         b2Vec2.calloc(alloc)
                             .x(1f)
                             .y(2f)
                         
                     )
                     .q( /* b2Rot */
-                        b2Rot.malloc(alloc)
+                        b2Rot.calloc(alloc)
                             .c(0.3f)
                             .s(1.5f)
                         
@@ -117,15 +117,15 @@ public class b2TransformTest {
 
             // 2
             ptr.put(
-                b2Transform.malloc(alloc)
+                b2Transform.calloc(alloc)
                     .p( /* b2Vec2 */
-                        b2Vec2.malloc(alloc)
+                        b2Vec2.calloc(alloc)
                             .x(5.5f)
                             .y(2.5f)
                         
                     )
                     .q( /* b2Rot */
-                        b2Rot.malloc(alloc)
+                        b2Rot.calloc(alloc)
                             .c(3.3f)
                             .s(10.5f)
                         

@@ -212,6 +212,17 @@ public class b2Version extends Struct<b2Version> {
     /**
      * Reserve memory for the new object {@code b2Version}.
      *
+     * @param arean arena
+     * @return b2Version
+     */
+    public static b2Version calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2Version(() -> ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Version}.
+     *
      * @return b2Version
      */
     public static b2Version malloc() {
@@ -236,9 +247,21 @@ public class b2Version extends Struct<b2Version> {
      * @return Buffer
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
-        return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+        long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Version}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity, ArenaAlloc arena) {
+        long ptr = arena.ncalloc(ALIGNOF, capacity, SIZEOF);
+        return new Buffer(ptr, capacity);
+    }
 
     // -----------------------------------    
     public static int nmajor(long address) { return memGetInt(address + MAJOR); }

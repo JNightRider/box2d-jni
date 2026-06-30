@@ -32,6 +32,7 @@ package org.box2d.jni;
 
 import org.box2d.jni.system.*;
 
+import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
 
@@ -175,6 +176,37 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     @Override
     protected b2RecQueryHit create(long address, Pointer ptr) {
         return ptr == null ? new b2RecQueryHit(address) : new b2RecQueryHit(ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecQueryHit}.
+     *
+     * @param alloc Custom memory manager
+     * @return b2RecQueryHit
+     */
+    public static b2RecQueryHit alloc(AllocFunc alloc) {
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2RecQueryHit(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecQueryHit}.
+     *
+     * @param arean arena
+     * @return b2RecQueryHit
+     */
+    public static b2RecQueryHit calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2RecQueryHit(() -> ptr);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecQueryHit}.
+     *
+     * @return b2RecQueryHit
+     */
+    public static b2RecQueryHit malloc() {
+        return new b2RecQueryHit(nmalloc(SIZEOF));
     }
 
     // -----------------------------------

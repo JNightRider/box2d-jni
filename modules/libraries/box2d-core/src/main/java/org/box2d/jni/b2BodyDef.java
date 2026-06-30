@@ -420,7 +420,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @param alloc arena
      * @return b2BodyDef
      */
-    public static b2BodyDef malloc(ArenaAlloc alloc) {
+    public static b2BodyDef calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2BodyDef(() -> ptr);
     }
@@ -464,8 +464,8 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @param alloc Arean
      * @return Buffer
      */
-    public static Buffer malloc(int capacity, ArenaAlloc alloc) {
-        long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
+    public static Buffer calloc(int capacity, ArenaAlloc alloc) {
+        long ptr = alloc.ncalloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(ptr, capacity);
     }
 

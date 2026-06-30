@@ -249,7 +249,19 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * @return b2RecQueryInfo
      */
     public static b2RecQueryInfo alloc(AllocFunc alloc) {
-        return new b2RecQueryInfo(alloc.alloc(ALIGNOF, SIZEOF, 1));
+        long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
+        return address == NULL ? null : new b2RecQueryInfo(() -> address);
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecQueryInfo}.
+     *
+     * @param arean arena
+     * @return b2RecQueryInfo
+     */
+    public static b2RecQueryInfo calloc(ArenaAlloc arean) {
+        long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
+        return new b2RecQueryInfo(() -> ptr);
     }
 
     /**
