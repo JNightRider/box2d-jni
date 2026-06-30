@@ -44,18 +44,19 @@ import java.util.function.Function;
 public final class Sys<T> {
 
     public static final Sys<String> B2JNI_LIB_PATH = new Sys<>("org.box2d.jni.path", StateInit.STRING);
-    
+
     public static final Sys<String> B2JNI_LIB_NAME = new Sys<>("org.box2d.jni.name", StateInit.STRING);
-    
+
     public static final Sys<Boolean> DISABLE_DEBUG = new Sys<>("org.box2d.jni.system.Debugs", StateInit.BOOLEAN);
+
     public static final Sys<Boolean> DISABLE_DEBUG_COLOR = new Sys<>("org.box2d.jni.system.Debug.Color", StateInit.BOOLEAN);
-    
+
     public static final Sys<Boolean> BOX2D_DOUBLE_PRECISION = new Sys<>("BOX2D_JNI_DOUBLE_PRECISION", StateInit.BOOLEAN);
-    
+
     public static final Sys<Boolean> BOX2D_NDEBUG = new Sys<>("BOX2D_JNI_NDEBUG", StateInit.BOOLEAN);
 
     public static final Sys<Integer> STACK_SIZE = new Sys<>("BOX2D_JNI_STACK_SIZE", StateInit.INT);
-    
+
     private interface StateInit<T> extends Function<String, T> {
 
         StateInit<Boolean> BOOLEAN = property -> {
