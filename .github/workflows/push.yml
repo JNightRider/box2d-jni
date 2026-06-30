@@ -423,6 +423,5 @@ jobs:
           JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PASSWORD }}
         run: |
-          ./gradlew jreleaserConfig --console=plain
           ./gradlew publish --console=plain
-          ./gradlew jreleaserDeploy --console=plain
+          ./gradlew jreleaserFullRelease --console=plain
