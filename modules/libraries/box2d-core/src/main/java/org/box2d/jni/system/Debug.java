@@ -65,7 +65,7 @@ public final class Debug {
                 ? text : color.getBackground() + text + NULL.getBackground();
 
         private static final Map<String, BiFunction<String, Color, String>> MAP = new HashMap<>();
-        private static final Boolean SKIP_COLOR = Platform.get() == Platform.Android;
+        private static final Boolean SKIP_COLOR = Platform.get() == Platform.Android || Sys.DISABLE_DEBUG_COLOR.get(false);
 
         static {
             MAP.put("c", FCOLOR);
@@ -118,7 +118,7 @@ public final class Debug {
     private static final PrintStream DEBUG_STREAM = System.out;
     
     static {
-        DEBUG = true;
+        DEBUG = !Sys.DISABLE_DEBUG.get(false);
     }
     
     public static void enabled(boolean flag) {
