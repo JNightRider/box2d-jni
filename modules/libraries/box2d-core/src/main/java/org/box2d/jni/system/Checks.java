@@ -42,10 +42,6 @@ import static org.box2d.jni.system.Pointer.*;
  */
 public final class Checks {
     
-    public static void setDebugEnabled(boolean b) {
-        Debug.DEBUG = b;
-    }
-    
     /**
      * Method in charge of verifying if the pointers are valid, that is, that 
      * they are not null and that they have a valid memory address. Otherwise an 
@@ -85,13 +81,7 @@ public final class Checks {
             throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
         }
         if (!buffer.isDirect()) {
-            System.out.println("direct");
-        }
-        if (buffer.limit() != length) {
-            System.out.println("limit: " + buffer.limit());
-        }
-        if (buffer.position() > 0) {
-            System.out.println("pos");
+            throw new IllegalStateException("The buffer does not have direct access to native memory.");
         }
     }
     
