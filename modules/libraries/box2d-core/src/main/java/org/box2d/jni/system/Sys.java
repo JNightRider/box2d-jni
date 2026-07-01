@@ -69,6 +69,13 @@ public final class Sys<T> {
         StateInit<String> STRING = System::getProperty;
     }
 
+    public static boolean defined(Sys value) {
+        if (value == null || value.get() == null) {
+            return false;
+        }
+        return true;
+    }
+    
     private final String property;
 
     private volatile T state;

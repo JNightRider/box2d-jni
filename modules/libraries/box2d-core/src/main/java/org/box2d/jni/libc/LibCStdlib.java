@@ -30,7 +30,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.libc;
 
+import java.nio.ByteBuffer;
+
 import org.box2d.jni.system.Library;
+
+import static org.box2d.jni.system.Memory.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Implementation of C libraries: {@code <stdlib.h>}
@@ -44,7 +49,16 @@ public final class LibCStdlib {
         Library.initialize();
     }
     
+    public static ByteBuffer malloc(long size) {
+        long ptr = nmalloc(size);
+        return memByteBuffer(ptr, (int)size);
+    }
+    
     public static native long nmalloc(long size);
+    
+    public static void free(ByteBuffer buffer) {
+        nfree(memGetNativeAddress(buffer));
+    }
     
     public static native void nfree(long ptr);
 }

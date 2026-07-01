@@ -35,6 +35,7 @@ import org.box2d.jni.*;
 import static org.box2d.jni.include.MathFunctions.*;
 import static org.box2d.jni.libc.LibCFloat.*;
 import static org.box2d.jni.libc.LibCMath.*;
+import static org.box2d.jni.system.Sys.*;
 
 import static org.box2d.jni.test.TestMacros.*;
 
@@ -47,6 +48,7 @@ import static org.box2d.jni.test.TestMacros.*;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public class TestMath {
 
     // 0.0023 degrees
@@ -76,7 +78,7 @@ public class TestMath {
             // The two results can be off by 360 degrees (-pi and pi)
             if ( diff > B2_PI )
             {
-                    diff -= 2.0f * B2_PI;
+                diff -= 2.0f * B2_PI;
             }
 
             // The approximate atan2 is quite accurate
@@ -213,6 +215,57 @@ public class TestMath {
             float tolerance = 0.1f * B2_PI / 180.0f;
             ENSURE_SMALL( relativeAngle - unwoundAngle, tolerance );
         }
+
+	// World position boundary helpers. With large world mode off these collapse to the float
+	// ops, so the round trips hold in both builds.
+	{
+            b2Vec2 d = b2Vec2.malloc().set( 0.25f, -0.5f );
+            b2Pos base = b2Pos.nmalloc().set( 10.0f, -20.0f );
+            b2Pos p = b2OffsetPos( base, d, b2Pos.nmalloc() );
+            b2Vec2 back = b2SubPos( p, base, b2Vec2.malloc() );
+            ENSURE_SMALL( back.x() - d.x(), 8.0f * FLT_EPSILON );
+            ENSURE_SMALL( back.y() - d.y(), 8.0f * FLT_EPSILON );
+
+            b2Vec2 r = b2ToVec2( base, b2Vec2.malloc() );
+            ENSURE( r.x() == 10.0f && r.y() == -20.0f );
+
+            ENSURE( b2IsValidPosition( p ) );
+            ENSURE( b2IsValidPosition( b2Pos_zero ) );
+            ENSURE( b2IsValidWorldTransform( b2WorldTransform_identity ) );
+
+            b2WorldTransform wt = b2WorldTransform.nmalloc().set( b2Pos.nmalloc().set( 3.0f, -4.0f ), b2MakeRot( 0.7f, b2Rot.malloc() ) );
+            ENSURE( b2IsValidWorldTransform( wt ) );
+
+            // Local to world to local round trip
+            b2Vec2 local = b2Vec2.malloc().set( 1.5f, 2.5f );
+            b2Pos world = b2TransformWorldPoint( wt, local, b2Pos.nmalloc() );
+            b2Vec2 backLocal = b2InvTransformWorldPoint( wt, world, b2Vec2.malloc() );
+            ENSURE_SMALL( backLocal.x() - local.x(), 8.0f * FLT_EPSILON );
+            ENSURE_SMALL( backLocal.y() - local.y(), 8.0f * FLT_EPSILON );
+
+            // Relative transform of B in A matches a float reference at modest coordinates            
+            b2WorldTransform A = b2WorldTransform.nmalloc().set( b2Pos.nmalloc().set( -2.0f, 3.0f ), b2MakeRot( 1.0f, b2Rot.malloc() ) );
+            b2WorldTransform B = b2WorldTransform.nmalloc().set( b2Pos.nmalloc().set( 1.0f, 0.0f ), b2MakeRot( -2.0f, b2Rot.malloc() ) );
+            b2Transform rel = b2InvMulWorldTransforms( A, B, b2Transform.malloc() );
+            b2Transform refA = b2Transform.malloc().set( b2ToVec2( A.p(), b2Vec2.malloc() ), A.q() );
+            b2Transform refB = b2Transform.malloc().set( b2ToVec2( B.p(), b2Vec2.malloc() ), B.q() );
+            b2Transform ref = b2InvMulTransforms( refA, refB, b2Transform.malloc() );
+            ENSURE_SMALL( rel.p().x() - ref.p().x(), 8.0f * FLT_EPSILON );
+            ENSURE_SMALL( rel.p().y() - ref.p().y(), 8.0f * FLT_EPSILON );
+	}
+
+if (defined( BOX2D_DOUBLE_PRECISION )) {
+	// Far from the origin a float vector cannot resolve sub meter motion, but a double world
+	// position can. This is the whole point of large world mode.
+	{
+            b2Vec2 d = b2Vec2.malloc().set( 0.25f, -0.5f );
+            b2Pos base = b2Pos.nmalloc().set( 1.0e7f, 0.0f );
+            b2Pos p = b2OffsetPos( base, d, b2Pos.nmalloc() );
+            b2Vec2 back = b2SubPos( p, base, b2Vec2.malloc() );
+            ENSURE_SMALL( back.x() - d.x(), 1.0e-4f );
+            ENSURE_SMALL( back.y() - d.y(), 1.0e-4f );
+	}
+}
 
         return 0;
     }
