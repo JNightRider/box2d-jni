@@ -68,8 +68,8 @@ public interface b2AssertFcnI extends CallbackI {
     @Override
     public default void callback(long resp, long args) {
         int __result = invoke(
-                memGetStringUTF8(memGetAddress(memGetAddress(args))),
-                memGetStringUTF8(memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))),
+                memUTF(memGetAddress(memGetAddress(args))),
+                memUTF(memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))),
                 memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
         );
         apiClosureRet(resp, __result);

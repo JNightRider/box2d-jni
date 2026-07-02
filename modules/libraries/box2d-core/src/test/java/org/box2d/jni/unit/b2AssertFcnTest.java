@@ -54,8 +54,8 @@ public class b2AssertFcnTest {
      */
     @Test
     public void callback() {
-        long buffer0 = MemoryUtil.memMallocUTF8("1/0", LibCStdlib.nmalloc(20));
-        long buffer1 = MemoryUtil.memMallocUTF8("box2d.jni.log", LibCStdlib.nmalloc(20));
+        long buffer0 = MemoryUtil.memMallocUTF("1/0", LibCStdlib.nmalloc(20));
+        long buffer1 = MemoryUtil.memMallocUTF("box2d.jni.log", LibCStdlib.nmalloc(20));
 
         {
             b2AssertFcnI func = (condition, fileName, lineNumber) -> {

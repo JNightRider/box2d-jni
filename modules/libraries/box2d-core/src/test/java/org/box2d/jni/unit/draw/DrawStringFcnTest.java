@@ -66,14 +66,14 @@ public class DrawStringFcnTest {
             DrawStringFcnI func = (p, s, color, context) -> {
                 Debug.apiPrint("DrawStringFcnI: p=" + p.x() + ", " + p.y() + ", s=" + s + ", color=" + color);
                 Assert.assertEquals(b2HexColor.b2_colorBlue, color);
-                Assert.assertEquals("JNI_B2", MemoryUtil.memGetStringUTF8(s));
+                Assert.assertEquals("JNI_B2", MemoryUtil.memUTF(s));
                 
                 Assert.assertEquals(0xDDDEEEl, context);
                 
                 Assert.assertEquals(1f, p.x().floatValue(), 0.0f);
                 Assert.assertEquals(2f, p.y().floatValue(), 0.0f);
             };
-            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
+            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
         }
         try
         (
@@ -83,14 +83,14 @@ public class DrawStringFcnTest {
             DrawStringFcn func = DrawStringFcn.create((p, s, color, context) -> {
                 Debug.apiPrint("DrawStringFcnI: p=" + p.x() + ", " + p.y() + ", s=" + s + ", color=" + color);
                 Assert.assertEquals(b2HexColor.b2_colorBlue, color);
-                Assert.assertEquals("JNI_B2", MemoryUtil.memGetStringUTF8(s));
+                Assert.assertEquals("JNI_B2", MemoryUtil.memUTF(s));
                 
                 Assert.assertEquals(0xDDDEEEl, context);
                 
                 Assert.assertEquals(1f, p.x().floatValue(), 0.0f);
                 Assert.assertEquals(2f, p.y().floatValue(), 0.0f);
             });
-            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF8(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
+            JNIB2.invoke_VEC2_PIPV(v.address(), MemoryUtil.memMallocUTF(str, nmem), b2HexColor.b2_colorBlue, 0xDDDEEEl, func.address());
         }
         LibCStdlib.nfree(nmem);
         Callbacks.b2FreeCallbacks();

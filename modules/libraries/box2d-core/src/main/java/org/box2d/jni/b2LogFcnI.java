@@ -65,7 +65,7 @@ public interface b2LogFcnI extends CallbackI {
     @Override
     public default void callback(long resp, long args) {
         invoke(
-                memGetStringUTF8(memGetAddress(memGetAddress(args)))
+                memUTF(memGetAddress(memGetAddress(args)))
         );
     }
 

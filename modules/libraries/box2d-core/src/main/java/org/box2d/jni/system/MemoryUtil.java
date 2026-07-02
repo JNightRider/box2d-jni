@@ -97,11 +97,18 @@ public final class MemoryUtil {
     
     public static native void nmemFree(Buffer ptr);
     
-    public static long memMallocUTF8L(String value, long len) {
-        return memMallocUTF8(value, LibCStdlib.nmalloc(len));
+    public static long memMallocUTF(String value) {
+        long ptr = nGetStringUTFChars(value);
+        long size = nstrlen(ptr) + 1;
+        long address = LibCStdlib.nmalloc(size);
+        if (ptr != NULL) {
+            nmemcpy(address, ptr, size);
+        }
+        nReleaseStringUTFChars(value, ptr);
+        return address;
     }
 
-    public static long memMallocUTF8(String value, long __result) {
+    public static long memMallocUTF(String value, long __result) {
         long ptr = nGetStringUTFChars(value);
         if (ptr != NULL) {
             nmemcpy(__result, ptr, nstrlen(ptr) + 1);
@@ -109,17 +116,15 @@ public final class MemoryUtil {
         nReleaseStringUTFChars(value, ptr);
         return __result;
     }
-    
-    public static String memGetStringUTF8(long ptr) {
+
+    public static String memUTF(long ptr) {
         if (ptr == NULL) {
             return null;
         }
         return nNewStringUTF(ptr);
     }
-    
-    public static native long nGetStringUTFChars(String string);
-    
-    public static native void nReleaseStringUTFChars(String string, long ptr);
-    
-    public static native String nNewStringUTF(long ptr);
+
+    static native long nGetStringUTFChars(String string);    
+    static native void nReleaseStringUTFChars(String string, long ptr);    
+    static native String nNewStringUTF(long ptr);
 }

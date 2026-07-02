@@ -316,7 +316,7 @@ public final class ArenaAlloc extends Uintptr implements AutoCloseable {
     }
 
     // -------------------------------------------------
-
+    
     /**
      * Returns the stack of the current thread.
      *
