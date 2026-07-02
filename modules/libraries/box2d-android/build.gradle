@@ -1,5 +1,7 @@
 import static org.box2d.jni.BuildSrc.*
 
+description = 'box2d-jni android'
+
 def b2bt     = findProperty('box2d.jni.bt')
 def b2flavor = findProperty('box2d.jni.flavor')
 def target   = findProperty('box2d.jni.android.target')
