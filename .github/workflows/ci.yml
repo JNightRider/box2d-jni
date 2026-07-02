@@ -40,9 +40,9 @@ jobs:
       
       - name: gradlew test
         env:
-        JAVA_TOOL_OPTIONS: >-
-          -DBOX2D_JNI_NDEBUG=true
-          -Dorg.box2d.jni.system.Debug.Color=true
+          JAVA_TOOL_OPTIONS: >-
+            -DBOX2D_JNI_NDEBUG=true
+            -Dorg.box2d.jni.system.Debug.Color=true
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
             --console=plain
