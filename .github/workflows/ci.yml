@@ -41,6 +41,8 @@ jobs:
       - name: gradlew test
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=true clean test \
+            -DBOX2D_JNI_NDEBUG=true \
+            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - if: failure()
         uses: actions/upload-artifact@v7
@@ -80,6 +82,8 @@ jobs:
       - name: gradlew build
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
+            -DBOX2D_JNI_NDEBUG=true \
+            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - if: failure()
         uses: actions/upload-artifact@v7
@@ -123,6 +127,8 @@ jobs:
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
+            -DBOX2D_JNI_NDEBUG=true \
+            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - name: Upload test report
         if: failure()
@@ -182,6 +188,8 @@ jobs:
             export RANLIB=llvm-ranlib
             export NM=llvm-nm
             ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
+            -DBOX2D_JNI_NDEBUG=true \
+            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - name: Upload test report
         if: failure()
@@ -222,6 +230,8 @@ jobs:
       - name: gradlew build
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
+            -DBOX2D_JNI_NDEBUG=true \
+            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - name: Upload test report
         if: failure()
@@ -265,6 +275,8 @@ jobs:
       - name: gradlew build
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
+            -DBOX2D_JNI_NDEBUG=true \
+            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - name: Upload test report
         if: failure()
