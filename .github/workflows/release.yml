@@ -1,8 +1,11 @@
 ---
-# GitHub Actions workflow for commits pushed to the box2d-jni repo - all branches
+# GitHub Actions workflow for box2d-jni tags (all branches - deployment)
 
-name: CI at GitHub
-on: [push, workflow_dispatch]
+name: CD at GitHub
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   Java21-Linux:
