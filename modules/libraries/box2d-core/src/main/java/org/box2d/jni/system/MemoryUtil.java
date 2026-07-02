@@ -107,6 +107,17 @@ public final class MemoryUtil {
         nReleaseStringUTFChars(value, ptr);
         return address;
     }
+    
+    public static long memMallocUTF(String value, ArenaAlloc alloc) {
+        long ptr = nGetStringUTFChars(value);
+        long size = nstrlen(ptr) + 1;
+        long address = alloc.nmalloc((int)size);
+        if (ptr != NULL) {
+            nmemcpy(address, ptr, size);
+        }
+        nReleaseStringUTFChars(value, ptr);
+        return address;
+    }
 
     public static long memMallocUTF(String value, long __result) {
         long ptr = nGetStringUTFChars(value);

@@ -105,8 +105,12 @@ import org.box2d.jni.readonly.ConstB2WeldJointDef;
 import org.box2d.jni.readonly.ConstB2WheelJointDef;
 import org.box2d.jni.readonly.ConstB2WorldDef;
 
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.Library;
+
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Class that represents the {@code <box2d.h>} header of box2d.
@@ -1125,6 +1129,25 @@ public final class Box2d {
      * {@code B2_API bool b2SaveRecordingToFile( const b2Recording* recording, const char* path ); }
      *
      * @param recording ConstB2Recording
+     * @param path String
+     *
+     * @return boolean
+     */
+    public static boolean b2SaveRecordingToFile(ConstB2Recording recording, String path) {
+        ArenaAlloc stack = allocGet(); int stackPointer = stack.getPointer();
+        try {
+            stack.nUTF(path);
+            long cpath = stack.getPointerAddress();
+            return nb2SaveRecordingToFile(recording.address(), cpath);
+        } finally {
+            stack.setPointer(stackPointer);
+        }
+    }
+
+    /**
+     * {@code B2_API bool b2SaveRecordingToFile( const b2Recording* recording, const char* path ); }
+     *
+     * @param recording ConstB2Recording
      * @param path long
      *
      * @return boolean
@@ -1138,6 +1161,24 @@ public final class Box2d {
     public static native boolean nb2SaveRecordingToFile(long recording, long path);
 
     // --- [ b2LoadRecordingFromFile ] ---
+
+    /**
+     * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
+     *
+     * @param path String
+     *
+     * @return b2Recording
+     */
+    public static b2Recording b2LoadRecordingFromFile(String path) {
+        ArenaAlloc stack = allocGet(); int stackPointer = stack.getPointer();
+        try {
+            stack.nUTF(path);
+            long cpath = stack.getPointerAddress();
+            return b2LoadRecordingFromFile(cpath);
+        } finally {
+            stack.setPointer(stackPointer);
+        }
+    }
 
     /**
      * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
@@ -1305,6 +1346,23 @@ public final class Box2d {
      * {@code B2_API void b2Body_SetName( b2BodyId bodyId, const char* name ); }
      *
      * @param bodyId b2BodyId
+     * @param name String
+     */
+    public static void b2Body_SetName(b2BodyId bodyId, String name) {
+        ArenaAlloc stack = allocGet(); int stackPointer = stack.getPointer();
+        try {
+            stack.nUTF(name);
+            long nameAddress = stack.getPointerAddress();
+            b2Body_SetName(bodyId, nameAddress);
+        } finally {
+            stack.setPointer(stackPointer);
+        }
+    }
+
+    /**
+     * {@code B2_API void b2Body_SetName( b2BodyId bodyId, const char* name ); }
+     *
+     * @param bodyId b2BodyId
      * @param name long
      */
     public static void b2Body_SetName(b2BodyId bodyId, long name) {
@@ -1316,6 +1374,18 @@ public final class Box2d {
     public static native void nb2Body_SetName(long bodyId, long name);
 
     // --- [ b2Body_GetName ] ---
+
+    /**
+     * {@code B2_API const char* b2Body_GetName( b2BodyId bodyId ); }
+     *
+     * @param bodyId b2BodyId
+     *
+     * @return String
+     */
+    public static String b2Body_GetName0(b2BodyId bodyId) {
+        long ptr = b2Body_GetName(bodyId);
+        return memUTF(ptr);
+    }
 
     /**
      * {@code B2_API const char* b2Body_GetName( b2BodyId bodyId ); }

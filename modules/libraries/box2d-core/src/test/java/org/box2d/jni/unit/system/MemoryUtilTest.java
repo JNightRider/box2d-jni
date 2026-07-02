@@ -87,5 +87,14 @@ public class MemoryUtilTest {
             Assert.assertEquals(50, Memory.memGetInt(ptr + 4 * 2));
             MemoryUtil.memFree(buffer);
         }
+        {
+            String txtSimple = "Hola | HI > año";
+            long chars = MemoryUtil.memMallocUTF(txtSimple);
+            Assert.assertNotEquals(0L, chars);
+
+            String recSimple = MemoryUtil.memUTF(chars);
+            Assert.assertEquals(txtSimple, recSimple);
+            LibCStdlib.nfree(chars);
+        }
     }
 }

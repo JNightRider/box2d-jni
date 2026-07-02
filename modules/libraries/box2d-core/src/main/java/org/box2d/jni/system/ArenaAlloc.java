@@ -316,6 +316,12 @@ public final class ArenaAlloc extends Uintptr implements AutoCloseable {
     }
 
     // -------------------------------------------------
+
+    public long nUTF(String text) {
+        return MemoryUtil.memMallocUTF(text, this);
+    }
+
+    // -------------------------------------------------
     
     /**
      * Returns the stack of the current thread.

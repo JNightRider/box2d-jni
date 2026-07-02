@@ -54,7 +54,7 @@ public final class Constants {
      * #endif
      * }
      */
-    public static final float B2_HUGE = Pointer.BOX2D_DOUBLE_PRECISION
+    public static final Number B2_HUGE = Pointer.BOX2D_DOUBLE_PRECISION
                             ? (1.0e9f * b2GetLengthUnitsPerMeter())
                             : (1.0e5f * b2GetLengthUnitsPerMeter());
 
