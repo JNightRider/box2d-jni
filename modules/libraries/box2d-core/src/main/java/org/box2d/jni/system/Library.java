@@ -56,7 +56,7 @@ public final class Library {
 
     static {
         for (var o : System.getProperties().entrySet()) {
-            System.out.println("-D" + o.getKey() + "=" + o.getKey());
+            System.out.println("-D" + o.getKey() + "=" + o.getValue());
         }
         String libpath = Sys.B2JNI_LIB_PATH.get(null),
                libname = Sys.B2JNI_LIB_NAME.get(null);

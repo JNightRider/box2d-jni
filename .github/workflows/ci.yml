@@ -39,10 +39,12 @@ jobs:
           pkg-config --modversion libffi
       
       - name: gradlew test
+        env:
+        JAVA_TOOL_OPTIONS: >-
+          -DBOX2D_JNI_NDEBUG=true
+          -Dorg.box2d.jni.system.Debug.Color=true
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test \
-            -DBOX2D_JNI_NDEBUG=true \
-            -Dorg.box2d.jni.system.Debug.Color=true \
             --console=plain
       - if: failure()
         uses: actions/upload-artifact@v7
