@@ -63,3 +63,44 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_libc_LibCStdlib_nfree
     UNUSED_PARAMS(__env, clazz)
     free(ptr);
 }
+
+/*
+ * Class:     org_box2d_jni_libc_LibCStdlib
+ * Method:    naligned_alloc
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_libc_LibCStdlib_naligned_1alloc
+    (JNIEnv *__env, jclass clazz, jlong alignment, jlong size)
+{
+    UNUSED_PARAMS(__env, clazz)
+#ifdef _WIN32
+    return (jlong)(uintptr_t)_aligned_malloc((size_t)size, (size_t)alignment);
+#else
+    #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L) /* c11 */
+        return (jlong)(uintptr_t)aligned_alloc((size_t)alignment, (size_t)size);
+    #else
+        void *ptr = NULL;
+        if (posix_memalign(&ptr, (size_t)alignment, (size_t)size)) {
+            return NULL;
+        }
+        return (jlong)(uintptr_t)ptr;
+    #endif
+#endif
+}
+
+/*
+ * Class:     org_box2d_jni_libc_LibCStdlib
+ * Method:    naligned_free
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_libc_LibCStdlib_naligned_1free
+    (JNIEnv *__env, jclass clazz, jlong address)
+{
+    void* ptr = (void*)(uintptr_t)address;
+    UNUSED_PARAMS(__env, clazz)
+#if defined(_WIN32)
+    _aligned_free(ptr);
+#else
+    free(ptr);
+#endif
+}

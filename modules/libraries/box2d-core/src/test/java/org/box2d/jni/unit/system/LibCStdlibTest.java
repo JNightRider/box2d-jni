@@ -28,41 +28,37 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.libc;
+package org.box2d.jni.unit.system;
 
-import java.nio.ByteBuffer;
+import static org.box2d.jni.libc.LibCStdlib.*;
+import static org.box2d.jni.system.Pointer.*;
 
-import org.box2d.jni.system.Library;
-
-import static org.box2d.jni.system.Memory.*;
-import static org.box2d.jni.system.MemoryUtil.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * Implementation of C libraries: {@code <stdlib.h>}
+ * A class to manage the unit tests of the {@link MemoryUtil} class.
  *
  * @author wil
- * @version 1.0.1
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 1.0.5
  */
-public final class LibCStdlib {
-    static {
-        Library.initialize();
+public class LibCStdlibTest {
+
+    /**
+     * Initialize all tests.
+     */
+    @Test
+    public void clib() {
+        {
+            long ptr = nmalloc(8);
+            Assert.assertNotEquals(NULL, ptr);
+            nfree(ptr);
+        }
+        {
+            long alig_ptr = naligned_alloc(64, 128);
+            Assert.assertNotEquals(NULL, alig_ptr);
+            naligned_free(alig_ptr);
+        }
     }
-    
-    public static ByteBuffer malloc(long size) {
-        long ptr = nmalloc(size);
-        return memByteBuffer(ptr, (int)size);
-    }
-    
-    public static native long nmalloc(long size);
-    
-    public static void free(ByteBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
-    }
-    
-    public static native void nfree(long ptr);
-    
-    public static native long naligned_alloc(long alignment, long size);
-    
-    public static native void naligned_free(long ptr);
 }
