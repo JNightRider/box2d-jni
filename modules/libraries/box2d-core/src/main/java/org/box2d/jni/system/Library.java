@@ -55,6 +55,9 @@ public final class Library {
     public static final String JNI_LIBRARY_NAME = "box2d-jni";
 
     static {
+        for (var o : System.getProperties().entrySet()) {
+            System.out.println("-D" + o.getKey() + "=" + o.getKey());
+        }
         String libpath = Sys.B2JNI_LIB_PATH.get(null),
                libname = Sys.B2JNI_LIB_NAME.get(null);
 
