@@ -380,7 +380,7 @@ public class b2DebugDraw extends Struct<b2DebugDraw> {
      * @param value long
      * @return b2DebugDraw
      */
-    public b2DebugDraw DrawBoundsFcn(DrawStringFcnI value) {
+    public b2DebugDraw DrawBoundsFcn(DrawBoundsFcnI value) {
         nDrawBoundsFcn(address(), value.address());
         return this;
     }
