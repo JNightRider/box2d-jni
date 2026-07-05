@@ -105,10 +105,14 @@ public final class Library {
         apiLogMore("ARCH: %c{" + arch.getName() + "}", Color.PURPLE);
         apiLogMore("VM: %c{" + Platform.getJavaName() + "}", Color.PURPLE);
         apiLogMore("VM Ver: %c{" + Platform.getJavaVersion() + "}", Color.PURPLE);
-        
+
         boolean dprecision = BOX2D_DOUBLE_PRECISION.get(false),
                 ndebug     = BOX2D_NDEBUG.get(false);
-        
+
+        if (DISABLE_DEBUG.get(null) == null) {
+            DISABLE_DEBUG.set(!ndebug);
+        }
+
         String precision = dprecision
                 ? "Dp" 
                 : "Sp",
