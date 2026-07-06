@@ -34,7 +34,7 @@ import org.box2d.jni.b2TaskCallbackI;
 import org.box2d.jni.b2WorldDef;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.JNI;
-
+import org.box2d.jni.system.Sys;
 import static org.box2d.jni.system.Pointer.*;
 
 import org.junit.Assert;
@@ -48,6 +48,7 @@ import org.junit.Test;
  * @since 1.0.0
  */
 public class b2WorldDefTest {
+    static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
      * Initialize all tests.

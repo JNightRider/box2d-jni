@@ -31,7 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.test;
 
 import org.box2d.jni.test.internal.*;
-import org.box2d.jni.system.Debug;
 
 import static java.lang.System.out;
 
@@ -52,7 +51,6 @@ import static org.box2d.jni.test.internal.Extern.*;
 public class Main {
     
     static {
-        Debug.enabled(false);
         CollisionTest = extern(new TestCollision(), TestCollision::CollisionTest);
         DistanceTest  = extern(new TestDistance(), TestDistance::DistanceTest);
         MathTest      = extern(new TestMath(), TestMath::MathTest);

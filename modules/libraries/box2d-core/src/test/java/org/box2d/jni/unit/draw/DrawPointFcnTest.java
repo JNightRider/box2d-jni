@@ -37,6 +37,7 @@ import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNIB2;
+import org.box2d.jni.system.Sys;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,6 +50,8 @@ import org.junit.Test;
  * @since 1.0.0
  */
 public class DrawPointFcnTest {
+    static { Sys.BOX2D_NDEBUG.set(true); }
+
     /**
      * Initialize all tests.
      */

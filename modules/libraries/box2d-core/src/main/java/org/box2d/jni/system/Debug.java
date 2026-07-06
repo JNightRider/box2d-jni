@@ -117,39 +117,40 @@ public final class Debug {
     protected static Boolean DEBUG;
     private static final PrintStream DEBUG_STREAM = System.out;
     
-    static {
+    private static void check() {
         DEBUG = !Sys.DISABLE_DEBUG.get(false);
     }
     
-    public static void enabled(boolean flag) {
-        DEBUG = flag;
-    }
-    
     public static void apiPrint(CharSequence msg) {
+        check();
         if (DEBUG) {
             DEBUG_STREAM.print(Color.sprintf("%c{" + msg + "}\n", Color.CYAN));
         }
     }
 
     public static void apiLog(CharSequence msg) {
+        check();
         if (DEBUG) {
             DEBUG_STREAM.print(Color.sprintf("[  %c{ok}  ] " + msg + "\n", Color.GREEN));
         }
     }
     
     public static void apiWarr(CharSequence msg) {
+        check();
         if (DEBUG) {
             DEBUG_STREAM.print(Color.sprintf("[ %c{warr} ] " + msg + "\n", Color.YELLOW));
         }
     }
     
     public static void apiErro(CharSequence msg) {
+        check();
         if (DEBUG) {
             DEBUG_STREAM.print(Color.sprintf("[ %c{erro} ] %c{" + msg + "}\n", Color.RED, Color.WHITE));
         }
     }
 
     public static void apiLogMore(CharSequence msg, Color ...colors) {
+        check();
         if (DEBUG) {
             DEBUG_STREAM.print(Color.sprintf("\t\t" + msg + "\n", colors));
         }

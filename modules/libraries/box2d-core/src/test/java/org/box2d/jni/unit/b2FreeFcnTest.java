@@ -34,6 +34,7 @@ import org.box2d.jni.b2FreeFcn;
 import org.box2d.jni.b2FreeFcnI;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.JNI;
+import org.box2d.jni.system.Sys;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,6 +47,8 @@ import org.junit.Test;
  * @since 1.0.0
  */
 public class b2FreeFcnTest {
+    static { Sys.BOX2D_NDEBUG.set(true); }
+
     /**
      * Initialize all tests.
      */

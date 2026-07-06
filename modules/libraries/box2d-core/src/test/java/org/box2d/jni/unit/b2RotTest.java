@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.unit;
 
 import org.box2d.jni.b2Rot;
+import org.box2d.jni.system.Sys;
 import static org.box2d.jni.system.Pointer.*;
 
 import org.junit.Assert;
@@ -44,7 +45,8 @@ import org.junit.Test;
  * @since 1.0.0
  */
 public class b2RotTest {
-    
+    static { Sys.BOX2D_NDEBUG.set(true); }
+
     /**
      * Initialize all tests.
      */

@@ -109,10 +109,6 @@ public final class Library {
         boolean dprecision = BOX2D_DOUBLE_PRECISION.get(false),
                 ndebug     = BOX2D_NDEBUG.get(false);
 
-        if (DISABLE_DEBUG.get(null) == null) {
-            DISABLE_DEBUG.set(!ndebug);
-        }
-
         String precision = dprecision
                 ? "Dp" 
                 : "Sp",
@@ -175,6 +171,10 @@ public final class Library {
             load.accept(libbin.toAbsolutePath().toString());
         } catch (IOException ex) {
             throw new IllegalStateException(ex);
+        }
+        // check debug Box2d-JNI
+        if (DISABLE_DEBUG.get(null) == null) {
+            DISABLE_DEBUG.set(!ndebug);
         }
     }
 }

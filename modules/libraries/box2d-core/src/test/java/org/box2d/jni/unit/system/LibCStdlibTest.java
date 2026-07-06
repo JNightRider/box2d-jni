@@ -32,6 +32,7 @@ package org.box2d.jni.unit.system;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Pointer.*;
+import org.box2d.jni.system.Sys;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,6 +45,7 @@ import org.junit.Test;
  * @since 1.0.5
  */
 public class LibCStdlibTest {
+    static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
      * Initialize all tests.
