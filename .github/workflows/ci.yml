@@ -97,10 +97,7 @@ jobs:
 
   Java21-Linux-PPC64LE:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
-    runs-on:
-      - self-hosted
-      - linux
-      - ppc64le
+    runs-on: [self-hosted, linux, ppc64le]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
