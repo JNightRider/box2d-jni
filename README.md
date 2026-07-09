@@ -21,18 +21,19 @@ Box2d-JNI has been ported to many different platforms.
 At the time of release, the following basic configurations have been
 tested:
 
-| Architecture   | Operating System            | Compiler | Classifier                |
-|----------------|-----------------------------|----------|---------------------------|
-| AArch32(ARM32) | Linux/Android (arm64_v8a)   | Clang    | `:android(@aar)`          |
-| AArch64(ARM64) | Linux/Android (armeabi_v7a) | Clang    | `:android(@aar)`          |
-| X86            | Linux/Android (x86)         | Clang    | `:android(@aar)`          |
-| X86-64         | Linux/Android (x86_64)      | Clang    | `:android(@aar)`          |
-| X86-64         | Linux                       | GCC      | `:linux_x64(Dp/Sp)`       |
-| aarch64        | Linux                       | GCC      | `:linux_aarch64(Dp/Sp)`   |
-| X86-64         | Windows/MinGW               | GCC      | `:windows_x64(Dp/Sp)`     |
-| aarch64        | Windows/MinGW               | Clang    | `:windows_aarch64(Dp/Sp)` |
-| X86-64         | Mac OSX                     | Clang    | `:osx_x64(Dp/Sp)`         |
-| aarch64        | Mac OSX                     | Clang    | `:osx_aarch64(Dp/Sp)`     |
+| Architecture      | Operating System            | Compiler | Classifier                |
+|-------------------|-----------------------------|----------|---------------------------|
+| AArch32(ARM32)    | Linux/Android (arm64_v8a)   | Clang    | `:android(@aar)`          |
+| AArch64(ARM64)    | Linux/Android (armeabi_v7a) | Clang    | `:android(@aar)`          |
+| RISC-V64(riscv64) | Linux/Android (riscv64)     | Clang    | `:android(@aar)`          |
+| X86               | Linux/Android (x86)         | Clang    | `:android(@aar)`          |
+| X86-64            | Linux/Android (x86_64)      | Clang    | `:android(@aar)`          |
+| X86-64            | Linux                       | GCC      | `:linux_x64(Dp/Sp)`       |
+| aarch64           | Linux                       | GCC      | `:linux_aarch64(Dp/Sp)`   |
+| X86-64            | Windows/MinGW               | GCC      | `:windows_x64(Dp/Sp)`     |
+| aarch64           | Windows/MinGW               | Clang    | `:windows_aarch64(Dp/Sp)` |
+| X86-64            | Mac OSX                     | Clang    | `:osx_x64(Dp/Sp)`         |
+| aarch64           | Mac OSX                     | Clang    | `:osx_aarch64(Dp/Sp)`     |
 
 ## Starting Box2d-JNI
 
