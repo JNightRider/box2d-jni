@@ -39,72 +39,49 @@ package org.box2d.jni.system;
  * @since 1.0.0
  */
 public enum VarType {
-    Int8t("byte|int8_t") {
-        @Override public int sizeof() {
-            return __nsizeof(int8_t);
-        }
-    },
-    Int16t("short|int16_t") {
-        @Override public int sizeof() {
-            return __nsizeof(int16_t);
-        }
-    },
-    Int32t("int|int32_t") {
-        @Override public int sizeof() {
-            return __nsizeof(int32_t);
-        }
-    },
-    Int64t("long|int64_t") {
-        @Override public int sizeof() {
-            return __nsizeof(int64_t);
-        }
-    },
-    Float("float") {
-        @Override public int sizeof() {
-            return __nsizeof(float_t);
-        }
-    },
-    Double("double") {
-        @Override public int sizeof() {
-            return __nsizeof(double_t);
-        }
-    },
-    Uintptrt("uintptr_t") {
-        @Override public int sizeof() {
-            return __nsizeof(uintptr_t);
-        }
-    },
-    Pointer("void*") {
-        @Override public int sizeof() {
-            return __nsizeof(uintptr_t);
-        }
-    };
+    Int8t("byte|int8_t", (int)nint8_t()),
+    Int16t("short|int16_t", (int) nint16_t()),
+    Int32t("int|int32_t", (int) nint32_t()),
+    Int64t("long|int64_t", (int) nint64_t()),
+    Float("float", (int) nfloat_t()),
+    Double("double", (int) ndouble_t()),
+    Uintptrt("uintptr_t", (int) ndouble_t()),
+    Pointer("void*", (int) npointer());
     
-    private static final int
-            int8_t     = 0x0001,
-            int16_t    = 0x0002,
-            int32_t    = 0x0003,
-            int64_t    = 0x0004,
-            float_t    = 0x0005,
-            double_t   = 0x0006,
-            uintptr_t  = 0x0007;
-
     static {
         Library.initialize();
     }
     
     private final String name;
+    private final int sizeof;
 
-    private VarType(String name) {
+    private VarType(String name, int sizeof) {
         this.name = name;
+        this.sizeof = sizeof;
     }
+    
+    public static native long nint8_t();
+    
+    public static native long nint16_t();
+    
+    public static native long nint32_t();
+    
+    public static native long nint64_t();
+    
+    public static native long nfloat_t();
+    
+    public static native long ndouble_t();
+    
+    public static native long nuintptr_t();
+    
+    public static native long npointer();
 
-    public abstract int sizeof();
-
-    private static native int __nsizeof(int __type);
+    public int sizeof() {
+        return sizeof;
+    }
 
     @Override
     public String toString() {
-        return String.valueOf(name);
+        return String.valueOf('(' + name + ')' + sizeof + "bits");
     }
 }

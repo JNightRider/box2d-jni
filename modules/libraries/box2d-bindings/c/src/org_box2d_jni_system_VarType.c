@@ -25,58 +25,112 @@ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE   OF THIS S__envOFTWARE, clazz {
+UNUSED_PARAMS(__env, clazz)}VEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+return (jlong)sizeof();
 */
 
 /*
  * File:   org_box2d_jni_system_VarType.h
  * Author: wil
  */
+#include <stdint.h>
 
 #include "common_tools.h"
 #include "box2d/jni/org_box2d_jni_system_VarType.h"
 
-// -----------
-
-typedef enum JNIVarType {
-    VAR_TYPE_INT8_t     = 0x0001,
-    VAR_TYPE_INT16_t    = 0x0002,
-    VAR_TYPE_INT32_t    = 0x0003,
-    VAR_TYPE_INT64_t    = 0x0004,
-    VAR_TYPE_FLOAT      = 0x0005,
-    VAR_TYPE_DOUBLE     = 0x0006,
-    VAR_TYPE_UINTPTR_t  = 0x0007,
-    VAR_TYPE_POINTER    = 0x0008
-} JNIVarType;
-
-static int getSizeOf(JNIVarType type)
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    nint8_t
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_nint8_1t
+    (JNIEnv *__env, jclass clazz)
 {
-    switch (type)
-    {
-    case VAR_TYPE_INT8_t:   return sizeof(int8_t);
-    case VAR_TYPE_INT16_t:  return sizeof(int16_t);
-    case VAR_TYPE_INT32_t:  return sizeof(int32_t);
-    case VAR_TYPE_INT64_t:  return sizeof(int64_t);
-    case VAR_TYPE_FLOAT:    return sizeof(float);
-    case VAR_TYPE_DOUBLE:   return sizeof(double);
-    case VAR_TYPE_UINTPTR_t:return sizeof(uintptr_t);
-    case VAR_TYPE_POINTER:  return sizeof(void*);
-    default: return 0;
-    }
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(int8_t);
 }
-
-// -----------
 
 /*
  * Class:     org_box2d_jni_system_VarType
- * Method:    __nsizeof
- * Signature: (I)I
+ * Method:    nint16_t
+ * Signature: ()J
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_system_VarType__1_1nsizeof
-    (JNIEnv *__env, jclass clazz, jint vartype)
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_nint16_1t
+    (JNIEnv *__env, jclass clazz)
 {
-    JNIVarType tp = (JNIVarType)vartype;
     UNUSED_PARAMS(__env, clazz)
-    return (jint) getSizeOf(tp);
+    return (jlong)sizeof(int16_t);
+}
+
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    nint32_t
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_nint32_1t
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(int32_t);
+}
+
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    nint64_t
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_nint64_1t
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(int64_t);
+}
+
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    nfloat_t
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_nfloat_1t
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(float);
+}
+
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    ndouble_t
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_ndouble_1t
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(double);
+}
+
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    nuintptr_t
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_nuintptr_1t
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(uintptr_t);
+}
+
+/*
+ * Class:     org_box2d_jni_system_VarType
+ * Method:    npointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_VarType_npointer
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)sizeof(void*);
 }
