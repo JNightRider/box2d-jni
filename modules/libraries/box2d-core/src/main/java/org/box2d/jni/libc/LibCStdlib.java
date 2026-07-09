@@ -49,6 +49,13 @@ public final class LibCStdlib {
         Library.initialize();
     }
     
+    public static ByteBuffer calloc(long num, long size) {
+        long ptr = ncalloc(num, size);
+        return memByteBuffer(ptr, (int)size);
+    }
+    
+    public static native long ncalloc(long num, long size);
+    
     public static ByteBuffer malloc(long size) {
         long ptr = nmalloc(size);
         return memByteBuffer(ptr, (int)size);
@@ -61,6 +68,11 @@ public final class LibCStdlib {
     }
     
     public static native void nfree(long ptr);
+    
+    public static ByteBuffer aligned_alloc(long alignment, long size) {
+        long ptr = naligned_alloc(alignment, size);
+        return memByteBuffer(ptr, (int)size);
+    }
     
     public static native long naligned_alloc(long alignment, long size);
     

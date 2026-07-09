@@ -34,10 +34,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Author: wil
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "common_tools.h"
 #include "box2d/jni/org_box2d_jni_libc_LibCStdlib.h"
+
+/*
+ * Class:     org_box2d_jni_libc_LibCStdlib
+ * Method:    ncalloc
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_libc_LibCStdlib_ncalloc
+  (JNIEnv *, jclass, jlong num, jlong size);
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)(uintptr_t)calloc((size_t)num, (size_t)size);
+}
 
 /*
  * Class:     org_box2d_jni_libc_LibCStdlib
