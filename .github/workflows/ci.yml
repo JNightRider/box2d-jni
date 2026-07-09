@@ -95,6 +95,51 @@ jobs:
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
 
+  Java21-Linux-PPC64LE:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    runs-on:
+      - self-hosted
+      - linux
+      - ppc64le
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 21
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            autoconf \
+            automake \
+            libtool \
+            texinfo \
+            build-essential
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Verify toolchain
+        run: |
+          uname -a
+          uname -m
+          java -version
+          gcc --version
+          cmake --version
+      - name: gradlew build
+        env:
+          JAVA_TOOL_OPTIONS: >-
+            -DBOX2D_JNI_NDEBUG=true
+            -Dorg.box2d.jni.system.Debug.Color=true
+        run: |
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-linux
+          path: |
+            modules/libraries/box2d-core/build/reports/tests/test
+          if-no-files-found: ignore
+
   Java21-Windows64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: windows-latest
