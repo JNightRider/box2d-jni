@@ -61,13 +61,20 @@ public enum AndroidAbi {
         Clang.x86_64_linux_android,
         "x86_64",
         "Android_X86_64"
+    ),
+    riscv64(
+        Host.riscv64_linux_android35,
+        Clang.riscv64_linux_android35,
+        "riscv64",
+        "Android_RISCV64"
     );
 
     public static enum Host {
-        arm_linux_androideabi("arm-linux-androideabi"), // 32-bit ARM
-        aarch64_linux_android("aarch64-linux-android"), // 64-bit ARM
-        i686_linux_android("i686-linux-android"),       // 32-bit Intel x86
-        x86_64_linux_android("x86_64-linux-android");   // 64-bit Intel x86
+        arm_linux_androideabi("arm-linux-androideabi"),     // 32-bit ARM
+        aarch64_linux_android("aarch64-linux-android"),     // 64-bit ARM
+        i686_linux_android("i686-linux-android"),           // 32-bit Intel x86
+        x86_64_linux_android("x86_64-linux-android"),       // 64-bit Intel x86
+        riscv64_linux_android35("riscv64-linux-android");   // 64-bist riscv
         
         private final String name;
 
@@ -89,7 +96,8 @@ public enum AndroidAbi {
         armv7a_linux_androideabi("armv7a-linux-androideabi"),
         aarch64_linux_android("aarch64-linux-android"),
         i686_linux_android("i686-linux-android"),
-        x86_64_linux_android("x86_64-linux-android");
+        x86_64_linux_android("x86_64-linux-android"),
+        riscv64_linux_android35("riscv64-linux-android");
         
         private final String name;
 
