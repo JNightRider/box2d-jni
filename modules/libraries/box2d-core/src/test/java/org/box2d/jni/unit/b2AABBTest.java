@@ -88,6 +88,32 @@ public class b2AABBTest {
                 }
             }            
         }
+        try (b2AABB ptr = b2AABB.calloc()) {
+            Assert.assertNotEquals(NULL, ptr.address());
+            // set
+            {
+                try (b2Vec2 a = b2Vec2.malloc()) {
+                    a.x(5.6f).y(-1.4f);
+                    ptr.lowerBound(a);
+                }
+
+                try (b2Vec2 b = b2Vec2.malloc()) {
+                    b.x(0.5f).y(1.1f);
+                    ptr.upperBound(b);
+                }
+            }
+            //get
+            {
+                try (b2Vec2 a = ptr.lowerBound()) {
+                    Assert.assertEquals(5.6f, a.x(), 0.0f);
+                    Assert.assertEquals(-1.4f, a.y(), 0.0f);
+                }
+                try (b2Vec2 b = ptr.upperBound()) {
+                    Assert.assertEquals(0.5f, b.x(), 0.0f);
+                    Assert.assertEquals(1.1f, b.y(), 0.0f);
+                }
+            }            
+        }
     }
     
     /**

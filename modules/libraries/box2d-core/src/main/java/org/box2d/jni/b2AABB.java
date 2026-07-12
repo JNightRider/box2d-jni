@@ -200,7 +200,16 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
     public static b2AABB calloc(ArenaAlloc alloc) {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2AABB(() -> ptr);
-    }   
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2AABB}.
+     *
+     * @return b2AABB
+     */
+    public static b2AABB calloc() {
+        return new b2AABB(ncalloc(1, SIZEOF));
+    }
 
     /**
      * Reserve memory for the new object {@code b2AABB}.
@@ -209,6 +218,16 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
      */
     public static b2AABB malloc() {
         return new b2AABB(nmalloc(SIZEOF));
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2AABB}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**
