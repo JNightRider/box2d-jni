@@ -46,6 +46,8 @@ public final class Sys<T> {
     public static final Sys<String> B2JNI_LIB_PATH = new Sys<>("org.box2d.jni.path", StateInit.STRING);
 
     public static final Sys<String> B2JNI_LIB_NAME = new Sys<>("org.box2d.jni.name", StateInit.STRING);
+    
+    public static final Sys<String> PIPELINE_STREAM = new Sys<>("org.box2d.jni.system.PipelineStream", StateInit.STRING);
 
     public static final Sys<Boolean> DISABLE_DEBUG = new Sys<>("org.box2d.jni.system.Debugs", StateInit.BOOLEAN);
 

@@ -30,7 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.system;
 
-import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -45,6 +46,7 @@ import java.util.regex.Pattern;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("unchecked")
 public final class Debug {
 
     public enum Color {
@@ -115,7 +117,19 @@ public final class Debug {
     }
 
     protected static Boolean DEBUG;
-    private static final PrintStream DEBUG_STREAM = System.out;
+    private static PipelineStream DEBUG_STREAM;
+    
+    static {
+        String clazz = Sys.PIPELINE_STREAM.get(PipelineStream.Default.class.getName());
+        try {
+            Class streamClass = Class.forName(clazz);
+            DEBUG_STREAM = (PipelineStream) streamClass.getDeclaredConstructor()
+                                                       .newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException |
+                 InstantiationException | NoSuchMethodException  | InvocationTargetException e) {
+            DEBUG_STREAM = new PipelineStream.Default();
+        }
+    }
     
     private static void check() {
         DEBUG = !Sys.DISABLE_DEBUG.get(false);
