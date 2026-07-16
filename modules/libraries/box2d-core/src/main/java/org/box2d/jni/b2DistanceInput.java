@@ -230,6 +230,15 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
     /**
      * Reserve memory for the new object {@code b2DistanceInput}.
      *
+     * @return b2DistanceInput
+     */
+    public static b2DistanceInput calloc() {
+        return new b2DistanceInput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2DistanceInput}.
+     *
      * @param arean arena
      * @return b2DistanceInput
      */
@@ -267,6 +276,16 @@ public class b2DistanceInput extends Struct<b2DistanceInput> implements ConstB2D
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2DistanceInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

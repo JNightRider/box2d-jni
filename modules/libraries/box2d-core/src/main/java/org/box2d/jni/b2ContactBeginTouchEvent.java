@@ -204,6 +204,15 @@ public class b2ContactBeginTouchEvent extends Struct<b2ContactBeginTouchEvent> {
     /**
      * Reserve memory for the new object {@code b2ContactBeginTouchEvent}.
      *
+     * @return b2ContactBeginTouchEvent
+     */
+    public static b2ContactBeginTouchEvent calloc() {
+        return new b2ContactBeginTouchEvent(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ContactBeginTouchEvent}.
+     *
      * @param alloc arena
      * @return b2ContactBeginTouchEvent
      */
@@ -240,6 +249,16 @@ public class b2ContactBeginTouchEvent extends Struct<b2ContactBeginTouchEvent> {
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ContactBeginTouchEvent}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

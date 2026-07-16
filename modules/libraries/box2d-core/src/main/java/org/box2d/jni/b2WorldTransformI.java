@@ -197,6 +197,15 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
     /**
      * Reserve memory for the new object {@code b2WorldTransformI}.
      *
+     * @return b2WorldTransformI
+     */
+    public static b2WorldTransformI calloc() {
+        return new b2WorldTransformI(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldTransformI}.
+     *
      * @param arean arena
      * @return b2WorldTransformI
      */
@@ -234,6 +243,16 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldTransformI}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

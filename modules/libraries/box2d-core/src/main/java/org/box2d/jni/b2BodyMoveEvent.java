@@ -216,6 +216,15 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
     /**
      * Reserve memory for the new object {@code b2BodyMoveEvent}.
      *
+     * @return b2BodyMoveEvent
+     */
+    public static b2BodyMoveEvent calloc() {
+        return new b2BodyMoveEvent(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BodyMoveEvent}.
+     *
      * @param alloc arena
      * @return b2BodyMoveEvent
      */
@@ -259,6 +268,16 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
      * Reserve an amount n of memory for the object {@code b2BodyMoveEvent}.
      *
      * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyMoveEvent}.
+     *
+     * @param capacity Number of elements
      * @param alloc Arean
      * @return Buffer
      */
@@ -270,7 +289,7 @@ public class b2BodyMoveEvent extends Struct<b2BodyMoveEvent> {
     // -----------------------------------
     
     public static long nuserData(long address)              { return memGetAddress(address + USER_DATA);}
-    public static b2WorldTransform ntransform(long address) { return b2WorldTransform.ncreateSafe(() -> address + TRANSFORM);}
+    public static b2WorldTransform ntransform(long address) { return b2WorldTransform.createSafe(() -> address + TRANSFORM);}
     public static b2BodyId nbodyId(long address)        { return b2BodyId.createSafe(() -> address + BODY_ID);}
     public static boolean nfellAsleep(long address)     { return memGetByte(address + FELL_ASLEEP) != 0;}
 

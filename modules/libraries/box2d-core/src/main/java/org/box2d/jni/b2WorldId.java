@@ -177,6 +177,15 @@ public class b2WorldId extends Struct<b2WorldId> implements ConstB2WorldId {
     /**
      * Reserve memory for the new object {@code b2WorldId}.
      *
+     * @return b2WorldId
+     */
+    public static b2WorldId calloc() {
+        return new b2WorldId(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldId}.
+     *
      * @param arean arena
      * @return b2WorldId
      */
@@ -214,6 +223,16 @@ public class b2WorldId extends Struct<b2WorldId> implements ConstB2WorldId {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldId}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

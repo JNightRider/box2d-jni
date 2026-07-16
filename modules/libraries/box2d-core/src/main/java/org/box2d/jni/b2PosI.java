@@ -299,6 +299,15 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
     /**
      * Reserve memory for the new object {@code b2PosI}.
      *
+     * @return b2PosI
+     */
+    public static b2PosI calloc() {
+        return new b2PosI(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2PosI}.
+     *
      * @param arean arena
      * @return b2PosI
      */
@@ -353,6 +362,16 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2PosI}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -371,6 +371,15 @@ public class b2Counters extends Struct<b2Counters> {
     /**
      * Reserve memory for the new object {@code b2Counters}.
      *
+     * @return b2Counters
+     */
+    public static b2Counters calloc() {
+        return new b2Counters(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Counters}.
+     *
      * @param alloc arena
      * @return b2Counters
      */
@@ -408,6 +417,16 @@ public class b2Counters extends Struct<b2Counters> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Counters}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

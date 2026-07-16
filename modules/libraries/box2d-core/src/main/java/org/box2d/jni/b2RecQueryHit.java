@@ -192,6 +192,15 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     /**
      * Reserve memory for the new object {@code b2RecQueryHit}.
      *
+     * @return b2RecQueryHit
+     */
+    public static b2RecQueryHit calloc() {
+        return new b2RecQueryHit(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecQueryHit}.
+     *
      * @param arean arena
      * @return b2RecQueryHit
      */
@@ -212,7 +221,7 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     // -----------------------------------
     
     private static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
-    private static b2Pos npoint(long address) { return b2Pos.ncreateSafe(() -> address + POINT); }
+    private static b2Pos npoint(long address) { return b2Pos.createSafe(() -> address + POINT); }
     private static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
     private static float nfraction(long address) { return memGetFloat(address + FRACTION); }
 

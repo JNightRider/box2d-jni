@@ -238,6 +238,15 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
     /**
      * Reserve memory for the new object {@code b2Capacity}.
      *
+     * @return b2Capacity
+     */
+    public static b2Capacity calloc() {
+        return new b2Capacity(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Capacity}.
+     *
      * @param alloc arena
      * @return b2Capacity
      */
@@ -275,6 +284,16 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Capacity}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

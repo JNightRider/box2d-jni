@@ -365,6 +365,15 @@ public class b2PrismaticJointDef extends Struct<b2PrismaticJointDef> implements 
     /**
      * Reserve memory for the new object {@code b2PrismaticJointDef}.
      *
+     * @return b2PrismaticJointDef
+     */
+    public static b2PrismaticJointDef calloc() {
+        return new b2PrismaticJointDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2PrismaticJointDef}.
+     *
      * @param arean arena
      * @return b2PrismaticJointDef
      */
@@ -402,6 +411,16 @@ public class b2PrismaticJointDef extends Struct<b2PrismaticJointDef> implements 
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2PrismaticJointDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

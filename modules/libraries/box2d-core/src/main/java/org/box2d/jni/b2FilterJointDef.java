@@ -188,6 +188,15 @@ public class b2FilterJointDef extends Struct<b2FilterJointDef> implements ConstB
     /**
      * Reserve memory for the new object {@code b2FilterJointDef}.
      *
+     * @return b2FilterJointDef
+     */
+    public static b2FilterJointDef calloc() {
+        return new b2FilterJointDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2FilterJointDef}.
+     *
      * @param arean arena
      * @return b2FilterJointDef
      */
@@ -225,6 +234,16 @@ public class b2FilterJointDef extends Struct<b2FilterJointDef> implements ConstB
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2FilterJointDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

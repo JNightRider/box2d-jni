@@ -198,6 +198,15 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     /**
      * Reserve memory for the new object {@code b2Transform}.
      *
+     * @return b2Transform
+     */
+    public static b2Transform calloc() {
+        return new b2Transform(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Transform}.
+     *
      * @param arean arena
      * @return b2Transform
      */
@@ -235,6 +244,16 @@ public class b2Transform extends Struct<b2Transform> implements b2WorldTransform
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Transform}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

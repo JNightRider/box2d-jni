@@ -491,7 +491,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     // -----------------------------------
 
     public static b2BodyType ntype(long address)                { return b2BodyType.valueOf(memGetInt(address + TYPE));        }
-    public static b2Pos nposition(long address)                 { return b2Pos.ncreateSafe(() -> address + POSITION);               }
+    public static b2Pos nposition(long address)                 { return b2Pos.createSafe(() -> address + POSITION);                }
     public static b2Rot nrotation(long address)                 { return b2Rot.createSafe(() -> address + ROTATION);                }
     public static b2Vec2 nlinearVelocity(long address)          { return b2Vec2.createSafe(() -> address + LINEAR_VELOCITY);        }
     public static float nangularVelocity(long address)          { return memGetFloat(address + ANGULAR_VELOCITY);                   }

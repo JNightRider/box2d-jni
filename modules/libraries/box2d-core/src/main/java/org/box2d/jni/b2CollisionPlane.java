@@ -221,6 +221,15 @@ public class b2CollisionPlane extends Struct<b2CollisionPlane> implements ConstB
     /**
      * Reserve memory for the new object {@code b2CollisionPlane}.
      *
+     * @return b2CollisionPlane
+     */
+    public static b2CollisionPlane calloc() {
+        return new b2CollisionPlane(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2CollisionPlane}.
+     *
      * @param alloc arena
      * @return b2CollisionPlane
      */
@@ -258,6 +267,16 @@ public class b2CollisionPlane extends Struct<b2CollisionPlane> implements ConstB
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2CollisionPlane}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

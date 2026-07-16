@@ -63,8 +63,8 @@ public class DrawPolygonFcnTest {
     public void callback() {
         try (
                 b2Vec2.Buffer buffer = b2Vec2.malloc(10);
-                b2WorldTransform t = b2WorldTransform.nmalloc().
-                set(b2Pos.nmalloc()
+                b2WorldTransform t = b2WorldTransform.malloc().
+                set(b2Pos.malloc()
                            .set(1f, 2f),
                     b2Rot.malloc()
                            .set(4f, 5f)
@@ -112,8 +112,8 @@ public class DrawPolygonFcnTest {
         try
         (
             b2Vec2.Buffer buffer = b2Vec2.malloc(10);
-            b2WorldTransform t = b2WorldTransform.nmalloc()
-                    .set(b2Pos.nmalloc()
+            b2WorldTransform t = b2WorldTransform.malloc()
+                    .set(b2Pos.malloc()
                            .set(1f, 2f),
                          b2Rot.malloc()
                                 .set(4f, 5f)

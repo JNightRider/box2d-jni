@@ -257,6 +257,15 @@ public class b2SimplexVertex extends Struct<b2SimplexVertex> implements ConstB2S
     /**
      * Reserve memory for the new object {@code b2SimplexVertex}.
      *
+     * @return b2BodyMoveEvent
+     */
+    public static b2SimplexVertex calloc() {
+        return new b2SimplexVertex(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2SimplexVertex}.
+     *
      * @param arean arena
      * @return b2SimplexVertex
      */
@@ -294,6 +303,16 @@ public class b2SimplexVertex extends Struct<b2SimplexVertex> implements ConstB2S
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2SimplexVertex}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

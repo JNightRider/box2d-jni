@@ -239,6 +239,15 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
     /**
      * Reserve memory for the new object {@code b2ExplosionDef}.
      *
+     * @return b2ExplosionDef
+     */
+    public static b2ExplosionDef calloc() {
+        return new b2ExplosionDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ExplosionDef}.
+     *
      * @param arean arena
      * @return b2ExplosionDef
      */
@@ -282,6 +291,16 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
      * Reserve an amount n of memory for the object {@code b2ExplosionDef}.
      *
      * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ExplosionDef}.
+     *
+     * @param capacity Number of elements
      * @param arena Arean
      * @return Buffer
      */
@@ -293,7 +312,7 @@ public class b2ExplosionDef extends Struct<b2ExplosionDef> implements ConstB2Exp
     // -----------------------------------
 
     public static long nmaskBits(long address)                      { return memGetLong(address + MASK_BITS);            }
-    public static b2Pos nposition(long address)                     { return b2Pos.ncreateSafe(() -> address + POSITION);}
+    public static b2Pos nposition(long address)                     { return b2Pos.createSafe(() -> address + POSITION); }
     public static float nradius(long address)                       { return memGetFloat(address + RADIUS);              }
     public static float nfalloff(long address)                      { return memGetFloat(address + FALLOFF);             }
     public static float nimpulsePerLength(long address)             { return memGetFloat(address + IMPULSE_PER_LENGTH);  }

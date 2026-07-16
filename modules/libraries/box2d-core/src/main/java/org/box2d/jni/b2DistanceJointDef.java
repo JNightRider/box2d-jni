@@ -401,6 +401,15 @@ public class b2DistanceJointDef extends Struct<b2DistanceJointDef> implements Co
     /**
      * Reserve memory for the new object {@code b2DistanceJointDef}.
      *
+     * @return b2DistanceJointDef
+     */
+    public static b2DistanceJointDef calloc() {
+        return new b2DistanceJointDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2DistanceJointDef}.
+     *
      * @param arean arena
      * @return b2DistanceJointDef
      */
@@ -438,6 +447,16 @@ public class b2DistanceJointDef extends Struct<b2DistanceJointDef> implements Co
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2DistanceJointDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

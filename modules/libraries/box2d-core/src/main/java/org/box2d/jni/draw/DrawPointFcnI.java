@@ -81,8 +81,8 @@ public interface DrawPointFcnI extends CallbackI, CDrawPointFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
-                        : b2Pos.ncreateSafe(() -> memGetAddress(args)),
+                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
+                        : b2Pos.createSafe(() -> memGetAddress(args)),
                 memGetFloat(memGetAddress(args + POINTER_SIZE)),
                 memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
                 memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))

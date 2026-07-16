@@ -223,6 +223,15 @@ public class b2RayCastInput extends Struct<b2RayCastInput> implements ConstB2Ray
     /**
      * Reserve memory for the new object {@code b2RayCastInput}.
      *
+     * @return b2RayCastInput
+     */
+    public static b2RayCastInput calloc() {
+        return new b2RayCastInput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RayCastInput}.
+     *
      * @param arean arena
      * @return b2RayCastInput
      */
@@ -260,6 +269,16 @@ public class b2RayCastInput extends Struct<b2RayCastInput> implements ConstB2Ray
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2RayCastInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

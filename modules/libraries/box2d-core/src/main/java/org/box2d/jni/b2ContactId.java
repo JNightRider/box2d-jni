@@ -204,6 +204,15 @@ public class b2ContactId extends Struct<b2ContactId> implements ConstB2ContactId
     /**
      * Reserve memory for the new object {@code b2ContactId}.
      *
+     * @return b2ContactId
+     */
+    public static b2ContactId calloc() {
+        return new b2ContactId(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ContactId}.
+     *
      * @param alloc arena
      * @return b2ContactId
      */
@@ -241,6 +250,16 @@ public class b2ContactId extends Struct<b2ContactId> implements ConstB2ContactId
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ContactId}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

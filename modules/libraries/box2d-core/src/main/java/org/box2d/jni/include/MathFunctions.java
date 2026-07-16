@@ -77,9 +77,9 @@ public final class MathFunctions {
     public static final b2Mat22 b2Mat22_zero = b2Mat22.malloc();
 
     /** Native bindings: {@code static const b2Pos b2Pos_zero = { 0.0f, 0.0f };} */
-    public static final b2Pos b2Pos_zero = b2Pos.nmalloc().set( 0.0f, 0.0f );
+    public static final b2Pos b2Pos_zero = b2Pos.malloc().set( 0.0f, 0.0f );
     /** Native bindings: {@code static const b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };} */
-    public static final b2WorldTransform b2WorldTransform_identity = b2WorldTransform.nmalloc();
+    public static final b2WorldTransform b2WorldTransform_identity = b2WorldTransform.malloc();
 
     static {
         try (ArenaAlloc arena = allocPush()) {
@@ -92,7 +92,7 @@ public final class MathFunctions {
                 b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f)
             );
             b2WorldTransform_identity.set(
-                b2Pos.nalloc(arena::ncalloc).set(0.0f, 0.0f),
+                b2Pos.alloc(arena::ncalloc).set(0.0f, 0.0f),
                 b2Rot.alloc(arena::ncalloc).set(1.0f, 0.0f)
             );
         }

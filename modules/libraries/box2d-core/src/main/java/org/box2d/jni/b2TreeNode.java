@@ -306,6 +306,15 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     /**
      * Reserve memory for the new object {@code b2TreeNode}.
      *
+     * @return b2TreeNode
+     */
+    public static b2TreeNode calloc() {
+        return new b2TreeNode(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2TreeNode}.
+     *
      * @param arean arena
      * @return b2TreeNode
      */
@@ -343,6 +352,16 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2TreeNode}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

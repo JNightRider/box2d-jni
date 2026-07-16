@@ -264,6 +264,15 @@ public class b2Sweep extends Struct<b2Sweep> implements ConstB2Sweep {
     /**
      * Reserve memory for the new object {@code b2Sweep}.
      *
+     * @return b2Sweep
+     */
+    public static b2Sweep calloc() {
+        return new b2Sweep(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Sweep}.
+     *
      * @param arean arena
      * @return b2Sweep
      */
@@ -301,6 +310,16 @@ public class b2Sweep extends Struct<b2Sweep> implements ConstB2Sweep {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Sweep}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

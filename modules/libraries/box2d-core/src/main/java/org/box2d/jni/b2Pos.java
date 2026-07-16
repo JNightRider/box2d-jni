@@ -124,7 +124,7 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      * @param ptr A reference pointer.
      * @return b2Pos
      */
-    static b2Pos ncreateSafe(Pointer ptr) {
+    static b2Pos createSafe(Pointer ptr) {
         return BOX2D_DOUBLE_PRECISION ? b2PosI.createSafe(ptr) : b2Vec2.createSafe(ptr);
     }
 
@@ -134,17 +134,26 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      * @param alloc Custom memory manager
      * @return b2Pos
      */
-    static b2Pos nalloc(AllocFunc alloc) {
+    static b2Pos alloc(AllocFunc alloc) {
         return BOX2D_DOUBLE_PRECISION ? b2PosI.alloc(alloc) : b2Vec2.alloc(alloc);
     }
-    
+
+    /**
+     * Reserve memory for the new object {@code b2Pos}.
+     *
+     * @return b2Pos
+     */
+    static b2Pos calloc() {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.calloc() : b2Vec2.calloc();
+    }
+
     /**
      * Reserve memory for the new object {@code b2Pos}.
      *
      * @param arean arena
      * @return b2Pos
      */
-    static b2Pos ncalloc(ArenaAlloc arean) {
+    static b2Pos calloc(ArenaAlloc arean) {
         return BOX2D_DOUBLE_PRECISION ? b2PosI.calloc(arean) : b2Vec2.calloc(arean);
     }
 
@@ -153,7 +162,7 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      *
      * @return b2Pos
      */
-    static b2Pos nmalloc() {
+    static b2Pos malloc() {
         return BOX2D_DOUBLE_PRECISION ? b2PosI.malloc() : b2Vec2.malloc();
     }
 }

@@ -186,6 +186,15 @@ public class b2Hull extends Struct<b2Hull> implements ConstB2Hull {
     /**
      * Reserve memory for the new object {@code b2Hull}.
      *
+     * @return b2Hull
+     */
+    public static b2Hull calloc() {
+        return new b2Hull(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Hull}.
+     *
      * @param arean arena
      * @return b2Hull
      */
@@ -223,6 +232,16 @@ public class b2Hull extends Struct<b2Hull> implements ConstB2Hull {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Hull}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

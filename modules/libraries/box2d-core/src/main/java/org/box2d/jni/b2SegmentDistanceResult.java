@@ -239,6 +239,15 @@ public class b2SegmentDistanceResult extends Struct<b2SegmentDistanceResult> imp
     /**
      * Reserve memory for the new object {@code b2SegmentDistanceResult}.
      *
+     * @return b2SegmentDistanceResult
+     */
+    public static b2SegmentDistanceResult calloc() {
+        return new b2SegmentDistanceResult(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2SegmentDistanceResult}.
+     *
      * @param arean arena
      * @return b2SegmentDistanceResult
      */
@@ -276,6 +285,16 @@ public class b2SegmentDistanceResult extends Struct<b2SegmentDistanceResult> imp
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2SegmentDistanceResult}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

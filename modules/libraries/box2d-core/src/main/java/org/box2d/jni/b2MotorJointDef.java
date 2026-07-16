@@ -365,6 +365,15 @@ public class b2MotorJointDef extends Struct<b2MotorJointDef> implements ConstB2M
     /**
      * Reserve memory for the new object {@code b2MotorJointDef}.
      *
+     * @return b2MotorJointDef
+     */
+    public static b2MotorJointDef calloc() {
+        return new b2MotorJointDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2MotorJointDef}.
+     *
      * @param arean arena
      * @return b2MotorJointDef
      */
@@ -402,6 +411,16 @@ public class b2MotorJointDef extends Struct<b2MotorJointDef> implements ConstB2M
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2MotorJointDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

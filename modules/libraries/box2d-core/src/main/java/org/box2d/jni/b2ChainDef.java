@@ -313,6 +313,15 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     /**
      * Reserve memory for the new object {@code b2ChainDef}.
      *
+     * @return b2ChainDef
+     */
+    public static b2ChainDef calloc() {
+        return new b2ChainDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ChainDef}.
+     *
      * @param alloc arena
      * @return b2ChainDef
      */
@@ -350,6 +359,16 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ChainDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

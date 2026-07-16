@@ -256,6 +256,15 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     /**
      * Reserve memory for the new object {@code b2RecQueryInfo}.
      *
+     * @return b2RecQueryInfo
+     */
+    public static b2RecQueryInfo calloc() {
+        return new b2RecQueryInfo(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecQueryInfo}.
+     *
      * @param arean arena
      * @return b2RecQueryInfo
      */
@@ -278,7 +287,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     public static b2RecQueryType ntype(long address) { return b2RecQueryType.valueOf(memGetInt(address + TYPE)); }
     public static b2QueryFilter nfilter(long address) { return b2QueryFilter.createSafe(() -> address + FILTER); }
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
-    public static b2Pos norigin(long address) { return b2Pos.ncreateSafe(() -> address + ORIGIN); }
+    public static b2Pos norigin(long address) { return b2Pos.createSafe(() -> address + ORIGIN); }
     public static b2Vec2 ntranslation(long address) { return b2Vec2.createSafe(() -> address + TRANSLATION); }
     public static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
     public static int nhitCount(long address) { return memGetInt(address + HIT_COUNT); }

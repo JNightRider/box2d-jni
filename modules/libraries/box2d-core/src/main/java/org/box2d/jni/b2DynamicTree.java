@@ -348,6 +348,15 @@ public class b2DynamicTree extends Struct<b2DynamicTree> implements ConstB2Dynam
     /**
      * Reserve memory for the new object {@code b2DynamicTree}.
      *
+     * @return b2DynamicTree
+     */
+    public static b2DynamicTree calloc() {
+        return new b2DynamicTree(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2DynamicTree}.
+     *
      * @param arean arena
      * @return b2DynamicTree
      */

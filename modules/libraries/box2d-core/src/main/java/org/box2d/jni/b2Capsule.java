@@ -223,6 +223,15 @@ public class b2Capsule extends Struct<b2Capsule> implements ConstB2Capsule {
     /**
      * Reserve memory for the new object {@code b2Capsule}.
      *
+     * @return b2Capsule
+     */
+    public static b2Capsule calloc() {
+        return new b2Capsule(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Capsule}.
+     *
      * @param alloc arena
      * @return b2Capsule
      */
@@ -260,6 +269,16 @@ public class b2Capsule extends Struct<b2Capsule> implements ConstB2Capsule {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Capsule}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

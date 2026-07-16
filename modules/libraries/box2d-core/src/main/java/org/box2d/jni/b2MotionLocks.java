@@ -190,6 +190,15 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
     /**
      * Reserve memory for the new object {@code b2MotionLocks}.
      *
+     * @return b2MotionLocks
+     */
+    public static b2MotionLocks calloc() {
+        return new b2MotionLocks(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2MotionLocks}.
+     *
      * @param arean arena
      * @return b2MotionLocks
      */
@@ -227,6 +236,16 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2MotionLocks}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

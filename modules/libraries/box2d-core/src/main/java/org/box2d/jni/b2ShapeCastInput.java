@@ -221,6 +221,15 @@ public class b2ShapeCastInput extends Struct<b2ShapeCastInput> implements ConstB
     /**
      * Reserve memory for the new object {@code b2ShapeCastInput}.
      *
+     * @return b2ShapeCastInput
+     */
+    public static b2ShapeCastInput calloc() {
+        return new b2ShapeCastInput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ShapeCastInput}.
+     *
      * @param arean arena
      * @return b2ShapeCastInput
      */
@@ -258,6 +267,16 @@ public class b2ShapeCastInput extends Struct<b2ShapeCastInput> implements ConstB
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ShapeCastInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -190,6 +190,15 @@ public class b2ShapeId extends Struct<b2ShapeId> implements ConstB2ShapeId {
     /**
      * Reserve memory for the new object {@code b2ShapeId}.
      *
+     * @return b2ShapeId
+     */
+    public static b2ShapeId calloc() {
+        return new b2ShapeId(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ShapeId}.
+     *
      * @param arean arena
      * @return b2ShapeId
      */
@@ -227,6 +236,16 @@ public class b2ShapeId extends Struct<b2ShapeId> implements ConstB2ShapeId {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ShapeId}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

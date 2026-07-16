@@ -116,7 +116,7 @@ public interface b2WorldTransform<SELF extends b2WorldTransform<SELF, P, Q>, P e
      * @param ptr A reference pointer.
      * @return b2WorldTransform
      */
-    static b2WorldTransform ncreateSafe(Pointer ptr) {
+    static b2WorldTransform createSafe(Pointer ptr) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.createSafe(ptr) : b2Transform.createSafe(ptr);
     }
 
@@ -126,17 +126,17 @@ public interface b2WorldTransform<SELF extends b2WorldTransform<SELF, P, Q>, P e
      * @param alloc Custom memory manager
      * @return b2WorldTransform
      */
-    static b2WorldTransform nalloc(AllocFunc alloc) {
+    static b2WorldTransform alloc(AllocFunc alloc) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.alloc(alloc) : b2Transform.alloc(alloc);
     }
-    
+
     /**
      * Reserve memory for the new object {@code b2WorldTransform}.
      *
      * @param arean arena
      * @return b2WorldTransform
      */
-    static b2WorldTransform ncalloc(ArenaAlloc arean) {
+    static b2WorldTransform calloc(ArenaAlloc arean) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.calloc(arean) : b2Transform.calloc(arean);
     }
 
@@ -145,7 +145,16 @@ public interface b2WorldTransform<SELF extends b2WorldTransform<SELF, P, Q>, P e
      *
      * @return b2WorldTransform
      */
-    static b2WorldTransform nmalloc() {
+    static b2WorldTransform calloc() {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.calloc() : b2Transform.calloc();
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldTransform}.
+     *
+     * @return b2WorldTransform
+     */
+    static b2WorldTransform malloc() {
         return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.malloc() : b2Transform.malloc();
     }
 }

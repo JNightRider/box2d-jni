@@ -202,6 +202,15 @@ public class b2Circle extends Struct<b2Circle> implements ConstB2Circle {
     /**
      * Reserve memory for the new object {@code b2Circle}.
      *
+     * @return b2Circle
+     */
+    public static b2Circle calloc() {
+        return new b2Circle(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Circle}.
+     *
      * @param alloc arena
      * @return b2Circle
      */
@@ -239,6 +248,16 @@ public class b2Circle extends Struct<b2Circle> implements ConstB2Circle {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Circle}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -204,6 +204,15 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
     /**
      * Reserve memory for the new object {@code b2PlaneResult}.
      *
+     * @return b2PlaneResult
+     */
+    public static b2PlaneResult calloc() {
+        return new b2PlaneResult(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2PlaneResult}.
+     *
      * @param arean arena
      * @return b2PlaneResult
      */
@@ -241,6 +250,16 @@ public class b2PlaneResult extends Struct<b2PlaneResult> implements ConstB2Plane
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2PlaneResult}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -239,6 +239,15 @@ public class b2TOIInput extends Struct<b2TOIInput> implements ConstB2TOIInput {
     /**
      * Reserve memory for the new object {@code b2TOIInput}.
      *
+     * @return b2TOIInput
+     */
+    public static b2TOIInput calloc() {
+        return new b2TOIInput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2TOIInput}.
+     *
      * @param arean arena
      * @return b2TOIInput
      */
@@ -276,6 +285,16 @@ public class b2TOIInput extends Struct<b2TOIInput> implements ConstB2TOIInput {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2TOIInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

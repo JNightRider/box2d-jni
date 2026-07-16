@@ -205,6 +205,15 @@ public class b2ShapeProxy extends Struct<b2ShapeProxy> implements ConstB2ShapePr
     /**
      * Reserve memory for the new object {@code b2ShapeProxy}.
      *
+     * @return b2ShapeProxy
+     */
+    public static b2ShapeProxy calloc() {
+        return new b2ShapeProxy(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ShapeProxy}.
+     *
      * @param arean arena
      * @return b2ShapeProxy
      */
@@ -242,6 +251,16 @@ public class b2ShapeProxy extends Struct<b2ShapeProxy> implements ConstB2ShapePr
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ShapeProxy}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

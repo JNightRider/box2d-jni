@@ -85,8 +85,8 @@ public interface b2CastResultFcnI extends CallbackI, CCastResultFcn {
                         ? memcpy(b2ShapeId.malloc(), () -> memGetAddress(args), b2ShapeId.SIZEOF)
                         : b2ShapeId.createSafe(() -> memGetAddress(args)),
                 isByValue()
-                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
-                        : b2Pos.ncreateSafe(() -> memGetAddress(args + VarType.Uintptrt.sizeof())),
+                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
+                        : b2Pos.createSafe(() -> memGetAddress(args + VarType.Uintptrt.sizeof())),
                 isByValue()
                         ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF)
                         : b2Vec2.createSafe(() -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),

@@ -243,6 +243,15 @@ public class b2WorldCastOutputI extends Struct<b2WorldCastOutputI> implements b2
     /**
      * Reserve memory for the new object {@code b2WorldCastOutputI}.
      *
+     * @return b2WorldCastOutputI
+     */
+    public static b2WorldCastOutputI calloc() {
+        return new b2WorldCastOutputI(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldCastOutputI}.
+     *
      * @param arean arena
      * @return b2WorldCastOutputI
      */
@@ -286,6 +295,16 @@ public class b2WorldCastOutputI extends Struct<b2WorldCastOutputI> implements b2
      * Reserve an amount n of memory for the object {@code b2WorldCastOutputI}.
      *
      * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutputI}.
+     *
+     * @param capacity Number of elements
      * @param arena Arean
      * @return Buffer
      */
@@ -297,7 +316,7 @@ public class b2WorldCastOutputI extends Struct<b2WorldCastOutputI> implements b2
     // -----------------------------------
 
     public static b2Vec2 nnormal(long address)      { return b2Vec2.createSafe(() -> address + NORMAL);      }
-    public static b2Pos npoint(long address)        { return b2Pos.ncreateSafe(() -> address + POINT);       }
+    public static b2Pos npoint(long address)        { return b2Pos.createSafe(() -> address + POINT);       }
     public static float nfraction(long address)     { return memGetFloat(address + FRACTION);                }
     public static int niterations(long address)     { return memGetInt(address + ITERATIONS);                }
     public static boolean nhit(long address)        { return memGetByte(address + HIT) != 0;                 }

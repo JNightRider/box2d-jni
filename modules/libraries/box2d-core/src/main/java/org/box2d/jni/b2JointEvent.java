@@ -185,6 +185,15 @@ public class b2JointEvent extends Struct<b2JointEvent> {
     /**
      * Reserve memory for the new object {@code b2JointEvent}.
      *
+     * @return b2JointEvent
+     */
+    public static b2JointEvent calloc() {
+        return new b2JointEvent(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2JointEvent}.
+     *
      * @param arean arena
      * @return b2JointEvent
      */
@@ -222,6 +231,16 @@ public class b2JointEvent extends Struct<b2JointEvent> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2JointEvent}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -275,6 +275,15 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
     /**
      * Reserve memory for the new object {@code b2RayResult}.
      *
+     * @return b2RayResult
+     */
+    public static b2RayResult calloc() {
+        return new b2RayResult(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RayResult}.
+     *
      * @param arean arena
      * @return b2RayResult
      */
@@ -318,6 +327,16 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
      * Reserve an amount n of memory for the object {@code b2RayResult}.
      *
      * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2RayResult}.
+     *
+     * @param capacity Number of elements
      * @param arena Arean
      * @return Buffer
      */
@@ -329,7 +348,7 @@ public class b2RayResult extends Struct<b2RayResult> implements ConstB2RayResult
     // -----------------------------------
 
     public static b2ShapeId nshapeId(long address) { return b2ShapeId.createSafe(() -> address + SHAPE_ID); }
-    public static b2Pos npoint(long address) { return b2Pos.ncreateSafe(() -> address + POINT); }
+    public static b2Pos npoint(long address) { return b2Pos.createSafe(() -> address + POINT); }
     public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
     public static float nfraction(long address) { return memGetFloat(address + FRACTION); }
     public static int nnodeVisits(long address) { return memGetInt(address + NODE_VISITS); }

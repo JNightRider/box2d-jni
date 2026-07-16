@@ -539,6 +539,15 @@ public class b2Profile extends Struct<b2Profile> {
     /**
      * Reserve memory for the new object {@code b2Profile}.
      *
+     * @return b2Profile
+     */
+    public static b2Profile calloc() {
+        return new b2Profile(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Profile}.
+     *
      * @param arean arena
      * @return b2Profile
      */
@@ -576,6 +585,16 @@ public class b2Profile extends Struct<b2Profile> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Profile}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -214,6 +214,15 @@ public class b2Simplex extends Struct<b2Simplex> {
     /**
      * Reserve memory for the new object {@code b2Simplex}.
      *
+     * @return b2Simplex
+     */
+    public static b2Simplex calloc() {
+        return new b2Simplex(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Simplex}.
+     *
      * @param arean arena
      * @return b2Simplex
      */
@@ -251,6 +260,16 @@ public class b2Simplex extends Struct<b2Simplex> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Simplex}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

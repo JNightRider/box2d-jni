@@ -194,6 +194,15 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
     /**
      * Reserve memory for the new object {@code b2Rot}.
      *
+     * @return b2Rot
+     */
+    public static b2Rot calloc() {
+        return new b2Rot(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Rot}.
+     *
      * @param alloc arena
      * @return b2Rot
      */
@@ -201,8 +210,7 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
         long ptr = alloc.ncalloc(ALIGNOF, 1, SIZEOF);
         return new b2Rot(() -> ptr);
     }
-    
-    
+
     /**
      * Reserve memory for the new object {@code b2Rot}.
      *
@@ -232,6 +240,16 @@ public class b2Rot extends Struct<b2Rot> implements ConstB2Rot {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Rot}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

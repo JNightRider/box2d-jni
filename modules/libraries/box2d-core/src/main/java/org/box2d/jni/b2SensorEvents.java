@@ -222,6 +222,15 @@ public class b2SensorEvents extends Struct<b2SensorEvents> {
     /**
      * Reserve memory for the new object {@code b2SensorEvents}.
      *
+     * @return b2SensorEvents
+     */
+    public static b2SensorEvents calloc() {
+        return new b2SensorEvents(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2SensorEvents}.
+     *
      * @param arean arena
      * @return b2SensorEvents
      */
@@ -259,6 +268,16 @@ public class b2SensorEvents extends Struct<b2SensorEvents> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2SensorEvents}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

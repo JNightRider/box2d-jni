@@ -250,6 +250,15 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
     /**
      * Reserve memory for the new object {@code b2RecPlayerInfo}.
      *
+     * @return b2RecPlayerInfo
+     */
+    public static b2RecPlayerInfo calloc() {
+        return new b2RecPlayerInfo(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RecPlayerInfo}.
+     *
      * @param arean arena
      * @return b2RecPlayerInfo
      */
@@ -287,6 +296,16 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2RecPlayerInfo}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

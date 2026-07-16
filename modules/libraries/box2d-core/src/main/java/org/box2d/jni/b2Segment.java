@@ -201,6 +201,15 @@ public class b2Segment extends Struct<b2Segment> implements ConstB2Segment {
     /**
      * Reserve memory for the new object {@code b2Segment}.
      *
+     * @return b2Segment
+     */
+    public static b2Segment calloc() {
+        return new b2Segment(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Segment}.
+     *
      * @param arean arena
      * @return b2Segment
      */
@@ -238,6 +247,16 @@ public class b2Segment extends Struct<b2Segment> implements ConstB2Segment {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Segment}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

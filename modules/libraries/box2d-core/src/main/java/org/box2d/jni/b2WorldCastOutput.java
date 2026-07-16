@@ -158,7 +158,7 @@ public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, 
      * @param ptr A reference pointer.
      * @return b2WorldCastOutput
      */
-    static b2WorldCastOutput ncreateSafe(Pointer ptr) {
+    static b2WorldCastOutput createSafe(Pointer ptr) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.createSafe(ptr) : b2CastOutput.createSafe(ptr);
     }
 
@@ -168,7 +168,7 @@ public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, 
      * @param alloc Custom memory manager
      * @return b2WorldCastOutput
      */
-    static b2WorldCastOutput nalloc(AllocFunc alloc) {
+    static b2WorldCastOutput alloc(AllocFunc alloc) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.alloc(alloc) : b2CastOutput.alloc(alloc);
     }
 
@@ -178,7 +178,7 @@ public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, 
      * @param arean arena
      * @return b2WorldCastOutput
      */
-    static b2WorldCastOutput ncalloc(ArenaAlloc arean) {
+    static b2WorldCastOutput calloc(ArenaAlloc arean) {
         return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.calloc(arean) : b2CastOutput.calloc(arean);
     }
 
@@ -187,7 +187,16 @@ public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, 
      *
      * @return b2WorldCastOutput
      */
-    static b2WorldCastOutput nmalloc() {
+    static b2WorldCastOutput calloc() {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.calloc() : b2CastOutput.calloc();
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WorldCastOutput}.
+     *
+     * @return b2WorldCastOutput
+     */
+    static b2WorldCastOutput malloc() {
         return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.malloc() : b2CastOutput.malloc();
     }
 }

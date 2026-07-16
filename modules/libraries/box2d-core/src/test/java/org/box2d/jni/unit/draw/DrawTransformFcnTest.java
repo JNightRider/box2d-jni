@@ -61,9 +61,9 @@ public class DrawTransformFcnTest {
     public void callback() {
         try
         (
-            b2Pos v = b2Pos.nmalloc().set(1f, 2f);
+            b2Pos v = b2Pos.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.malloc().set(v, r)
         ) {
 
             DrawTransformFcnI func = (transform, context) -> {
@@ -78,9 +78,9 @@ public class DrawTransformFcnTest {
         }
         try
         (
-            b2Pos v = b2Pos.nmalloc().set(1f, 2f);
+            b2Pos v = b2Pos.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.malloc().set(v, r)
         ) {
 
             DrawTransformFcn func = DrawTransformFcn.create((transform, context) -> {

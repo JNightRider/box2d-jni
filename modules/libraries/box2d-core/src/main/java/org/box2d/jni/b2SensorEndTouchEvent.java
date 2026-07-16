@@ -189,6 +189,15 @@ public class b2SensorEndTouchEvent extends Struct<b2SensorEndTouchEvent> {
     /**
      * Reserve memory for the new object {@code b2SensorEndTouchEvent}.
      *
+     * @return b2SensorEndTouchEvent
+     */
+    public static b2SensorEndTouchEvent calloc() {
+        return new b2SensorEndTouchEvent(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2SensorEndTouchEvent}.
+     *
      * @param arean arena
      * @return b2SensorEndTouchEvent
      */
@@ -226,6 +235,16 @@ public class b2SensorEndTouchEvent extends Struct<b2SensorEndTouchEvent> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2SensorEndTouchEvent}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

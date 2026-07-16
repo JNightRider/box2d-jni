@@ -65,7 +65,7 @@ public class DrawSolidCircleFcnTest {
         (
             b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.malloc().set(v, r)
         ) {
 
             DrawSolidCircleFcnI func = (transform, center, radius, color, context) -> {

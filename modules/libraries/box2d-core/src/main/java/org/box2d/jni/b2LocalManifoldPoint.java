@@ -208,6 +208,15 @@ public class b2LocalManifoldPoint extends Struct<b2LocalManifoldPoint> implement
     /**
      * Reserve memory for the new object {@code b2LocalManifoldPoint}.
      *
+     * @return b2LocalManifoldPoint
+     */
+    public static b2LocalManifoldPoint calloc() {
+        return new b2LocalManifoldPoint(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2LocalManifoldPoint}.
+     *
      * @param arean arena
      * @return b2LocalManifoldPoint
      */
@@ -244,6 +253,16 @@ public class b2LocalManifoldPoint extends Struct<b2LocalManifoldPoint> implement
      */
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         return new Buffer(alloc.alloc(ALIGNOF, SIZEOF, capacity), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2LocalManifoldPoint}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

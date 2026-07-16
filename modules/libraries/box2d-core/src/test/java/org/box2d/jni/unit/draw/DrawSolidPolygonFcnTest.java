@@ -66,7 +66,7 @@ public class DrawSolidPolygonFcnTest {
             b2Vec2.Buffer buffer = b2Vec2.malloc(10);
             b2Vec2 v = b2Vec2.malloc().set(1f, 2f);
             b2Rot r =  b2Rot.malloc().set(4, 6);
-            b2WorldTransform t = b2WorldTransform.nmalloc().set(v, r)
+            b2WorldTransform t = b2WorldTransform.malloc().set(v, r)
         ) {
             buffer.put(b2Vec2.malloc().set(1f, 2f));
             buffer.put(b2Vec2.malloc().set(-0.5f, -3.5f));

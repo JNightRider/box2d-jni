@@ -212,6 +212,15 @@ public class b2Version extends Struct<b2Version> {
     /**
      * Reserve memory for the new object {@code b2Version}.
      *
+     * @return b2Version
+     */
+    public static b2Version calloc() {
+        return new b2Version(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Version}.
+     *
      * @param arean arena
      * @return b2Version
      */
@@ -249,6 +258,16 @@ public class b2Version extends Struct<b2Version> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Version}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

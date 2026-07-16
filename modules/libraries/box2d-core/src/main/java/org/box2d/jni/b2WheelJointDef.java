@@ -347,6 +347,15 @@ public class b2WheelJointDef extends Struct<b2WheelJointDef> implements ConstB2W
     /**
      * Reserve memory for the new object {@code b2WheelJointDef}.
      *
+     * @return b2WheelJointDef
+     */
+    public static b2WheelJointDef calloc() {
+        return new b2WheelJointDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2WheelJointDef}.
+     *
      * @param arean arena
      * @return b2WheelJointDef
      */
@@ -384,6 +393,16 @@ public class b2WheelJointDef extends Struct<b2WheelJointDef> implements ConstB2W
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WheelJointDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

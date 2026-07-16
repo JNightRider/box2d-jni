@@ -83,11 +83,11 @@ public interface DrawSolidCapsuleFcnI extends CallbackI, CDrawSolidCapsuleFcn {
     public default void callback(long resp, long args) {
         invoke(
                 isByValue()
-                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
-                        : b2Pos.ncreateSafe(() -> memGetAddress(args)),
+                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
+                        : b2Pos.createSafe(() -> memGetAddress(args)),
                 isByValue()
-                        ? memcpy(b2Pos.nmalloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
-                        : b2Pos.ncreateSafe(() -> memGetAddress(args + POINTER_SIZE)),
+                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
+                        : b2Pos.createSafe(() -> memGetAddress(args + POINTER_SIZE)),
                 memGetFloat(memGetAddress(args + 2 * POINTER_SIZE)),
                 memGetInt(memGetAddress(args + 3 * POINTER_SIZE)),
                 memGetAddress(memGetAddress(args + 4 * POINTER_SIZE))

@@ -267,6 +267,15 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
     /**
      * Reserve memory for the new object {@code b2ContactHitEvent}.
      *
+     * @return b2ContactHitEvent
+     */
+    public static b2ContactHitEvent calloc() {
+        return new b2ContactHitEvent(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ContactHitEvent}.
+     *
      * @param alloc arena
      * @return b2ContactHitEvent
      */
@@ -310,6 +319,16 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
      * Reserve an amount n of memory for the object {@code b2ContactHitEvent}.
      *
      * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ContactHitEvent}.
+     *
+     * @param capacity Number of elements
      * @param alloc Arean
      * @return Buffer
      */
@@ -323,7 +342,7 @@ public class b2ContactHitEvent extends Struct<b2ContactHitEvent> {
     public static b2ShapeId nshapeIdA(long address) { return b2ShapeId.createSafe(() -> address + SHAPE_ID_A); }
     public static b2ShapeId nshapeIdB(long address) { return b2ShapeId.createSafe(() -> address + SHAPE_ID_B); }
     public static b2ContactId ncontactId(long address) { return b2ContactId.createSafe(() -> address + CONTACT_ID); }
-    public static b2Pos npoint(long address) { return b2Pos.ncreateSafe(() -> address + POINT); }
+    public static b2Pos npoint(long address) { return b2Pos.createSafe(() -> address + POINT); }
     public static b2Vec2 nnormal(long address) { return b2Vec2.createSafe(() -> address + NORMAL); }
     public static float napproachSpeed(long address) { return memGetFloat(address + APPROACH_SPEED); }
 

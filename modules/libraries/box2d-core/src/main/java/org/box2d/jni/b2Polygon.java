@@ -240,6 +240,15 @@ public class b2Polygon extends Struct<b2Polygon> implements ConstB2Polygon {
     /**
      * Reserve memory for the new object {@code b2Polygon}.
      *
+     * @return b2Polygon
+     */
+    public static b2Polygon calloc() {
+        return new b2Polygon(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2Polygon}.
+     *
      * @param arean arena
      * @return b2Polygon
      */
@@ -277,6 +286,16 @@ public class b2Polygon extends Struct<b2Polygon> implements ConstB2Polygon {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Polygon}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

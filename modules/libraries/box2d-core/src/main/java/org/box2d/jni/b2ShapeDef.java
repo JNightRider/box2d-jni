@@ -373,6 +373,15 @@ public class b2ShapeDef extends Struct<b2ShapeDef> implements ConstB2ShapeDef {
     /**
      * Reserve memory for the new object {@code b2ShapeDef}.
      *
+     * @return b2ShapeDef
+     */
+    public static b2ShapeDef calloc() {
+        return new b2ShapeDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ShapeDef}.
+     *
      * @param arean arena
      * @return b2ShapeDef
      */
@@ -410,6 +419,16 @@ public class b2ShapeDef extends Struct<b2ShapeDef> implements ConstB2ShapeDef {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ShapeDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

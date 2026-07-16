@@ -181,6 +181,15 @@ public class b2TreeStats extends Struct<b2TreeStats> {
     /**
      * Reserve memory for the new object {@code b2TreeStats}.
      *
+     * @return b2TreeStats
+     */
+    public static b2TreeStats calloc() {
+        return new b2TreeStats(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2TreeStats}.
+     *
      * @param arean arena
      * @return b2TreeStats
      */
@@ -218,6 +227,16 @@ public class b2TreeStats extends Struct<b2TreeStats> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2TreeStats}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

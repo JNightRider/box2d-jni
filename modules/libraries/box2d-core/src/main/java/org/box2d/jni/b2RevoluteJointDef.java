@@ -365,6 +365,15 @@ public class b2RevoluteJointDef extends Struct<b2RevoluteJointDef> implements Co
     /**
      * Reserve memory for the new object {@code b2RevoluteJointDef}.
      *
+     * @return b2RevoluteJointDef
+     */
+    public static b2RevoluteJointDef calloc() {
+        return new b2RevoluteJointDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2RevoluteJointDef}.
+     *
      * @param arean arena
      * @return b2RevoluteJointDef
      */
@@ -402,6 +411,16 @@ public class b2RevoluteJointDef extends Struct<b2RevoluteJointDef> implements Co
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2RevoluteJointDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

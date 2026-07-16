@@ -257,6 +257,15 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
     /**
      * Reserve memory for the new object {@code b2ShapeCastPairInput}.
      *
+     * @return b2ShapeCastPairInput
+     */
+    public static b2ShapeCastPairInput calloc() {
+        return new b2ShapeCastPairInput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ShapeCastPairInput}.
+     *
      * @param arean arena
      * @return b2ShapeCastPairInput
      */
@@ -294,6 +303,16 @@ public class b2ShapeCastPairInput extends Struct<b2ShapeCastPairInput> implement
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ShapeCastPairInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

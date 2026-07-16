@@ -197,6 +197,15 @@ public class b2SensorBeginTouchEvent extends Struct<b2SensorBeginTouchEvent> {
      *
      * @return b2SensorBeginTouchEvent
      */
+    public static b2SensorBeginTouchEvent calloc() {
+        return new b2SensorBeginTouchEvent(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2SensorBeginTouchEvent}.
+     *
+     * @return b2SensorBeginTouchEvent
+     */
     public static b2SensorBeginTouchEvent malloc() {
         return new b2SensorBeginTouchEvent(nmalloc(SIZEOF));
     }
@@ -221,6 +230,16 @@ public class b2SensorBeginTouchEvent extends Struct<b2SensorBeginTouchEvent> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2SensorBeginTouchEvent}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

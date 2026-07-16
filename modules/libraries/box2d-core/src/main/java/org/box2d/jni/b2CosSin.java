@@ -175,6 +175,15 @@ public class b2CosSin extends Struct<b2CosSin> {
     /**
      * Reserve memory for the new object {@code b2CosSin}.
      *
+     * @return b2CosSin
+     */
+    public static b2CosSin calloc() {
+        return new b2CosSin(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2CosSin}.
+     *
      * @param alloc arena
      * @return b2CosSin
      */
@@ -212,6 +221,16 @@ public class b2CosSin extends Struct<b2CosSin> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2CosSin}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -184,6 +184,15 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     /**
      * Reserve memory for the new object {@code b2TreeNodeChildren}.
      *
+     * @return b2TreeNodeChildren
+     */
+    public static b2TreeNodeChildren calloc() {
+        return new b2TreeNodeChildren(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2TreeNodeChildren}.
+     *
      * @param arean arena
      * @return b2TreeNodeChildren
      */
@@ -221,6 +230,16 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2TreeNodeChildren}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

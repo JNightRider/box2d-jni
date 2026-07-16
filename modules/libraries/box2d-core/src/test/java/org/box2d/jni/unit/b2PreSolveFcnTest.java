@@ -62,7 +62,7 @@ public class b2PreSolveFcnTest {
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
                 b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-                b2Pos v0 = b2Pos.nmalloc().set(1.05f, 0.5f);
+                b2Pos v0 = b2Pos.malloc().set(1.05f, 0.5f);
                 b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
             ) {
 
@@ -94,7 +94,7 @@ public class b2PreSolveFcnTest {
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
                 b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-                b2Pos v0 = b2Pos.nmalloc().set(1.05f, 0.5f);
+                b2Pos v0 = b2Pos.malloc().set(1.05f, 0.5f);
                 b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
             ) {
 

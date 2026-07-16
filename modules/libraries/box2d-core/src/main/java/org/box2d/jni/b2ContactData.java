@@ -215,6 +215,15 @@ public class b2ContactData extends Struct<b2ContactData> {
     /**
      * Reserve memory for the new object {@code b2ContactData}.
      *
+     * @return b2ContactData
+     */
+    public static b2ContactData calloc() {
+        return new b2ContactData(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ContactData}.
+     *
      * @param alloc arena
      * @return b2ContactData
      */
@@ -252,6 +261,16 @@ public class b2ContactData extends Struct<b2ContactData> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ContactData}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

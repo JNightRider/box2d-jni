@@ -61,7 +61,7 @@ public class b2CastResultFcnTest {
     public void callback() {
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20);
-                b2Pos v0 = b2Pos.nmalloc().set(1f, 2f);
+                b2Pos v0 = b2Pos.malloc().set(1f, 2f);
                 b2Vec2 v1 = b2Vec2.malloc().set(4f, 6f)
             ) {
 
@@ -90,7 +90,7 @@ public class b2CastResultFcnTest {
         }
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20);
-                b2Pos v0 = b2Pos.nmalloc().set(1f, 2f);
+                b2Pos v0 = b2Pos.malloc().set(1f, 2f);
                 b2Vec2 v1 = b2Vec2.malloc().set(4f, 6f)
             ) {
 

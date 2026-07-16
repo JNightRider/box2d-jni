@@ -182,6 +182,15 @@ public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
     /**
      * Reserve memory for the new object {@code b2PlaneSolverResult}.
      *
+     * @return b2PlaneSolverResult
+     */
+    public static b2PlaneSolverResult calloc() {
+        return new b2PlaneSolverResult(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2PlaneSolverResult}.
+     *
      * @param arean arena
      * @return b2PlaneSolverResult
      */
@@ -219,6 +228,16 @@ public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2PlaneSolverResult}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

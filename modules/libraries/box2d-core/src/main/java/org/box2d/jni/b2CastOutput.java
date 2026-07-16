@@ -243,6 +243,15 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     /**
      * Reserve memory for the new object {@code b2CastOutput}.
      *
+     * @return b2CastOutput
+     */
+    public static b2CastOutput calloc() {
+        return new b2CastOutput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2CastOutput}.
+     *
      * @param alloc arena
      * @return b2CastOutput
      */
@@ -280,6 +289,16 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2CastOutput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

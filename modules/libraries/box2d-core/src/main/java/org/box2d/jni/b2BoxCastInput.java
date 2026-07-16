@@ -203,6 +203,15 @@ public class b2BoxCastInput extends Struct<b2BoxCastInput> implements ConstB2Box
     /**
      * Reserve memory for the new object {@code b2BoxCastInput}.
      *
+     * @return b2BoxCastInput
+     */
+    public static b2BoxCastInput calloc() {
+        return new b2BoxCastInput(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BoxCastInput}.
+     *
      * @param alloc arena
      * @return b2BoxCastInput
      */
@@ -240,6 +249,16 @@ public class b2BoxCastInput extends Struct<b2BoxCastInput> implements ConstB2Box
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BoxCastInput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

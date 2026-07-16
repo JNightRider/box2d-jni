@@ -216,6 +216,15 @@ public class b2ChainSegment extends Struct<b2ChainSegment> {
     /**
      * Reserve memory for the new object {@code b2ChainSegment}.
      *
+     * @return b2ChainSegment
+     */
+    public static b2ChainSegment calloc() {
+        return new b2ChainSegment(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2ChainSegment}.
+     *
      * @param alloc arena
      * @return b2ChainSegment
      */
@@ -253,6 +262,16 @@ public class b2ChainSegment extends Struct<b2ChainSegment> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2ChainSegment}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**
