@@ -173,6 +173,15 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
     /**
      * Reserve memory for the new object {@code b2BodyEvents}.
      *
+     * @return b2BodyEvents
+     */
+    public static b2BodyEvents calloc() {
+        return new b2BodyEvents(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BodyEvents}.
+     *
      * @param alloc Custom memory manager
      * @return b2BodyEvents
      */
@@ -221,6 +230,16 @@ public class b2BodyEvents extends Struct<b2BodyEvents> {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyEvents}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

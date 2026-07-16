@@ -417,6 +417,15 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     /**
      * Reserve memory for the new object {@code b2BodyDef}.
      *
+     * @return b2BodyDef
+     */
+    public static b2BodyDef calloc() {
+        return new b2BodyDef(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BodyDef}.
+     *
      * @param alloc arena
      * @return b2BodyDef
      */
@@ -455,6 +464,16 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyDef}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**

@@ -226,16 +226,6 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
      * @param capacity Number of elements
      * @return Buffer
      */
-    public static Buffer calloc(int capacity) {
-        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
-    }
-
-    /**
-     * Reserve an amount n of memory for the object {@code b2AABB}.
-     *
-     * @param capacity Number of elements
-     * @return Buffer
-     */
     public static Buffer malloc(int capacity) {
         return new Buffer(nmalloc(capacity * SIZEOF), capacity);
     }
@@ -251,7 +241,17 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
     }
-    
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2AABB}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
+    }
+
     /**
      * Reserve an amount n of memory for the object {@code b2AABB}.
      *

@@ -191,6 +191,15 @@ public class b2BodyId extends Struct<b2BodyId> implements ConstB2BodyId {
     /**
      * Reserve memory for the new object {@code b2BodyId}.
      *
+     * @return b2BodyId
+     */
+    public static b2BodyId calloc() {
+        return new b2BodyId(ncalloc(1, SIZEOF));
+    }
+
+    /**
+     * Reserve memory for the new object {@code b2BodyId}.
+     *
      * @param alloc arena
      * @return b2BodyId
      */
@@ -228,6 +237,16 @@ public class b2BodyId extends Struct<b2BodyId> implements ConstB2BodyId {
     public static Buffer malloc(int capacity, AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, capacity, SIZEOF);
         return new Buffer(address, capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2BodyId}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer calloc(int capacity) {
+        return new Buffer(ncalloc(capacity, SIZEOF), capacity);
     }
 
     /**
