@@ -44,7 +44,7 @@ public abstract class b2CastResultFcn extends Callback implements b2CastResultFc
     
     /**
      * Callback flag
-     * @see b2CustomFilterFcnI#isByValue() 
+     * @see b2CastResultFcn#isByValue() 
      */
     protected boolean byValue;
 
@@ -60,7 +60,7 @@ public abstract class b2CastResultFcn extends Callback implements b2CastResultFc
     /**
      * Modify the way arguments are provided for the invoked function.
      * 
-     * @see b2CustomFilterFcnI#isByValue() 
+     * @see b2CastResultFcnI#isByValue() 
      * 
      * @param byValue boolean
      */
