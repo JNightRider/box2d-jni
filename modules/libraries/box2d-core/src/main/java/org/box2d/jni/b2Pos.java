@@ -34,7 +34,6 @@ import org.box2d.jni.readonly.ConstB2Pos;
 import org.box2d.jni.system.AllocFunc;
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.BufferDef;
-import org.box2d.jni.system.Library;
 import org.box2d.jni.system.Pointer;
 
 /**
