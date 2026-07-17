@@ -51,7 +51,7 @@ import static org.box2d.jni.system.Memory.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float>, ConstB2Vec2 {
 
@@ -206,6 +206,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @param o b2Vec2
      * @return b2Vec2
      */
+    @Override
     public b2Vec2 add(b2Vec2 o) {
         nadd(address(), o.address(), address());
         return this;
@@ -217,6 +218,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @param o b2Vec2
      * @return b2Vec2
      */
+    @Override
     public b2Vec2 sub(b2Vec2 o) {
         nsub(address(), o.address(), address());
         return this;
@@ -228,6 +230,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @param o b2Vec2
      * @return b2Vec2
      */
+    @Override
     public b2Vec2 mult(b2Vec2 o) {
         nmult(address(), o.address(), address());
         return this;
@@ -238,6 +241,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      *
      * @return b2Vec2
      */
+    @Override
     public b2Vec2 neg() {
         x(-x());
         y(-y());
@@ -250,6 +254,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @param o b2Vec2
      * @return boolean
      */
+    @Override
     public boolean equality(b2Vec2 o) {
         return nequality(address(), o.address());
     }
@@ -260,6 +265,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
      * @param o b2Vec2
      * @return boolean
      */
+    @Override
     public boolean inequality(b2Vec2 o) {
         return ninequality(address(), o.address());
     }
@@ -398,7 +404,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     public static Buffer createSafe(long address, int capacity) {
         return address == NULL ? null : new Buffer(address, capacity);
     }
-    
+
     // -----------------------------------
     public static long nadd(long a, long b, long __result) {
         nx(__result, nx(a) + nx(b));
@@ -434,6 +440,7 @@ public class b2Vec2 extends Struct<b2Vec2> implements b2Pos<b2Vec2, Float, Float
     /** An array of {@code b2Vec2} structs. */
     public static class Buffer extends StructBuffer<b2Vec2, Buffer> implements ConstB2Vec2.ConstBuffer<b2Vec2, Buffer>, 
                                                                                ConstB2Pos.ConstBuffer<b2Vec2, Buffer>,
+                                                                               b2Pos.Buffer<b2Vec2, Buffer>, 
                                                                                JNINative {
         /** An element that provides information about the structure. */
         private static final b2Vec2 ELEMENT_FACTORY = b2Vec2.factory();

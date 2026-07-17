@@ -47,7 +47,7 @@ import static org.box2d.jni.libc.LibCString.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2WorldTransform<b2WorldTransformI, b2PosI, b2Rot>, ConstB2WorldTransform<b2PosI, b2Rot> {
 
@@ -278,7 +278,9 @@ public class b2WorldTransformI extends Struct<b2WorldTransformI> implements b2Wo
     // -----------------------------------
     
     /** An array of {@code b2Transform} structs. */
-    public static class Buffer extends StructBuffer<b2WorldTransformI, Buffer> implements b2WorldTransformI.ConstBuffer<b2WorldTransformI, Buffer>, JNINative {
+    public static class Buffer extends StructBuffer<b2WorldTransformI, Buffer> implements b2WorldTransform.ConstBuffer<b2WorldTransformI, Buffer>,
+                                                                                          b2WorldTransform.Buffer<b2WorldTransformI, Buffer>,
+                                                                                          JNINative {
         /** An element that provides information about the structure. */
         private static final b2WorldTransformI ELEMENT_FACTORY = b2WorldTransformI.factory();
 

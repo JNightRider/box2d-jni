@@ -33,6 +33,7 @@ package org.box2d.jni;
 import org.box2d.jni.readonly.ConstB2WorldTransform;
 import org.box2d.jni.system.AllocFunc;
 import org.box2d.jni.system.ArenaAlloc;
+import org.box2d.jni.system.BufferDef;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -55,7 +56,7 @@ import org.box2d.jni.system.Pointer;
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.2.0
  */
 public interface b2WorldTransform<SELF extends b2WorldTransform<SELF, P, Q>, P extends b2Pos, Q extends b2Rot> extends Pointer, ConstB2WorldTransform<P, Q> {
 
@@ -156,5 +157,59 @@ public interface b2WorldTransform<SELF extends b2WorldTransform<SELF, P, Q>, P e
      */
     static b2WorldTransform malloc() {
         return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.malloc() : b2Transform.malloc();
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldTransform}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer malloc(int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.malloc(capacity) : b2Transform.malloc(capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldTransform}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    static Buffer malloc(int capacity, AllocFunc alloc) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.malloc(capacity, alloc) : b2Transform.malloc(capacity, alloc);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldTransform}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer calloc(int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.calloc(capacity) : b2Transform.calloc(capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldTransform}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    static Buffer calloc(int capacity, ArenaAlloc arena) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldTransformI.calloc(capacity, arena) : b2Transform.calloc(capacity, arena);
+    }
+
+    /**
+     * A definition of buffers or pointers to structures of type {@code b2WorldTransform};
+     * this interface acts as a representation of the structure's
+     * implementation.
+     *
+     * @param <T> Data type managed by the buffer
+     * @param <SELF> The object that implements the buffer
+     */
+    interface Buffer<T extends b2WorldTransform, SELF extends Buffer<T, SELF>> extends BufferDef<T, SELF> {
+        /* nothng */
     }
 }

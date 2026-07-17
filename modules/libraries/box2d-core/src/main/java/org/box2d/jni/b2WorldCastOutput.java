@@ -33,6 +33,7 @@ package org.box2d.jni;
 import org.box2d.jni.readonly.ConstB2WorldCastOutput;
 import org.box2d.jni.system.AllocFunc;
 import org.box2d.jni.system.ArenaAlloc;
+import org.box2d.jni.system.BufferDef;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -62,7 +63,7 @@ import org.box2d.jni.system.Pointer;
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.2.0
  */
 public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, POINT extends b2Pos> extends Pointer, ConstB2WorldCastOutput<POINT> {
 
@@ -198,5 +199,59 @@ public interface b2WorldCastOutput<SELF extends b2WorldCastOutput<SELF, POINT>, 
      */
     static b2WorldCastOutput malloc() {
         return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.malloc() : b2CastOutput.malloc();
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer malloc(int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.malloc(capacity) : b2CastOutput.malloc(capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutput}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    static Buffer malloc(int capacity, AllocFunc alloc) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.malloc(capacity, alloc) : b2CastOutput.malloc(capacity, alloc);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutput}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer calloc(int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.calloc(capacity) : b2CastOutput.calloc(capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2WorldCastOutput}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    static Buffer calloc(int capacity, ArenaAlloc arena) {
+        return BOX2D_DOUBLE_PRECISION ? b2WorldCastOutputI.calloc(capacity, arena) : b2CastOutput.calloc(capacity, arena);
+    }
+
+    /**
+     * A definition of buffers or pointers to structures of type {@code b2WorldCastOutput};
+     * this interface acts as a representation of the structure's
+     * implementation.
+     *
+     * @param <T> Data type managed by the buffer
+     * @param <SELF> The object that implements the buffer
+     */
+    interface Buffer<T extends b2WorldCastOutput, SELF extends Buffer<T, SELF>> extends BufferDef<T, SELF> {
+        /* nothng */
     }
 }

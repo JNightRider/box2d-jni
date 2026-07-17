@@ -48,7 +48,7 @@ import static org.box2d.jni.libc.LibCString.*;
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffer<T, SELF>> extends UintptrBuffer<SELF> implements ConstStructBuffer<T, SELF>, Iterable<T> {
+public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffer<T, SELF>> extends UintptrBuffer<SELF> implements ConstStructBuffer<T, SELF>, Iterable<T>, BufferDef<T, SELF> {
 
     public StructBuffer(ByteBuffer container, int remaining) {
         super(container, -1, 0, remaining, remaining);
@@ -98,6 +98,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws java.nio.BufferUnderflowException If the buffer's current
      * position is not smaller than its limit
      */
+    @Override
     public SELF get(T value) {
         int sizeof = getElementFactory().sizeof();
         nmemcpy(value.address(), address.get() + Integer.toUnsignedLong(nextGetIndex()) * sizeof, sizeof);
@@ -119,6 +120,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * position is not smaller than its limit
      * @throws java.nio.ReadOnlyBufferException If this buffer is read-only
      */
+    @Override
     public SELF put(T value) {
         int sizeof = getElementFactory().sizeof();
         nmemcpy(address.get() + Integer.toUnsignedLong(nextPutIndex()) * sizeof, value.address(), sizeof);
@@ -158,6 +160,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws IndexOutOfBoundsException If {@code index} is negative or not
      * smaller than the buffer's limit
      */
+    @Override
     public SELF get(int index, T value) {
         int sizeof = getElementFactory().sizeof();
         nmemcpy(value.address(), address.get() + check(index, limit) * sizeof, sizeof);
@@ -179,6 +182,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * smaller than the buffer's limit
      * @throws java.nio.ReadOnlyBufferException If this buffer is read-only
      */
+    @Override
     public SELF put(int index, T value) {
         int sizeof = getElementFactory().sizeof();
         nmemcpy(address.get() + check(index, limit) * sizeof, value.address(), sizeof);
@@ -198,6 +202,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws java.nio.BufferUnderflowException If the buffer's current
      * position is not smaller than its limit
      */
+    @Override
     public SELF apply(Consumer<T> consumer) {
         consumer.accept(get());
         return self();
@@ -218,6 +223,7 @@ public abstract class StructBuffer<T extends Struct<T>, SELF extends StructBuffe
      * @throws IndexOutOfBoundsException If {@code index} is negative or not
      * smaller than the buffer's limit
      */
+    @Override
     public SELF apply(int index, Consumer<T> consumer) {
         consumer.accept(get(index));
         return self();

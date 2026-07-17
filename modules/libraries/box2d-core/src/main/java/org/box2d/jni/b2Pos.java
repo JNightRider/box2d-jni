@@ -33,6 +33,8 @@ package org.box2d.jni;
 import org.box2d.jni.readonly.ConstB2Pos;
 import org.box2d.jni.system.AllocFunc;
 import org.box2d.jni.system.ArenaAlloc;
+import org.box2d.jni.system.BufferDef;
+import org.box2d.jni.system.Library;
 import org.box2d.jni.system.Pointer;
 
 /**
@@ -54,7 +56,7 @@ import org.box2d.jni.system.Pointer;
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.2.0
  */
 public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y extends Number> extends Pointer, ConstB2Pos<X, Y> {
 
@@ -119,6 +121,53 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
     int sizeof();
 
     /**
+     * Unary add one vector to another
+     *
+     * @param o b2Pos
+     * @return b2Pos
+     */
+    SELF add(SELF o);
+
+    /**
+     * Unary subtract one vector from another
+     *
+     * @param o b2Pos
+     * @return b2Pos
+     */
+    SELF sub(SELF o);
+
+    /**
+     * Unary multiply a vector by a scalar
+     *
+     * @param o b2Pos
+     * @return b2Pos
+     */
+    SELF mult(SELF o);
+
+    /**
+     * Unary negate a vector
+     *
+     * @return b2Pos
+     */
+    SELF neg();
+
+    /**
+     * Binary vector equality
+     *
+     * @param o b2Pos
+     * @return boolean
+     */
+    boolean equality(SELF o);
+
+    /**
+     * Binary vector inequality
+     *
+     * @param o b2Pos
+     * @return boolean
+     */
+    boolean inequality(SELF o);
+
+    /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
@@ -164,5 +213,88 @@ public interface b2Pos<SELF extends b2Pos<SELF, X, Y>, X extends Number, Y exten
      */
     static b2Pos malloc() {
         return BOX2D_DOUBLE_PRECISION ? b2PosI.malloc() : b2Vec2.malloc();
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Pos}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer malloc(int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.malloc(capacity) : b2Vec2.malloc(capacity);
+    }
+    
+    /**
+     * Reserve an amount n of memory for the object {@code b2Pos}.
+     *
+     * @param src source
+     * @return Buffer
+     */
+    @SuppressWarnings("unchecked")
+    static Buffer mallocSafe(b2Pos ...src) {
+        if (src == null) {
+            return null;
+        }
+        Buffer ptr = malloc(src.length);
+        for (b2Pos v : src) {
+            ptr.put(v);
+        }
+        return ptr;
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Pos}.
+     *
+     * @param capacity Number of elements
+     * @param alloc Custom memory manager
+     * @return Buffer
+     */
+    static Buffer malloc(int capacity, AllocFunc alloc) {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.malloc(capacity, alloc) : b2Vec2.malloc(capacity, alloc);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Pos}.
+     *
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer calloc(int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.calloc(capacity) : b2Vec2.calloc(capacity);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Pos}.
+     *
+     * @param capacity Number of elements
+     * @param arena Arean
+     * @return Buffer
+     */
+    static Buffer calloc(int capacity, ArenaAlloc arena) {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.calloc(capacity, arena) : b2Vec2.calloc(capacity, arena);
+    }
+
+    /**
+     * Reserve an amount n of memory for the object {@code b2Pos}.
+     *
+     * @param address Buffer address
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    static Buffer createSafe(long address, int capacity) {
+        return BOX2D_DOUBLE_PRECISION ? b2PosI.createSafe(address, capacity) : b2Vec2.createSafe(address, capacity);
+    }
+
+    /**
+     * A definition of buffers or pointers to structures of type {@code b2Pos};
+     * this interface acts as a representation of the structure's
+     * implementation.
+     *
+     * @param <T> Data type managed by the buffer
+     * @param <SELF> The object that implements the buffer
+     */
+    interface Buffer<T extends b2Pos, SELF extends Buffer<T, SELF>> extends BufferDef<T, SELF> {
+        /* nothng */
     }
 }

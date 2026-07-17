@@ -50,7 +50,7 @@ import static org.box2d.jni.system.Memory.*;
  * 
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOutput<b2CastOutput, b2Vec2> {
 
@@ -330,7 +330,7 @@ public class b2CastOutput extends Struct<b2CastOutput> implements b2WorldCastOut
     // -----------------------------------
 
     /** An array of {@code b2CastOutput} structs. */
-    public static class Buffer extends StructBuffer<b2CastOutput, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2CastOutput, Buffer> implements b2WorldCastOutput.Buffer<b2CastOutput, Buffer>, JNINative {
 
         /** An element that provides information about the structure. */
         private static final b2CastOutput ELEMENT_FACTORY = b2CastOutput.factory();

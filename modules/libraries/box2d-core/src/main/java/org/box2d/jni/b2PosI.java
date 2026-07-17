@@ -48,7 +48,7 @@ import static org.box2d.jni.system.Memory.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Double>, ConstB2Pos<Double, Double> {
 
@@ -204,6 +204,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @param o b2PosI
      * @return b2PosI
      */
+    @Override
     public b2PosI add(b2PosI o) {
         nadd(address(), o.address(), address());
         return this;
@@ -215,6 +216,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @param o b2PosI
      * @return b2PosI
      */
+    @Override
     public b2PosI sub(b2PosI o) {
         nsub(address(), o.address(), address());
         return this;
@@ -226,6 +228,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @param o b2PosI
      * @return b2PosI
      */
+    @Override
     public b2PosI mult(b2PosI o) {
         nmult(address(), o.address(), address());
         return this;
@@ -236,6 +239,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      *
      * @return b2PosI
      */
+    @Override
     public b2PosI neg() {
         x(-x());
         y(-y());
@@ -248,6 +252,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @param o b2PosI
      * @return boolean
      */
+    @Override
     public boolean equality(b2PosI o) {
         return nequality(address(), o.address());
     }
@@ -258,6 +263,7 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
      * @param o b2PosI
      * @return boolean
      */
+    @Override
     public boolean inequality(b2PosI o) {
         return ninequality(address(), o.address());
     }
@@ -430,7 +436,9 @@ public class b2PosI extends Struct<b2PosI> implements b2Pos<b2PosI, Double, Doub
     // -----------------------------------
     
     /** *  An array of {@code b2PosI} structs. */
-    public static class Buffer extends StructBuffer<b2PosI, Buffer> implements b2Pos.ConstBuffer<b2PosI, Buffer>, JNINative {
+    public static class Buffer extends StructBuffer<b2PosI, Buffer> implements b2Pos.Buffer<b2PosI, Buffer>, 
+                                                                               b2Pos.ConstBuffer<b2PosI, Buffer>,
+                                                                               JNINative {
         /** An element that provides information about the structure. */
         private static final b2PosI ELEMENT_FACTORY = b2PosI.factory();
 
