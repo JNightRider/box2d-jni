@@ -83,7 +83,7 @@ public interface DrawBoundsFcnI extends CallbackI, CDrawBoundsFcn {
         invoke(
                 isByValue()
                         ? memcpy(b2AABB.malloc(), () -> memGetAddress(args), b2AABB.SIZEOF)
-                        : b2AABB.createSafe(() -> 0),
+                        : b2AABB.createSafe(() -> memGetAddress(args)),
                 memGetInt(memGetAddress(args + VarType.Uintptrt.sizeof())),
                 memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
         );

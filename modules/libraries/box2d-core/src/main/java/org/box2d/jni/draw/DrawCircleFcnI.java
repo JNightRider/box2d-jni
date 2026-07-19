@@ -84,7 +84,7 @@ public interface DrawCircleFcnI extends CallbackI, CDrawCircleFcn {
         invoke(
                 isByValue()
                         ? memcpy(b2Pos.malloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
-                        : b2Pos.createSafe(() -> 0),
+                        : b2Pos.createSafe(() -> memGetAddress(args)),
                 memGetFloat(memGetAddress(args + VarType.Uintptrt.sizeof())),
                 memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
                 memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
