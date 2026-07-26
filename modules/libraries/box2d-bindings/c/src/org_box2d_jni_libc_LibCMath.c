@@ -46,7 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Signature: (F)F
  */
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCMath_ncosf
-(JNIEnv *__env, jclass clazz, jfloat a)
+    (JNIEnv *__env, jclass clazz, jfloat a)
 {
     return (jfloat)cosf(a);
 }
@@ -57,7 +57,7 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCMath_ncosf
  * Signature: (F)F
  */
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCMath_nsinf
-(JNIEnv *__env, jclass clazz, jfloat a)
+    (JNIEnv *__env, jclass clazz, jfloat a)
 {
     return (jfloat)sinf(a);
 }
@@ -68,7 +68,18 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCMath_nsinf
  * Signature: (FF)F
  */
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCMath_natan2f
-(JNIEnv *__env, jclass clazz, jfloat y, jfloat x)
+    (JNIEnv *__env, jclass clazz, jfloat y, jfloat x)
 {
     return (jfloat)atan2f(y, x);
+}
+
+/*
+ * Class:     org_box2d_jni_libc_LibCMath
+ * Method:    nlog2f
+ * Signature: (F)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCMath_nlog2f
+  (JNIEnv *__env, jclass clazz, jfloat x)
+{
+    return (jfloat)log2f(x);
 }
