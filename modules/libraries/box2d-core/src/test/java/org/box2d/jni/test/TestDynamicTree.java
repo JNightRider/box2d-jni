@@ -285,7 +285,7 @@ public class TestDynamicTree {
     private static final b2TreeQueryCallbackFcnI QueryCollectCallback = (proxyId, userData, context) -> 
     {
         IntBuffer out = memIntBuffer(context, 16);
-	    out.put(proxyId, 1);
+        out.put(proxyId, 1);
         return true; // continue the query
     };
 
