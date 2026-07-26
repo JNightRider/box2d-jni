@@ -45,17 +45,18 @@ import static org.box2d.jni.test.internal.Extern.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/main.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class Main {
     
     static {
-        CollisionTest = extern(new TestCollision(), TestCollision::CollisionTest);
-        DistanceTest  = extern(new TestDistance(), TestDistance::DistanceTest);
-        MathTest      = extern(new TestMath(), TestMath::MathTest);
-        ShapeTest     = extern(new TestShape(), TestShape::ShapeTest);
-        IdTest        = extern(new TestId(), TestId::IdTest);
+        DynamicTreeTest = extern(new TestDynamicTree(), TestDynamicTree::DynamicTreeTest);
+        CollisionTest   = extern(new TestCollision(), TestCollision::CollisionTest);
+        DistanceTest    = extern(new TestDistance(), TestDistance::DistanceTest);
+        MathTest        = extern(new TestMath(), TestMath::MathTest);
+        ShapeTest       = extern(new TestShape(), TestShape::ShapeTest);
+        IdTest          = extern(new TestId(), TestId::IdTest);
     }
     
 
@@ -63,7 +64,7 @@ public class Main {
     static Extern<Integer> CollisionTest;
 //extern int DeterminismTest( void );
     static Extern<Integer> DistanceTest;
-//extern int DynamicTreeTest( void );
+    static Extern<Integer> DynamicTreeTest;
     static Extern<Integer> IdTest;
     static Extern<Integer> MathTest;
     static Extern<Integer> ShapeTest;
@@ -93,7 +94,7 @@ public class Main {
         //MAYBE_RUN_TEST( ContainerTest );
         //MAYBE_RUN_TEST( DeterminismTest );
         MAYBE_RUN_TEST( DistanceTest );
-        //MAYBE_RUN_TEST( DynamicTreeTest );
+        MAYBE_RUN_TEST( DynamicTreeTest );
         MAYBE_RUN_TEST( IdTest );
         MAYBE_RUN_TEST( ShapeTest );
         //MAYBE_RUN_TEST( ThreadTest );
