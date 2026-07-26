@@ -36,7 +36,7 @@ import org.box2d.jni.system.Library;
  * Implementation of C libraries: {@code <math.h>}
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class LibCMath {
@@ -61,4 +61,10 @@ public class LibCMath {
     }
     
     public static native float natan2f(float y, float x);
+    
+    public static float log2f(float x) {
+        return nlog2f(x);
+    }
+    
+    public static native float nlog2f(float x);
 }
