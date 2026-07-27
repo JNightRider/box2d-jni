@@ -59,13 +59,13 @@ public final class Constants {
                             : (1.0e5f * b2GetLengthUnitsPerMeter());
 
     /** {@code #define B2_MAX_WORKERS 32 } */
-    public static final float  B2_MAX_WORKERS = 32;
+    public static final int  B2_MAX_WORKERS = 32;
 
     /** {@code } */
-    public static final float B2_MAX_TASKS = 256;
+    public static final int B2_MAX_TASKS = 256;
 
     /** {@code } */
-    public static final float B2_GRAPH_COLOR_COUNT = 24;
+    public static final int B2_GRAPH_COLOR_COUNT = 24;
 
     /** {@code } */
     public static final float B2_LINEAR_SLOP = ( 0.005f * b2GetLengthUnitsPerMeter() );
@@ -76,7 +76,7 @@ public final class Constants {
      * #endif
      * }
      */
-    public static final float B2_MAX_WORLDS = 128;
+    public static final int B2_MAX_WORLDS = 128;
 
     /**
      * {@code 
@@ -85,7 +85,7 @@ public final class Constants {
      * #endif
      * }
      */
-    public static final float B2_NAME_LENGTH = 10;
+    public static final int B2_NAME_LENGTH = 10;
 
    /** {@code #define B2_MAX_ROTATION ( 0.25f * B2_PI ) } */
     public static final float B2_MAX_ROTATION = ( 0.25f * B2_PI );
