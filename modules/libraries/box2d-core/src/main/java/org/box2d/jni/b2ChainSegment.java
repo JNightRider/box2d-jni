@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
+import org.box2d.jni.readonly.ConstB2ChainSegment;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.libc.LibCString.*;
@@ -49,9 +50,9 @@ import static org.box2d.jni.system.Memory.*;
  * 
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
-public class b2ChainSegment extends Struct<b2ChainSegment> {
+public class b2ChainSegment extends Struct<b2ChainSegment> implements ConstB2ChainSegment {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -112,12 +113,16 @@ public class b2ChainSegment extends Struct<b2ChainSegment> {
     }
 
     /** @return Returns the property {@code ghost1} */
+    @Override
     public b2Vec2 ghost1() { return nghost1(address()); }
     /** @return Returns the property {@code segment} */
+    @Override
     public b2Segment segment() { return nsegment(address()); }
     /** @return Returns the property {@code ghost2} */
+    @Override
     public b2Vec2 ghost2() { return nghost2(address()); }
     /** @return Returns the property {@code chainId} */
+    @Override
     public int chainId() { return nchainId(address()); }
 
     /**
