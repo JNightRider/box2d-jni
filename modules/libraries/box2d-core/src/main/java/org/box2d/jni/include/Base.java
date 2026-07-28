@@ -53,6 +53,8 @@ import static org.box2d.jni.system.Checks.*;
  */
 public final class Base {
     static { Library.initialize(); }
+    /** Used to indicate an unset or invalid index value.*/
+    public static final int B2_NULL_INDEX = ( -1 );
     /* Native bindings: {@code #define B2_HASH_INIT 5381} */
     public static final int B2_HASH_INIT = 5381;
     
