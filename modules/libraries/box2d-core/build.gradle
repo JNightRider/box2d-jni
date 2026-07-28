@@ -14,6 +14,14 @@ ext {
     websiteUrl = 'https://github.com/JNightRider/box2d-jni'
 }
 
+// Register JVM-execution tasks:
+
+application {
+    // default settings for the 'run' task:
+    mainClass = 'org.box2d.jni.test.Main'
+}
+
+
 java {
     withSourcesJar()
     withJavadocJar()
@@ -37,7 +45,6 @@ javadocJar {
 def jars = fileTree("${rootDir}/lib") {
     exclude("*Debug*")
 }
-
 publishing {
     publications {
         maven(MavenPublication) {
