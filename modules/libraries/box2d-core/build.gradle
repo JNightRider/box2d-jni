@@ -165,6 +165,7 @@ tasks.withType(JavaExec).configureEach { // Java runtime options:
     if (enableNativeAccess) {
         jvmArgs('--enable-native-access=ALL-UNNAMED') // suppress System::load() warning
     }
+    systemProperties(System.getProperties())
 }
 
 // test
