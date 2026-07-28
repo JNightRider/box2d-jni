@@ -72,8 +72,15 @@ public final class Sys<T> {
     }
 
     public static boolean defined(Sys value) {
-        if (value == null || value.get() == null) {
+        if (value == null) {
             return false;
+        }
+        Object val = value.get();
+        if (val == null) {
+            return false;
+        }
+        if (val instanceof Boolean) {
+            return ((boolean) val);
         }
         return true;
     }
