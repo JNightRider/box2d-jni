@@ -186,6 +186,7 @@ jobs:
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
       - name: box2d test - [Sp, Dp]
+        shell: msys2 {0}
         run: |
           for DP in false true; do
             echo "Running with BOX2D_JNI_DOUBLE_PRECISION=$DP"
@@ -270,6 +271,7 @@ jobs:
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
       - name: box2d test - [Sp, Dp]
+        shell: msys2 {0}
         run: |
           for DP in false true; do
             echo "Running with BOX2D_JNI_DOUBLE_PRECISION=$DP"
