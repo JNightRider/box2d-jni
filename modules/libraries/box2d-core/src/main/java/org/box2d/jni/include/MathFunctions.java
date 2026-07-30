@@ -84,16 +84,16 @@ public final class MathFunctions {
     static {
         try (ArenaAlloc arena = allocPush()) {
             b2Transform_identity.set(
-                b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f),
-                b2Rot.alloc(arena::ncalloc).set(1.0f, 0.0f)
+                b2Vec2.calloc(arena).set(0.0f, 0.0f),
+                b2Rot.calloc(arena).set(1.0f, 0.0f)
             );
             b2Mat22_zero.set(
-                b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f),
-                b2Vec2.alloc(arena::ncalloc).set(0.0f, 0.0f)
+                b2Vec2.calloc(arena).set(0.0f, 0.0f),
+                b2Vec2.calloc(arena).set(0.0f, 0.0f)
             );
             b2WorldTransform_identity.set(
-                b2Pos.alloc(arena::ncalloc).set(0.0f, 0.0f),
-                b2Rot.alloc(arena::ncalloc).set(1.0f, 0.0f)
+                b2Pos.calloc(arena).set(0.0f, 0.0f),
+                b2Rot.calloc(arena).set(1.0f, 0.0f)
             );
         }
     }
