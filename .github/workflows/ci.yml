@@ -44,7 +44,7 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
@@ -74,7 +74,6 @@ jobs:
           path: |
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
-
 
   Java21-Linux_ARM64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
@@ -109,7 +108,7 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
@@ -177,7 +176,7 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
@@ -261,7 +260,7 @@ jobs:
             export AR=llvm-ar
             export RANLIB=llvm-ranlib
             export NM=llvm-nm
-            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
@@ -326,7 +325,7 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
@@ -394,7 +393,7 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true clean test
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
