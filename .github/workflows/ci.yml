@@ -273,6 +273,13 @@ jobs:
       - name: box2d test - [Sp, Dp]
         shell: msys2 {0}
         run: |
+          export PATH=/clangarm64/bin:/usr/bin:/bin
+          export CC=clang
+          export CXX=clang++
+          export LD=ld.lld
+          export AR=llvm-ar
+          export RANLIB=llvm-ranlib
+          export NM=llvm-nm
           for DP in false true; do
             echo "Running with BOX2D_JNI_DOUBLE_PRECISION=$DP"
 
