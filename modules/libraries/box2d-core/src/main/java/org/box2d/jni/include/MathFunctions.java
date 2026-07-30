@@ -53,7 +53,7 @@ import static org.box2d.jni.system.ArenaAlloc.*;
  * Class that represents the {@code <math_functions.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
