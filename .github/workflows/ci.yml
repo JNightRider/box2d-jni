@@ -58,6 +58,7 @@ jobs:
             echo "Running with BOX2D_JNI_DOUBLE_PRECISION=$DP"
 
             ./gradlew :modules:libraries:box2d-core:run \
+              -Pbox2d.jni.bt=Debug \
               -Pbox2d.jni.android=false \
               -Pbox2d.jni.desktop=true \
               -DBOX2D_JNI_NDEBUG=false \
