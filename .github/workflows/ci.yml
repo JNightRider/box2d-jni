@@ -61,7 +61,7 @@ jobs:
               -Pbox2d.jni.bt=Debug \
               -Pbox2d.jni.android=false \
               -Pbox2d.jni.desktop=true \
-              -DBOX2D_JNI_NDEBUG=false \
+              -DBOX2D_JNI_NDEBUG=true \
               -DBOX2D_JNI_DOUBLE_PRECISION=$DP \
               -DBOX2D_NDEBUG=true \
               -Dorg.box2d.jni.system.Debug.Color=true \
