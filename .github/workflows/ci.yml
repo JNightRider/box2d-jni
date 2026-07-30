@@ -11,6 +11,17 @@ on:
 jobs:
   Java21-Linux64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    strategy:
+      fail-fast: false
+      matrix:
+        double_precision:
+          - false
+          - true
+        include:
+          - double_precision: false
+            name: Sp
+          - double_precision: true
+            name: Dp
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v7
@@ -52,27 +63,19 @@ jobs:
           path: |
             modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
-      - name: box2d test - [Sp, Dp]
+      - name: box2d test [${{ matrix.name }}]
         run: |
           ./gradlew :modules:libraries:box2d-core:run \
-            -DBOX2D_JNI_NDEBUG=false \            
-            -DBOX2D_JNI_DOUBLE_PRECISION=false \
-            -DBOX2D_NDEBUG=true \
-            -Dorg.box2d.jni.system.Debug.Color=true \
-            -Dorg.box2d.jni.system.Debugs=true
-          
-          ./gradlew :modules:libraries:box2d-core:run \
-            -DBOX2D_JNI_NDEBUG=false \            
-            -DBOX2D_JNI_DOUBLE_PRECISION=true \
+            -DBOX2D_JNI_NDEBUG=false \
+            -DBOX2D_JNI_DOUBLE_PRECISION=${{ matrix.double_precision }} \
             -DBOX2D_NDEBUG=true \
             -Dorg.box2d.jni.system.Debug.Color=true \
             -Dorg.box2d.jni.system.Debugs=true
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: test-report-linux
-          path: |
-            modules/libraries/box2d-core/build/reports/tests/test
+          name: test-report-linux-${{ matrix.name }}
+          path: modules/libraries/box2d-core/build/reports/tests/test
           if-no-files-found: ignore
 
 
