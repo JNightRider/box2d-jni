@@ -38,7 +38,6 @@ import static org.box2d.jni.include.Base.*;
 import static org.box2d.jni.test.TestMacros.*;
 import static org.box2d.jni.test.internal.Extern.*;
 
-
 /**
  * A line-by-line Java translation of the box2d 'test/main.c' example.
  * <p>
@@ -49,7 +48,7 @@ import static org.box2d.jni.test.internal.Extern.*;
  * @since 1.0.0
  */
 public class Main {
-    
+
     static {
         DynamicTreeTest = extern(new TestDynamicTree(), TestDynamicTree::DynamicTreeTest);
         CollisionTest   = extern(new TestCollision(), TestCollision::CollisionTest);
@@ -59,7 +58,7 @@ public class Main {
         WorldTest       = extern(new TestWorld(), TestWorld::WorldTest);
         IdTest          = extern(new TestId(), TestId::IdTest);
     }
-    
+
     static Extern<Integer> CollisionTest;
     static Extern<Integer> DistanceTest;
     static Extern<Integer> DynamicTreeTest;
@@ -67,7 +66,7 @@ public class Main {
     static Extern<Integer> MathTest;
     static Extern<Integer> ShapeTest;
     static Extern<Integer> WorldTest;
-    
+
     public static void main(String[] args) {
         /*const char* */ filter = null;
         if (args.length > 0)
