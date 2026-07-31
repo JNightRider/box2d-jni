@@ -49,9 +49,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetAllocator
     (JNIEnv *__env, jclass clazz, jlong func0, jlong func1)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2AllocFcn* __function0 = (b2AllocFcn*)(uintptr_t)func0;
-    b2FreeFcn* __function1 = (b2FreeFcn*)(uintptr_t)func1;
-    b2SetAllocator( __function0, __function1 );
+    b2SetAllocator( (b2AllocFcn*)(uintptr_t)func0, (b2FreeFcn*)(uintptr_t)func1 );
 }
 
 /*
@@ -75,8 +73,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetAssertFcn
     (JNIEnv *__env, jclass clazz, jlong func0)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2AssertFcn* __function = (b2AssertFcn*)(uintptr_t)func0;
-    b2SetAssertFcn( __function );
+    b2SetAssertFcn( (b2AssertFcn*)(uintptr_t)func0 );
 }
 
 /*
@@ -88,8 +85,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetLogFcn
     (JNIEnv *__env, jclass clazz, jlong func0)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2LogFcn* __function = (b2LogFcn*)(uintptr_t)func0;
-    b2SetLogFcn( __function );
+    b2SetLogFcn( (b2LogFcn*)(uintptr_t)func0 );
 }
 
 /*
@@ -101,8 +97,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2GetVersion
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Version* ptr = (b2Version*)(uintptr_t)__result;
-    *ptr = b2GetVersion();
+    *(b2Version*)__result = b2GetVersion();
 }
 
 /*
