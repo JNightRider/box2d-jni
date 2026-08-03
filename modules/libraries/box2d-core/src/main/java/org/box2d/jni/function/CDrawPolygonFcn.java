@@ -53,15 +53,4 @@ public interface CDrawPolygonFcn extends Pointer {
      * @param context long
      */
     void invoke( b2WorldTransform transform, long vertices, int vertexCount, int color, long context  );
-
-    /**
-     * {@code true} if the function arguments are passed by value (a copy of the
-     * structure), otherwise {@code false} if it is simply a direct reference to
-     * the structure retrieved from libfii.
-     *
-     * @return boolean
-     */
-    default boolean isByValue() {
-        return true;
-    }
 }

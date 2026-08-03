@@ -62,7 +62,7 @@ public class DrawPolygonFcnTest {
     @Test
     public void callback() {
         try (
-                b2Vec2.Buffer buffer = b2Vec2.malloc(10);
+                b2Vec2.Buffer buffer = b2Vec2.calloc(10);
                 b2WorldTransform t = b2WorldTransform.malloc().
                 set(b2Pos.malloc()
                            .set(1f, 2f),
@@ -155,7 +155,6 @@ public class DrawPolygonFcnTest {
                 Assert.assertEquals(1.4f, v.x(), 0.0f);
                 Assert.assertEquals(-34.89f, v.y(), 0.0f);
             });
-            func.byValue(false);
 
             JNIB2.invoke_WORLDTRANSFORM_PIIPV(t.address(), buffer.address(), 10, b2HexColor.b2_colorRed, 0xFFFFl, func.address());
         }

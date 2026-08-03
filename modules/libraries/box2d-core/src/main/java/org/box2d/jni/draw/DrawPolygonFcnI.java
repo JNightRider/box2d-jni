@@ -41,6 +41,8 @@ import org.box2d.jni.function.CDrawPolygonFcn;
 import org.box2d.jni.system.CallbackI;
 
 import static org.box2d.jni.libc.LibCString.*;
+import org.box2d.jni.system.ArenaAlloc;
+import static org.box2d.jni.system.ArenaAlloc.allocPush;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -83,19 +85,17 @@ public interface DrawPolygonFcnI extends CallbackI, CDrawPolygonFcn {
     /*(non-Javadoc)*/
     @Override
     default void callback(long resp, long args) {
-        b2WorldTransform __arg1 = BOX2D_DOUBLE_PRECISION
-                        ? (isByValue()
-                                ? memcpy(b2WorldTransformI.malloc(), () -> memGetAddress(args), b2WorldTransformI.SIZEOF)
-                                : b2WorldTransformI.createSafe(() -> memGetAddress(args)))
-                        : (isByValue()
-                                ? memcpy(b2Transform.malloc(), () -> memGetAddress(args), b2Transform.SIZEOF)
-                                : b2Transform.createSafe(() -> memGetAddress(args)));
-        invoke(
-                 __arg1,
-                memGetAddress(memGetAddress(args + POINTER_SIZE)),
-                memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
-                memGetInt(memGetAddress(args + 3 * POINTER_SIZE)),
-                memGetAddress(memGetAddress(args + 4 * POINTER_SIZE))
-        );
+        try (ArenaAlloc arena = allocPush()) {
+            b2WorldTransform __arg1 = BOX2D_DOUBLE_PRECISION
+                    ? memcpy(b2WorldTransformI.calloc(arena), memGetAddress(args), b2WorldTransformI.SIZEOF)
+                    : memcpy(b2Transform.calloc(arena), memGetAddress(args), b2Transform.SIZEOF);
+            invoke(
+                    __arg1,
+                    memGetAddress(memGetAddress(args + POINTER_SIZE)),
+                    memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
+                    memGetInt(memGetAddress(args + 3 * POINTER_SIZE)),
+                    memGetAddress(memGetAddress(args + 4 * POINTER_SIZE))
+            );
+        }
     }
 }
