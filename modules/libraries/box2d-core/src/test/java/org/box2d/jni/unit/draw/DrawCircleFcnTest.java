@@ -46,7 +46,7 @@ import org.junit.Test;
  * A class to manage the unit tests of the {@link DrawCircleFcn} class.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class DrawCircleFcnTest {
