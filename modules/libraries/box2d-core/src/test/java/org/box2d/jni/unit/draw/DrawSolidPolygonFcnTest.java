@@ -155,7 +155,6 @@ public class DrawSolidPolygonFcnTest {
                 Assert.assertEquals(1.4f, vb.x(), 0.0f);
                 Assert.assertEquals(-34.89f, vb.y(), 0.0f);
             });
-            func.byValue(false);
 
             JNIB2.invoke_WORLDTRANSFORM_PIFIPV(t.address(), buffer.address(), 10, 10.5f, b2HexColor.b2_colorGreen, 0xFFFFl, func.address());
         }

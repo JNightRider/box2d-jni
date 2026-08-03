@@ -105,7 +105,6 @@ public class DrawSolidCircleFcnTest {
                 
                 Assert.assertEquals(0x0CDDDl, context);
             });
-            func.byValue(false);
             JNIB2.invoke_WORLDTRANSFORM__VEC2_FIPV(t.address(), v.address(), 1.1f, b2HexColor.b2_colorBlue, 0x0CDDDl, func.address());
         }
         Callbacks.b2FreeCallbacks();

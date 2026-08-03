@@ -38,6 +38,7 @@ import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNIB2;
+import org.box2d.jni.system.Library;
 import org.box2d.jni.system.Sys;
 
 import org.junit.Assert;
@@ -52,7 +53,11 @@ import org.junit.Test;
  */
 @SuppressWarnings("unchecked")
 public class DrawTransformFcnTest {
-    static { Sys.BOX2D_NDEBUG.set(true); }
+
+    static {
+        Sys.BOX2D_NDEBUG.set(true);
+        Library.initialize();
+    }
 
     /**
      * Initialize all tests.
@@ -91,7 +96,6 @@ public class DrawTransformFcnTest {
                 Assert.assertEquals(6f, transform.q().s(), 0.0f);                
                 Assert.assertEquals(0x0ddccc, context);
             });
-            func.byValue(false);
             JNIB2.invoke_TRANSFORM_PV(t.address(), 0x0ddccc, func.address());
         }
         Callbacks.b2FreeCallbacks();

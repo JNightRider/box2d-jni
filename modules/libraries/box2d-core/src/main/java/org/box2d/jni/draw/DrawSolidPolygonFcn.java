@@ -43,12 +43,6 @@ import org.box2d.jni.system.Checks;
  * @since 1.0.0
  */
 public abstract class DrawSolidPolygonFcn extends Callback implements DrawSolidPolygonFcnI {
-    
-    /**
-     * Callback flag
-     * @see DrawSolidPolygonFcn#isByValue() 
-     */
-    protected boolean byValue;
 
     /**
      * Create a callback instance using libffi.
@@ -57,24 +51,6 @@ public abstract class DrawSolidPolygonFcn extends Callback implements DrawSolidP
      */
     public DrawSolidPolygonFcn(long address) {
         super(address);
-    }
-
-    /**
-     * Modify the way arguments are provided for the invoked function.
-     * 
-     * @see DrawSolidPolygonFcn#isByValue() 
-     * 
-     * @param byValue boolean
-     */
-    public void byValue(boolean byValue) {
-        this.byValue = byValue;
-    }
-
-    /* (non-Javadoc)
-     */
-    @Override
-    public boolean isByValue() {
-        return this.byValue;
     }
 
     /**
