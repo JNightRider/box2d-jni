@@ -31,18 +31,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.draw;
 
 import java.nio.LongBuffer;
-import java.util.function.Function;
-import org.box2d.jni.b2Transform;
 
+import java.util.function.Function;
+
+import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2WorldTransform;
 import org.box2d.jni.b2WorldTransformI;
 
 import org.box2d.jni.function.CDrawPolygonFcn;
+
 import org.box2d.jni.system.CallbackI;
+import org.box2d.jni.system.ArenaAlloc;
 
 import static org.box2d.jni.libc.LibCString.*;
-import org.box2d.jni.system.ArenaAlloc;
-import static org.box2d.jni.system.ArenaAlloc.allocPush;
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
