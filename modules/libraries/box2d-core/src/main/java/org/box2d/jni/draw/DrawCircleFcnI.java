@@ -36,10 +36,13 @@ import java.util.function.Function;
 import org.box2d.jni.b2Pos;
 
 import org.box2d.jni.function.CDrawCircleFcn;
+
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -81,13 +84,13 @@ public interface DrawCircleFcnI extends CallbackI, CDrawCircleFcn {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        invoke(
-                isByValue()
-                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
-                        : b2Pos.createSafe(() -> memGetAddress(args)),
-                memGetFloat(memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
-        );
+        try (ArenaAlloc arena = allocPush()) {
+            invoke(
+                    memcpy(b2Pos.calloc(arena), memGetAddress(args), b2Pos.DSIZEOF),
+                    memGetFloat(memGetAddress(args + VarType.Uintptrt.sizeof())),
+                    memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
+                    memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
+            );
+        }
     }
 }

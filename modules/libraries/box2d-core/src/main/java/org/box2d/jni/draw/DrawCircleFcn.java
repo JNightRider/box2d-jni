@@ -45,36 +45,12 @@ import org.box2d.jni.system.Checks;
 public abstract class DrawCircleFcn extends Callback implements DrawCircleFcnI {
 
     /**
-     * Callback flag
-     * @see DrawCircleFcn#isByValue()
-     */
-    protected boolean byValue;
-
-    /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
     public DrawCircleFcn(long address) {
         super(address);
-    }
-
-    /**
-     * Modify the way arguments are provided for the invoked function.
-     *
-     * @see DrawCircleFcn#isByValue()
-     *
-     * @param byValue boolean
-     */
-    public void byValue(boolean byValue) {
-        this.byValue = byValue;
-    }
-
-    /* (non-Javadoc)
-     */
-    @Override
-    public boolean isByValue() {
-        return this.byValue;
     }
 
     /**

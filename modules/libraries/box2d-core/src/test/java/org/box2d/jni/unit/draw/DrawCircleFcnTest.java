@@ -89,7 +89,6 @@ public class DrawCircleFcnTest {
                 Assert.assertEquals(1f, center.x().floatValue(), 0.0f);
                 Assert.assertEquals(2f, center.y().floatValue(), 0.0f);
             });
-            func.byValue(false);
             JNIB2.invoke_VEC2_FIPV(v.address(), 10.5f, b2HexColor.b2_colorRed, 0x00fffl, func.address());
         }
         Callbacks.b2FreeCallbacks();
