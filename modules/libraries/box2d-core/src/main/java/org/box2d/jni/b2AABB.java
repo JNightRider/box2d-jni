@@ -166,7 +166,27 @@ public class b2AABB extends Struct<b2AABB> implements ConstB2AABB {
     private static b2AABB factory() {
         return new b2AABB(-1L, true);
     }
-    
+
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2AABB
+     */
+    public static b2AABB create(long ptr) {
+        return new b2AABB(() -> ptr);
+    }
+
+    /**
+     * Create a reference to a pointer to access its properties.
+     *
+     * @param ptr A reference pointer.
+     * @return b2AABB
+     */
+    public static b2AABB createSafe(long ptr) {
+        return createSafe(() -> ptr);
+    }
+
     /**
      * Create a reference to a pointer to access its properties.
      *

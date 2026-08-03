@@ -36,10 +36,13 @@ import java.util.function.Function;
 import org.box2d.jni.b2AABB;
 
 import org.box2d.jni.function.CDrawBoundsFcn;
+
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -80,12 +83,12 @@ public interface DrawBoundsFcnI extends CallbackI, CDrawBoundsFcn {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        invoke(
-                isByValue()
-                        ? memcpy(b2AABB.malloc(), () -> memGetAddress(args), b2AABB.SIZEOF)
-                        : b2AABB.createSafe(() -> memGetAddress(args)),
-                memGetInt(memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
-        );
+        try (ArenaAlloc arena = allocPush()) {
+            invoke(
+                    memcpy(b2AABB.calloc(arena), memGetAddress(args), b2AABB.SIZEOF),
+                    memGetInt(memGetAddress(args + VarType.Uintptrt.sizeof())),
+                    memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
+            );
+        }
     }
 }

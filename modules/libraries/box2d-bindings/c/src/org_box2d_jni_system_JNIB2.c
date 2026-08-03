@@ -249,3 +249,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1WORLDTRANSFORM_1_
     ((void (*) (b2WorldTransform, b2Vec2, float, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2WorldTransform*)param0, *(b2Vec2*)param1, (float)param2, (uint32_t)param3, (uintptr_t)param4);
 }
 
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_AABB_IPV
+ * Signature: (JIJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1AABB_1IPV
+  (JNIEnv *__env, jclass clazz, jlong param0, jint param1, jlong param2, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2AABB, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2AABB*)param0, (int)param1, (uintptr_t)param2);
+}

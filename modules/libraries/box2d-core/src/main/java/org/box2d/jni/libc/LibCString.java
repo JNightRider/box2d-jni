@@ -37,22 +37,27 @@ import org.box2d.jni.system.Pointer;
  * Implementation of C libraries: {@code <string.h>}
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class LibCString {
     static {
         Library.initialize();
     }
-    
+
     public static native long nmemset(long ptr, int value, long num);
-    
+
     public static <T extends Pointer> T memcpy(T dest, Pointer src, long n) {
         nmemcpy(dest.address(), src.address(), n);
         return dest;
     }
-    
+
+    public static <T extends Pointer> T memcpy(T dest, long src, long n) {
+        nmemcpy(dest.address(), src, n);
+        return dest;
+    }
+
     public static native long nmemcpy(long dest, long src, long n);
-    
+
     public static native long nstrlen(long s);
 }

@@ -60,4 +60,6 @@ public final class JNIB2 {
 
     public static native void invoke_WORLDTRANSFORM_PIIPV(long param0, long param1, int param2, int param3, long param4, long __functionAddress);
     public static native void invoke_WORLDTRANSFORM__VEC2_FIPV(long param0, long param1, float param2, int param3, long param4, long __functionAddress);
+
+    public static native void invoke_AABB_IPV(long param0, int param1, long param2, long __functionAddress);
 }

@@ -45,36 +45,12 @@ import org.box2d.jni.system.Checks;
 public abstract class DrawBoundsFcn extends Callback implements DrawBoundsFcnI {
 
     /**
-     * Callback flag
-     * @see DrawBoundsFcn#isByValue()
-     */
-    protected boolean byValue;
-
-    /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
     public DrawBoundsFcn(long address) {
         super(address);
-    }
-
-    /**
-     * Modify the way arguments are provided for the invoked function.
-     *
-     * @see DrawBoundsFcn#isByValue()
-     *
-     * @param byValue boolean
-     */
-    public void byValue(boolean byValue) {
-        this.byValue = byValue;
-    }
-
-    /* (non-Javadoc)
-     */
-    @Override
-    public boolean isByValue() {
-        return this.byValue;
     }
 
     /**
