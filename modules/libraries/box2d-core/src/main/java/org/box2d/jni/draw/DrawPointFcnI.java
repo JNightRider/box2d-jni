@@ -34,10 +34,14 @@ import java.nio.LongBuffer;
 import java.util.function.Function;
 
 import org.box2d.jni.b2Pos;
+
 import org.box2d.jni.function.CDrawPointFcn;
+
 import org.box2d.jni.system.CallbackI;
+import org.box2d.jni.system.ArenaAlloc;
 
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -79,13 +83,13 @@ public interface DrawPointFcnI extends CallbackI, CDrawPointFcn {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        invoke(
-                isByValue()
-                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args), b2Pos.DSIZEOF)
-                        : b2Pos.createSafe(() -> memGetAddress(args)),
-                memGetFloat(memGetAddress(args + POINTER_SIZE)),
-                memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
-                memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))
-        );
+        try (ArenaAlloc arena = allocPush()) {
+            invoke(
+                    memcpy(b2Pos.calloc(arena), memGetAddress(args), b2Pos.DSIZEOF),
+                    memGetFloat(memGetAddress(args + POINTER_SIZE)),
+                    memGetInt(memGetAddress(args + 2 * POINTER_SIZE)),
+                    memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))
+            );
+        }
     }
 }

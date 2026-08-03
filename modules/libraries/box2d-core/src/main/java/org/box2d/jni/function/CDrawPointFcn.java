@@ -38,7 +38,7 @@ import org.box2d.jni.system.Pointer;
  * structure cannot be modified, only invoked).
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public interface CDrawPointFcn extends Pointer {
@@ -52,15 +52,4 @@ public interface CDrawPointFcn extends Pointer {
      * @param context long
      */
     void invoke(b2Pos p, float size, int color, long context);
-
-    /**
-     * {@code true} if the function arguments are passed by value (a copy of the
-     * structure), otherwise {@code false} if it is simply a direct reference to
-     * the structure retrieved from libfii.
-     *
-     * @return boolean
-     */
-    default boolean isByValue() {
-        return true;
-    }
 }
