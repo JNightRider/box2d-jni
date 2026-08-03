@@ -45,7 +45,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link DrawCircleFcn} class.
+ * A class to manage the unit tests of the {@link DrawBoundsFcn} class.
  *
  * @author wil
  * @version 1.0.0
@@ -54,7 +54,6 @@ import org.junit.Test;
 public class DrawBoundsFcnTest {
     static {
         Sys.BOX2D_NDEBUG.set(true);
-        Library.initialize();
     }
 
     /**
