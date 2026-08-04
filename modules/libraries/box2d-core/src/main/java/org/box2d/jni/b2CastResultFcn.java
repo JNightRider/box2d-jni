@@ -41,12 +41,6 @@ import org.box2d.jni.system.Checks;
  * @since 1.0.0
  */
 public abstract class b2CastResultFcn extends Callback implements b2CastResultFcnI {
-    
-    /**
-     * Callback flag
-     * @see b2CastResultFcn#isByValue() 
-     */
-    protected boolean byValue;
 
     /**
      * Create a callback instance using libffi.
@@ -55,24 +49,6 @@ public abstract class b2CastResultFcn extends Callback implements b2CastResultFc
      */
     public b2CastResultFcn(long address) {
         super(address);
-    }
-
-    /**
-     * Modify the way arguments are provided for the invoked function.
-     * 
-     * @see b2CastResultFcnI#isByValue() 
-     * 
-     * @param byValue boolean
-     */
-    public void byValue(boolean byValue) {
-        this.byValue = byValue;
-    }
-
-    /* (non-Javadoc)
-     */
-    @Override
-    public boolean isByValue() {
-        return this.byValue;
     }
 
     /**

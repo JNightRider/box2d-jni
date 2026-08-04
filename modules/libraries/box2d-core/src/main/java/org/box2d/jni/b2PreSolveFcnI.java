@@ -34,10 +34,13 @@ import java.nio.LongBuffer;
 import java.util.function.Function;
 
 import org.box2d.jni.function.CPreSolveFcn;
+
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -80,21 +83,15 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        boolean __result = invoke(
-                isByValue()
-                        ? memcpy(b2ShapeId.malloc(), () -> memGetAddress(args), b2ShapeId.SIZEOF)
-                        : b2ShapeId.createSafe(() -> memGetAddress(args)),
-                isByValue()
-                        ? memcpy(b2ShapeId.malloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF)
-                        : b2ShapeId.createSafe(() -> memGetAddress(args + VarType.Uintptrt.sizeof())),
-                isByValue()
-                        ? memcpy(b2Pos.malloc(), () -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF)
-                        : b2Pos.createSafe(() -> memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
-                isByValue()
-                        ? memcpy(b2Vec2.malloc(), () -> memGetAddress(args + 3 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF)
-                        : b2Vec2.createSafe(() -> memGetAddress(args + 3 * VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
-        );
-        apiClosureRet(resp, (byte) (__result ? 1 : 0));
+        try (ArenaAlloc arena = allocPush()) {
+            boolean __result = invoke(
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
+                    memcpy(b2Pos.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF),
+                    memcpy(b2Vec2.calloc(arena), memGetAddress(args + 3 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF),
+                    memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
+            );
+            apiClosureRet(resp, (byte) (__result ? 1 : 0));
+        }
     }
 }

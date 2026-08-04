@@ -113,7 +113,6 @@ public class b2CastResultFcnTest {
                 Assert.assertEquals(0xFF344FFFl, context);
                 return 11.05f;
             });
-            func.byValue(false);
             
             float __result = JNIB2.invoke_SHAPEID_POS_VEC2_FPF(id0.address(), v0.address(), v1.address(), 45.5f, 0xFF344FFFl, func.address());
             Assert.assertEquals(11.05f, __result, 0.0f);

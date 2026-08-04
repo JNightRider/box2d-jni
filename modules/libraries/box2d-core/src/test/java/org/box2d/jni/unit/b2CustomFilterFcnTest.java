@@ -98,8 +98,6 @@ public class b2CustomFilterFcnTest {
                 return false;
             });
 
-            func.byValue(false);
-
             boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_PB(id0.address(), id1.address(), 0x00373ADCl, func.address());
             Assert.assertFalse(__result);
 

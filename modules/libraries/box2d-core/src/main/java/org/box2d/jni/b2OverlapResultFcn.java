@@ -41,12 +41,6 @@ import org.box2d.jni.system.Checks;
  * @since 1.0.0
  */
 public abstract class b2OverlapResultFcn extends Callback implements b2OverlapResultFcnI {
-    
-    /**
-     * Callback flag
-     * @see b2CustomFilterFcnI#isByValue() 
-     */
-    protected boolean byValue;
 
     /**
      * Create a callback instance using libffi.
@@ -55,24 +49,6 @@ public abstract class b2OverlapResultFcn extends Callback implements b2OverlapRe
      */
     public b2OverlapResultFcn(long address) {
         super(address);
-    }
-
-    /**
-     * Modify the way arguments are provided for the invoked function.
-     * 
-     * @see b2CustomFilterFcnI#isByValue() 
-     * 
-     * @param byValue boolean
-     */
-    public void byValue(boolean byValue) {
-        this.byValue = byValue;
-    }
-
-    /* (non-Javadoc)
-     */
-    @Override
-    public boolean isByValue() {
-        return this.byValue;
     }
 
     /**

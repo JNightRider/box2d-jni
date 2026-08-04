@@ -34,10 +34,12 @@ import java.nio.LongBuffer;
 import java.util.function.Function;
 
 import org.box2d.jni.function.CCustomFilterFcn;
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -61,7 +63,7 @@ public interface b2CustomFilterFcnI extends CallbackI, CCustomFilterFcn {
              .put(ffi_type_pointer);
         targs.flip();
         long rtype = ffi_type_sint8;
-        
+
         return njniCallbackCreate(instance, rtype, targs, 3);
     };
 
@@ -78,15 +80,13 @@ public interface b2CustomFilterFcnI extends CallbackI, CCustomFilterFcn {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        boolean __result = invoke(
-                isByValue()
-                        ? memcpy(b2ShapeId.malloc(), () -> memGetAddress(args), b2ShapeId.SIZEOF)
-                        : b2ShapeId.createSafe(() -> memGetAddress(args)),
-                isByValue()
-                        ? memcpy(b2ShapeId.malloc(), () -> memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF)
-                        : b2ShapeId.createSafe(() -> memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
-        );
-        apiClosureRet(resp, (byte) (__result ? 1 : 0));
+        try (ArenaAlloc arena = allocPush()) {
+            boolean __result = invoke(
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
+                    memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
+            );
+            apiClosureRet(resp, (byte) (__result ? 1 : 0));
+        }
     }
 }

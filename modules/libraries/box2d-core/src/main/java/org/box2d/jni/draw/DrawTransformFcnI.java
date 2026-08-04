@@ -83,13 +83,13 @@ public interface DrawTransformFcnI extends CallbackI, CDrawTransformFcn {
     @Override
     public default void callback(long resp, long args) {
         try (ArenaAlloc arena = allocPush()) {
-        b2WorldTransform __arg1 = BOX2D_DOUBLE_PRECISION
-                        ? memcpy(b2WorldTransformI.calloc(arena), memGetAddress(args), b2WorldTransformI.SIZEOF)
-                        : memcpy(b2Transform.calloc(arena), memGetAddress(args), b2Transform.SIZEOF);
-        invoke(
-                __arg1,
-                memGetAddress(memGetAddress(args + POINTER_SIZE))
-        );
+            b2WorldTransform __arg1 = BOX2D_DOUBLE_PRECISION
+                    ? memcpy(b2WorldTransformI.calloc(arena), memGetAddress(args), b2WorldTransformI.SIZEOF)
+                    : memcpy(b2Transform.calloc(arena), memGetAddress(args), b2Transform.SIZEOF);
+            invoke(
+                    __arg1,
+                    memGetAddress(memGetAddress(args + POINTER_SIZE))
+            );
         }
     }
 }

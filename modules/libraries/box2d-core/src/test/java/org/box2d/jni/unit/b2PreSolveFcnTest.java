@@ -119,7 +119,6 @@ public class b2PreSolveFcnTest {
                 Assert.assertEquals(0x0045CBFFL, context);
                 return false;
             });
-            func.byValue(false);
             
             boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
             Assert.assertFalse(__result);
