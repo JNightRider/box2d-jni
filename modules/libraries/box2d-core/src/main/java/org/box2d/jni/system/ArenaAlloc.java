@@ -31,6 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.system;
 
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.Arrays;
 
 import static org.box2d.jni.libc.LibCString.*;
@@ -316,6 +318,61 @@ public final class ArenaAlloc extends Uintptr implements AutoCloseable {
     }
 
     // -------------------------------------------------
+    public ByteBuffer malloc(int size) {
+        long ptr = nmalloc(size);
+        return MemoryUtil.memByteBuffer(ptr, size);
+    }
+
+    public ByteBuffer calloc(int size) {
+        long ptr = ncalloc(POINTER_SIZE, size, 1);
+        return MemoryUtil.memByteBuffer(ptr, size);
+    }
+
+    /**
+     * Float version of {@link #malloc(int)}.
+     *
+     * @param size the size of each element
+     * @return FloatBuffer
+     */
+    public FloatBuffer mallocFloat(int size) {
+        return MemoryUtil.memFloatBuffer(nmalloc(4, size << 2), size);
+    }
+
+    /**
+     * Float version of {@link #calloc(int)}.
+     *
+     * @param size the size of each element
+     * @return FloatBuffer
+     */
+    public FloatBuffer callocFloat(int size) {
+        int bytes = size * 4;
+        long address0 = nmalloc(4, bytes);
+        nmemset(address0, 0, bytes);
+        return MemoryUtil.memFloatBuffer(address0, size);
+    }
+
+    /**
+     * Int version of {@link #malloc(int)}.
+     *
+     * @param size the size of each element
+     * @return IntBuffer
+     */
+    public IntBuffer mallocInt(int size) {
+        return MemoryUtil.memIntBuffer(nmalloc(4, size << 2), size);
+    }
+
+    /**
+     * Int version of {@link #calloc(int)}.
+     *
+     * @param size the size of each element
+     * @return IntBuffer
+     */
+    public IntBuffer callocInt(int size) {
+        int bytes = size * 4;
+        long address0 = nmalloc(4, bytes);
+        nmemset(address0, 0, bytes);
+        return MemoryUtil.memIntBuffer(address0, size);
+    }
 
     public long nUTF(String text) {
         return MemoryUtil.memMallocUTF(text, this);
