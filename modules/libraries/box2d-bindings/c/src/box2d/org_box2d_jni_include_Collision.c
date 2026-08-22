@@ -83,13 +83,10 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeOffsetPolygon
  * Signature: (JJJFJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeOffsetRoundedPolygon
-    (JNIEnv *__env, jclass clazz, jlong hull, jlong positionAdd, jlong rotationAdd, jfloat radius, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong hull, jlong position, jlong rotation, jfloat radius, jlong __result)
 {
-    b2Polygon* ptr   = (b2Polygon*)(uintptr_t)__result;
-    b2Vec2* position = (b2Vec2*)(uintptr_t)positionAdd;
-    b2Rot* rotation  = (b2Rot*)(uintptr_t)rotationAdd;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2MakeOffsetRoundedPolygon( (const b2Hull*) hull, *position, *rotation, radius );
+    *(b2Polygon*)__result = b2MakeOffsetRoundedPolygon( (const b2Hull*) hull, *(b2Vec2*)position, *(b2Rot*)rotation, radius );
 }
 
 /*
@@ -100,9 +97,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeOffsetRounded
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeSquare
     (JNIEnv *__env, jclass clazz, jfloat halfWidth, jlong __result)
 {
-    b2Polygon* ptr = (b2Polygon*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2MakeSquare( halfWidth );
+    *(b2Polygon*)__result = b2MakeSquare( halfWidth );
 }
 
 /*
@@ -113,9 +109,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeSquare
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeBox
     (JNIEnv *__env, jclass clazz, jfloat halfWidth, jfloat halfHeight, jlong __result)
 {
-    b2Polygon* ptr = (b2Polygon*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2MakeBox( halfWidth, halfHeight );
+    *(b2Polygon*)__result = b2MakeBox( halfWidth, halfHeight );
 }
 
 /*
@@ -126,9 +121,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeBox
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2MakeRoundedBox
     (JNIEnv *__env, jclass clazz, jfloat halfWidth, jfloat halfHeight, jfloat radius, jlong __result)
 {
-    b2Polygon* ptr = (b2Polygon*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2MakeRoundedBox( halfWidth, halfHeight, radius );
+    *(b2Polygon*)__result = b2MakeRoundedBox( halfWidth, halfHeight, radius );
 }
 
 /*
