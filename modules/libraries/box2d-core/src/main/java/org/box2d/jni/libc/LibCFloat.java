@@ -36,7 +36,7 @@ import org.box2d.jni.system.Library;
  * Implementation of C libraries: {@code <float.h>}
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class LibCFloat {
@@ -44,7 +44,9 @@ public class LibCFloat {
         Library.initialize();
     }
     
-    public static final float FLT_EPSILON = nFLT_EPSILON();
+    public static final float FLT_MAX = nFLT_MAX();
+    public static native float nFLT_MAX();
     
+    public static final float FLT_EPSILON = nFLT_EPSILON();    
     public static native float nFLT_EPSILON();
 }
