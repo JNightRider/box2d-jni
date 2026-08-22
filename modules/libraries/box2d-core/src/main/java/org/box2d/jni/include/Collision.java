@@ -77,7 +77,7 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <collision.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public final class Collision {
@@ -1489,7 +1489,7 @@ public final class Collision {
      *
      * @return b2PlaneSolverResult
      */
-    public static b2PlaneSolverResult b2SolvePlanes(b2Vec2 targetDelta, b2CollisionPlane planes, int count, b2PlaneSolverResult __result) {
+    public static b2PlaneSolverResult b2SolvePlanes(b2Vec2 targetDelta, b2CollisionPlane.Buffer planes, int count, b2PlaneSolverResult __result) {
         checkPointers(targetDelta, planes, __result);
         nb2SolvePlanes(targetDelta.address(), planes.address(), count, __result.address());
         return __result;
