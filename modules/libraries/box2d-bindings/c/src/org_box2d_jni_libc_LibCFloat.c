@@ -42,6 +42,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /*
  * Class:     org_box2d_jni_libc_LibCFloat
+ * Method:    nFLT_MAX
+ * Signature: ()F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_libc_LibCFloat_nFLT_1MAX
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat)FLT_MAX;
+}
+
+
+/*
+ * Class:     org_box2d_jni_libc_LibCFloat
  * Method:    nFLT_EPSILON
  * Signature: ()F
  */
