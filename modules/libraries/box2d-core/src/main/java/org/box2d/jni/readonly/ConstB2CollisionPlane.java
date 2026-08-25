@@ -36,7 +36,7 @@ package org.box2d.jni.readonly;
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.1
  */
 public interface ConstB2CollisionPlane extends ConstStruct {
 
@@ -69,4 +69,15 @@ public interface ConstB2CollisionPlane extends ConstStruct {
      * @return boolean
      */
     boolean clipVelocity();
+
+    /**
+     * A template that handles the representation of a constant pointer (buffer)
+     * of constant structures such as {@code ConstB2CollisionPlane}
+     *
+     * @param <T> The type of object stored in this buffer
+     * @param <SELF> The type of this buffer
+     */
+    interface ConstBuffer<T extends ConstB2CollisionPlane, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
+        /* nothing */
+    }
 }

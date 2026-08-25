@@ -56,7 +56,7 @@ import static org.box2d.jni.system.Memory.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2DynamicTree extends Struct<b2DynamicTree> implements ConstB2DynamicTree {
 
@@ -437,7 +437,7 @@ public class b2DynamicTree extends Struct<b2DynamicTree> implements ConstB2Dynam
     // -----------------------------------
 
     /** An array of {@code b2DynamicTree} structs. */
-    public static class Buffer extends StructBuffer<b2DynamicTree, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2DynamicTree, Buffer> implements JNINative, ConstB2DynamicTree.ConstBuffer<b2DynamicTree, Buffer> {
 
         /** An element that provides information about the structure. */
         private static final b2DynamicTree ELEMENT_FACTORY = b2DynamicTree.factory();

@@ -1511,7 +1511,7 @@ public final class Collision {
      *
      * @return b2Vec2
      */
-    public static b2Vec2 b2ClipVector(b2Vec2 vector, ConstB2CollisionPlane planes, int count, b2Vec2 __result) {
+    public static b2Vec2 b2ClipVector(b2Vec2 vector, ConstB2CollisionPlane.ConstBuffer planes, int count, b2Vec2 __result) {
         checkPointers(vector, planes, __result);
         nb2ClipVector(vector.address(), planes.address(), count, __result.address());
         return __result;

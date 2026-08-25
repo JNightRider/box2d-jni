@@ -50,7 +50,7 @@ import static org.box2d.jni.system.Memory.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class b2CollisionPlane extends Struct<b2CollisionPlane> implements ConstB2CollisionPlane {
 
@@ -306,7 +306,7 @@ public class b2CollisionPlane extends Struct<b2CollisionPlane> implements ConstB
     // -----------------------------------
 
     /** An array of {@code b2CollisionPlane} structs. */
-    public static class Buffer extends StructBuffer<b2CollisionPlane, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2CollisionPlane, Buffer> implements JNINative, ConstB2CollisionPlane.ConstBuffer<b2CollisionPlane, Buffer>  {
 
         /** An element that provides information about the structure. */
         private static final b2CollisionPlane ELEMENT_FACTORY = b2CollisionPlane.factory();

@@ -36,7 +36,7 @@ package org.box2d.jni.readonly;
  * b2DynamicTree)
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public interface ConstB2DynamicTree extends ConstStruct {
@@ -117,4 +117,15 @@ public interface ConstB2DynamicTree extends ConstStruct {
      * @return int
      */
     int rebuildCapacity();
+
+    /**
+     * A template that handles the representation of a constant pointer (buffer)
+     * of constant structures such as {@code ConstB2DynamicTree}
+     *
+     * @param <T> The type of object stored in this buffer
+     * @param <SELF> The type of this buffer
+     */
+    interface ConstBuffer<T extends ConstB2DynamicTree, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
+        /* nothing */
+    }
 }
