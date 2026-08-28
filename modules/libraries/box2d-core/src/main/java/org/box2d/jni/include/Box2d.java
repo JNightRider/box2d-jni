@@ -122,7 +122,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  */
 public final class Box2d {
     static { Library.initialize(); }
-    
+
     // --- [ b2CreateWorld ] ---
 
     /**
@@ -141,7 +141,6 @@ public final class Box2d {
 
     /* {@code B2_API b2WorldId b2CreateWorld( const b2WorldDef* def ); } */
     public static native void nb2CreateWorld(long def, long __result);
-
 
     // --- [ b2DestroyWorld ] ---
 
@@ -2159,6 +2158,39 @@ public final class Box2d {
 
     /* {@code B2_API float b2Body_GetSleepThreshold( b2BodyId bodyId ); } */
     public static native float nb2Body_GetSleepThreshold(long bodyId);
+
+    // --- [ b2Body_SetSafetyFactor ] ---
+
+    /**
+     * {@code B2_API void b2Body_SetSafetyFactor( b2BodyId bodyId, float safetyFactor )
+     * }
+     *
+     * @param bodyId b2BodyId
+     * @param safetyFactor float
+     */
+    public static void b2Body_SetSafetyFactor(b2BodyId bodyId, float safetyFactor) {
+        checkPointers(bodyId);
+        nb2Body_SetSafetyFactor(bodyId.address(), safetyFactor);
+    }
+
+    /* {@code B2_API void b2Body_SetSafetyFactor( b2BodyId bodyId, float safetyFactor ); } */
+    public static native void nb2Body_SetSafetyFactor( long bodyId, float safetyFactor );
+
+    // --- [ b2Body_SetSafetyFactor ] ---
+
+    /**
+     * {@code B2_API float b2Body_GetSafetyFactor( b2BodyId bodyId ); }
+     *
+     * @param bodyId b2BodyId
+     * @return float
+     */
+    public static float b2Body_GetSafetyFactor(b2BodyId bodyId) {
+        checkPointers(bodyId);
+        return nb2Body_GetSafetyFactor(bodyId.address());
+    }
+
+    /* {@code B2_API float b2Body_GetSafetyFactor( b2BodyId bodyId ); } */
+    public static native float nb2Body_GetSafetyFactor( long bodyId );    
 
     // --- [ b2Body_IsEnabled ] ---
 

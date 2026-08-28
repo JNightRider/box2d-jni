@@ -50,6 +50,7 @@ import static org.box2d.jni.system.Memory.*;
  *     float angularDamping;
  *     float gravityScale;
  *     float sleepThreshold;
+ *     float safetyFactor;
  *     const char* name;
  *     void* userData;
  *     b2MotionLocks motionLocks;
@@ -64,8 +65,8 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  *
  * @author wil
+ * @version 1.0.1
  * @since 1.0.0
- * @version 1.0.0
  */
 public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
 
@@ -86,6 +87,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
             ANGULAR_DAMPING,
             GRAVITY_SCALE,
             SLEEP_THRESHOLD,
+            SAFETY_FACTOR,
             NAME,
             USER_DATA,
             MOTION_LOCKS,
@@ -103,6 +105,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
                 __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Rot.SIZEOF, b2Rot.ALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(4),
                 __member(4),
                 __member(4),
                 __member(4),
@@ -129,16 +132,17 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
         ANGULAR_DAMPING = layout.offsetof(6);
         GRAVITY_SCALE = layout.offsetof(7);
         SLEEP_THRESHOLD = layout.offsetof(8);
-        NAME = layout.offsetof(9);
-        USER_DATA = layout.offsetof(10);
-        MOTION_LOCKS = layout.offsetof(11);
-        ENABLE_SLEEP = layout.offsetof(12);
-        IS_AWAKE = layout.offsetof(13);
-        IS_BULLET = layout.offsetof(14);
-        IS_ENABLED = layout.offsetof(15);
-        ALLOW_FAST_ROTATION = layout.offsetof(16);
-        ENABLE_CONTACT_RECYCLING = layout.offsetof(17);
-        INTERNAL_VALUE = layout.offsetof(18);
+        SAFETY_FACTOR = layout.offsetof(9);
+        NAME = layout.offsetof(10);
+        USER_DATA = layout.offsetof(11);
+        MOTION_LOCKS = layout.offsetof(12);
+        ENABLE_SLEEP = layout.offsetof(13);
+        IS_AWAKE = layout.offsetof(14);
+        IS_BULLET = layout.offsetof(15);
+        IS_ENABLED = layout.offsetof(16);
+        ALLOW_FAST_ROTATION = layout.offsetof(17);
+        ENABLE_CONTACT_RECYCLING = layout.offsetof(18);
+        INTERNAL_VALUE = layout.offsetof(19);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -200,7 +204,10 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public float gravityScale() { return ngravityScale(address()); }
     /** @return Returns the property {@code sleepThreshold} */
     @Override
-    public float sleepThreshold() { return nsleepThreshold(address()); }    
+    public float sleepThreshold() { return nsleepThreshold(address()); }
+    /** @return Returns the property {@code safetyFactor} */
+    @Override
+    public float safetyFactor() { return nsafetyFactor(address()); }    
     /** @return Returns the property {@code name} */
     @Override
     public long name() { return nname(address()); }
@@ -295,6 +302,13 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @return b2BodyDef
      */
     public b2BodyDef sleepThreshold(float value) { nsleepThreshold(address(), value); return this; }
+    /**
+     * Set the value of property {@code safetyFactor}
+     *
+     * @param value The value
+     * @return b2BodyDef
+     */
+    public b2BodyDef safetyFactor(float value) { nsafetyFactor(address(), value); return this; }
     /**
      * Set the value of property {@code name}
      *
@@ -499,6 +513,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static float nangularDamping(long address)           { return memGetFloat(address + ANGULAR_DAMPING);                    }
     public static float ngravityScale(long address)             { return memGetFloat(address + GRAVITY_SCALE);                      }
     public static float nsleepThreshold(long address)           { return memGetFloat(address + SLEEP_THRESHOLD);                    }
+    public static float nsafetyFactor(long address)             { return memGetFloat(address + SAFETY_FACTOR);                      }
     public static long nname(long address)                      { return memGetAddress(address + NAME);                             }
     public static long nuserData(long address)                  { return memGetAddress(address + USER_DATA);                        }
     public static b2MotionLocks nmotionLocks(long address)      { return b2MotionLocks.createSafe(() -> address + MOTION_LOCKS);    }
@@ -519,6 +534,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static void nangularDamping(long address, float value)           { memPutFloat(address + ANGULAR_DAMPING, value);                                }
     public static void ngravityScale(long address, float value)             { memPutFloat(address + GRAVITY_SCALE, value);                                  }
     public static void nsleepThreshold(long address, float value)           { memPutFloat(address + SLEEP_THRESHOLD, value);                                }
+    public static void nsafetyFactor(long address, float value)             { memPutFloat(address + SAFETY_FACTOR, value);                                  }
     public static void nname(long address, long value)                      { memPutAddress(address + NAME, value);                                         }
     public static void nuserData(long address, long value)                  { memPutAddress(address + USER_DATA, value);                                    }
     public static void nmotionLocks(long address, b2MotionLocks value)      { nmemcpy(address + MOTION_LOCKS, value.address(), b2MotionLocks.SIZEOF); }
