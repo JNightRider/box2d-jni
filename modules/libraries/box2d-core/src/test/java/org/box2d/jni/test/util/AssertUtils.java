@@ -27,7 +27,7 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.test.util;
 
 import org.box2d.jni.b2Pos;
@@ -35,18 +35,33 @@ import org.box2d.jni.b2ShapeId;
 import org.junit.Assert;
 
 /**
+ * A utility class for box2d-jni tests.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.3.0
  */
 public final class AssertUtils {
-    
+
+    /**
+     * Asserts that two objects of type {@link b2Pos} are equal; otherwise, it
+     * throws an exception indicating the difference.
+     *
+     * @param expected b2Pos (expected)
+     * @param actual b2Pos (actual)
+     */
     public static void assertEquals(b2Pos expected, b2Pos actual) {
         Assert.assertEquals(expected.x().floatValue(), actual.x().floatValue(), 0.0f);
         Assert.assertEquals(expected.y().floatValue(), actual.y().floatValue(), 0.0f);
     }
-    
+
+    /**
+     * Asserts that two objects of type {@link b2ShapeId} are equal; otherwise,
+     * it throws an exception indicating the difference.
+     *
+     * @param expected b2ShapeId (expected)
+     * @param actual b2ShapeId (actual)
+     */
     public static void assertEquals(b2ShapeId expected, b2ShapeId actual) {
         Assert.assertEquals(expected.generation(), actual.generation());
         Assert.assertEquals(expected.index1(), actual.index1());
