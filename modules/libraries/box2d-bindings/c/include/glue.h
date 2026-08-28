@@ -96,7 +96,7 @@ static ffi_type ffi_type_b2Transform = {
     .elements = ffi_type_b2Transform_elements
 };
 
-// --- [ ffi_type: 2AABB ] ---
+// --- [ ffi_type: b2AABB ] ---
 
 static ffi_type* ffi_type_b2AABB_elements[3] = {
     &ffi_type_b2Vec2,
@@ -150,3 +150,42 @@ static ffi_type ffi_type_b2WorldTransform = {
 #define ffi_type_b2WorldTransform           ffi_type_b2Transform 
 
 #endif
+
+// --- [ ffi_type: b2ManifoldPoint ] ---
+
+static ffi_type* ffi_type_b2ManifoldPoint_elements[] = {
+    &ffi_type_b2Vec2,
+    &ffi_type_b2Vec2,
+    &ffi_type_float,
+    &ffi_type_float,
+    &ffi_type_float,
+    &ffi_type_float,
+    &ffi_type_float,
+    &ffi_type_float,
+    &ffi_type_uint16,
+    &ffi_type_uint8,
+    NULL
+};
+static ffi_type ffi_type_b2ManifoldPoint = {
+    .size = 0,
+    .alignment = 0,
+    .type = FFI_TYPE_STRUCT,
+    .elements = ffi_type_b2ManifoldPoint_elements
+};
+
+// --- [ ffi_type: b2Manifold ] ---
+
+static ffi_type* ffi_type_b2Manifold_elements[] = {
+    &ffi_type_b2Vec2,
+    &ffi_type_float,
+    &ffi_type_b2ManifoldPoint,
+    &ffi_type_b2ManifoldPoint,
+    &ffi_type_sint32,
+    NULL
+};
+static ffi_type ffi_type_b2Manifold = {
+    .size = 0,
+    .alignment = 0,
+    .type = FFI_TYPE_STRUCT,
+    .elements = ffi_type_b2Manifold_elements
+};

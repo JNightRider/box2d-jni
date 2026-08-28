@@ -53,7 +53,7 @@ import static org.box2d.jni.system.ArenaAlloc.*;
  * Class that represents the {@code <math_functions.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.2.0
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
@@ -96,6 +96,7 @@ public final class MathFunctions {
                 b2Rot.calloc(arena).set(1.0f, 0.0f)
             );
         }
+        b2OffsetWorldTransform(b2WorldTransform_identity, b2Transform_identity, b2WorldTransform_identity);
     }
 
     // --- [ b2IsValidFloat ] ---
@@ -1491,15 +1492,35 @@ public final class MathFunctions {
      * @param __result store
      *
      * @return b2WorldTransform
+     * 
+     * @deprecated This function will be removed soon, so please use function {@link #b2MulWorldTransforms(b2WorldTransform, b2Transform, b2WorldTransform) b2MulWorldTransforms } instead.
      */
+    @Deprecated(since = "1.3.0")
     public static b2WorldTransform b2OffsetWorldTransform(b2WorldTransform A, b2Transform B, b2WorldTransform __result) {
         checkPointers(A, B, __result);
-        nb2OffsetWorldTransform(A.address(), B.address(), __result.address());
+        nb2MulWorldTransforms(A.address(), B.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_INLINE b2WorldTransform b2OffsetWorldTransform( b2WorldTransform A, b2Transform B ); } */
-    public static native void nb2OffsetWorldTransform(long A, long B, long __result);
+    // --- [ b2MulWorldTransforms ] ---
+
+    /**
+     * {@code B2_INLINE b2WorldTransform b2MulWorldTransforms( b2WorldTransform A, b2Transform B ); }
+     *
+     * @param A b2WorldTransform
+     * @param B b2Transform
+     * @param __result b2WorldTransform
+     *
+     * @return b2WorldTransform
+     */
+    public static b2WorldTransform b2MulWorldTransforms(b2WorldTransform A, b2Transform B, b2WorldTransform __result) {
+        checkPointers(A, B, __result);
+        nb2MulWorldTransforms(A.address(), B.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_INLINE b2WorldTransform b2MulWorldTransforms( b2WorldTransform A, b2Transform B ); } */
+    public static native void nb2MulWorldTransforms(long A, long B, long __result);
 
     // --- [ b2ToRelativeTransform ] ---
 

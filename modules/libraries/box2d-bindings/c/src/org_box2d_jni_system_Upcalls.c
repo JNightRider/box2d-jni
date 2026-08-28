@@ -284,6 +284,18 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2AABB
 
 /*
  * Class:     org_box2d_jni_system_Upcalls
+ * Method:    nffi_type_b2Manifold
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_Upcalls_nffi_1type_1b2Manifold
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong) &ffi_type_b2Manifold;
+}
+
+/*
+ * Class:     org_box2d_jni_system_Upcalls
  * Method:    njniCallbackCreate
  * Signature: (Ljava/lang/Object;JLjava/nio/LongBuffer;)J
  */

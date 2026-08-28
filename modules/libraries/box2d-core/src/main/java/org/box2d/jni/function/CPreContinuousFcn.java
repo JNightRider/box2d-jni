@@ -27,30 +27,33 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.function;
 
-import org.box2d.jni.b2Manifold;
+import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2ShapeId;
+import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.Pointer;
 
 /**
- * It represents the read-only function {@code b2PreSolveFcn} (its
- * structure cannot be modified, only invoked).
+ * It represents the read-only function {@code b2PreSolveFcn} (its structure
+ * cannot be modified, only invoked).
  *
  * @author wil
- * @version 1.2.0
- * @since 1.0.0
+ * @version 1.1.0
+ * @since 1.3.0
  */
-public interface CPreSolveFcn extends Pointer {
+public interface CPreContinuousFcn extends Pointer {
 
     /**
      * The function of the callback.
      *
      * @param shapeIdA b2ShapeId
      * @param shapeIdB b2ShapeId
-     * @param manifold b2Manifold
+     * @param point b2Pos
+     * @param normal b2Vec2
      * @param context long
+     * @return boolean
      */
-    void invoke( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold manifold, long context );
+    boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, long context);
 }

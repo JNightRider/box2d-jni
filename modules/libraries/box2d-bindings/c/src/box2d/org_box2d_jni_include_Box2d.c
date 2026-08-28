@@ -363,13 +363,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetCustomFilte
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_SetPreSolveCallback
- * Signature: (JJJ)V
+ * Signature: (JJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetPreSolveCallback
-    (JNIEnv *__env, jclass clazz, jlong worldId, jlong fcn, jlong context)
+    (JNIEnv * __env, jclass clazz, jlong worldId, jlong preSolveFcn, jlong preContinuousFcn, jlong context)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_SetPreSolveCallback( *(b2WorldId*)worldId, (b2PreSolveFcn*)fcn, (void*)context );
+    b2World_SetPreSolveCallback( *(b2WorldId*)worldId, (b2PreSolveFcn*)preSolveFcn, (b2PreContinuousFcn*)preContinuousFcn, (void*)context );
 }
 
 /*
@@ -2385,13 +2385,13 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Chain_1IsValid
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2DestroyJoint
- * Signature: (JZ)V
+ * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DestroyJoint
-    (JNIEnv *__env, jclass clazz, jlong jointId, jboolean wakeAttached)
+    (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DestroyJoint( *(b2JointId*)jointId, (bool)wakeAttached );
+    b2DestroyJoint( *(b2JointId*)jointId );
 }
 
 /*

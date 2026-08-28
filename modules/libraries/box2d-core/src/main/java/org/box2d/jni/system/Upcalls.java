@@ -58,7 +58,7 @@ import static org.box2d.jni.system.Pointer.*;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public final class Upcalls {
@@ -117,8 +117,6 @@ public final class Upcalls {
             apiLogMore("The %c{" + callback.getClass() + "} was removed from the context.", Color.WHITE);
         }
     }
-    
-    
 
     private Upcalls() {
     }
@@ -190,6 +188,9 @@ public final class Upcalls {
     
     public static final long ffi_type_b2AABB = nffi_type_b2AABB();
     public static native long nffi_type_b2AABB();
+    
+    public static final long ffi_type_b2Manifold = nffi_type_b2Manifold();
+    public static native long nffi_type_b2Manifold();
     
     // -----------------------------------
     

@@ -34,36 +34,36 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef void b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ); }
+ * Callback function: {@code typedef bool b2PreContinuousFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ); }
  *
  * @author wil
- * @version 1.2.0
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 1.3.0
  */
-public abstract class b2PreSolveFcn extends Callback implements b2PreSolveFcnI {
+public abstract class b2PreContinuousFcn extends Callback implements b2PreContinuousFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2PreSolveFcn(long address) {
+    public b2PreContinuousFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2PreSolveFcn}.
+     * Create a new empty object of type {@code b2PreContinuousFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2PreSolveFcn
+     * @return b2PreContinuousFcn
      */
-    public static b2PreSolveFcn create(b2PreSolveFcnI delegate) {
+    public static b2PreContinuousFcn create(b2PreContinuousFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2PreSolveFcn) {
-            return (b2PreSolveFcn) delegate;
+        if (delegate instanceof b2PreContinuousFcn) {
+            return (b2PreContinuousFcn) delegate;
         }
 
         long address = delegate.address();
@@ -76,17 +76,17 @@ public abstract class b2PreSolveFcn extends Callback implements b2PreSolveFcnI {
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2PreSolveFcn {
+    private static final class Container extends b2PreContinuousFcn {
         /**The dynamic or lambda function. */
-        private final b2PreSolveFcnI delegate;
+        private final b2PreContinuousFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2PreSolveFcn</code> function.
+         * Create a new container to handle the <code>b2PreContinuousFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2PreSolveFcnI|function
+         * @param delegate b2PreContinuousFcnI|function
          */
-        public Container(long address, b2PreSolveFcnI delegate) {
+        public Container(long address, b2PreContinuousFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -94,8 +94,9 @@ public abstract class b2PreSolveFcn extends Callback implements b2PreSolveFcnI {
         /*(non-Javadoc)
          */
         @Override
-        public void invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold manifold, long context) {
-            delegate.invoke(shapeIdA, shapeIdB, manifold, context);
+        public boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, long context) {
+            return delegate.invoke(shapeIdA, shapeIdB, point, normal, context);
         }
     }
 }
+

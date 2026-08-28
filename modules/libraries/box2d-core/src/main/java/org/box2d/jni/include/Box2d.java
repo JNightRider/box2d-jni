@@ -60,6 +60,7 @@ import org.box2d.jni.b2OverlapResultFcnI;
 import org.box2d.jni.b2PlaneResultFcnI;
 import org.box2d.jni.b2Polygon;
 import org.box2d.jni.b2Pos;
+import org.box2d.jni.b2PreContinuousFcnI;
 import org.box2d.jni.b2PreSolveFcnI;
 import org.box2d.jni.b2Profile;
 import org.box2d.jni.b2QueryFilter;
@@ -116,7 +117,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * Class that represents the {@code <box2d.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public final class Box2d {
@@ -157,7 +158,6 @@ public final class Box2d {
     /* {@code B2_API void b2DestroyWorld( b2WorldId worldId ); } */
     public static native void nb2DestroyWorld(long worldId);
 
-
     // --- [ b2World_IsValid ] ---
 
     /**
@@ -192,7 +192,6 @@ public final class Box2d {
     /* {@code B2_API void b2World_Step( b2WorldId worldId, float timeStep, int subStepCount ); } */
     public static native void nb2World_Step(long worldId, float timeStep, int subStepCount);
 
-
     // --- [ b2World_Draw ] ---
 
     /**
@@ -208,7 +207,6 @@ public final class Box2d {
 
     /* {@code B2_API void b2World_Draw( b2WorldId worldId, b2DebugDraw* draw ); } */
     public static native void nb2World_Draw(long worldId, long draw);
-
 
     // --- [ b2World_GetBounds ] ---
 
@@ -229,7 +227,6 @@ public final class Box2d {
     /* {@code B2_API b2AABB b2World_GetBounds( b2WorldId worldId ); } */
     public static native void nb2World_GetBounds(long worldId, long __result);
 
-
     // --- [ b2World_GetBodyEvents ] ---
 
     /**
@@ -248,7 +245,6 @@ public final class Box2d {
 
     /* {@code B2_API b2BodyEvents b2World_GetBodyEvents( b2WorldId worldId ); } */
     public static native void nb2World_GetBodyEvents(long worldId, long __result);
-
 
     // --- [ b2World_GetSensorEvents ] ---
 
@@ -269,7 +265,6 @@ public final class Box2d {
     /* {@code B2_API b2SensorEvents b2World_GetSensorEvents( b2WorldId worldId ); } */
     public static native void nb2World_GetSensorEvents(long worldId, long __result);
 
-
     // --- [ b2World_GetContactEvents ] ---
 
     /**
@@ -288,7 +283,6 @@ public final class Box2d {
 
     /* {@code B2_API b2ContactEvents b2World_GetContactEvents( b2WorldId worldId ); } */
     public static native void nb2World_GetContactEvents(long worldId, long __result);
-
 
     // --- [ b2World_GetJointEvents ] ---
 
@@ -332,7 +326,6 @@ public final class Box2d {
 
     /* {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); } } */
     public static native void nb2World_OverlapAABB(long worldId, long origin, long aabb, long filter, long fcn, long context, long __result);
-
 
     // --- [ b2World_OverlapShape ] ---
 
@@ -382,7 +375,6 @@ public final class Box2d {
     /* {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } */
     public static native void nb2World_CastRay(long worldId, long origin, long translation, long filter, long fcn, long context, long __result);
 
-
     // --- [ b2World_CastRayClosest ] ---
 
     /**
@@ -404,7 +396,6 @@ public final class Box2d {
 
     /* {@code B2_API b2RayResult b2World_CastRayClosest( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter ); } */
     public static native void nb2World_CastRayClosest(long worldId, long origin, long translation, long filter, long __result);
-
 
     // --- [ b2World_CastShape ] ---
 
@@ -622,23 +613,23 @@ public final class Box2d {
     /* {@code B2_API void b2World_SetCustomFilterCallback( b2WorldId worldId, b2CustomFilterFcn* fcn, void* context ); } */
     public static native void nb2World_SetCustomFilterCallback(long worldId, long fcn, long context);
 
-
     // --- [ b2World_SetPreSolveCallback ] ---
 
     /**
-     * {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* fcn, void* context ); }
+     * {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* preSolveFcn, b2PreContinuousFcn* preContinuousFcn, void* context ); }
      *
      * @param worldId b2WorldId
-     * @param fcn long
+     * @param preSolveFcn b2PreSolveFcnI
+     * @param preContinuousFcn b2PreContinuousFcnI
      * @param context long
      */
-    public static void b2World_SetPreSolveCallback(b2WorldId worldId, b2PreSolveFcnI fcn, long context) {
-        checkPointers(worldId, fcn);
-        nb2World_SetPreSolveCallback(worldId.address(), fcn.address(), context);
+    public static void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcnI preSolveFcn, b2PreContinuousFcnI preContinuousFcn, long context ) {
+        checkPointers(worldId, preSolveFcn, preContinuousFcn);
+        nb2World_SetPreSolveCallback(worldId.address(), preSolveFcn.address(), preContinuousFcn.address(), context);
     }
 
-    /* {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* fcn, void* context ); } */
-    public static native void nb2World_SetPreSolveCallback(long worldId, long fcn, long context);
+    /* {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* preSolveFcn, b2PreContinuousFcn* preContinuousFcn, void* context ); } */
+    public static native void nb2World_SetPreSolveCallback( long worldId, long preSolveFcn, long preContinuousFcn, long context );
 
     // --- [ b2World_SetGravity ] ---
 
@@ -3620,18 +3611,17 @@ public final class Box2d {
     // --- [ b2DestroyJoint ] ---
 
     /**
-     * {@code B2_API void b2DestroyJoint( b2JointId jointId, bool wakeAttached ); }
+     * {@code B2_API void b2DestroyJoint( b2JointId jointId ); }
      *
      * @param jointId b2JointId
-     * @param wakeAttached boolean
      */
-    public static void b2DestroyJoint(b2JointId jointId, boolean wakeAttached) {
+    public static void b2DestroyJoint(b2JointId jointId) {
         checkPointers(jointId);
-        nb2DestroyJoint(jointId.address(), wakeAttached);
+        nb2DestroyJoint(jointId.address());
     }
 
-    /* {@code B2_API void b2DestroyJoint( b2JointId jointId, bool wakeAttached ); } */
-    public static native void nb2DestroyJoint(long jointId, boolean wakeAttached);
+    /* {@code B2_API void b2DestroyJoint( b2JointId jointId ); } */
+    public static native void nb2DestroyJoint(long jointId);
 
     // --- [ b2Joint_IsValid ] ---
 

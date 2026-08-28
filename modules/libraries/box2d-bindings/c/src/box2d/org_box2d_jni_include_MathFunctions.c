@@ -1082,14 +1082,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2InvMulWorldTr
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions
- * Method:    nb2OffsetWorldTransform
+ * Method:    nb2MulWorldTransforms
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2OffsetWorldTransform
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2MulWorldTransforms
     (JNIEnv *__env, jclass clazz, jlong A, jlong B, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2WorldTransform*)__result = b2OffsetWorldTransform( *(b2WorldTransform*) A, *(b2Transform*) B );
+    *(b2WorldTransform*)__result = b2MulWorldTransforms( *(b2WorldTransform*) A, *(b2Transform*) B );
 }
 
 /*
