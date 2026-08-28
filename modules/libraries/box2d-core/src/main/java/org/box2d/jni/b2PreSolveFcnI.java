@@ -66,7 +66,7 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
         targs.flip();
         long rtype = ffi_type_void;
         
-        return njniCallbackCreate(instance, rtype, targs, 5);
+        return njniCallbackCreate(instance, rtype, targs, 4);
     };
 
     /**
@@ -87,7 +87,7 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
                     memcpy(b2Manifold.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Manifold.SIZEOF),
-                    memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
+                    memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
             );
         }
     }

@@ -153,7 +153,7 @@ static ffi_type ffi_type_b2WorldTransform = {
 
 // --- [ ffi_type: b2ManifoldPoint ] ---
 
-static ffi_type* ffi_type_b2ManifoldPoint_elements[] = {
+static ffi_type* ffi_type_b2ManifoldPoint_elements[12] = {
     &ffi_type_b2Vec2,
     &ffi_type_b2Vec2,
     &ffi_type_float,
@@ -175,7 +175,7 @@ static ffi_type ffi_type_b2ManifoldPoint = {
 
 // --- [ ffi_type: b2Manifold ] ---
 
-static ffi_type* ffi_type_b2Manifold_elements[] = {
+static ffi_type* ffi_type_b2Manifold_elements[6] = {
     &ffi_type_b2Vec2,
     &ffi_type_float,
     &ffi_type_b2ManifoldPoint,

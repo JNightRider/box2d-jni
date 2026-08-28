@@ -30,15 +30,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2Pos;
+import org.box2d.jni.b2Manifold;
+import org.box2d.jni.b2ManifoldPoint;
 import org.box2d.jni.b2PreSolveFcn;
 import org.box2d.jni.b2PreSolveFcnI;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.b2Vec2;
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNIB2;
 import org.box2d.jni.system.Sys;
+import org.box2d.jni.test.util.AssertUtils;
+import static org.box2d.jni.system.ArenaAlloc.*;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -47,7 +51,7 @@ import org.junit.Test;
  * A class to manage the unit tests of the {@link b2PreSolveFcn} class.
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
@@ -57,72 +61,96 @@ public class b2PreSolveFcnTest {
     /**
      * Initialize all tests.
      */
-//    @Test
-//    public void callback() {
-//        try (
-//                b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
-//                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-//                b2Pos v0 = b2Pos.malloc().set(1.05f, 0.5f);
-//                b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
-//            ) {
-//
-//            b2PreSolveFcnI func = (shapeIdA, shapeIdB, point, normal, context) -> {
-//                Debug.apiPrint("b2PreSolveFcnTestI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-//                Debug.apiPrint("b2PreSolveFcnTestI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
-//                Debug.apiPrint("b2PreSolveFcnTestI: x=" + point.x() + ", y=" + point.y());
-//                Debug.apiPrint("b2PreSolveFcnTestI: x=" + normal.x() + ", y=" + normal.y());
-//
-//                Assert.assertEquals(10, (int) shapeIdA.index1());
-//                Assert.assertEquals(20, (short) shapeIdA.generation());
-//
-//                Assert.assertEquals(89, (int) shapeIdB.index1());
-//                Assert.assertEquals(35, (short) shapeIdB.generation());
-//                
-//                Assert.assertEquals(1.05f, point.x().floatValue(), 0.0f);
-//                Assert.assertEquals(0.5f, point.y().floatValue(), 0.0f);
-//                
-//                Assert.assertEquals(4.6f, normal.x(), 0.0f);
-//                Assert.assertEquals(0.004f, normal.y(), 0.0f);
-//
-//                Assert.assertEquals(0x0045CBFFL, context);
-//                return true;
-//            };
-//            
-//            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
-//            Assert.assertTrue(__result);
-//        }
-//        try (
-//                b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
-//                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-//                b2Pos v0 = b2Pos.malloc().set(1.05f, 0.5f);
-//                b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
-//            ) {
-//
-//            b2PreSolveFcn func = b2PreSolveFcn.create((shapeIdA, shapeIdB, point, normal, context) -> {
-//                Debug.apiPrint("b2PreSolveFcnTest: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-//                Debug.apiPrint("b2PreSolveFcnTest: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
-//                Debug.apiPrint("b2PreSolveFcnTest: x=" + point.x() + ", y=" + point.y());
-//                Debug.apiPrint("b2PreSolveFcnTest: x=" + normal.x() + ", y=" + normal.y());
-//
-//                Assert.assertEquals(10, (int) shapeIdA.index1());
-//                Assert.assertEquals(20, (short) shapeIdA.generation());
-//
-//                Assert.assertEquals(89, (int) shapeIdB.index1());
-//                Assert.assertEquals(35, (short) shapeIdB.generation());
-//                
-//                Assert.assertEquals(1.05f, point.x().floatValue(), 0.0f);
-//                Assert.assertEquals(0.5f, point.y().floatValue(), 0.0f);
-//                
-//                Assert.assertEquals(4.6f, normal.x(), 0.0f);
-//                Assert.assertEquals(0.004f, normal.y(), 0.0f);
-//
-//                Assert.assertEquals(0x0045CBFFL, context);
-//                return false;
-//            });
-//            
-//            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
-//            Assert.assertFalse(__result);
-//        }
-//        Callbacks.b2FreeCallbacks();
-//    }
+    @Test
+    public void callback() {
+        try (ArenaAlloc arena = allocPush()) {
+            b2ShapeId a = b2ShapeId.calloc(arena)
+                    .generation((short) 23)
+                    .index1(50)
+                    .world0((short) 100);
+
+            b2ShapeId b = b2ShapeId.calloc(arena)
+                    .generation((short) 30)
+                    .index1(100)
+                    .world0((short) 10);
+
+            b2ManifoldPoint.Buffer points = b2ManifoldPoint.calloc(2, arena);
+            points.put(0, b2ManifoldPoint.calloc(arena)
+                    .baseSeparation(10.5f));
+
+            b2Manifold m = b2Manifold.calloc(arena)
+                    .normal(b2Vec2.calloc(arena).set(1.3f, -5.5f))
+                    .pointCount(3)
+                    .points(points)
+                    .rollingImpulse(-15.678f);
+
+            b2PreSolveFcnI func = (shapeIdA, shapeIdB, manifold, context) -> {
+                Debug.apiPrint("b2PreSolveFcnI<>");
+
+                Assert.assertNotEquals(NULL, a.address());
+                Assert.assertNotEquals(NULL, b.address());
+                AssertUtils.assertEquals(a, shapeIdA);
+                AssertUtils.assertEquals(b, shapeIdB);
+
+                Assert.assertNotEquals(NULL, manifold.address());
+                Assert.assertEquals(3, manifold.pointCount());
+                Assert.assertEquals(-15.678f, manifold.rollingImpulse(), 0.0f);
+                AssertUtils.assertEquals(m.normal(), manifold.normal());
+
+                b2ManifoldPoint.Buffer ptr = manifold.points();
+                Assert.assertNotEquals(NULL, ptr);
+
+                Assert.assertNotEquals(NULL, ptr.get(0).address());
+                Assert.assertEquals(10.5f, ptr.get(0).baseSeparation(), 0.0f);
+
+                Assert.assertEquals(0X04CCFL, context);
+            };
+            JNIB2.invoke_SHAPEID_SHAPEID_MANIFOLD_PV(a.address(), b.address(), m.address(), 0X04CCFL, func.address());
+        }
+        try (ArenaAlloc arena = allocPush()) {
+            b2ShapeId a = b2ShapeId.calloc(arena)
+                    .generation((short) 23)
+                    .index1(50)
+                    .world0((short) 100);
+
+            b2ShapeId b = b2ShapeId.calloc(arena)
+                    .generation((short) 30)
+                    .index1(100)
+                    .world0((short) 10);
+
+            b2ManifoldPoint.Buffer points = b2ManifoldPoint.calloc(2, arena);
+            points.put(0, b2ManifoldPoint.calloc(arena)
+                    .baseSeparation(10.5f));
+
+            b2Manifold m = b2Manifold.calloc(arena)
+                    .normal(b2Vec2.calloc(arena).set(1.3f, -5.5f))
+                    .pointCount(3)
+                    .points(points)
+                    .rollingImpulse(-15.678f);
+
+            b2PreSolveFcn func = b2PreSolveFcn.create((shapeIdA, shapeIdB, manifold, context) -> {
+                Debug.apiPrint("b2PreSolveFcn<>");
+
+                Assert.assertNotEquals(NULL, a.address());
+                Assert.assertNotEquals(NULL, b.address());
+                AssertUtils.assertEquals(a, shapeIdA);
+                AssertUtils.assertEquals(b, shapeIdB);
+
+                Assert.assertNotEquals(NULL, manifold.address());
+                Assert.assertEquals(3, manifold.pointCount());
+                Assert.assertEquals(-15.678f, manifold.rollingImpulse(), 0.0f);
+                AssertUtils.assertEquals(m.normal(), manifold.normal());
+
+                b2ManifoldPoint.Buffer ptr = manifold.points();
+                Assert.assertNotEquals(NULL, ptr);
+
+                Assert.assertNotEquals(NULL, ptr.get(0).address());
+                Assert.assertEquals(10.5f, ptr.get(0).baseSeparation(), 0.0f);
+
+                Assert.assertEquals(0X04CCFL, context);
+            });
+            JNIB2.invoke_SHAPEID_SHAPEID_MANIFOLD_PV(a.address(), b.address(), m.address(), 0X04CCFL, func.address());
+        }
+        Callbacks.b2FreeCallbacks();
+    }
 }

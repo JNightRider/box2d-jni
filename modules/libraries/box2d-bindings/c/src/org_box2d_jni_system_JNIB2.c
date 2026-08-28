@@ -42,6 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "box2d/id.h"
 #include "box2d/math_functions.h"
+#include "box2d/collision.h"
 #include "box2d/jni/org_box2d_jni_system_JNIB2.h"
 
 /*
@@ -255,8 +256,20 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1WORLDTRANSFORM_1_
  * Signature: (JIJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1AABB_1IPV
-  (JNIEnv *__env, jclass clazz, jlong param0, jint param1, jlong param2, jlong __functionAddress)
+    (JNIEnv *__env, jclass clazz, jlong param0, jint param1, jlong param2, jlong __functionAddress)
 {
     UNUSED_PARAMS(__env, clazz)
     ((void (*) (b2AABB, uint32_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2AABB*)param0, (int)param1, (uintptr_t)param2);
+}
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_SHAPEID_SHAPEID_MANIFOLD_PV
+ * Signature: (JJJJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1SHAPEID_1MANIFOLD_1PV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong param2, jlong param3, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2ShapeId, b2ShapeId, b2Manifold, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2ShapeId*)param1, *(b2Manifold*)param2, (uintptr_t)param3);
 }

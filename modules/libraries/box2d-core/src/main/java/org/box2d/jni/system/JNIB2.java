@@ -35,7 +35,7 @@ package org.box2d.jni.system;
  * functions or members (Box2d).
  * 
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public final class JNIB2 {
@@ -48,6 +48,7 @@ public final class JNIB2 {
 
     public static native float invoke_SHAPEID_VEC2_VEC2_FPF(long param0, long param1, long param2, float param3, long param4, long __functionAddress);
     public static native float invoke_SHAPEID_POS_VEC2_FPF(long param0, long param1, long param2, float param3, long param4, long __functionAddress);
+    public static native void invoke_SHAPEID_SHAPEID_MANIFOLD_PV(long param0, long param1, long param2, long param3, long __functionAddress);
     public static native void invoke_TRANSFORM_PIFIPV(long param0, long param1, int param2, float param3, int param4, long param5, long __functionAddress);
     public static native void invoke_WORLDTRANSFORM_PIFIPV(long param0, long param1, int param2, float param3, int param4, long param5, long __functionAddress);
 
@@ -61,5 +62,5 @@ public final class JNIB2 {
     public static native void invoke_WORLDTRANSFORM_PIIPV(long param0, long param1, int param2, int param3, long param4, long __functionAddress);
     public static native void invoke_WORLDTRANSFORM__VEC2_FIPV(long param0, long param1, float param2, int param3, long param4, long __functionAddress);
 
-    public static native void invoke_AABB_IPV(long param0, int param1, long param2, long __functionAddress);
+    public static native void invoke_AABB_IPV(long param0, int param1, long param2, long __functionAddress);    
 }
