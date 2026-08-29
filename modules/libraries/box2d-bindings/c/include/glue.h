@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // --- [ ffi_type: b2Vec2 ] ---
 
-static ffi_type* ffi_type_b2Vec2_elements[3] = {
+static ffi_type* ffi_type_b2Vec2_elements[] = {
     &ffi_type_float,
     &ffi_type_float,
     NULL
@@ -55,7 +55,7 @@ static ffi_type ffi_type_b2Vec2 = {
 
 // --- [ ffi_type: b2Rot ] ---
 
-static ffi_type* ffi_type_b2Rot_elements[3] = {
+static ffi_type* ffi_type_b2Rot_elements[] = {
     &ffi_type_float,
     &ffi_type_float,
     NULL
@@ -69,7 +69,7 @@ static ffi_type ffi_type_b2Rot = {
 
 // --- [ ffi_type: b2ShapeId ] ---
 
-static ffi_type* ffi_type_b2ShapeId_elements[4] = {
+static ffi_type* ffi_type_b2ShapeId_elements[] = {
     &ffi_type_sint32,
     &ffi_type_uint16,
     &ffi_type_uint16,
@@ -84,7 +84,7 @@ static ffi_type ffi_type_b2ShapeId = {
 
 // --- [ ffi_type: b2Transform ] ---
 
-static ffi_type* ffi_type_b2Transform_elements[3] = {
+static ffi_type* ffi_type_b2Transform_elements[] = {
     &ffi_type_b2Vec2,
     &ffi_type_b2Rot,
     NULL
@@ -98,7 +98,7 @@ static ffi_type ffi_type_b2Transform = {
 
 // --- [ ffi_type: b2AABB ] ---
 
-static ffi_type* ffi_type_b2AABB_elements[3] = {
+static ffi_type* ffi_type_b2AABB_elements[] = {
     &ffi_type_b2Vec2,
     &ffi_type_b2Vec2,
     NULL
@@ -115,7 +115,7 @@ static ffi_type ffi_type_b2AABB = {
 #if defined( BOX2D_DOUBLE_PRECISION )
 // --- [ ffi_type: b2Pos ] ---
 
-static ffi_type* ffi_type_b2Pos_elements[3] = {
+static ffi_type* ffi_type_b2Pos_elements[] = {
     &ffi_type_double,
     &ffi_type_double,
     NULL
@@ -129,7 +129,7 @@ static ffi_type ffi_type_b2Pos = {
 
 // --- [ ffi_type: b2WorldTransform ] ---
 
-static ffi_type* ffi_type_b2WorldTransform_elements[3] = {
+static ffi_type* ffi_type_b2WorldTransform_elements[] = {
     &ffi_type_b2Pos,
     &ffi_type_b2Rot,
     NULL
@@ -153,7 +153,7 @@ static ffi_type ffi_type_b2WorldTransform = {
 
 // --- [ ffi_type: b2ManifoldPoint ] ---
 
-static ffi_type* ffi_type_b2ManifoldPoint_elements[12] = {
+static ffi_type* ffi_type_b2ManifoldPoint_elements[] = {
     &ffi_type_b2Vec2,
     &ffi_type_b2Vec2,
     &ffi_type_float,
@@ -175,7 +175,7 @@ static ffi_type ffi_type_b2ManifoldPoint = {
 
 // --- [ ffi_type: b2Manifold ] ---
 
-static ffi_type* ffi_type_b2Manifold_elements[6] = {
+static ffi_type* ffi_type_b2Manifold_elements[] = {
     &ffi_type_b2Vec2,
     &ffi_type_float,
     &ffi_type_b2ManifoldPoint,

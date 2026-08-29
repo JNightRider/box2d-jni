@@ -34,6 +34,7 @@ import org.box2d.jni.*;
 
 import static org.box2d.jni.b2TOIState.*;
 import static org.box2d.jni.include.Collision.*;
+import static org.box2d.jni.include.Constants.*;
 import static org.box2d.jni.include.MathFunctions.*;
 
 import static org.box2d.jni.libc.LibCFloat.*;
@@ -75,13 +76,11 @@ public class TestDistance {
     static int ShapeDistanceTest()
     {
         b2Vec2.Buffer vas = b2Vec2.mallocSafe(b2Vec2.malloc().set( -1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, 1.0f ), b2Vec2.malloc().set( -1.0f, 1.0f ) );
-        vas.flip();
 
         b2Vec2.Buffer vbs = b2Vec2.mallocSafe(
                 b2Vec2.malloc().set( 2.0f, -1.0f ),
                 b2Vec2.malloc().set( 2.0f, 1.0f )
         );
-        vbs.flip();
 
         b2DistanceInput input = b2DistanceInput.malloc();input.clear();
         input.proxyA(b2MakeProxy( vas, ARRAY_COUNT( vas ), 0.0f , b2ShapeProxy.malloc() ));
@@ -100,20 +99,19 @@ public class TestDistance {
     static int ShapeCastTest( )
     {
         b2Vec2.Buffer vas = b2Vec2.mallocSafe(b2Vec2.malloc().set( -1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, 1.0f ), b2Vec2.malloc().set( -1.0f, 1.0f ) );
-        vas.flip();
-        
+
         b2Vec2.Buffer vbs = b2Vec2.mallocSafe(
             b2Vec2.malloc().set( 2.0f, -1.0f ),
             b2Vec2.malloc().set( 2.0f, 1.0f )
         );
-        vbs.flip();
 
-        b2ShapeCastPairInput input = b2ShapeCastPairInput.malloc();input.clear();
+        b2ShapeCastPairInput input = b2ShapeCastPairInput.calloc();
         input.proxyA(b2MakeProxy( vas, ARRAY_COUNT( vas ), 0.0f, b2ShapeProxy.malloc() ));
         input.proxyB(b2MakeProxy( vbs, ARRAY_COUNT( vbs ), 0.0f, b2ShapeProxy.malloc() ));
         input.transform(b2Transform_identity);
         input.translationB(b2Vec2.malloc().set( -2.0f, 0.0f ));
         input.maxFraction(1.0f);
+        input.canEncroach(false);
 
         b2CastOutput output = b2ShapeCast( input, b2CastOutput.malloc() );
 
@@ -123,16 +121,101 @@ public class TestDistance {
         return 0;
     }
 
+    // A thin plank and a point a linear slop off the middle of its short end face. The closest feature
+    // is that end face, so GJK finishes on a two point simplex spanning it.
+    //
+    // b2SolveSimplex2 hands back a search direction of magnitude 2 * distance * edge^2, which the
+    // caller weighs against an absolute epsilon. That test is cubic in length, so it gives out on
+    // short edges: below an edge of about 3.5 mm at default length units it declares the shapes
+    // overlapped and returns a zero distance with no normal, though they are plainly apart.
+    //
+    // Measured cutoff matches 2 * distance * edge^2 < FLT_EPSILON to three digits, and it tracks the
+    // contact edge alone. Widening the plank from 1 m to 100 m changes nothing.
+    static int ShapeDistanceShortEdgeTest( )
+    {
+        float halfThickness = 0.0016f;
+
+        b2Vec2.Buffer corners = b2Vec2.mallocSafe(
+                b2Vec2.malloc().set( -0.5f, -halfThickness ),
+                b2Vec2.malloc().set( 0.5f, -halfThickness ),
+                b2Vec2.malloc().set( 0.5f, halfThickness ),
+                b2Vec2.malloc().set( -0.5f, halfThickness )
+        );
+
+        b2Vec2 point = b2Vec2.malloc().set( 0.5f + B2_LINEAR_SLOP, 0.0f );
+
+        b2DistanceInput input = b2DistanceInput.calloc();
+        input.proxyA(b2MakeProxy( corners, ARRAY_COUNT( corners ), 0.0f, b2ShapeProxy.malloc() ));
+        {
+            b2ShapeProxy proxy = b2ShapeProxy.malloc();
+            nb2MakeProxy( point.address(), 1, 0.0f, proxy.address() );
+            input.proxyB(proxy);
+        }        
+        input.transform(b2Transform_identity);
+        input.useRadii(false);
+
+        b2SimplexCache cache = b2SimplexCache.calloc();
+        b2DistanceOutput output = b2ShapeDistance( input, cache, null, 0, b2DistanceOutput.malloc() );
+
+        ENSURE( output.distance() > 0.0f );
+        ENSURE( b2IsNormalized( output.normal() ) );
+        ENSURE_SMALL( output.distance() - B2_LINEAR_SLOP, 1e-6f );
+
+        return 0;
+    }
+
+    // The same false overlap seen through b2ShapeCast, which is how it was reported.
+    //
+    // Conservative advancement stops the cores a target apart and target is at least a linear slop, so
+    // the query can never legitimately answer overlap after the first iteration. Here iteration 1 does,
+    // and b2ShapeCast has no fallback: it trips
+    // B2_ASSERT( distanceOutput.distance > 0.0f && b2IsNormalized( distanceOutput.normal ) ).
+    //
+    // Enable once b2ShapeDistance stops reporting the false overlap. The assert aborts the run, so
+    // leaving it on would take the rest of the suite with it.
+    public static final boolean B2_SHORT_EDGE_CAST_REPRO = true;
+    static int ShapeCastShortEdgeTest()
+    {
+        float halfThickness = 0.0002f;
+
+        b2Vec2.Buffer corners = b2Vec2.mallocSafe(
+                b2Vec2.malloc().set( -0.5f, -halfThickness ),
+                b2Vec2.malloc().set( 0.5f, -halfThickness ),
+                b2Vec2.malloc().set( 0.5f, halfThickness ),
+                b2Vec2.malloc().set( -0.5f, halfThickness )
+        );
+
+        // falls past the end of the plank and drifts into it, so the second query lands on the end face
+        b2Vec2 start = b2Vec2.malloc().set( 0.506f, 0.0035f );
+
+        b2ShapeCastPairInput input = b2ShapeCastPairInput.calloc();
+        input.proxyA(b2MakeProxy( corners, ARRAY_COUNT( corners ), 0.0f, b2ShapeProxy.malloc() ));
+        {
+            b2ShapeProxy proxy = b2ShapeProxy.malloc();
+            nb2MakeProxy( start.address(), 1, 0.0f, proxy.address() );
+            input.proxyB(proxy);
+        }
+        input.transform(b2Transform_identity);
+        input.translationB(b2Vec2.malloc().set( -0.01f, -0.5f ));
+        input.maxFraction(1.0f);
+        input.canEncroach(false);
+
+        b2CastOutput output = b2ShapeCast( input, b2CastOutput.malloc() );
+
+        ENSURE( output.hit() == false || b2IsNormalized( output.normal() ) );
+
+        return 0;
+    }
+
+
     static int TimeOfImpactTest( )
     {
         b2Vec2.Buffer vas = b2Vec2.mallocSafe(b2Vec2.malloc().set( -1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, 1.0f ), b2Vec2.malloc().set( -1.0f, 1.0f ) );
-        vas.flip();
         
         b2Vec2.Buffer vbs = b2Vec2.mallocSafe(
             b2Vec2.malloc().set( 2.0f, -1.0f ),
             b2Vec2.malloc().set( 2.0f, 1.0f )
         );
-        vbs.flip();
 
         b2TOIInput input = b2TOIInput.malloc();
         input.proxyA(b2MakeProxy( vas, ARRAY_COUNT( vas ), 0.0f, b2ShapeProxy.malloc() ));
@@ -154,6 +237,10 @@ public class TestDistance {
         RUN_SUBTEST(() -> SegmentDistanceTest() );
         RUN_SUBTEST(() -> ShapeDistanceTest() );
         RUN_SUBTEST(() -> ShapeCastTest() );
+        RUN_SUBTEST(() -> ShapeDistanceShortEdgeTest() );
+if (B2_SHORT_EDGE_CAST_REPRO) {
+        RUN_SUBTEST(() -> ShapeCastShortEdgeTest() );
+}
         RUN_SUBTEST(() -> TimeOfImpactTest() );
 
         return 0;

@@ -650,6 +650,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1EnableSpeculat
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_GetStateHash
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetStateHash
+    (JNIEnv *__env, jclass clazz, jlong worldId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jlong)b2World_GetStateHash(*(b2WorldId*)worldId);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2CreateRecording
  * Signature: (I)J
  */
@@ -3251,6 +3263,187 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2MotorJoint_1GetMaxS
     UNUSED_PARAMS(__env, clazz)
     return (jfloat)b2MotorJoint_GetMaxSpringTorque(*(b2JointId*)jointId);
 }
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2CreateMoverJoint
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateMoverJoint
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong def, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2JointId*)__result = b2CreateMoverJoint( *(b2WorldId*)worldId, (const b2MoverJointDef*)def );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2MoverJoint_SetLinearVelocity
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2MoverJoint_1SetLinearVelocity
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong velocity)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2MoverJoint_SetLinearVelocity( *(b2JointId*)jointId, *(b2Vec2*)velocity );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2MoverJoint_GetLinearVelocity
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2MoverJoint_1GetLinearVelocity
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Vec2*)__result = b2MoverJoint_GetLinearVelocity( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2MoverJoint_SetMaxVelocityForce
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2MoverJoint_1SetMaxVelocityForce
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong maxForce)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2MoverJoint_SetMaxVelocityForce( *(b2JointId*)jointId, *(b2Vec2*)maxForce );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2MoverJoint_GetMaxVelocityForce
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2MoverJoint_1GetMaxVelocityForce
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Vec2*)__result = b2MoverJoint_GetMaxVelocityForce( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2CreatePogoJoint
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2CreatePogoJoint
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong def, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2JointId*)__result = b2CreatePogoJoint( *(b2WorldId*)worldId, (const b2PogoJointDef*)def );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_SetRestLength
+ * Signature: (JF)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1SetRestLength
+    (JNIEnv *__env, jclass clazz, jlong jointId, jfloat length)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2PogoJoint_SetRestLength( *(b2JointId*)jointId, length );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_GetRestLength
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetRestLength
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return b2PogoJoint_GetRestLength( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_SetSpringHertz
+ * Signature: (JF)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1SetSpringHertz
+    (JNIEnv *__env, jclass clazz, jlong jointId, jfloat hertz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2PogoJoint_SetSpringHertz( *(b2JointId*)jointId, hertz );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_GetSpringHertz
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetSpringHertz
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return b2PogoJoint_GetSpringHertz( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_SetSpringDampingRatio
+ * Signature: (JF)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1SetSpringDampingRatio
+    (JNIEnv *__env, jclass clazz, jlong jointId, jfloat dampingRatio)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2PogoJoint_SetSpringDampingRatio( *(b2JointId*)jointId, dampingRatio );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_GetSpringDampingRatio
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetSpringDampingRatio
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return b2PogoJoint_GetSpringDampingRatio( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_GetLength
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetLength
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return b2PogoJoint_GetLength( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_GetVelocity
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetVelocity
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return b2PogoJoint_GetVelocity( *(b2JointId*)jointId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2PogoJoint_GetImpulse
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetImpulse
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return b2PogoJoint_GetImpulse( *(b2JointId*)jointId );
+}
+
 
 /*
  * Class:     org_box2d_jni_include_Box2d

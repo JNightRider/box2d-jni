@@ -38,6 +38,8 @@ import org.box2d.jni.b2ExplosionDef;
 import org.box2d.jni.b2Filter;
 import org.box2d.jni.b2FilterJointDef;
 import org.box2d.jni.b2MotorJointDef;
+import org.box2d.jni.b2MoverJointDef;
+import org.box2d.jni.b2PogoJointDef;
 import org.box2d.jni.b2PrismaticJointDef;
 import org.box2d.jni.b2QueryFilter;
 import org.box2d.jni.b2RevoluteJointDef;
@@ -55,7 +57,7 @@ import static org.box2d.jni.libc.LibCStdint.*;
  * Class that represents the {@code <types.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public final class Types {
@@ -245,7 +247,41 @@ public final class Types {
 
     /* {@code B2_API b2FilterJointDef b2DefaultFilterJointDef( void ); } */
     public static native void nb2DefaultFilterJointDef(long __result);
-    
+
+    // --- [ b2MoverJointDef ] ---
+
+    /**
+     * {@code B2_API b2MoverJointDef b2DefaultMoverJointDef( void ); }
+     *
+     * @param __result b2MoverJointDef
+     * @return b2MoverJointDef
+     */
+    public static b2MoverJointDef b2DefaultMoverJointDef(b2MoverJointDef __result) {
+        checkPointers(__result);
+        nb2DefaultMoverJointDef(__result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2MoverJointDef b2DefaultMoverJointDef( void ); } */
+    public static native void nb2DefaultMoverJointDef(long __result);
+
+    // --- [ b2DefaultPogoJointDef ] ---
+
+    /**
+     * {@code B2_API b2PogoJointDef b2DefaultPogoJointDef( void ); }
+     *
+     * @param __result b2PogoJointDef
+     * @return b2PogoJointDef
+     */
+    public static b2PogoJointDef b2DefaultPogoJointDef(b2PogoJointDef __result) {
+        checkPointers(__result);
+        nb2DefaultPogoJointDef(__result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2PogoJointDef b2DefaultPogoJointDef( void ); } */
+    public static native void nb2DefaultPogoJointDef(long __result);
+
     // --- [ b2DefaultPrismaticJointDef ] ---
 
     /**

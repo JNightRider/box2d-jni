@@ -301,11 +301,9 @@ public class TestWorld {
         return true;
     };
 
-//    private final b2PreSolveFcnI PreSolveStatic = (shapeIdA, shapeIdB, point, normal, context) -> 
-//    {
-//        ENSURE( context == NULL );
-//        return false;
-//    };
+    private final b2PreSolveFcnI PreSolveStatic = (shapeIdA, shapeIdB, manifold, context) -> {
+        
+    };
 
     // This test is here to ensure all API functions link correctly.
     int TestWorldCoverage( )
@@ -336,7 +334,7 @@ public class TestWorld {
         ENSURE( value == 100.0f );
 
         b2World_SetCustomFilterCallback( worldId, CustomFilter, NULL );
-//        b2World_SetPreSolveCallback( worldId, PreSolveStatic, NULL );
+        b2World_SetPreSolveCallback(worldId, PreSolveStatic, null, NULL);
 
         b2Vec2 g = b2Vec2.malloc().set( 1.0f, 2.0f );
         b2World_SetGravity( worldId, g );

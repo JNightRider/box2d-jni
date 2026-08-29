@@ -117,6 +117,7 @@ public final class TestMacros {
         return A.length;
     }    
     public static int ARRAY_COUNT( UintptrBuffer A ) {
+        A.flip();
         return A.remaining();
     }
     

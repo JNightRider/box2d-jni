@@ -49,9 +49,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWorldDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2WorldDef* ptr = (b2WorldDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultWorldDef();
+    *(b2WorldDef*)__result = b2DefaultWorldDef();
 }
 
 /*
@@ -62,9 +61,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWorldDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultBodyDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2BodyDef* ptr = (b2BodyDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultBodyDef();
+    *(b2BodyDef*)__result = b2DefaultBodyDef();
 }
 
 /*
@@ -75,9 +73,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultBodyDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultFilter
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2Filter* ptr = (b2Filter*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultFilter();
+    *(b2Filter*)__result = b2DefaultFilter();
 }
 
 /*
@@ -88,9 +85,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultFilter
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultQueryFilter
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2QueryFilter* ptr = (b2QueryFilter*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultQueryFilter();
+    *(b2QueryFilter*)__result = b2DefaultQueryFilter();
 }
 
 /*
@@ -101,9 +97,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultQueryFilter
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultSurfaceMaterial
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2SurfaceMaterial* ptr = (b2SurfaceMaterial*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultSurfaceMaterial();
+    *(b2SurfaceMaterial*)__result = b2DefaultSurfaceMaterial();
 }
 
 /*
@@ -114,9 +109,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultSurfaceMateria
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultShapeDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2ShapeDef* ptr = (b2ShapeDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultShapeDef();
+    *(b2ShapeDef*)__result = b2DefaultShapeDef();
 }
 
 /*
@@ -127,9 +121,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultShapeDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultChainDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2ChainDef* ptr = (b2ChainDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultChainDef();
+    *(b2ChainDef*)__result = b2DefaultChainDef();
 }
 
 /*
@@ -140,9 +133,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultChainDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultDistanceJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2DistanceJointDef* ptr = (b2DistanceJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultDistanceJointDef();
+    *(b2DistanceJointDef*)__result = b2DefaultDistanceJointDef();
 }
 
 /*
@@ -153,9 +145,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultDistanceJointD
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultMotorJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2MotorJointDef* ptr = (b2MotorJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultMotorJointDef();
+    *(b2MotorJointDef*)__result = b2DefaultMotorJointDef();
 }
 
 /*
@@ -166,9 +157,32 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultMotorJointDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultFilterJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2FilterJointDef* ptr = (b2FilterJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultFilterJointDef();
+    *(b2FilterJointDef*)__result = b2DefaultFilterJointDef();
+}
+
+/*
+ * Class:     org_box2d_jni_include_Types
+ * Method:    nb2DefaultMoverJointDef
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultMoverJointDef
+    (JNIEnv *__env, jclass clazz, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2MoverJointDef*)__result = b2DefaultMoverJointDef();
+}
+
+/*
+ * Class:     org_box2d_jni_include_Types
+ * Method:    nb2DefaultPogoJointDef
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultPogoJointDef
+    (JNIEnv *__env, jclass clazz, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2PogoJointDef*)__result = b2DefaultPogoJointDef();
 }
 
 /*
@@ -179,9 +193,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultFilterJointDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultPrismaticJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2PrismaticJointDef* ptr = (b2PrismaticJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultPrismaticJointDef();
+    *(b2PrismaticJointDef*)__result = b2DefaultPrismaticJointDef();
 }
 
 /*
@@ -192,9 +205,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultPrismaticJoint
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultRevoluteJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2RevoluteJointDef* ptr = (b2RevoluteJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultRevoluteJointDef();
+    *(b2RevoluteJointDef*)__result = b2DefaultRevoluteJointDef();
 }
 
 /*
@@ -205,9 +217,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultRevoluteJointD
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWeldJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2WeldJointDef* ptr = (b2WeldJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultWeldJointDef();
+    *(b2WeldJointDef*)__result = b2DefaultWeldJointDef();
 }
 
 /*
@@ -218,9 +229,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWeldJointDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWheelJointDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2WheelJointDef* ptr = (b2WheelJointDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultWheelJointDef();
+    *(b2WheelJointDef*)__result = b2DefaultWheelJointDef();
 }
 
 /*
@@ -231,9 +241,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWheelJointDef
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultExplosionDef
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2ExplosionDef* ptr = (b2ExplosionDef*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultExplosionDef();
+    *(b2ExplosionDef*)__result = b2DefaultExplosionDef();
 }
 
 /*
@@ -256,7 +265,6 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Types_nb2GetGraphColor
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultDebugDraw
     (JNIEnv *__env, jclass clazz, jlong __result)
 {
-    b2DebugDraw* ptr = (b2DebugDraw*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DefaultDebugDraw();
+    *(b2DebugDraw*)__result = b2DefaultDebugDraw();
 }

@@ -114,5 +114,9 @@ public final class Checks {
         return prt != NULL;
     }
     
+    public static long checkOut(Pointer ptr) {
+        return ptr == null ? NULL : ptr.address();
+    }
+    
     private Checks() {}
 }

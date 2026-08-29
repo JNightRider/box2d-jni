@@ -78,6 +78,30 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_b2JointType_nb2_1motorJoint
 
 /*
  * Class:     org_box2d_jni_b2JointType
+ * Method:    nb2_moverJoint
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2JointType_nb2_1moverJoint
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jint)b2_moverJoint;
+}
+
+/*
+ * Class:     org_box2d_jni_b2JointType
+ * Method:    nb2_pogoJoint
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2JointType_nb2_1pogoJoint
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jint)b2_pogoJoint;
+}
+
+/*
+ * Class:     org_box2d_jni_b2JointType
  * Method:    nb2_prismaticJoint
  * Signature: ()I
  */

@@ -93,6 +93,8 @@ import org.box2d.jni.readonly.ConstB2DistanceJointDef;
 import org.box2d.jni.readonly.ConstB2ExplosionDef;
 import org.box2d.jni.readonly.ConstB2FilterJointDef;
 import org.box2d.jni.readonly.ConstB2MotorJointDef;
+import org.box2d.jni.readonly.ConstB2MoverJointDef;
+import org.box2d.jni.readonly.ConstB2PogoJointDef;
 import org.box2d.jni.readonly.ConstB2Polygon;
 import org.box2d.jni.readonly.ConstB2PrismaticJointDef;
 import org.box2d.jni.readonly.ConstB2RecPlayer;
@@ -623,8 +625,8 @@ public final class Box2d {
      * @param context long
      */
     public static void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcnI preSolveFcn, b2PreContinuousFcnI preContinuousFcn, long context ) {
-        checkPointers(worldId, preSolveFcn, preContinuousFcn);
-        nb2World_SetPreSolveCallback(worldId.address(), preSolveFcn.address(), preContinuousFcn.address(), context);
+        checkPointers(worldId, preSolveFcn);
+        nb2World_SetPreSolveCallback(worldId.address(), preSolveFcn.address(), checkOut(preContinuousFcn), context);
     }
 
     /* {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* preSolveFcn, b2PreContinuousFcn* preContinuousFcn, void* context ); } */
@@ -1015,6 +1017,22 @@ public final class Box2d {
 
     /* {@code B2_API void b2World_EnableSpeculative( b2WorldId worldId, bool flag ); } */
     public static native void nb2World_EnableSpeculative(long worldId, boolean flag);
+
+    // --- [ b2World_GetStateHash ] ---
+
+    /**
+     * {@code B2_API uint64_t b2World_GetStateHash( b2WorldId worldId ); }
+     *
+     * @param worldId
+     * @return
+     */
+    public static long b2World_GetStateHash(b2WorldId worldId) {
+        checkPointers(worldId);
+        return nb2World_GetStateHash(worldId.address());
+    }
+
+    /* {@code B2_API uint64_t b2World_GetStateHash( b2WorldId worldId ); } */
+    public static native long nb2World_GetStateHash(long worldId);
 
     // --- [ b2CreateRecording ] ---
 
@@ -4823,6 +4841,266 @@ public final class Box2d {
     /* {@code B2_API float b2MotorJoint_GetMaxSpringTorque( b2JointId jointId ); } */
     public static native float nb2MotorJoint_GetMaxSpringTorque(long jointId);
 
+    // --- [ b2CreateMoverJoint ] ---
+
+    /**
+     * {@code B2_API b2JointId b2CreateMoverJoint( b2WorldId worldId, const b2MoverJointDef* def ); }
+     *
+     * @param worldId b2WorldId
+     * @param def ConstB2MoverJointDef
+     * @param __result store
+     *
+     * @return b2JointId
+     */
+    public static b2JointId b2CreateMoverJoint(b2WorldId worldId, ConstB2MoverJointDef def, b2JointId __result) {
+        checkPointers(worldId, def, __result);
+        nb2CreateMoverJoint(worldId.address(), def.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2JointId b2CreateMoverJoint( b2WorldId worldId, const b2MoverJointDef* def ); } */
+    public static native void nb2CreateMoverJoint(long worldId, long def, long __result);
+
+    // --- [ b2MoverJoint_SetLinearVelocity ] ---
+
+    /**
+     * {@code B2_API void b2MoverJoint_SetLinearVelocity( b2JointId jointId, b2Vec2 velocity ); }
+     *
+     * @param jointId b2JointId
+     * @param velocity b2Vec2
+     */
+    public static void b2MoverJoint_SetLinearVelocity(b2JointId jointId, b2Vec2 velocity) {
+        checkPointers(jointId, velocity);
+        nb2MoverJoint_SetLinearVelocity(jointId.address(), velocity.address());
+    }
+
+    /* {@code B2_API void b2MoverJoint_SetLinearVelocity( b2JointId jointId, b2Vec2 velocity ); } */
+    public static native void nb2MoverJoint_SetLinearVelocity(long jointId, long velocity);
+
+    // --- [ b2MoverJoint_GetLinearVelocity ] ---
+
+    /**
+     * {@code B2_API b2Vec2 b2MoverJoint_GetLinearVelocity( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     * @param __result store
+     *
+     * @return b2Vec2
+     */
+    public static b2Vec2 b2MoverJoint_GetLinearVelocity(b2JointId jointId, b2Vec2 __result) {
+        checkPointers(jointId, __result);
+        nb2MoverJoint_GetLinearVelocity(jointId.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2Vec2 b2MoverJoint_GetLinearVelocity( b2JointId jointId ); } */
+    public static native void nb2MoverJoint_GetLinearVelocity(long jointId, long __result);
+
+    // --- [ b2MoverJoint_SetMaxVelocityForce ] ---
+
+    /**
+     * {@code B2_API void b2MoverJoint_SetMaxVelocityForce( b2JointId jointId, b2Vec2 maxForce ); }
+     *
+     * @param jointId b2JointId
+     * @param maxForce b2Vec2
+     */
+    public static void b2MoverJoint_SetMaxVelocityForce(b2JointId jointId, b2Vec2 maxForce) {
+        checkPointers(jointId, maxForce);
+        nb2MoverJoint_SetMaxVelocityForce(jointId.address(), maxForce.address());
+    }
+
+    /* {@code B2_API void b2MoverJoint_SetMaxVelocityForce( b2JointId jointId, b2Vec2 maxForce ); } */
+    public static native void nb2MoverJoint_SetMaxVelocityForce(long jointId, long maxForce);
+
+    // --- [ b2MoverJoint_GetMaxVelocityForce ] ---
+
+    /**
+     * {@code B2_API b2Vec2 b2MoverJoint_GetMaxVelocityForce( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     * @param __result store
+     *
+     * @return b2Vec2
+     */
+    public static b2Vec2 b2MoverJoint_GetMaxVelocityForce(b2JointId jointId, b2Vec2 __result) {
+        checkPointers(jointId, __result);
+        nb2MoverJoint_GetMaxVelocityForce(jointId.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2Vec2 b2MoverJoint_GetMaxVelocityForce( b2JointId jointId ); } */
+    public static native void nb2MoverJoint_GetMaxVelocityForce(long jointId, long __result);
+
+    // --- [ b2CreatePogoJoint ] ---
+
+    /**
+     * {@code B2_API b2JointId b2CreatePogoJoint( b2WorldId worldId, const b2PogoJointDef* def ); }
+     *
+     * @param worldId b2WorldId
+     * @param def ConstB2PogoJointDef
+     * @param __result store
+     *
+     * @return b2JointId
+     */
+    public static b2JointId b2CreatePogoJoint(b2WorldId worldId, ConstB2PogoJointDef def, b2JointId __result) {
+        checkPointers(worldId, def, __result);
+        nb2CreatePogoJoint(worldId.address(), def.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2JointId b2CreatePogoJoint( b2WorldId worldId, const b2PogoJointDef* def ); } */
+    public static native void nb2CreatePogoJoint(long worldId, long def, long __result);
+
+    // --- [ b2PogoJoint_SetRestLength ] ---
+
+    /**
+     * {@code B2_API void b2PogoJoint_SetRestLength( b2JointId jointId, float length ); }
+     *
+     * @param jointId b2JointId
+     * @param length float
+     */
+    public static void b2PogoJoint_SetRestLength(b2JointId jointId, float length) {
+        checkPointers(jointId);
+        nb2PogoJoint_SetRestLength(jointId.address(), length);
+    }
+
+    /* {@code B2_API void b2PogoJoint_SetRestLength( b2JointId jointId, float length ); } */
+    public static native void nb2PogoJoint_SetRestLength(long jointId, float length);
+
+    // --- [ b2PogoJoint_GetRestLength ] ---
+
+    /**
+     * {@code B2_API float b2PogoJoint_GetRestLength( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2PogoJoint_GetRestLength(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2PogoJoint_GetRestLength(jointId.address());
+    }
+
+    /* {@code B2_API float b2PogoJoint_GetRestLength( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetRestLength(long jointId);
+
+    // --- [ b2PogoJoint_SetSpringHertz ] ---
+
+    /**
+     * {@code B2_API void b2PogoJoint_SetSpringHertz( b2JointId jointId, float hertz ); }
+     *
+     * @param jointId b2JointId
+     * @param hertz float
+     */
+    public static void b2PogoJoint_SetSpringHertz(b2JointId jointId, float hertz) {
+        checkPointers(jointId);
+        nb2PogoJoint_SetSpringHertz(jointId.address(), hertz);
+    }
+
+    /* {@code B2_API void b2PogoJoint_SetSpringHertz( b2JointId jointId, float hertz ); } */
+    public static native void nb2PogoJoint_SetSpringHertz(long jointId, float hertz);
+
+    // --- [ b2PogoJoint_GetSpringHertz ] ---
+
+    /**
+     * {@code B2_API float b2PogoJoint_GetSpringHertz( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2PogoJoint_GetSpringHertz(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2PogoJoint_GetSpringHertz(jointId.address());
+    }
+
+    /* {@code B2_API float b2PogoJoint_GetSpringHertz( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetSpringHertz(long jointId);
+
+    // --- [ b2PogoJoint_SetSpringDampingRatio ] ---
+
+    /**
+     * {@code B2_API void b2PogoJoint_SetSpringDampingRatio( b2JointId jointId, float dampingRatio ); }
+     *
+     * @param jointId b2JointId
+     * @param dampingRatio float
+     */
+    public static void b2PogoJoint_SetSpringDampingRatio(b2JointId jointId, float dampingRatio) {
+        checkPointers(jointId);
+        nb2PogoJoint_SetSpringDampingRatio(jointId.address(), dampingRatio);
+    }
+
+    /* {@code B2_API void b2PogoJoint_SetSpringDampingRatio( b2JointId jointId, float dampingRatio ); } */
+    public static native void nb2PogoJoint_SetSpringDampingRatio(long jointId, float dampingRatio);
+
+    // --- [ b2PogoJoint_GetSpringDampingRatio ] ---
+
+    /**
+     * {@code B2_API float b2PogoJoint_GetSpringDampingRatio( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2PogoJoint_GetSpringDampingRatio(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2PogoJoint_GetSpringDampingRatio(jointId.address());
+    }
+
+    /* {@code B2_API float b2PogoJoint_GetSpringDampingRatio( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetSpringDampingRatio(long jointId);
+
+    // --- [ b2PogoJoint_GetLength ] ---
+
+    /**
+     * {@code B2_API float b2PogoJoint_GetLength( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2PogoJoint_GetLength(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2PogoJoint_GetLength(jointId.address());
+    }
+
+    /* {@code B2_API float b2PogoJoint_GetLength( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetLength(long jointId);
+
+    // --- [ b2PogoJoint_GetVelocity ] ---
+
+    /**
+     * {@code B2_API float b2PogoJoint_GetVelocity( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2PogoJoint_GetVelocity(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2PogoJoint_GetVelocity(jointId.address());
+    }
+
+    /* {@code B2_API float b2PogoJoint_GetVelocity( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetVelocity(long jointId);
+
+    // --- [ b2PogoJoint_GetImpulse ] ---
+
+    /**
+     * {@code B2_API float b2PogoJoint_GetImpulse( b2JointId jointId ); }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2PogoJoint_GetImpulse(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2PogoJoint_GetImpulse(jointId.address());
+    }
+
+    /* {@code B2_API float b2PogoJoint_GetImpulse( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetImpulse(long jointId);
+    
     // --- [ b2CreateFilterJoint ] ---
 
     /**

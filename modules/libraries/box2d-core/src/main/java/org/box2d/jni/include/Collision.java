@@ -72,6 +72,7 @@ import org.box2d.jni.readonly.ConstB2Vec2;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.Pointer.*;
 
 /**
  * Class that represents the {@code <collision.h>} header of box2d.
@@ -682,8 +683,8 @@ public final class Collision {
      * @return b2DistanceOutput
      */
     public static b2DistanceOutput b2ShapeDistance(ConstB2DistanceInput input, b2SimplexCache cache, b2Simplex simplexes, int simplexCapacity, b2DistanceOutput __result) {
-        checkPointers(input, cache, simplexes, __result);
-        nb2ShapeDistance(input.address(), cache.address(), simplexes.address(), simplexCapacity, __result.address());
+        checkPointers(input, cache, __result);
+        nb2ShapeDistance(input.address(), cache.address(), checkOut(simplexes), simplexCapacity, __result.address());
         return __result;
     }
 
