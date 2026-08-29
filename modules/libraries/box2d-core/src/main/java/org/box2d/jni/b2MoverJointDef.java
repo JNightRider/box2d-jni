@@ -49,8 +49,8 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  *
  * @author wil
- * @since 1.0.0
  * @version 1.0.0
+ * @since 1.3.0
  */
 public class b2MoverJointDef extends Struct<b2MoverJointDef> implements ConstB2MoverJointDef {
 
