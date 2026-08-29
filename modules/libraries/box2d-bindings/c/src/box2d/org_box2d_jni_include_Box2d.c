@@ -1400,6 +1400,30 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetSleepThres
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2Body_SetSafetyFactor
+ * Signature: (JF)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1SetSafetyFactor
+    (JNIEnv *__env, jclass clazz, jlong bodyId, jfloat safetyFactor)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2Body_SetSafetyFactor(*(b2BodyId*)bodyId, safetyFactor);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2Body_GetSafetyFactor
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetSafetyFactor
+    (JNIEnv *__env, jclass clazz, jlong bodyId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat) b2Body_GetSafetyFactor(*(b2BodyId*)bodyId);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2Body_IsEnabled
  * Signature: (J)Z
  */
