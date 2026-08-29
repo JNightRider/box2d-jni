@@ -39,6 +39,8 @@ import org.box2d.jni.system.*;
  * 	b2_distanceJoint,
  * 	b2_filterJoint,
  * 	b2_motorJoint,
+ *      b2_moverJoint,
+ *	b2_pogoJoint,
  * 	b2_prismaticJoint,
  * 	b2_revoluteJoint,
  * 	b2_weldJoint,
@@ -47,7 +49,7 @@ import org.box2d.jni.system.*;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public enum b2JointType {
@@ -77,6 +79,24 @@ public enum b2JointType {
      */
     b2_motorJoint(
         nb2_motorJoint()
+    ),
+
+    /**
+     * <pre><code>
+     * b2_moverJoint -&#62; box2d
+     * </code></pre>
+     */
+    b2_moverJoint(
+        nb2_moverJoint()
+    ),
+
+    /**
+     * <pre><code>
+     * b2_pogoJoint -&#62; box2d
+     * </code></pre>
+     */
+    b2_pogoJoint(
+        nb2_pogoJoint()
     ),
 
     /**
@@ -181,6 +201,10 @@ public enum b2JointType {
     public static native int nb2_filterJoint();
     /* Binding JNI to property 'b2_motorJoint' of structure 'b2JointType' */
     public static native int nb2_motorJoint();
+    /* Binding JNI to property 'b2_moverJoint' of structure 'b2JointType' */
+    public static native int nb2_moverJoint();
+    /* Binding JNI to property 'b2_pogoJoint' of structure 'b2JointType' */
+    public static native int nb2_pogoJoint();
     /* Binding JNI to property 'b2_prismaticJoint' of structure 'b2JointType' */
     public static native int nb2_prismaticJoint();
     /* Binding JNI to property 'b2_revoluteJoint' of structure 'b2JointType' */
