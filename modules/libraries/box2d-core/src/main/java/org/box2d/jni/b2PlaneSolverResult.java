@@ -40,14 +40,14 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2PlaneSolverResult
  * {
- *     b2Vec2 translation;
+ *     b2Vec2 delta;
  *     int iterationCount;
  * } b2PlaneSolverResult;
  * </code></pre>
  *
  * @author wil
+ * @version 1.2.0
  * @since 1.0.0
- * @version 1.0.0
  */
 public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
 
@@ -59,7 +59,7 @@ public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
 
     /** The struct member offsets. */
     private static final int
-            TRANSLATION,
+            DELTA,
             ITERATION_COUNT;
 
     static {
@@ -68,7 +68,7 @@ public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
                 __member(4)
         );
 
-        TRANSLATION = layout.offsetof(0);
+        DELTA = layout.offsetof(0);
         ITERATION_COUNT = layout.offsetof(1);
 
         SIZEOF = layout.getSize();
@@ -103,19 +103,19 @@ public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
         super(address, factor);
     }
 
-    /** @return Returns the property {@code translation} */
-    public b2Vec2 translation() { return ntranslation(address()); }
+    /** @return Returns the property {@code delta} */
+    public b2Vec2 delta() { return ndelta(address()); }
     /** @return Returns the property {@code iterationCount} */
     public int iterationCount() { return niterationCount(address()); }
 
     /**
-     * Set the value of property {@code translation}
+     * Set the value of property {@code delta}
      *
      * @param value b2Vec2
      * @return b2PlaneSolverResult
      */
-    public b2PlaneSolverResult translation(b2Vec2 value) {
-        ntranslation(address(), value);
+    public b2PlaneSolverResult delta(b2Vec2 value) {
+        ndelta(address(), value);
         return this;
     }
 
@@ -254,10 +254,10 @@ public class b2PlaneSolverResult extends Struct<b2PlaneSolverResult> {
 
     // -----------------------------------
     
-    public static b2Vec2 ntranslation(long address) { return b2Vec2.createSafe(() -> address + TRANSLATION); }
+    public static b2Vec2 ndelta(long address) { return b2Vec2.createSafe(() -> address + DELTA); }
     public static int niterationCount(long address) { return memGetInt(address + ITERATION_COUNT); }
 
-    public static void ntranslation(long address, b2Vec2 value) { nmemcpy(address + TRANSLATION, value.address(), b2Vec2.SIZEOF); }
+    public static void ndelta(long address, b2Vec2 value) { nmemcpy(address + DELTA, value.address(), b2Vec2.SIZEOF); }
     public static void niterationCount(long address, int value) { memPutInt(address + ITERATION_COUNT, value); }
     
     // -----------------------------------
