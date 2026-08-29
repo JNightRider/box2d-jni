@@ -67,17 +67,13 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
         set(CLANG_TRIPLE "riscv64-linux-android")
         set(AUTOTOOLS_HOST "riscv64-linux-android")
     else()
-        message(FATAL_ERROR
-            "Unsupported Android ABI: ${ANDROID_ABI}"
-        )
+        message(FATAL_ERROR "Unsupported Android ABI: ${ANDROID_ABI}")
     endif()
-
 
     set(ANDROID_TOOLCHAIN_BIN "${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin")
     set(ANDROID_CC "${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_PLATFORM_LEVEL}-clang")
     set(ANDROID_AR "${ANDROID_TOOLCHAIN_BIN}/llvm-ar")
     set(ANDROID_RANLIB "${ANDROID_TOOLCHAIN_BIN}/llvm-ranlib")
-
 
     message(STATUS "ANDROID_ABI=${ANDROID_ABI}")
     message(STATUS "ANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}")

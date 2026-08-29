@@ -1,173 +1,104 @@
-import static org.box2d.jni.BuildSrc.*
+plugins {
+    alias(libs.plugins.android.library) // to build Android libraries
+}
 
 description = 'box2d-jni android'
 
-def b2bt     = findProperty('box2d.jni.bt')
-def b2flavor = findProperty('box2d.jni.flavor')
-def target   = findProperty('box2d.jni.android.target')
-
-def android = makeAndroidAbi(target)
-def buildTypes = makeBuildType(b2bt)
-def flavors = makeFlavor(b2flavor)
-
-def properties = new Properties()
-def file = rootProject.file('local.properties')
-if (file.exists()) {
-    file.withInputStream { stream ->
-        properties.load(stream)
-    }
+ext {
+    baseName = "${artifact}" // for artifacts
+    groupID = 'io.github.jnightrider'
 }
 
-def ndkHome = System.getenv('ANDROID_NDK_HOME')
-                ?: (findProperty('box2d.jni.android.ndk.home')
-                ?: properties.getProperty('ndk.dir', ''))
+android {
+    namespace = groupID + '.box2djni'
+    compileSdk = 36
 
-def pickNewestNdk = { File ndkParent ->
-    if (!ndkParent?.exists() || !ndkParent.directory) {
-        return null
-    }
-    def versions = ndkParent.listFiles()?.findAll { it.directory } ?: []
-    if (!versions) {
-        return null
-    }
-    versions.sort { a, b -> b.name <=> a.name }
-    return versions[0].absolutePath
-}
+    defaultConfig {
+        minSdk = 35
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
 
-def sdk = []
-if (!ndkHome) {
-    def userHome = System.getProperty('user.home', '')
-    sdk = [
-            System.getenv('ANDROID_SDK_ROOT'),
-            System.getenv('ANDROID_HOME'),
-            findProperty('box2d.jni.android.ndk.home'),
-            properties.getProperty('sdk.dir'),
-            userHome ? "${userHome}/Android/Sdk" : '',
-            userHome ? "${userHome}/Library/Android/sdk" : ''
-    ].findAll { it != null && it.toString().trim() }
-
-    sdk.find { sdkPath ->
-        def sdkDir = new File(sdkPath.toString())
-        if (!sdkDir.exists()) {
-            return false
-        }
-        def ndkBundle = new File(sdkDir, 'ndk-bundle')
-        if (ndkBundle.exists()) {
-            ndkHome = ndkBundle.absolutePath
-            return true
-        }
-        def newestNdk = pickNewestNdk(new File(sdkDir, 'ndk'))
-        if (newestNdk) {
-            ndkHome = newestNdk
-            return true
-        }
-        return false
-    }
-}
-
-
-def toolchain = ndkHome ? new File(ndkHome, 'build/cmake/android.toolchain.cmake') : null
-def minSupportedApi = 35
-
-def androidPlatform = (findProperty('androidPlatform') ?: "android-${minSupportedApi}")
-def androidApiLevel = (androidPlatform =~ /android-(\d+)/).with { it.matches() ? it[0][1] as int : -1 }
-if (androidApiLevel < minSupportedApi) {
-    throw new GradleException("androidPlatform=${androidPlatform} is below Android 11. Use -PandroidPlatform=android-${minSupportedApi} or newer.")
-}
-
-// build JNI and CMake
-
-buildTypes.each { type ->
-    flavors.each { variant ->
-        android.each { abi ->
-            tasks.register("configureCMake${abi.name}${type.name}${variant.name}", Exec) {
-                dependsOn(
-                    ':modules:libraries:box2d-bindings:unpackBox2dSource',
-                    ':modules:libraries:box2d-bindings:unpackLibffiSource',
-                    ':modules:libraries:box2d-core:classes'
-                )
-
-                workingDir new File(rootDir.absolutePath, "modules/libraries/box2d-bindings/c")
-
-                commandLine (
-                        'cmake',
-                        '-S', '.',
-                        '-B', "build/build-${abi.name}${type.name}${variant.name}",
-                        "-DCMAKE_SYSTEM_NAME=Android",
-                        "-DCMAKE_BUILD_TYPE=${type.name}",
-                        "-DCMAKE_TOOLCHAIN_FILE=${toolchain.absolutePath}",
-                        "-DANDROID_ABI=${abi.abi}",
-                        "-DANDROID_PLATFORM=${androidPlatform}",
-                        "-DB2_ENABLE_ASSERT=${type.flag}",
-                        "-DBOX2D_DOUBLE_PRECISION=${variant.precision}",
-                        "-DBINDINGS_SUFFIX=_${type.name}${variant.name}",
-                        "-DANDROID_TOOLCHAIN_BIN=${makeToolchainBin(ndkHome, abi)}",
-                        "-DAUTOTOOLS_HOST=${abi.host.name}",
-                        "-DCLANG_TRIPLE=${abi.clang.name}",
-                )
+        externalNativeBuild {
+            ndk {
+                def target = findProperty('box2d.jni.android.target')
+                if (!target) {
+                    abiFilters 'arm64-v8a', 'armeabi-v7a', 'riscv64', 'x86', 'x86_64'
+                } else if (target == 'Android_ARM7') {
+                    abiFilters 'armeabi-v7a'
+                } else if (target == 'Android_ARM8') {
+                    abiFilters 'arm64-v8a'
+                } else if (target == 'Android_RISCV64') {
+                    abiFilters 'riscv64'
+                } else if (target == 'Android_X86') {
+                    abiFilters 'x86'
+                } else if (target == 'Android_X86_64') {
+                    abiFilters 'x86_64'
+                }
             }
-
-            tasks.register("buildCMake${abi.name}${type.name}${variant.name}", Exec) {
-                dependsOn("configureCMake${abi.name}${type.name}${variant.name}")
-
-                workingDir new File(rootDir.absolutePath, "modules/libraries/box2d-bindings/c")
-                commandLine(
-                        'cmake',
-                        '--build', "build/build-${abi.name}${type.name}${variant.name}",
-                        '--config', 'Release'
-                )
-            }
-        }
-    }
-}
-
-// C/C++ compilation (Box2d| JNI )
-
-tasks.register("nativesJar", Zip) {
-    def deps = []
-    buildTypes.each { type ->
-        flavors.each { variant ->
-            android.each { abi ->
-                deps.add("buildCMake${abi.name}${type.name}${variant.name}")
+            cmake {
+                cFlags "-std=c11"
             }
         }
     }
 
-    dependsOn(deps)
-    def outDir = new File(rootDir, 'lib');
+    externalNativeBuild {
+        cmake {
+            path "${rootDir}/modules/libraries/box2d-bindings/c/CMakeLists.txt"
+        }
+    }
 
-    archiveBaseName.set("${artifact}")
-    destinationDirectory.set(outDir)
+    flavorDimensions += "precision"
 
-    archiveClassifier.set("android")
-    archiveExtension.set('aar')
-
-    from(layout.projectDirectory.file('src/main/AndroidManifest.xml'))
-    buildTypes.each { type ->
-        flavors.each { variant ->
-            android.each { abi ->
-                def dir = new File(rootDir, "modules/libraries/box2d-bindings/c/build/build-${abi.name}${type.name}${variant.name}/natives")
-                println("Include: ${dir}")
-                from(dir) {
-                    into "jni/${abi.abi}"
-                    include "**/*${variant.name}.so"
+    productFlavors {
+        def flavor = findProperty('box2d.jni.flavor')
+        if (!flavor || flavor == 'Dp') {
+            dp {
+                dimension "precision"
+                externalNativeBuild {
+                    cmake {
+                        arguments "-DBOX2D_DOUBLE_PRECISION=ON"
+                    }
+                }
+            }
+        }
+        if (!flavor || flavor == 'Sp') {
+            sp {
+                dimension "precision"
+                externalNativeBuild {
+                    cmake {
+                        arguments "-DBOX2D_DOUBLE_PRECISION=OFF"
+                    }
                 }
             }
         }
     }
-}
 
-tasks.register('buildJNI') {
-    def deps = []
-    buildTypes.each { type ->
-        flavors.each { variant ->
-            android.each { abi ->
-                deps.add("configureCMake${abi.name}${type.name}${variant.name}")
-                deps.add("buildCMake${abi.name}${type.name}${variant.name}")
+    buildTypes {
+        debug {
+            externalNativeBuild {
+                cmake {
+                    arguments "-DTYPE_DEBUG=ON"
+                }
+            }
+        }
+
+        release {
+            minifyEnabled true
+            externalNativeBuild {
+                cmake {
+                    arguments "-DTYPE_DEBUG=OFF"
+                }
             }
         }
     }
 
-    deps.add('nativesJar')
-    dependsOn(deps)
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
 }
