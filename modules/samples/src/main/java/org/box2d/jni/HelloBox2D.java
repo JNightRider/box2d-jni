@@ -89,8 +89,8 @@ public class HelloBox2D {
         for (int i = 0; i < 90; ++i) {
             try (ArenaAlloc arena = allocPush()) {
                 b2World_Step(worldId, timeStep, subStepCount);
-                b2Pos position = b2Body_GetPosition(bodyId, b2Pos.alloc(arena::ncalloc));
-                b2Rot rotation = b2Body_GetRotation(bodyId, b2Rot.alloc(arena::ncalloc));
+                b2Pos position = b2Body_GetPosition(bodyId, b2Pos.calloc(arena));
+                b2Rot rotation = b2Body_GetRotation(bodyId, b2Rot.calloc(arena));
 
                 System.out.printf("%4.2f %4.2f %4.2f\n", position.x(), position.y(), b2Rot_GetAngle(rotation));
             }
