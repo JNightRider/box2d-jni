@@ -1,7 +1,8 @@
 ## Catalog of libraries and plugins used to build and run the Box2d-JNI project
 
 [versions]
-junit4 = "4.13.2"
+junit4      = "4.13.2"
+android-ndk = "29.0.14206865"
 
 [libraries]
 junit4 = { module = "junit:junit", version.ref = "junit4" }
@@ -9,4 +10,5 @@ junit4 = { module = "junit:junit", version.ref = "junit4" }
 [bundles]
 
 [plugins]
-download = { id = "de.undercouch.download", version = "5.7.0" }
+android-library = { id = "com.android.library",    version = "9.3.2" }
+download        = { id = "de.undercouch.download", version = "5.7.0" }
