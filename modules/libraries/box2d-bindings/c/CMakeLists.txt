@@ -43,50 +43,57 @@ include(ExternalProject)
 set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
-    find_library(log-lib log)
 
     message(STATUS "Compiling libffi on Android")
-    
-    set(AUTOTOOLS_HOST "" CACHE STRING "Autotools host triplet")
-    set(CLANG_TRIPLE "" CACHE STRING "Clang triple prefix")
-    set(ANDROID_TOOLCHAIN_BIN "" CACHE STRING "toolchain bin")
 
-    if(NOT ANDROID_TOOLCHAIN_BIN)
-        message(FATAL_ERROR "ANDROID_TOOLCHAIN_BIN not set")
-    endif()
-
-    if(NOT AUTOTOOLS_HOST)
-        message(FATAL_ERROR "AUTOTOOLS_HOST not set")
-    endif()
-
-    if(NOT CLANG_TRIPLE)
-        message(FATAL_ERROR "CLANG_TRIPLE not set")
-    endif()
-
+    # Android NDK toolchain
     set(ANDROID_TOOLCHAIN_BIN
-    ${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin)
+        "${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin")
 
-    set(ANDROID_CC
-        ${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_NATIVE_API_LEVEL}-clang)
+    # Determine target from ABI
+    if(ANDROID_ABI STREQUAL "arm64-v8a")
+        set(CLANG_TRIPLE "aarch64-linux-android")
+        set(AUTOTOOLS_HOST "aarch64-linux-android")
+    elseif(ANDROID_ABI STREQUAL "armeabi-v7a")
+        set(CLANG_TRIPLE "armv7a-linux-androideabi")
+        set(AUTOTOOLS_HOST "arm-linux-androideabi")
+    elseif(ANDROID_ABI STREQUAL "x86")
+        set(CLANG_TRIPLE "i686-linux-android")
+        set(AUTOTOOLS_HOST "i686-linux-android")
+    elseif(ANDROID_ABI STREQUAL "x86_64")
+        set(CLANG_TRIPLE "x86_64-linux-android")
+        set(AUTOTOOLS_HOST "x86_64-linux-android")
+    elseif(ANDROID_ABI STREQUAL "riscv64")
+        set(CLANG_TRIPLE "riscv64-linux-android")
+        set(AUTOTOOLS_HOST "riscv64-linux-android")
+    else()
+        message(FATAL_ERROR
+            "Unsupported Android ABI: ${ANDROID_ABI}"
+        )
+    endif()
 
-    set(ANDROID_CXX
-        ${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_NATIVE_API_LEVEL}-clang++)
 
-    message(STATUS "CC=${CMAKE_C_COMPILER}")
-    message(STATUS "SYSROOT=${CMAKE_SYSROOT}")
-    message(STATUS "SYSROOT=${CMAKE_AR}")
+    set(ANDROID_TOOLCHAIN_BIN "${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin")
+    set(ANDROID_CC "${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_PLATFORM_LEVEL}-clang")
+    set(ANDROID_AR "${ANDROID_TOOLCHAIN_BIN}/llvm-ar")
+    set(ANDROID_RANLIB "${ANDROID_TOOLCHAIN_BIN}/llvm-ranlib")
+
+
+    message(STATUS "ANDROID_ABI=${ANDROID_ABI}")
+    message(STATUS "ANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}")
     message(STATUS "ANDROID_TOOLCHAIN_BIN=${ANDROID_TOOLCHAIN_BIN}")
     message(STATUS "ANDROID_CC=${ANDROID_CC}")
-    message(STATUS "ANDROID_CXX=${ANDROID_CXX}")
+    message(STATUS "ANDROID_AR=${ANDROID_AR}")
+    message(STATUS "ANDROID_RANLIB=${ANDROID_RANLIB}")
 
     ExternalProject_Add(libffi_project
         SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/libffi
         CONFIGURE_COMMAND
             env
             CC=${ANDROID_CC}
-            CXX=${ANDROID_CXX}
-            AR=${CMAKE_AR}
-            RANLIB=${CMAKE_RANLIB}
+            AR=${ANDROID_AR}
+            RANLIB=${ANDROID_RANLIB}
+
             ./configure
             --host=${AUTOTOOLS_HOST}
             --prefix=${LIBFFI_PREFIX}
@@ -94,7 +101,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
             --enable-static
             --disable-docs
             CFLAGS=-fPIC
-        
+
         BUILD_COMMAND make -j
         INSTALL_COMMAND make install
 
