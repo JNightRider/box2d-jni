@@ -171,18 +171,30 @@ public enum b2JointType {
     public static b2JointType valueOf(int type) {
         if (type == b2_distanceJoint.value()) {
             return b2_distanceJoint;
-        } else if (type == b2_filterJoint.value()) {
+        }
+        if (type == b2_filterJoint.value()) {
             return b2_filterJoint;
-        } else if (type == b2_motorJoint.value()) {
+        }
+        if (type == b2_motorJoint.value()) {
             return b2_motorJoint;
-        } else if (type == b2_prismaticJoint.value()) {
+        }
+        if (type == b2_prismaticJoint.value()) {
             return b2_prismaticJoint;
-        } else if (type == b2_revoluteJoint.value()) {
+        }
+        if (type == b2_revoluteJoint.value()) {
             return b2_revoluteJoint;
-        } else if (type == b2_weldJoint.value()) {
+        }
+        if (type == b2_weldJoint.value()) {
             return b2_weldJoint;
-        } else if (type == b2_wheelJoint.value()) {
+        }
+        if (type == b2_wheelJoint.value()) {
             return b2_wheelJoint;
+        }
+        if (type == b2_moverJoint.value()) {
+            return b2_moverJoint;
+        }
+        if (type == b2_pogoJoint.value()) {
+            return b2_pogoJoint;
         }
         throw new UnsupportedOperationException("enum: " + type);
     }
