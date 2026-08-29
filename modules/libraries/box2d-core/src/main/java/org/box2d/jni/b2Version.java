@@ -42,10 +42,10 @@ import static org.box2d.jni.system.VarType.*;
  * {
  * 	/// Significant changes
  * 	int major;
-
+ *
  * 	/// Incremental changes
  * 	int minor;
-
+ *
  * 	/// Bug fixes
  * 	int revision;
  * } b2Version;
