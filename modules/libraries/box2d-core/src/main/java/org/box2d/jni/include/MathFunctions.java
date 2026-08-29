@@ -96,7 +96,6 @@ public final class MathFunctions {
                 b2Rot.calloc(arena).set(1.0f, 0.0f)
             );
         }
-        b2OffsetWorldTransform(b2WorldTransform_identity, b2Transform_identity, b2WorldTransform_identity);
     }
 
     // --- [ b2IsValidFloat ] ---
@@ -1481,26 +1480,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Transform b2InvMulWorldTransforms( b2WorldTransform A, b2WorldTransform B )} */
     public static native void nb2InvMulWorldTransforms(long A, long B, long __result);
-
-    // --- [ b2OffsetWorldTransform ] ---
-
-    /**
-     * {@code B2_INLINE b2WorldTransform b2OffsetWorldTransform( b2WorldTransform A, b2Transform B ); }
-     *
-     * @param A b2WorldTransform
-     * @param B b2Transform
-     * @param __result store
-     *
-     * @return b2WorldTransform
-     * 
-     * @deprecated This function will be removed soon, so please use function {@link #b2MulWorldTransforms(b2WorldTransform, b2Transform, b2WorldTransform) b2MulWorldTransforms } instead.
-     */
-    @Deprecated(since = "1.3.0")
-    public static b2WorldTransform b2OffsetWorldTransform(b2WorldTransform A, b2Transform B, b2WorldTransform __result) {
-        checkPointers(A, B, __result);
-        nb2MulWorldTransforms(A.address(), B.address(), __result.address());
-        return __result;
-    }
 
     // --- [ b2MulWorldTransforms ] ---
 
