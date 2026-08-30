@@ -36,22 +36,28 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.box2d.jni.BuildSrc;
 
 import org.gradle.api.Project;
 
 /**
+ * A class responsible for generating the {@code local.properties'} file for
+ * Android; this is useful if environment variables have not been configured.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.3.0
  */
 public final class LocalProperties {
+    /** Class logger. */
+    private static final Logger LOGGER = Logger.getLogger(LocalProperties.class.getName());
 
-    private static final System.Logger LOG = System.getLogger(LocalProperties.class.getName());
-    
+    /** Name file. */
     private static final String LOCAL_PROPERTIES_NAME = "local.properties";
+    /** android skd (path) */
     private static final String ANDROID_HOME;
     
     static {
@@ -77,15 +83,22 @@ public final class LocalProperties {
         ANDROID_HOME = sdk;        
     }
 
-    public static void checkLocalProperties(Project project, File rootDir) {
+    /**
+     * Check if the {@code box2d.jni.android.check} option is enabled in order
+     * to generate the properties file for Android.
+     *
+     * @param project Project (module)
+     */
+    public static void checkLocalProperties(Project project) {
         Object check = project.findProperty("box2d.jni.android.check");
+        File rootDir = project.getRootDir();
         if (check == null || rootDir == null) {
-            LOG.log(System.Logger.Level.INFO, "Android SDK search disabled");
+            LOGGER.log(Level.INFO, "Android SDK search disabled");
             return;
         }
 
         if (!rootDir.exists() || !rootDir.isDirectory()) {
-            LOG.log(System.Logger.Level.WARNING, () -> "The project root directory is invalid: rootDir=" + rootDir);
+            LOGGER.log(Level.WARNING, () -> "The project root directory is invalid: rootDir=" + rootDir);
             return;
         }
 
@@ -99,6 +112,11 @@ public final class LocalProperties {
         }
     }
 
+    /**
+     * Print the contents of the {@code local.properties} file.
+     *
+     * @param file File
+     */
     private static void printLocalProperties(File file) {
         try (InputStream in = new FileInputStream(file)) {
             Properties properties = new Properties();
@@ -108,6 +126,11 @@ public final class LocalProperties {
         } catch (Exception ex) { /* ignore */ }
     }
 
+    /**
+     * Create the properties file for Android.
+     *
+     * @param file File
+     */
     private static void createLocalProperties(File file) {
         Properties properties = new Properties();
         properties.put("sdk.dir", ANDROID_HOME);
@@ -127,7 +150,7 @@ public final class LocalProperties {
 """
             );
         } catch (Exception e) {
-            LOG.log(System.Logger.Level.WARNING, "Error creating the properties file of ANDROID_HOME");
+            LOGGER.log(Level.WARNING, "Error creating the properties file of ANDROID_HOME");
         }
     }
 }
