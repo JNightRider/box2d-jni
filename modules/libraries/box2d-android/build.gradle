@@ -1,3 +1,4 @@
+import org.box2d.jni.BuildSrc
 import org.box2d.jni.android.LocalProperties
 
 plugins {
@@ -42,6 +43,7 @@ android {
             }
             cmake {
                 cFlags "-std=c11"
+                arguments "-DBINDINGS_ANDROID_HOME=${BuildSrc.getToolchainDir()}"
             }
         }
     }
@@ -112,14 +114,10 @@ afterEvaluate {
     tasks.matching {
         it.name.startsWith("bundle") && it.name.endsWith("Aar")
     }.configureEach { task ->
-
         def variantName = task.name.substring("bundle".length()).replace("Aar", "")
-        def variant = variantName.replaceAll(/([a-z])([A-Z])/, '$1-$2').toLowerCase()
-        if (variant.contains("release")) {
-            variant = variant.substring(0, variant.length() - 8)
-        }
+        def variant = BuildSrc.checkAndroidVariantName(variantName)
 
-        task.archiveFileName.set("box2d-jni-${jjVersion}-android-${variant}.aar")
+        task.archiveFileName.set("box2d-jni-${jjVersion}-android_${variant}.aar")
     }
 }
 

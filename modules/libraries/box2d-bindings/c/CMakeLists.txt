@@ -43,12 +43,24 @@ include(ExternalProject)
 set(LIBFFI_PREFIX ${CMAKE_BINARY_DIR}/extern/libffi)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
-
     message(STATUS "Compiling libffi on Android")
+    # Native library suffix
+    if(BOX2D_DOUBLE_PRECISION)
+        set(BINDINGS_SUFFIX "_${CMAKE_BUILD_TYPE}Dp")
+    else()
+        set(BINDINGS_SUFFIX "_${CMAKE_BUILD_TYPE}Sp")
+    endif()
+
+    message(STATUS "BOX2D_DOUBLE_PRECISION=${BOX2D_DOUBLE_PRECISION}")
+    message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+    message(STATUS "BINDINGS_SUFFIX=${BINDINGS_SUFFIX}")
 
     # Android NDK toolchain
+    if(NOT BINDINGS_ANDROID_HOME)
+        message(FATAL_ERROR "ANDROID_TOOLCHAIN_BIN not set")
+    endif()
     set(ANDROID_TOOLCHAIN_BIN
-        "${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin")
+        "${ANDROID_NDK}/toolchains/llvm/prebuilt/${BINDINGS_ANDROID_HOME}/bin")
 
     # Determine target from ABI
     if(ANDROID_ABI STREQUAL "arm64-v8a")
