@@ -89,7 +89,7 @@ public final class LocalProperties {
             return;
         }
 
-        if (BuildSrc.checkBool("true")) {
+        if (BuildSrc.checkBool(check)) {
             File file = new File(rootDir, LOCAL_PROPERTIES_NAME);
             if (! file.exists()) {
                 createLocalProperties(file);
