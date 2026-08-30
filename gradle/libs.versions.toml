@@ -2,7 +2,6 @@
 
 [versions]
 junit4      = "4.13.2"
-android-ndk = "29.0.14206865"
 
 [libraries]
 junit4 = { module = "junit:junit", version.ref = "junit4" }
