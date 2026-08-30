@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    //id 'java-gradle-plugin'
 }
 
 description = 'box2d-jni build'
