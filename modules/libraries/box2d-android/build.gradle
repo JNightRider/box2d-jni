@@ -1,6 +1,9 @@
+import org.box2d.jni.android.LocalProperties
+
 plugins {
     alias(libs.plugins.android.library) // to build Android libraries
 }
+LocalProperties.checkLocalProperties(project, rootDir)
 
 description = 'box2d-jni android'
 

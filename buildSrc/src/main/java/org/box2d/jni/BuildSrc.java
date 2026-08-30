@@ -31,17 +31,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import java.util.Base64;
-import org.box2d.jni.android.AndroidAbi;
 
 /**
  * Utility methods used in Gradle builds.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public final class BuildSrc {
 
+    public static final boolean checkBool(Object value) {
+        if (value == null)
+            return false;
+        
+        if (value instanceof Boolean) {
+            return (boolean)value;
+        }
+        return Boolean.parseBoolean(String.valueOf(value));
+    }
+    
     /**
      * Generates the list of build types to be executed based on user
      * configurations; by default, it returns all default options, unless a
@@ -79,65 +88,6 @@ public final class BuildSrc {
         return new Flavor[]{
             Flavor.valueOf(String.valueOf(type))
         };
-    }
-
-    /**
-     * Generates the Android ABIs; by default, it returns all default options,
-     * unless a specific one is specified.
-     *
-     * @see AndroidAbi
-     *
-     * @param type abi name
-     * @return {@code AndroidAbi[]}
-     */
-    public static AndroidAbi[] makeAndroidAbi(Object type) {
-        if (type == null) {
-            return AndroidAbi.values();
-        }
-        for (var abi : AndroidAbi.values()) {
-            if (abi.getName().equals(String.valueOf(type))) {
-                return new AndroidAbi[]{
-                    abi
-                };
-            }
-        }
-        return AndroidAbi.values();
-    }
-
-    /**
-     * Generates the toolchain path for compiling native Android objects; this
-     * locates the binaries for each ABI within the NDK path.
-     *
-     * @param ndkhome NDK path
-     * @param abi the abi
-     * @return String
-     */
-    public static String makeToolchainBin(Object ndkhome, AndroidAbi abi) {
-        Platform platform = Platform.get();
-        StringBuilder sb = new StringBuilder();
-        sb.append(ndkhome)
-                .append("/toolchains/llvm/prebuilt");
-
-        if (null == platform) {
-            sb.append("/linux-x86_64");
-        } else {
-            switch (platform) {
-                case WINDOWS ->
-                    sb.append("/windows-x86_64");
-                case MACOSX -> {
-                    if (Platform.getArchitecture() == Platform.Architecture.ARM64) {
-                        sb.append("/darwin-arm64");
-                    } else {
-                        sb.append("/darwin-x86_64");
-                    }
-                }
-                default ->
-                    sb.append("/linux-x86_64");
-            }
-        }
-
-        sb.append("/bin");
-        return String.valueOf(sb);
     }
 
     /**
