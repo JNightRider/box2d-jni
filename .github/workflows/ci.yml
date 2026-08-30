@@ -18,25 +18,12 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 21
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            cmake \
-            autoconf \
-            automake \
-            libtool \
-            texinfo \
-            build-essential
 
       - uses: gradle/actions/setup-gradle@v6
       - name: Verify toolchain
         run: |
           java -version
           echo "JAVA_HOME=$JAVA_HOME"
-          gcc --version
-          cmake --version
-          pkg-config --modversion libffi
 
       - name: gradlew test
         env:

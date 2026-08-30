@@ -25,6 +25,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = libraryVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         externalNativeBuild {
             ndk {
@@ -141,4 +142,13 @@ tasks.named("preBuild") {
             ':modules:libraries:box2d-bindings:unpackLibffiSource',
             ':modules:libraries:box2d-core:classes'
     )
+}
+
+dependencies {
+    testImplementation libs.junit4
+
+    androidTestImplementation libs.android.ext.junit
+    androidTestImplementation libs.android.test.runner
+    androidTestImplementation libs.android.test.rules
+    androidTestImplementation libs.android.espresso.core
 }
