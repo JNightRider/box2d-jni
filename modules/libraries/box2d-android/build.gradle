@@ -6,6 +6,7 @@ description = 'box2d-jni android'
 
 ext {
     baseName = "${artifact}" // for artifacts
+    libraryVersion = "${jjVersion}"
     groupID = 'io.github.jnightrider'
 }
 
@@ -17,7 +18,7 @@ android {
         minSdk = 35
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = libraryVersion
 
         externalNativeBuild {
             ndk {
@@ -75,19 +76,24 @@ android {
     }
 
     buildTypes {
-        debug {
-            externalNativeBuild {
-                cmake {
-                    arguments "-DTYPE_DEBUG=ON"
+        def bt = findProperty('box2d.jni.bt')
+        if (!bt || bt == 'Debug') {
+            debug {
+                externalNativeBuild {
+                    cmake {
+                        arguments "-DTYPE_DEBUG=ON"
+                    }
                 }
             }
         }
 
-        release {
-            minifyEnabled true
-            externalNativeBuild {
-                cmake {
-                    arguments "-DTYPE_DEBUG=OFF"
+        if (!bt || bt == 'Release') {
+            release {
+                minifyEnabled true
+                externalNativeBuild {
+                    cmake {
+                        arguments "-DTYPE_DEBUG=OFF"
+                    }
                 }
             }
         }
@@ -99,6 +105,37 @@ android {
     }
 }
 
-dependencies {
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith("bundle") && it.name.endsWith("Aar")
+    }.configureEach { task ->
 
+        def variantName = task.name.substring("bundle".length()).replace("Aar", "")
+        def variant = variantName.replaceAll(/([a-z])([A-Z])/, '$1-$2').toLowerCase()
+        if (variant.contains("release")) {
+            variant = variant.substring(0, variant.length() - 8)
+        }
+
+        task.archiveFileName.set("box2d-jni-${jjVersion}-android-${variant}.aar")
+    }
+}
+
+tasks.register("copyAars", Copy) {
+    from(layout.buildDirectory.dir("outputs/aar"))
+    exclude("box2d-jni-${jjVersion}-android-.aar")
+    into("${rootDir}/lib")
+}
+
+tasks.configureEach { task ->
+    if (task.name.startsWith("bundle") && task.name.endsWith("Aar")) {
+        task.finalizedBy("copyAars")
+    }
+}
+
+tasks.named("preBuild") {
+    dependsOn(
+            ':modules:libraries:box2d-bindings:unpackBox2dSource',
+            ':modules:libraries:box2d-bindings:unpackLibffiSource',
+            ':modules:libraries:box2d-core:classes'
+    )
 }

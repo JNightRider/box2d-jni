@@ -161,13 +161,6 @@ tasks.register('buildJNI') {
         }
     }
 
-    def android = findProperty("box2d.jni.android")
-    if (android && Boolean.valueOf(android.toString())) {
-        deps.add(':modules:libraries:box2d-android:buildJNI')
-    } else {
-        println('Skip native compilation for Android...')
-    }
-
     deps.add('nativesJar')
     dependsOn(deps)
 }
