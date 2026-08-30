@@ -9,6 +9,72 @@ on:
   workflow_dispatch:
 
 jobs:
+  Android:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            autoconf \
+            automake \
+            libtool \
+            texinfo \
+            build-essential
+
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Verify toolchain
+        run: |
+          java -version
+          echo "JAVA_HOME=$JAVA_HOME"
+          gcc --version
+          cmake --version
+          pkg-config --modversion libffi
+
+      - name: gradlew test
+        env:
+          JAVA_TOOL_OPTIONS: >-
+            -DBOX2D_JNI_NDEBUG=true
+            -Dorg.box2d.jni.system.Debug.Color=true
+        run: |
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Sp clean test
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-linux
+          path: |
+            modules/libraries/box2d-core/build/reports/tests/test
+          if-no-files-found: ignore
+      - name: box2d test - [Sp, Dp]
+        run: |
+          for DP in false true; do
+            echo "Running with BOX2D_JNI_DOUBLE_PRECISION=$DP"
+
+            ./gradlew :modules:libraries:box2d-core:run \
+              -Pbox2d.jni.bt=Debug \
+              -Pbox2d.jni.android=ture \
+              -Pbox2d.jni.desktop=false \
+              -DBOX2D_JNI_NDEBUG=true \
+              -DBOX2D_JNI_DOUBLE_PRECISION=$DP \
+              -DBOX2D_NDEBUG=true \
+              -Dorg.box2d.jni.system.Debug.Color=true \
+              -Dorg.box2d.jni.system.Debugs=true
+          done
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-box2d
+          path: |
+            modules/libraries/box2d-core/build/reports/tests/test
+          if-no-files-found: ignore
+
   Java21-Linux64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: ubuntu-22.04
