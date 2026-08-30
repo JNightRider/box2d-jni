@@ -44,35 +44,13 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Sp clean test
+          ./gradlew connectedAndroidTest
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: test-report-linux
+          name: test-report-android
           path: |
-            modules/libraries/box2d-core/build/reports/tests/test
-          if-no-files-found: ignore
-      - name: box2d test - [Sp, Dp]
-        run: |
-          for DP in false true; do
-            echo "Running with BOX2D_JNI_DOUBLE_PRECISION=$DP"
-
-            ./gradlew :modules:libraries:box2d-core:run \
-              -Pbox2d.jni.bt=Debug \
-              -Pbox2d.jni.android=ture \
-              -Pbox2d.jni.desktop=false \
-              -DBOX2D_JNI_NDEBUG=true \
-              -DBOX2D_JNI_DOUBLE_PRECISION=$DP \
-              -DBOX2D_NDEBUG=true \
-              -Dorg.box2d.jni.system.Debug.Color=true \
-              -Dorg.box2d.jni.system.Debugs=true
-          done
-      - if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: test-report-box2d
-          path: |
-            modules/libraries/box2d-core/build/reports/tests/test
+            modules/libraries/box2d-android/build/reports/androidTests
           if-no-files-found: ignore
 
   Java21-Linux64:
