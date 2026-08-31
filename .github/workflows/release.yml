@@ -6,6 +6,7 @@
 #  push:
 #    tags:
 #      - '*'
+
 name: CI at GitHub
 on:
   push:
