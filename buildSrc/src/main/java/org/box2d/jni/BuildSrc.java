@@ -76,7 +76,7 @@ public final class BuildSrc {
         if (BuildType.Release.getName().equalsIgnoreCase(type)) {
             return toCharsUpperCase(variant[0], 1);
         }
-        return toCharsUpperCase(variant[0], 1) + toCharsUpperCase(variant[1], 1);
+        return toCharsUpperCase(variant[1], 1) + toCharsUpperCase(variant[0], 1);
     }
 
     /**

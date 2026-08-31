@@ -1,13 +1,54 @@
 ---
 # GitHub Actions workflow for box2d-jni tags (all branches - deployment)
 
-name: CD at GitHub
+#name: CD at GitHub
+#on:
+#  push:
+#    tags:
+#      - '*'
+name: CI at GitHub
 on:
   push:
-    tags:
-      - '*'
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
 
 jobs:
+  Java21-Android:
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Verify toolchain
+        run: |
+          java -version
+          echo "JAVA_HOME=$JAVA_HOME"
+
+      - name: gradlew build
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false build \
+            -x test --console=plain
+      - name: Upload jars        
+        uses: actions/upload-artifact@v7
+        with:
+          name: box2d-jni-android
+          path: |
+            lib/*.aar
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-android
+          path: |
+            modules/libraries/box2d-android/build/reports/androidTests
+          if-no-files-found: ignore
+
   Java21-Linux64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: ubuntu-22.04
@@ -40,7 +81,7 @@ jobs:
       - name: gradlew build
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=true build \
+          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             -x test --console=plain
       - name: Upload jars        
         uses: actions/upload-artifact@v7
@@ -48,7 +89,6 @@ jobs:
           name: box2d-jni-linux_x64
           path: |
             lib/*.jar
-            lib/*.aar
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
@@ -317,6 +357,7 @@ jobs:
   publish:
     if: startsWith(github.ref, 'refs/tags/')
     needs:
+      - Java21-Android
       - Java21-Linux64
       - Java21-Linux_ARM64
       - Java21-Windows64
@@ -326,6 +367,18 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v7
+
+      # include: lib | Android
+      - name: Download Android artifacts       
+        uses: actions/download-artifact@v7
+        with:
+          name: box2d-jni-android
+          path: lib
+      - name: Download Android
+        uses: actions/download-artifact@v7
+        with:
+          name: box2d-jni-android
+          path: lib
 
       # include: lib | Linux
       - name: Download Linux x64 | Android artifacts       
@@ -371,18 +424,18 @@ jobs:
       - name: Show artifacts
         run: |
           ls -lah lib
-      - uses: actions/setup-java@v5
-        with:
-          distribution: zulu
-          java-version: 21
-      - uses: gradle/actions/setup-gradle@v6
-      - name: Publish to Maven Central
-        env:
-          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
-          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
-          JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PASSWORD }}
-        run: |
-          ./gradlew publish --console=plain
-          ./gradlew jreleaserFullRelease --console=plain
+#      - uses: actions/setup-java@v5
+#        with:
+#          distribution: zulu
+#          java-version: 21
+#      - uses: gradle/actions/setup-gradle@v6
+#      - name: Publish to Maven Central
+#        env:
+#          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+#          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
+#          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+#          JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+#          JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PASSWORD }}
+#        run: |
+#          ./gradlew publish --console=plain
+#          ./gradlew jreleaserFullRelease --console=plain
