@@ -25,7 +25,7 @@ jobs:
           java -version
           echo "JAVA_HOME=$JAVA_HOME"
 
-      - name: Android tests
+      - name: Android tests [Sp, Dp]
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -34,12 +34,10 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            ./gradlew \
-              -Pbox2d.jni.bt=Debug \
-              -Pbox2d.jni.android=true \
-              -Pbox2d.jni.desktop=false \
-              -Pbox2d.jni.flavor=Sp \
-              connectedAndroidTest
+            for FLAVOR in Sp Dp; do
+                echo "Running Box2D $FLAVOR"
+                ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=$FLAVOR -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
+            done
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
