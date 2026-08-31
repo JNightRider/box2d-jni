@@ -145,6 +145,10 @@ tasks.named("preBuild") {
 }
 
 dependencies {
+    androidTestImplementation project(':modules:libraries:box2d-core')
+    androidTestImplementation project(':modules:libraries:box2d-bindings')
+    androidTestImplementation fileTree(dir: "${rootDir}/lib", include: ['*.aar'])
+
     testImplementation libs.junit4
 
     androidTestImplementation libs.android.ext.junit
