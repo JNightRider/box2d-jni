@@ -24,11 +24,16 @@ jobs:
         run: |
           java -version
           echo "JAVA_HOME=$JAVA_HOME"
+      - name: Enable KVM
+        run: |
+          sudo usermod -aG kvm $USER
+          sudo chmod 666 /dev/kvm
       - name: Check KVM
         run: |
-          ls -l /dev/kvm || true
-          groups
-          id
+          ls -l /dev/kvm
+          test -r /dev/kvm && echo "KVM readable"
+          test -w /dev/kvm && echo "KVM writable"
+
 #      - name: Android tests [Sp, Dp]
 #        uses: reactivecircus/android-emulator-runner@v2
 #        with:
