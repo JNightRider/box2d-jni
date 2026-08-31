@@ -31,13 +31,14 @@ jobs:
           api-level: 35
           arch: x86_64
           target: google_apis
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-metrics
           disable-animations: true
           script: |
-            for FLAVOR in Sp Dp; do
-                echo "Running Box2D $FLAVOR"
-                ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=$FLAVOR -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
-            done
+            echo "Running Box2D Sp"
+            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Sp -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
+
+            echo "Running Box2D Dp"
+            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Dp -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
