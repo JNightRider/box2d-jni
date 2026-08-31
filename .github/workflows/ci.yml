@@ -24,28 +24,32 @@ jobs:
         run: |
           java -version
           echo "JAVA_HOME=$JAVA_HOME"
-
-      - name: Android tests [Sp, Dp]
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          arch: x86_64
-          target: google_apis
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-metrics
-          disable-animations: true
-          script: |
-            echo "Running Box2D Sp"
-            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Sp -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
-
-            echo "Running Box2D Dp"
-            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Dp -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
-      - if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: test-report-android
-          path: |
-            modules/libraries/box2d-android/build/reports/androidTests
-          if-no-files-found: ignore
+      - name: Check KVM
+        run: |
+          ls -l /dev/kvm || true
+          groups
+          id
+#      - name: Android tests [Sp, Dp]
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 35
+#          arch: x86_64
+#          target: google_apis
+#          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-metrics
+#          disable-animations: true
+#          script: |
+#            echo "Running Box2D Sp"
+#            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Sp -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
+#
+#            echo "Running Box2D Dp"
+#            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Dp -Pbox2d.jni.android.target=Android_X86_64 connectedAndroidTest
+#      - if: failure()
+#        uses: actions/upload-artifact@v7
+#        with:
+#          name: test-report-android
+#          path: |
+#            modules/libraries/box2d-android/build/reports/androidTests
+#          if-no-files-found: ignore
 
   Java21-Linux64:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
