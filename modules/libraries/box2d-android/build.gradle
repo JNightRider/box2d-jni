@@ -111,6 +111,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 afterEvaluate {
@@ -138,16 +142,14 @@ tasks.configureEach { task ->
 
 tasks.named("preBuild") {
     dependsOn(
-            ':modules:libraries:box2d-bindings:unpackBox2dSource',
-            ':modules:libraries:box2d-bindings:unpackLibffiSource',
-            ':modules:libraries:box2d-core:classes'
+        ':modules:libraries:box2d-bindings:unpackBox2dSource',
+        ':modules:libraries:box2d-bindings:unpackLibffiSource',
+        ':modules:libraries:box2d-core:classes'
     )
 }
 
 dependencies {
     androidTestImplementation project(':modules:libraries:box2d-core')
-    androidTestImplementation project(':modules:libraries:box2d-bindings')
-    androidTestImplementation fileTree(dir: "${rootDir}/lib", include: ['*.aar'])
 
     testImplementation libs.junit4
 

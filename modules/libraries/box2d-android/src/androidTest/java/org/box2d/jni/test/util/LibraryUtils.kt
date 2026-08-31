@@ -28,39 +28,35 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.test
+package org.box2d.jni.test.util
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.jnightrider.box2djni.test.BuildConfig
 
-import org.box2d.jni.system.Library
-import org.box2d.jni.test.util.LibraryUtils
-
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.box2d.jni.system.Debug
+import org.box2d.jni.system.Sys
 
 /**
- * A class to manage the unit tests of the {@link Library} class.
+ * A utility class responsible for configuring the library based on the Android {@code BuildConfig}
  *
  * @author wil
  * @version 1.0.0
  * @since 1.3.0
  */
-@RunWith(AndroidJUnit4::class)
-class LibraryTest {
+class LibraryUtils {
+    companion object {
+        fun setupLibrary() {
+            val flavor = BuildConfig.FLAVOR
+            Debug.apiPrint("Android META-INF:")
+            Debug.apiLogMore("Flavor: $flavor")
 
-    /**
-     * Initialize all tests.
-     */
-    @Before fun setUp() {
-        LibraryUtils.setupLibrary()
-    }
+            if ("dp".equals(flavor, ignoreCase = true)) {
+                Sys.BOX2D_DOUBLE_PRECISION.set(true)
+            } else {
+                Sys.BOX2D_DOUBLE_PRECISION.set(false)
+            }
 
-    /**
-     * Run all tests.
-     */
-    @Test
-    fun runTest() {
-        Library.initialize()
+            Debug.apiLogMore("Build type: ${BuildConfig.BUILD_TYPE}")
+            Sys.BOX2D_NDEBUG.set(BuildConfig.DEBUG)
+        }
     }
 }
