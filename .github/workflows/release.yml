@@ -1,18 +1,11 @@
 ---
 # GitHub Actions workflow for box2d-jni tags (all branches - deployment)
 
-#name: CD at GitHub
-#on:
-#  push:
-#    tags:
-#      - '*'
-
-name: CI at GitHub
+name: CD at GitHub
 on:
   push:
-    branches: ['**']
-  pull_request:
-  workflow_dispatch:
+    tags:
+      - '*'
 
 jobs:
   Java21-Android:
@@ -32,7 +25,7 @@ jobs:
           echo "JAVA_HOME=$JAVA_HOME"
 
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false build \
             -x test --console=plain
@@ -80,7 +73,7 @@ jobs:
           pkg-config --modversion libffi
       
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             -x test --console=plain
@@ -126,7 +119,7 @@ jobs:
           cmake --version
           pkg-config --modversion libffi
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             -x test --console=plain
@@ -176,7 +169,7 @@ jobs:
           pkg-config --version
           pkg-config --modversion libffi
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
@@ -234,7 +227,7 @@ jobs:
           uname -m
       - uses: gradle/actions/setup-gradle@v6
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             export PATH=/clangarm64/bin:/usr/bin:/bin
@@ -288,7 +281,7 @@ jobs:
           pkg-config --version
           pkg-config --modversion libffi
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             -x test --console=plain
@@ -337,7 +330,7 @@ jobs:
         with:
           xcode-version: '26.5.0'
       - name: gradlew build
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
             -x test --console=plain
@@ -356,7 +349,7 @@ jobs:
           if-no-files-found: ignore
 
   publish:
-#    if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
     needs:
       - Java21-Android
       - Java21-Linux64
@@ -425,18 +418,18 @@ jobs:
       - name: Show artifacts
         run: |
           ls -lah lib
-#      - uses: actions/setup-java@v5
-#        with:
-#          distribution: zulu
-#          java-version: 21
-#      - uses: gradle/actions/setup-gradle@v6
-#      - name: Publish to Maven Central
-#        env:
-#          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
-#          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
-#          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-#          JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
-#          JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PASSWORD }}
-#        run: |
-#          ./gradlew publish --console=plain
-#          ./gradlew jreleaserFullRelease --console=plain
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Publish to Maven Central
+        env:
+          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PASSWORD }}
+        run: |
+          ./gradlew publish --console=plain
+          ./gradlew jreleaserFullRelease --console=plain
