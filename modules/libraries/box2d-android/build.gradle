@@ -129,8 +129,14 @@ afterEvaluate {
 }
 
 tasks.register("copyAars", Copy) {
+    def bt = findProperty('box2d.jni.bt')
+    def ex = ["box2d-jni-${jjVersion}-android-.aar"]
+    if (bt && bt == "Release") {
+        ex.add("*Debug*")
+    }
+
     from(layout.buildDirectory.dir("outputs/aar"))
-    exclude("box2d-jni-${jjVersion}-android-.aar")
+    exclude(ex)
     into("${rootDir}/lib")
 }
 
