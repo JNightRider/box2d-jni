@@ -52,7 +52,8 @@ import org.box2d.jni.test.TestMacros.RUN_SUBTEST
  */
 class TestCollision {
 
-    fun AABBTest(): Int {
+    fun AABBTest(): Int
+    {
         val a = b2AABB.malloc()
         a.lowerBound(b2Vec2.malloc().set(-1.0f, -1.0f))
         a.upperBound(b2Vec2.malloc().set(-2.0f, -2.0f))

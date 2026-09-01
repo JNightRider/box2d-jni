@@ -426,7 +426,8 @@ class TestDynamicTree {
         return 0
     }
 
-    fun TreeGridHeightTest(): Int {
+    fun TreeGridHeightTest(): Int 
+    {
         val tree = b2DynamicTree_Create(16, b2DynamicTree.malloc())
 
         val columnCount = 20

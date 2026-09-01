@@ -247,6 +247,6 @@ if (B2_SHORT_EDGE_CAST_REPRO) {
 }
         RUN_SUBTEST( ::TimeOfImpactTest )
 
-        return 0;
+        return 0
     }
 }

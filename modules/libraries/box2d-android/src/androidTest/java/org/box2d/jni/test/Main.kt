@@ -65,9 +65,9 @@ class Main {
     private val DistanceTest: KFunction<Int> = TestDistance()::DistanceTest
     private val DynamicTreeTest: KFunction<Int> = TestDynamicTree()::DynamicTreeTest
     private val IdTest: KFunction<Int> = TestId()::IdTest
-    //private val MathTest: KFunction<Int> = TestId()::IdTest
-    //private val ShapeTest: KFunction<Int> = TestId()::IdTest
-    //private val WorldTest: KFunction<Int> = TestId()::IdTest
+    private val MathTest: KFunction<Int> = TestMath()::MathTest
+    private val ShapeTest: KFunction<Int> = TestShape()::ShapeTest
+    private val WorldTest: KFunction<Int> = TestWorld()::WorldTest
 
     @Test fun main() {
         val args = InstrumentationRegistry.getArguments()
@@ -85,13 +85,13 @@ class Main {
 
         System.out.printf("======================================\n")
 
-        //TestMacros.MAYBE_RUN_TEST(Main.MathTest)
+        MAYBE_RUN_TEST(MathTest)
         MAYBE_RUN_TEST(CollisionTest)
         MAYBE_RUN_TEST(DistanceTest)
         MAYBE_RUN_TEST(DynamicTreeTest)
         MAYBE_RUN_TEST(IdTest)
-        //TestMacros.MAYBE_RUN_TEST(Main.ShapeTest)
-        //TestMacros.MAYBE_RUN_TEST(Main.WorldTest)
+        MAYBE_RUN_TEST(ShapeTest)
+        MAYBE_RUN_TEST(WorldTest)
 
         System.out.printf("======================================\n")
         System.out.printf("All Box2D tests passed!\n")

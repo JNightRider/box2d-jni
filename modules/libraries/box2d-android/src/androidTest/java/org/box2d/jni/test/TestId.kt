@@ -46,6 +46,7 @@ import org.box2d.jni.test.TestMacros.ENSURE
  * @since 1.3.0
  */
 class TestId {
+
     fun IdTest(): Int
     {
         val a = 0x01234567
