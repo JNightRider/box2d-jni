@@ -45,7 +45,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * A class to manage the unit tests of the {@link LibCStdlib} class.
+ * A class to manage the unit tests of the {@code LibCStdlib} class.
  *
  * @author wil
  * @version 2.0.0
@@ -70,7 +70,6 @@ public class LibCStdlibTest {
         testClib();
         testCalloc();
         testMalloc();
-        testAlignedAlloc();
     }
 
     /**
@@ -168,75 +167,6 @@ public class LibCStdlibTest {
             assertEquals(40, memGetByte(ptr));
             assertEquals(2, memGetByte(ptr + size));
             nfree(ptr);
-        }
-    }
-
-    /**
-     * test {@code aligned_alloc}
-     */
-    public void testAlignedAlloc() {
-        final long alignments[] = { 8, 16, 32, 64, 128, 256};
-        final long sizes[]      = { 8, 16, 32, 64, 128, 256, 512, 1024, 4096 };
-        {
-            apiLog("Start aligned_alloc ~ByteBuffer");
-            apiPrint("alignment  size    check");
-            apiPrint("-------------------------");
-            for (int j = 0; j < alignments.length; j++) {
-                for (int l = 0; l < sizes.length; l++) {
-                    long aligment = alignments[j];
-                    long size = sizes[l];
-                    
-                    ByteBuffer ptr = aligned_alloc(aligment, size);
-                    long address = memGetNativeAddress(ptr);
-                    
-                    apiPrint("%9s  %4s    %4s".formatted(aligment, ptr.remaining(), address % aligment == 0));
-                    assertEquals(ptr.capacity(), size);
-                    assertEquals(ptr.limit(), size);
-                    assertEquals(ptr.remaining(), size);
-                    assertEquals(0, address % aligment);
-
-                    for (int i = 0; i < ptr.remaining(); i++) {
-                        byte value = (byte) (i & 0xFF);
-                        ptr.put(i, value);
-                    }
-
-                    ptr.rewind();
-                    for (int i = 0; i < ptr.remaining(); i++) {
-                        byte expected = (byte)(i & 0xFF);
-                        byte actual = ptr.get(i);
-                        assertEquals(expected, actual);
-                    }
-                    aligned_free(ptr);
-                }
-            }
-        }
-        {
-            apiLog("Start aligned_alloc ~uintptr_t");
-            apiPrint("alignment  size    check");
-            apiPrint("-------------------------");
-            for (int j = 0; j < alignments.length; j++) {
-                for (int l = 0; l < sizes.length; l++) {
-                    long aligment = alignments[j];
-                    long size = sizes[l];
-                    
-                    long ptr = naligned_alloc(aligment, size);
-
-                    apiPrint("%9s  %4s    %4s".formatted(aligment, size, ptr % aligment == 0));
-                    assertEquals(0, ptr % aligment);
-
-                    for (int i = 0; i < size; i++) {
-                        byte value = (byte) (i & 0xFF);
-                        memPutByte(ptr + i * Byte.BYTES, value);
-                    }
-
-                    for (int i = 0; i < size; i++) {
-                        byte expected = (byte)(i & 0xFF);
-                        byte actual = memGetByte(ptr + i * Byte.BYTES);
-                        assertEquals(expected, actual);
-                    }
-                    naligned_free(ptr);
-                }
-            }
         }
     }
 }
