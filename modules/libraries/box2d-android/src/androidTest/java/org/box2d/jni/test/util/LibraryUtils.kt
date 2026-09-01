@@ -28,42 +28,35 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.system;
+package org.box2d.jni.test.util
 
-import org.box2d.jni.include.Base;
+import io.github.jnightrider.box2djni.test.BuildConfig
+
+import org.box2d.jni.system.Debug
+import org.box2d.jni.system.Sys
 
 /**
- * Pointer interface.
- * <p>
- * This interface can be used where there is a need to manage or make a connection
- * to the native code, this interface provides the methods needed to manage it.
- * </p>
- * 
+ * A utility class responsible for configuring the library based on the Android {@code BuildConfig}
+ *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.3.0
  */
-public interface Pointer {
-    
-    /** Alias for the null pointer address. */
-    public static final long NULL = 0L;
-    
-    /** Determine if the 2D motor has started using the {@code BOX2D_DOUBLE_PRECISION} indicator. */
-    final boolean BOX2D_DOUBLE_PRECISION = Base.b2IsDoublePrecision();
-    
-    /** The pointer size in bytes. Will be 4 on a 32bit JVM and 8 on a 64bit one. */
-    int POINTER_SIZE = VarType.Pointer.sizeof();
+class LibraryUtils {
+    companion object {
+        fun setupLibrary() {
+            val flavor = BuildConfig.FLAVOR
+            Debug.apiPrint("Android META-INF:")
+            Debug.apiLogMore("Flavor: $flavor")
 
-    /** Will be true on a 32bit JVM. */
-    boolean BITS32 = POINTER_SIZE * 8 == 32;
+            if ("dp".equals(flavor, ignoreCase = true)) {
+                Sys.BOX2D_DOUBLE_PRECISION.set(true)
+            } else {
+                Sys.BOX2D_DOUBLE_PRECISION.set(false)
+            }
 
-    /** Will be true on a 64bit JVM. */
-    boolean BITS64 = POINTER_SIZE * 8 == 64;
-    
-    /**
-     * Returns the raw pointer address as a {@code long} value.
-     *
-     * @return the pointer address
-     */
-    long address();
+            Debug.apiLogMore("Build type: ${BuildConfig.BUILD_TYPE}")
+            Sys.BOX2D_NDEBUG.set(BuildConfig.DEBUG)
+        }
+    }
 }

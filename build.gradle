@@ -4,12 +4,15 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'            // to build JVM
-    apply plugin: 'java-library'    // to build JVM libraries
-    apply plugin: 'application'     // to build JVM applications
+    def name = project.name
+    if (! name.endsWith("android")) {
+        apply plugin: 'java'            // to build JVM
+        apply plugin: 'java-library'    // to build JVM libraries
+        apply plugin: 'application'     // to build JVM applications
 
-    java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        java {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
     }
 }

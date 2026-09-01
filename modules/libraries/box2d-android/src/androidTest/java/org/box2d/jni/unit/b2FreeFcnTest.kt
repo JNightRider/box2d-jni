@@ -28,42 +28,60 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.system;
+package org.box2d.jni.unit
 
-import org.box2d.jni.include.Base;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+
+import org.box2d.jni.b2FreeFcn
+import org.box2d.jni.b2FreeFcnI
+import org.box2d.jni.system.Callbacks
+import org.box2d.jni.system.JNI
+
+import org.box2d.jni.test.util.LibraryUtils
+
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
- * Pointer interface.
- * <p>
- * This interface can be used where there is a need to manage or make a connection
- * to the native code, this interface provides the methods needed to manage it.
- * </p>
- * 
+ * A class to manage the unit tests of the {@link b2FreeFcn} class.
+ *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.3.0
  */
-public interface Pointer {
-    
-    /** Alias for the null pointer address. */
-    public static final long NULL = 0L;
-    
-    /** Determine if the 2D motor has started using the {@code BOX2D_DOUBLE_PRECISION} indicator. */
-    final boolean BOX2D_DOUBLE_PRECISION = Base.b2IsDoublePrecision();
-    
-    /** The pointer size in bytes. Will be 4 on a 32bit JVM and 8 on a 64bit one. */
-    int POINTER_SIZE = VarType.Pointer.sizeof();
+@RunWith(AndroidJUnit4::class)
+class b2FreeFcnTest {
 
-    /** Will be true on a 32bit JVM. */
-    boolean BITS32 = POINTER_SIZE * 8 == 32;
-
-    /** Will be true on a 64bit JVM. */
-    boolean BITS64 = POINTER_SIZE * 8 == 64;
-    
     /**
-     * Returns the raw pointer address as a {@code long} value.
-     *
-     * @return the pointer address
+     * Initialize all tests.
      */
-    long address();
+    @Before fun setUp() {
+        LibraryUtils.setupLibrary()
+    }
+
+    /**
+     * Run tests {@sample funFuncI}
+     */
+    @Test fun funFuncI() {
+        val func = b2FreeFcnI { mem: Long, size: Long ->
+            Assert.assertEquals(1024L, mem)
+            Assert.assertEquals(6L, size)
+        }
+        JNI.invokeJJV(1024L, 6L, func.address())
+        Callbacks.b2FreeCallbacks()
+    }
+
+    /**
+     * Run tests {@sample funFunc}
+     */
+    @Test fun funFunc() {
+        val func = b2FreeFcn.create(b2FreeFcnI { mem: Long, size: Long ->
+            Assert.assertEquals(1024L, mem)
+            Assert.assertEquals(6L, size)
+        })
+        JNI.invokeJJV(1024L, 6L, func.address())
+        Callbacks.b2FreeCallbacks()
+    }
 }

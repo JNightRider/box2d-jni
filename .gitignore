@@ -52,3 +52,11 @@ modules/libraries/box2d-bindings/c/extern/
 ### box2d-jni ###
 modules/libraries/box2d-bindings/c/include/box2d/
 modules/libraries/box2d-bindings/downloads
+
+### android ###
+.kotlin
+/local.properties
+/build
+/captures
+.externalNativeBuild
+.cxx

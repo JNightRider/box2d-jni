@@ -31,6 +31,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.libc;
 
 import java.nio.ByteBuffer;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
 
 import org.box2d.jni.system.Library;
 
@@ -41,40 +46,180 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * Implementation of C libraries: {@code <stdlib.h>}
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class LibCStdlib {
     static {
         Library.initialize();
     }
-    
+
+    // --- [ calloc ] ---
+
+    /**
+     * {@code void* calloc( size_t num, size_t size ); }
+     *
+     * @param num long
+     * @param size long
+     * @return ByteBuffer
+     */
     public static ByteBuffer calloc(long num, long size) {
-        long ptr = ncalloc(num, size);
-        return memByteBuffer(ptr, (int)size);
+        long __result = ncalloc(num, size);
+        return memByteBuffer(__result, (int)(num * size));
     }
-    
+
+    /* {@code void* calloc( size_t num, size_t size ); } */
     public static native long ncalloc(long num, long size);
-    
+
+    // --- [ malloc ] ---
+
+    /**
+     * {@code void* malloc( size_t size ); }
+     *
+     * @param size long
+     * @return ByteBuffer
+     */
     public static ByteBuffer malloc(long size) {
-        long ptr = nmalloc(size);
-        return memByteBuffer(ptr, (int)size);
+        long __result = nmalloc(size);
+        return memByteBuffer(__result, (int)size);
     }
-    
+
+    /* {@code void* malloc( size_t size ); } */
     public static native long nmalloc(long size);
-    
+
+    // --- [ free ] ---
+
+    /**
+     * {@code void free( void* ptr ); }
+     *
+     * @param buffer ByteBuffer
+     */
     public static void free(ByteBuffer buffer) {
         nfree(memGetNativeAddress(buffer));
     }
-    
-    public static native void nfree(long ptr);
-    
-    public static ByteBuffer aligned_alloc(long alignment, long size) {
-        long ptr = naligned_alloc(alignment, size);
-        return memByteBuffer(ptr, (int)size);
+
+    /**
+     * {@code void free( void* ptr ); }
+     *
+     * @param buffer ShortBuffer
+     */
+    public static void free(ShortBuffer buffer) {
+        nfree(memGetNativeAddress(buffer));
     }
-    
+
+    /**
+     * {@code void free( void* ptr ); }
+     *
+     * @param buffer IntBuffer
+     */
+    public static void free(IntBuffer buffer) {
+        nfree(memGetNativeAddress(buffer));
+    }
+
+    /**
+     * {@code void free( void* ptr ); }
+     *
+     * @param buffer FloatBuffer
+     */
+    public static void free(FloatBuffer buffer) {
+        nfree(memGetNativeAddress(buffer));
+    }
+
+    /**
+     * {@code void free( void* ptr ); }
+     *
+     * @param buffer DoubleBuffer
+     */
+    public static void free(DoubleBuffer buffer) {
+        nfree(memGetNativeAddress(buffer));
+    }
+
+    /**
+     * {@code void free( void* ptr ); }
+     *
+     * @param buffer LongBuffer
+     */
+    public static void free(LongBuffer buffer) {
+        nfree(memGetNativeAddress(buffer));
+    }
+
+    /* {@code void free( void* ptr ); } */
+    public static native void nfree(long ptr);
+
+    // --- [ aligned_alloc ] ---
+
+    /**
+     * {@code void* aligned_alloc( size_t alignment, size_t size ); }
+     *
+     * @param alignment long
+     * @param size long
+     * @return ByteBuffer
+     */
+    public static ByteBuffer aligned_alloc(long alignment, long size) {
+        long __result = naligned_alloc(alignment, size);
+        return memByteBuffer(__result, (int)size);
+    }
+
+    /* {@code void* aligned_alloc( size_t alignment, size_t size ); } */
     public static native long naligned_alloc(long alignment, long size);
-    
+
+    // --- [ aligned_free ] ---
+
+    /**
+     * void aligned_free ( void *memblock );
+     *
+     * @param ptr ByteBuffer
+     */
+    public static void aligned_free(ByteBuffer ptr) {
+        naligned_free(memGetNativeAddress(ptr));
+    }
+
+    /**
+     * void aligned_free ( void *memblock );
+     *
+     * @param ptr ShortBuffer
+     */
+    public static void aligned_free(ShortBuffer ptr) {
+        naligned_free(memGetNativeAddress(ptr));
+    }
+
+    /**
+     * void aligned_free ( void *memblock );
+     *
+     * @param ptr IntBuffer
+     */
+    public static void aligned_free(IntBuffer ptr) {
+        naligned_free(memGetNativeAddress(ptr));
+    }
+
+    /**
+     * void aligned_free ( void *memblock );
+     *
+     * @param ptr FloatBuffer
+     */
+    public static void aligned_free(FloatBuffer ptr) {
+        naligned_free(memGetNativeAddress(ptr));
+    }
+
+    /**
+     * void aligned_free ( void *memblock );
+     *
+     * @param ptr DoubleBuffer
+     */
+
+    public static void aligned_free(DoubleBuffer ptr) {
+        naligned_free(memGetNativeAddress(ptr));
+    }
+
+    /**
+     * void aligned_free ( void *memblock );
+     *
+     * @param ptr LongBuffer
+     */
+    public static void aligned_free(LongBuffer ptr) {
+        naligned_free(memGetNativeAddress(ptr));
+    }
+
+    /* void aligned_free ( void *memblock ); */
     public static native void naligned_free(long ptr);
 }

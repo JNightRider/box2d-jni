@@ -18,8 +18,18 @@ dependencyResolutionManagement {
     }
 }
 
+def androidEnabled =
+        providers.gradleProperty("box2d.jni.android")
+                .map { it.toBoolean() }
+                .orElse(false)
+                .get()
+
 include ':modules:libraries:box2d-core'
 include ':modules:libraries:box2d-bindings'
-include ':modules:libraries:box2d-android'
+
+// Skip android
+if (androidEnabled) {
+    include ':modules:libraries:box2d-android'
+}
 
 include ':modules:samples'
