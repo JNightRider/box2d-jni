@@ -159,6 +159,7 @@ dependencies {
 
     testImplementation libs.junit4
 
+    androidTestImplementation libs.kotlin.reflect
     androidTestImplementation libs.android.ext.junit
     androidTestImplementation libs.android.test.runner
     androidTestImplementation libs.android.test.rules

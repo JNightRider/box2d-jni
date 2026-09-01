@@ -28,38 +28,60 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.test.system
+package org.box2d.jni.test
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.box2d.jni.*
 
-import org.box2d.jni.system.Library
-import org.box2d.jni.test.util.LibraryUtils
-
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.box2d.jni.include.Id.*
+import org.box2d.jni.test.TestMacros.ENSURE
 
 /**
- * A class to manage the unit tests of the {@link Library} class.
+ * A line-by-line Java translation of the box2d 'test/test_id.c' example.
+ *
+ *
+ * Source code: https://github.com/erincatto/box2d/blob/main/test/test_id.c
  *
  * @author wil
  * @version 1.0.0
  * @since 1.3.0
  */
-@RunWith(AndroidJUnit4::class)
-class LibraryTest {
+class TestId {
+    fun IdTest(): Int
+    {
+        val a = 0x01234567
 
-    /**
-     * Initialize all tests.
-     */
-    @Before fun setUp() {
-        LibraryUtils.setupLibrary()
-    }
+        run {
+            val id = b2LoadWorldId(a, b2WorldId.malloc())
+            val b = b2StoreWorldId(id)
+            ENSURE(b == a)
+        }
 
-    /**
-     * Run all tests.
-     */
-    @Test fun runTest() {
-        Library.initialize()
+        val x = 0x0123456789ABCDEFL
+
+        run {
+            val id = b2LoadBodyId(x, b2BodyId.malloc())
+            val y = b2StoreBodyId(id)
+            ENSURE(x == y)
+        }
+
+        run {
+            val id = b2LoadShapeId(x, b2ShapeId.malloc())
+            val y = b2StoreShapeId(id)
+            ENSURE(x == y)
+        }
+
+        run {
+            val id = b2LoadChainId(x, b2ChainId.malloc())
+            val y = b2StoreChainId(id)
+            ENSURE(x == y)
+        }
+
+        run {
+            val id = b2LoadJointId(x, b2JointId.malloc())
+            val y = b2StoreJointId(id)
+            ENSURE(x == y)
+        }
+
+        return 0
     }
 }

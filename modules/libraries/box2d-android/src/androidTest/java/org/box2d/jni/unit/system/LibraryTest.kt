@@ -28,31 +28,26 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.test
+package org.box2d.jni.unit.system
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
-import org.box2d.jni.b2FreeFcn
-import org.box2d.jni.b2FreeFcnI
-import org.box2d.jni.system.Callbacks
-import org.box2d.jni.system.JNI
-
+import org.box2d.jni.system.Library
 import org.box2d.jni.test.util.LibraryUtils
 
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * A class to manage the unit tests of the {@link b2FreeFcn} class.
+ * A class to manage the unit tests of the {@link Library} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.3.0
  */
 @RunWith(AndroidJUnit4::class)
-class b2FreeFcnTest {
+class LibraryTest {
 
     /**
      * Initialize all tests.
@@ -62,25 +57,9 @@ class b2FreeFcnTest {
     }
 
     /**
-     * Run tests {@sample funFuncI}
+     * Run all tests.
      */
-    @Test fun funFuncI() {
-        val func = b2FreeFcnI { mem: Long, size: Long ->
-            Assert.assertEquals(1024L, mem)
-            Assert.assertEquals(6L, size)
-        }
-        Callbacks.b2FreeCallbacks()
-    }
-
-    /**
-     * Run tests {@sample funFunc}
-     */
-    @Test fun funFunc() {
-        val func = b2FreeFcn.create(b2FreeFcnI { mem: Long, size: Long ->
-            Assert.assertEquals(1024L, mem)
-            Assert.assertEquals(6L, size)
-        })
-        JNI.invokeJJV(1024L, 6L, func.address())
-        Callbacks.b2FreeCallbacks()
+    @Test fun runTest() {
+        Library.initialize()
     }
 }
