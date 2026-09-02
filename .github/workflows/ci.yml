@@ -35,6 +35,21 @@ jobs:
           test -r /dev/kvm
           test -w /dev/kvm
           echo "KVM is available"
+      - name: gradlew build test
+        env:
+          JAVA_TOOL_OPTIONS: >-
+            -DBOX2D_JNI_NDEBUG=true
+            -Dorg.box2d.jni.system.Debug.Color=true
+        run: |
+          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false build \
+            -x test --console=plain
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-report-android
+          path: |
+            modules/libraries/box2d-android/build/reports/androidTests
+          if-no-files-found: ignore
       - name: Android tests [Sp, Dp]
         uses: reactivecircus/android-emulator-runner@v2
         with:
