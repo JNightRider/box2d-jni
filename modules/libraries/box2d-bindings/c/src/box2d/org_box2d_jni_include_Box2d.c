@@ -638,18 +638,6 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1RebuildStaticT
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2World_EnableSpeculative
- * Signature: (JZ)V
- */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1EnableSpeculative
-    (JNIEnv *__env, jclass clazz, jlong worldId, jboolean flag)
-{
-    UNUSED_PARAMS(__env, clazz)
-    b2World_EnableSpeculative( *(b2WorldId*)worldId, (bool)flag );
-}
-
-/*
- * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_GetStateHash
  * Signature: (J)J
  */

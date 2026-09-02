@@ -1002,22 +1002,6 @@ public final class Box2d {
     /* {@code B2_API void b2World_RebuildStaticTree( b2WorldId worldId ); } */
     public static native void nb2World_RebuildStaticTree(long worldId);
 
-    // --- [ b2World_EnableSpeculative ] ---
-
-    /**
-     * {@code B2_API void b2World_EnableSpeculative( b2WorldId worldId, bool flag ); }
-     *
-     * @param worldId b2WorldId
-     * @param flag boolean
-     */
-    public static void b2World_EnableSpeculative(b2WorldId worldId, boolean flag) {
-        checkPointers(worldId);
-        nb2World_EnableSpeculative(worldId.address(), flag);
-    }
-
-    /* {@code B2_API void b2World_EnableSpeculative( b2WorldId worldId, bool flag ); } */
-    public static native void nb2World_EnableSpeculative(long worldId, boolean flag);
-
     // --- [ b2World_GetStateHash ] ---
 
     /**
