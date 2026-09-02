@@ -59,8 +59,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
     if(NOT BINDINGS_ANDROID_HOME)
         message(FATAL_ERROR "ANDROID_TOOLCHAIN_BIN not set")
     endif()
-    set(ANDROID_TOOLCHAIN_BIN
-        "${ANDROID_NDK}/toolchains/llvm/prebuilt/${BINDINGS_ANDROID_HOME}/bin")
 
     # Determine target from ABI
     if(ANDROID_ABI STREQUAL "arm64-v8a")
@@ -85,7 +83,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
         message(FATAL_ERROR "Unsupported Android ABI: ${ANDROID_ABI}")
     endif()
 
-    set(ANDROID_TOOLCHAIN_BIN "${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin")
+    set(ANDROID_TOOLCHAIN_BIN "${ANDROID_NDK}/toolchains/llvm/prebuilt/${BINDINGS_ANDROID_HOME}/bin")
     set(ANDROID_CC "${ANDROID_TOOLCHAIN_BIN}/${CLANG_TRIPLE}${ANDROID_PLATFORM_LEVEL}-clang")
     set(ANDROID_AR "${ANDROID_TOOLCHAIN_BIN}/llvm-ar")
     set(ANDROID_RANLIB "${ANDROID_TOOLCHAIN_BIN}/llvm-ranlib")
