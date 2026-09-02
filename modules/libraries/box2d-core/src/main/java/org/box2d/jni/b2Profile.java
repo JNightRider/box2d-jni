@@ -51,7 +51,6 @@ import static org.box2d.jni.system.Memory.*;
  * 	float solveImpulses;
  * 	float integratePositions;
  * 	float relaxImpulses;
- * 	float applyRestitution;
  * 	float storeImpulses;
  * 	float splitIslands;
  * 	float transforms;
@@ -66,8 +65,8 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  *
  * @author wil
+ * @version 1.0.1
  * @since 1.0.0
- * @version 1.0.0
  */
 public class b2Profile extends Struct<b2Profile> {
 
@@ -91,7 +90,6 @@ public class b2Profile extends Struct<b2Profile> {
             SOLVE_IMPULSES,
             INTEGRATE_POSITIONS,
             RELAX_IMPULSES,
-            APPLY_RESTITUTION,
             STORE_IMPULSES,
             SPLIT_ISLANDS,
             TRANSFORMS,
@@ -105,6 +103,7 @@ public class b2Profile extends Struct<b2Profile> {
 
     static {
         Layout layout = __struct(
+                __member(4), 
                 __member(4),
                 __member(4),
                 __member(4),
@@ -125,9 +124,7 @@ public class b2Profile extends Struct<b2Profile> {
                 __member(4),
                 __member(4),
                 __member(4),
-                __member(4),
-                __member(4),
-                __member(4)
+                __member(4) 
         );
 
         STEP = layout.offsetof(0);
@@ -142,17 +139,16 @@ public class b2Profile extends Struct<b2Profile> {
         SOLVE_IMPULSES = layout.offsetof(9);
         INTEGRATE_POSITIONS = layout.offsetof(10);
         RELAX_IMPULSES = layout.offsetof(11);
-        APPLY_RESTITUTION = layout.offsetof(12);
-        STORE_IMPULSES = layout.offsetof(13);
-        SPLIT_ISLANDS = layout.offsetof(14);
-        TRANSFORMS = layout.offsetof(15);
-        SENSOR_HITS = layout.offsetof(16);
-        JOINT_EVENTS = layout.offsetof(17);
-        HIT_EVENTS = layout.offsetof(18);
-        REFIT = layout.offsetof(19);
-        BULLETS = layout.offsetof(20);
-        SLEEP_ISLANDS = layout.offsetof(21);
-        SENSORS = layout.offsetof(22);
+        STORE_IMPULSES = layout.offsetof(12);
+        SPLIT_ISLANDS = layout.offsetof(13);
+        TRANSFORMS = layout.offsetof(14);
+        SENSOR_HITS = layout.offsetof(15);
+        JOINT_EVENTS = layout.offsetof(16);
+        HIT_EVENTS = layout.offsetof(17);
+        REFIT = layout.offsetof(18);
+        BULLETS = layout.offsetof(19);
+        SLEEP_ISLANDS = layout.offsetof(20);
+        SENSORS = layout.offsetof(21);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -212,8 +208,6 @@ public class b2Profile extends Struct<b2Profile> {
     public float integratePositions() { return nintegratePositions(address()); }
     /** @return Returns the property {@code relaxImpulses} */
     public float relaxImpulses() { return nrelaxImpulses(address()); }
-    /** @return Returns the property {@code applyRestitution} */
-    public float applyRestitution() { return napplyRestitution(address()); }
     /** @return Returns the property {@code storeImpulses} */
     public float storeImpulses() { return nstoreImpulses(address()); }
     /** @return Returns the property {@code splitIslands} */
@@ -364,17 +358,6 @@ public class b2Profile extends Struct<b2Profile> {
      */
     public b2Profile relaxImpulses(float value) {
         nrelaxImpulses(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code applyRestitution}
-     *
-     * @param value The value
-     * @return b2Profile
-     */
-    public b2Profile applyRestitution(float value) {
-        napplyRestitution(address(), value);
         return this;
     }
 
@@ -611,53 +594,51 @@ public class b2Profile extends Struct<b2Profile> {
 
     // -----------------------------------
     
-    public static float nstep(long address)                  { return memGetFloat(address + STEP);                 }
-    public static float npairs(long address)                 { return memGetFloat(address + PAIRS);                }
-    public static float ncollide(long address)               { return memGetFloat(address + COLLIDE);              }
-    public static float nsolve(long address)                 { return memGetFloat(address + SOLVE);                }
-    public static float nsolverSetup(long address)           { return memGetFloat(address + SOLVER_SETUP);         }
-    public static float nconstraints(long address)           { return memGetFloat(address + CONSTRAINTS);          }
-    public static float nprepareConstraints(long address)    { return memGetFloat(address + PREPARE_CONSTRAINTS);  }
-    public static float nintegrateVelocities(long address)   { return memGetFloat(address + INTEGRATE_VELOCITIES); }
-    public static float nwarmStart(long address)             { return memGetFloat(address + WARM_START);           }
-    public static float nsolveImpulses(long address)        { return memGetFloat(address + SOLVE_IMPULSES);       }
-    public static float nintegratePositions(long address)   { return memGetFloat(address + INTEGRATE_POSITIONS);  }
-    public static float nrelaxImpulses(long address)        { return memGetFloat(address + RELAX_IMPULSES);       }
-    public static float napplyRestitution(long address)     { return memGetFloat(address + APPLY_RESTITUTION);    }
-    public static float nstoreImpulses(long address)        { return memGetFloat(address + STORE_IMPULSES);       }
-    public static float nsplitIslands(long address)         { return memGetFloat(address + SPLIT_ISLANDS);        }
-    public static float ntransforms(long address)           { return memGetFloat(address + TRANSFORMS);           }
-    public static float nsensorHits(long address)           { return memGetFloat(address + SENSOR_HITS);          }
-    public static float njointEvents(long address)          { return memGetFloat(address + JOINT_EVENTS);         }
-    public static float nhitEvents(long address)            { return memGetFloat(address + HIT_EVENTS);           }
-    public static float nrefit(long address)                { return memGetFloat(address + REFIT);                }
-    public static float nbullets(long address)              { return memGetFloat(address + BULLETS);              }
-    public static float nsleepIslands(long address)         { return memGetFloat(address + SLEEP_ISLANDS);        }
-    public static float nsensors(long address)              { return memGetFloat(address + SENSORS);              }
+    public static float nstep(long address)                { return memGetFloat(address + STEP);                 }
+    public static float npairs(long address)               { return memGetFloat(address + PAIRS);                }
+    public static float ncollide(long address)             { return memGetFloat(address + COLLIDE);              }
+    public static float nsolve(long address)               { return memGetFloat(address + SOLVE);                }
+    public static float nsolverSetup(long address)         { return memGetFloat(address + SOLVER_SETUP);         }
+    public static float nconstraints(long address)         { return memGetFloat(address + CONSTRAINTS);          }
+    public static float nprepareConstraints(long address)  { return memGetFloat(address + PREPARE_CONSTRAINTS);  }
+    public static float nintegrateVelocities(long address) { return memGetFloat(address + INTEGRATE_VELOCITIES); }
+    public static float nwarmStart(long address)           { return memGetFloat(address + WARM_START);           }
+    public static float nsolveImpulses(long address)       { return memGetFloat(address + SOLVE_IMPULSES);       }
+    public static float nintegratePositions(long address)  { return memGetFloat(address + INTEGRATE_POSITIONS);  }
+    public static float nrelaxImpulses(long address)       { return memGetFloat(address + RELAX_IMPULSES);       }
+    public static float nstoreImpulses(long address)       { return memGetFloat(address + STORE_IMPULSES);       }
+    public static float nsplitIslands(long address)        { return memGetFloat(address + SPLIT_ISLANDS);        }
+    public static float ntransforms(long address)          { return memGetFloat(address + TRANSFORMS);           }
+    public static float nsensorHits(long address)          { return memGetFloat(address + SENSOR_HITS);          }
+    public static float njointEvents(long address)         { return memGetFloat(address + JOINT_EVENTS);         }
+    public static float nhitEvents(long address)           { return memGetFloat(address + HIT_EVENTS);           }
+    public static float nrefit(long address)               { return memGetFloat(address + REFIT);                }
+    public static float nbullets(long address)             { return memGetFloat(address + BULLETS);              }
+    public static float nsleepIslands(long address)        { return memGetFloat(address + SLEEP_ISLANDS);        }
+    public static float nsensors(long address)             { return memGetFloat(address + SENSORS);              }
 
-    public static void nstep(long address, float value)                  { memPutFloat(address + STEP, value);                 }
-    public static void npairs(long address, float value)                 { memPutFloat(address + PAIRS, value);                }
-    public static void ncollide(long address, float value)               { memPutFloat(address + COLLIDE, value);              }
-    public static void nsolve(long address, float value)                 { memPutFloat(address + SOLVE, value);                }
-    public static void nsolverSetup(long address, float value)           { memPutFloat(address + SOLVER_SETUP, value);         }
-    public static void nconstraints(long address, float value)           { memPutFloat(address + CONSTRAINTS, value);          }
-    public static void nprepareConstraints(long address, float value)    { memPutFloat(address + PREPARE_CONSTRAINTS, value);  }
-    public static void nintegrateVelocities(long address, float value)   { memPutFloat(address + INTEGRATE_VELOCITIES, value); }
-    public static void nwarmStart(long address, float value)             { memPutFloat(address + WARM_START, value);           }
-    public static void nsolveImpulses(long address, float value)        { memPutFloat(address + SOLVE_IMPULSES, value);       }
-    public static void nintegratePositions(long address, float value)   { memPutFloat(address + INTEGRATE_POSITIONS, value);  }
-    public static void nrelaxImpulses(long address, float value)        { memPutFloat(address + RELAX_IMPULSES, value);       }
-    public static void napplyRestitution(long address, float value)     { memPutFloat(address + APPLY_RESTITUTION, value);    }
-    public static void nstoreImpulses(long address, float value)        { memPutFloat(address + STORE_IMPULSES, value);       }
-    public static void nsplitIslands(long address, float value)         { memPutFloat(address + SPLIT_ISLANDS, value);        }
-    public static void ntransforms(long address, float value)           { memPutFloat(address + TRANSFORMS, value);           }
-    public static void nsensorHits(long address, float value)           { memPutFloat(address + SENSOR_HITS, value);          }
-    public static void njointEvents(long address, float value)          { memPutFloat(address + JOINT_EVENTS, value);         }
-    public static void nhitEvents(long address, float value)            { memPutFloat(address + HIT_EVENTS, value);           }
-    public static void nrefit(long address, float value)                { memPutFloat(address + REFIT, value);                }
-    public static void nbullets(long address, float value)              { memPutFloat(address + BULLETS, value);              }
-    public static void nsleepIslands(long address, float value)         { memPutFloat(address + SLEEP_ISLANDS, value);        }
-    public static void nsensors(long address, float value)              { memPutFloat(address + SENSORS, value);              }
+    public static void nstep(long address, float value)                { memPutFloat(address + STEP, value);                 }
+    public static void npairs(long address, float value)               { memPutFloat(address + PAIRS, value);                }
+    public static void ncollide(long address, float value)             { memPutFloat(address + COLLIDE, value);              }
+    public static void nsolve(long address, float value)               { memPutFloat(address + SOLVE, value);                }
+    public static void nsolverSetup(long address, float value)         { memPutFloat(address + SOLVER_SETUP, value);         }
+    public static void nconstraints(long address, float value)         { memPutFloat(address + CONSTRAINTS, value);          }
+    public static void nprepareConstraints(long address, float value)  { memPutFloat(address + PREPARE_CONSTRAINTS, value);  }
+    public static void nintegrateVelocities(long address, float value) { memPutFloat(address + INTEGRATE_VELOCITIES, value); }
+    public static void nwarmStart(long address, float value)           { memPutFloat(address + WARM_START, value);           }
+    public static void nsolveImpulses(long address, float value)       { memPutFloat(address + SOLVE_IMPULSES, value);       }
+    public static void nintegratePositions(long address, float value)  { memPutFloat(address + INTEGRATE_POSITIONS, value);  }
+    public static void nrelaxImpulses(long address, float value)       { memPutFloat(address + RELAX_IMPULSES, value);       }
+    public static void nstoreImpulses(long address, float value)       { memPutFloat(address + STORE_IMPULSES, value);       }
+    public static void nsplitIslands(long address, float value)        { memPutFloat(address + SPLIT_ISLANDS, value);        }
+    public static void ntransforms(long address, float value)          { memPutFloat(address + TRANSFORMS, value);           }
+    public static void nsensorHits(long address, float value)          { memPutFloat(address + SENSOR_HITS, value);          }
+    public static void njointEvents(long address, float value)         { memPutFloat(address + JOINT_EVENTS, value);         }
+    public static void nhitEvents(long address, float value)           { memPutFloat(address + HIT_EVENTS, value);           }
+    public static void nrefit(long address, float value)               { memPutFloat(address + REFIT, value);                }
+    public static void nbullets(long address, float value)             { memPutFloat(address + BULLETS, value);              }
+    public static void nsleepIslands(long address, float value)        { memPutFloat(address + SLEEP_ISLANDS, value);        }
+    public static void nsensors(long address, float value)             { memPutFloat(address + SENSORS, value);              }
 
     // -----------------------------------
 
