@@ -41,7 +41,7 @@ jobs:
             -DBOX2D_JNI_NDEBUG=true
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
-          ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false build \
+          ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=true -Pbox2d.jni.desktop=false -Pbox2d.jni.flavor=Sp build \
             -x test --console=plain
       - if: failure()
         uses: actions/upload-artifact@v7
