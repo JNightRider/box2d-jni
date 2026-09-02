@@ -2520,6 +2520,57 @@ public final class Box2d {
     /* {@code B2_API b2AABB b2Body_ComputeAABB( b2BodyId bodyId ); } */
     public static native void nb2Body_ComputeAABB(long bodyId, long __result);
 
+    // --- [ b2Body_GetMinExtent ] ---
+
+    /**
+     * {@code B2_API float b2Body_GetMinExtent( b2BodyId bodyId ); }
+     *
+     * @param bodyId b2BodyId
+     *
+     * @return float
+     */
+    public static float b2Body_GetMinExtent(b2BodyId bodyId) {
+        checkPointers(bodyId);
+        return nb2Body_GetMinExtent(bodyId.address());
+    }
+
+    /* {@code B2_API float b2Body_GetMinExtent( b2BodyId bodyId ); } */
+    public static native float nb2Body_GetMinExtent(long bodyId);
+
+    // --- [ b2Body_GetMaxExtent ] ---
+
+    /**
+     * {@code B2_API float b2Body_GetMaxExtent( b2BodyId bodyId ); }
+     *
+     * @param bodyId b2BodyId
+     *
+     * @return float
+     */
+    public static float b2Body_GetMaxExtent(b2BodyId bodyId) {
+        checkPointers(bodyId);
+        return nb2Body_GetMaxExtent(bodyId.address());
+    }
+
+    /* {@code B2_API float b2Body_GetMaxExtent( b2BodyId bodyId ); } */
+    public static native float nb2Body_GetMaxExtent(long bodyId);
+
+    // --- [ b2Body_GetMaxExtentOrigin ] ---
+
+    /**
+     * {@code B2_API float b2Body_GetMaxExtentOrigin( b2BodyId bodyId ); }
+     *
+     * @param bodyId b2BodyId
+     *
+     * @return float
+     */
+    public static float b2Body_GetMaxExtentOrigin(b2BodyId bodyId) {
+        checkPointers(bodyId);
+        return nb2Body_GetMaxExtentOrigin(bodyId.address());
+    }
+
+    /* {@code B2_API float b2Body_GetMaxExtentOrigin( b2BodyId bodyId ); } */
+    public static native float nb2Body_GetMaxExtentOrigin(long bodyId);
+
     // --- [ b2CreateCircleShape ] ---
 
     /**

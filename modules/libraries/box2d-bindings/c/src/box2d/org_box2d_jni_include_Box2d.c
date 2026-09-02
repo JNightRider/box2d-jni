@@ -1652,6 +1652,42 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1ComputeAABB
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2Body_GetMinExtent
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMinExtent
+    (JNIEnv *__env, jclass clazz, jlong bodyId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat) b2Body_GetMinExtent(*(b2BodyId*)bodyId);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2Body_GetMaxExtent
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMaxExtent
+    (JNIEnv *__env, jclass clazz, jlong bodyId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat) b2Body_GetMaxExtent( *(b2BodyId*)bodyId );;
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2Body_GetMaxExtentOrigin
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMaxExtentOrigin
+    (JNIEnv *__env, jclass clazz, jlong bodyId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat) b2Body_GetMaxExtentOrigin( *(b2BodyId*)bodyId );;
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2CreateCircleShape
  * Signature: (JJJJ)V
  */
