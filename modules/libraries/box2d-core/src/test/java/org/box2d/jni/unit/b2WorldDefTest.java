@@ -44,7 +44,7 @@ import org.junit.Test;
  * A class to manage the unit tests of the {@link b2WorldDef} class.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class b2WorldDefTest {
@@ -77,7 +77,6 @@ public class b2WorldDefTest {
 
             ptr.enableSleep(true);
             ptr.enableContinuous(true);
-            ptr.enableContactSoftening(false);
 
             ptr.workerCount(4);
 
@@ -141,7 +140,6 @@ public class b2WorldDefTest {
 
             Assert.assertTrue(ptr.enableSleep());
             Assert.assertTrue(ptr.enableContinuous());
-            Assert.assertFalse(ptr.enableContactSoftening());
 
             Assert.assertEquals(4, ptr.workerCount());
 

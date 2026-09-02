@@ -35,7 +35,7 @@ package org.box2d.jni.readonly;
  * constant of type <code>b2WorldDef</code>. (native type: const b2WorldDef)
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public interface ConstB2WorldDef extends ConstStruct {
@@ -116,13 +116,6 @@ public interface ConstB2WorldDef extends ConstStruct {
      * @return boolean
      */
      boolean enableContinuous();
-
-    /**
-     * Returns the property {@code enableContactSoftening}
-     *
-     * @return boolean
-     */
-     boolean enableContactSoftening();
 
     /**
      * Returns the property {@code workerCount}

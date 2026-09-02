@@ -52,21 +52,19 @@ import static org.box2d.jni.system.Memory.*;
  *     b2RestitutionCallback* restitutionCallback;
  *     bool enableSleep;
  *     bool enableContinuous;
- *     bool enableContactSoftening;
  *     int workerCount;
  *     b2EnqueueTaskCallback* enqueueTask;
  *     b2FinishTaskCallback* finishTask;
  *     void* userTaskContext;
  *     void* userData;
- *     const char* recordingPath;
  *     b2Capacity capacity;
  *     int internalValue;
  * } b2WorldDef;
  * </code></pre>
  * 
  * @author wil
+ * @version 1.0.1
  * @since 1.0.0
- * @version 1.0.0
  */
 public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
 
@@ -89,7 +87,6 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
             RESTITUTION_CALLBACK,
             ENABLE_SLEEP,
             ENABLE_CONTINUOUS,
-            ENABLE_CONTACT_SOFTENING,
             WORKER_COUNT,
             ENQUEUE_TASK,
             FINISH_TASK,
@@ -109,7 +106,6 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
                 __member(4),
                 __member(VarType.Uintptrt.sizeof()),
                 __member(VarType.Uintptrt.sizeof()),
-                __member(1),
                 __member(1),
                 __member(1),
                 __member(4),
@@ -134,17 +130,16 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
 
         ENABLE_SLEEP = layout.offsetof(9);
         ENABLE_CONTINUOUS = layout.offsetof(10);
-        ENABLE_CONTACT_SOFTENING = layout.offsetof(11);
 
-        WORKER_COUNT = layout.offsetof(12);
+        WORKER_COUNT = layout.offsetof(11);
 
-        ENQUEUE_TASK = layout.offsetof(13);
-        FINISH_TASK = layout.offsetof(14);
-        USER_TASK_CONTEXT = layout.offsetof(15);
-        USER_DATA = layout.offsetof(16);
+        ENQUEUE_TASK = layout.offsetof(12);
+        FINISH_TASK = layout.offsetof(13);
+        USER_TASK_CONTEXT = layout.offsetof(14);
+        USER_DATA = layout.offsetof(15);
 
-        CAPACITY = layout.offsetof(17);
-        INTERNAL_VALUE = layout.offsetof(18);
+        CAPACITY = layout.offsetof(16);
+        INTERNAL_VALUE = layout.offsetof(17);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -211,9 +206,6 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /** @return Returns the property {@code enableContinuous} */
     @Override
     public boolean enableContinuous() { return nenableContinuous(address()); }
-    /** @return Returns the property {@code enableContactSoftening} */
-    @Override
-    public boolean enableContactSoftening() { return nenableContactSoftening(address()); }
     /** @return Returns the property {@code workerCount} */
     @Override
     public int workerCount() { return nworkerCount(address()); }
@@ -346,16 +338,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nenableContinuous(address(), value);
         return this;
     }
-    /**
-     * Set the value of property {@code gravity}
-     * 
-     * @param value boolean
-     * @return b2WorldDef
-     */
-    public b2WorldDef enableContactSoftening(boolean value) {
-        nenableContactSoftening(address(), value);
-        return this;
-    }
+
     /**
      * Set the value of property {@code gravity}
      * 
@@ -562,7 +545,6 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     public static long nrestitutionCallback(long address)       { return memGetAddress(address + RESTITUTION_CALLBACK);         }
     public static boolean nenableSleep(long address)            { return memGetByte(address + ENABLE_SLEEP) != 0;               }
     public static boolean nenableContinuous(long address)       { return memGetByte(address + ENABLE_CONTINUOUS) != 0;          }
-    public static boolean nenableContactSoftening(long address) { return memGetByte(address + ENABLE_CONTACT_SOFTENING) != 0;   }
     public static int nworkerCount(long address)                { return memGetInt(address + WORKER_COUNT);                     }
     public static long nenqueueTask(long address)               { return memGetAddress(address + ENQUEUE_TASK);                 }
     public static long nfinishTask(long address)                { return memGetAddress(address + FINISH_TASK);                  }
@@ -582,7 +564,6 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     public static void nrestitutionCallback(long address, b2RestitutionCallbackI value) { memPutAddress(address + RESTITUTION_CALLBACK, value.address()); }
     public static void nenableSleep(long address, boolean value)            { memPutByte(address + ENABLE_SLEEP, (byte) (value ? 1 : 0));               }
     public static void nenableContinuous(long address, boolean value)       { memPutByte(address + ENABLE_CONTINUOUS, (byte) (value ? 1 : 0));          }
-    public static void nenableContactSoftening(long address, boolean value) { memPutByte(address + ENABLE_CONTACT_SOFTENING, (byte) (value ? 1 : 0));   }
     public static void nworkerCount(long address, int value)                { memPutInt(address + WORKER_COUNT, value);                                 }
     public static void nenqueueTask(long address, b2EnqueueTaskCallbackI value) { memPutAddress(address + ENQUEUE_TASK, value.address());         }
     public static void nfinishTask(long address, b2FinishTaskCallbackI value)   { memPutAddress(address + FINISH_TASK, value.address());          }
