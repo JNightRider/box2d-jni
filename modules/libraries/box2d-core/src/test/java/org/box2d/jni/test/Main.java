@@ -36,7 +36,6 @@ import static java.lang.System.out;
 
 import static org.box2d.jni.include.Base.*;
 import static org.box2d.jni.test.TestMacros.*;
-import static org.box2d.jni.test.internal.Extern.*;
 
 /**
  * A line-by-line Java translation of the box2d 'test/main.c' example.
@@ -44,28 +43,18 @@ import static org.box2d.jni.test.internal.Extern.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/main.c
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class Main {
 
-    static {
-        DynamicTreeTest = extern(new TestDynamicTree(), TestDynamicTree::DynamicTreeTest);
-        CollisionTest   = extern(new TestCollision(), TestCollision::CollisionTest);
-        DistanceTest    = extern(new TestDistance(), TestDistance::DistanceTest);
-        MathTest        = extern(new TestMath(), TestMath::MathTest);
-        ShapeTest       = extern(new TestShape(), TestShape::ShapeTest);
-        WorldTest       = extern(new TestWorld(), TestWorld::WorldTest);
-        IdTest          = extern(new TestId(), TestId::IdTest);
-    }
-
-    static Extern<Integer> CollisionTest;
-    static Extern<Integer> DistanceTest;
-    static Extern<Integer> DynamicTreeTest;
-    static Extern<Integer> IdTest;
-    static Extern<Integer> MathTest;
-    static Extern<Integer> ShapeTest;
-    static Extern<Integer> WorldTest;
+    static IVFunction CollisionTest = new TestCollision()::CollisionTest;
+    static IVFunction DistanceTest = new TestDistance()::DistanceTest;
+    static IVFunction DynamicTreeTest = new TestDynamicTree()::DynamicTreeTest;
+    static IVFunction IdTest = new TestId()::IdTest;
+    static IVFunction MathTest = new TestMath()::MathTest;
+    static IVFunction ShapeTest = new TestShape()::ShapeTest;
+    static IVFunction WorldTest = new TestWorld()::WorldTest;
 
     public static void main(String[] args) {
         /*const char* */ filter = null;

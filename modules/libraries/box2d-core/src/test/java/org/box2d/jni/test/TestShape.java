@@ -46,7 +46,7 @@ import static org.box2d.jni.test.TestMacros.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test/test_shape.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class TestShape {
@@ -58,7 +58,7 @@ public class TestShape {
 
     public static final int N = 4;
 
-    static int ShapeMassTest( )
+    private int ShapeMassTest( )
     {
         {
             b2MassData md = b2ComputeCircleMass( circle, 1.0f, b2MassData.malloc() );
@@ -129,7 +129,7 @@ public class TestShape {
         return 0;
     }
 
-    static int ShapeAABBTest( )
+    private int ShapeAABBTest( )
     {
         {
             b2AABB b = b2ComputeCircleAABB( circle, b2WorldTransform_identity, b2AABB.malloc() );
@@ -158,7 +158,7 @@ public class TestShape {
         return 0;
     }
 
-    static int PointInShapeTest( )
+    private int PointInShapeTest( )
     {
         b2Vec2 p1 = b2Vec2.malloc().set( 0.5f, 0.5f );
         b2Vec2 p2 = b2Vec2.malloc().set( 4.0f, -4.0f );
@@ -182,7 +182,7 @@ public class TestShape {
         return 0;
     }
 
-    static int RayCastShapeTest(  )
+    private int RayCastShapeTest(  )
     {
         b2RayCastInput input = b2RayCastInput.malloc().set( b2Vec2.malloc().set( -4.0f, 0.0f ), b2Vec2.malloc().set( 8.0f, 0.0f ), 1.0f );
 
@@ -217,10 +217,10 @@ public class TestShape {
     {
         box = b2MakeBox( 1.0f, 1.0f, b2Polygon.malloc() );
 
-        RUN_SUBTEST(() -> ShapeMassTest() );
-        RUN_SUBTEST(() -> ShapeAABBTest() );
-        RUN_SUBTEST(() -> PointInShapeTest() );
-        RUN_SUBTEST(() -> RayCastShapeTest() );
+        RUN_SUBTEST( this::ShapeMassTest );
+        RUN_SUBTEST( this::ShapeAABBTest );
+        RUN_SUBTEST( this::PointInShapeTest );
+        RUN_SUBTEST( this::RayCastShapeTest );
 
         return 0;
     }

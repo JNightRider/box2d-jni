@@ -48,12 +48,12 @@ import static org.box2d.jni.test.TestMacros.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test_distance.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class TestDistance {
 
-    static int SegmentDistanceTest( )
+    private int SegmentDistanceTest( )
     {
         b2Vec2 p1 = b2Vec2.malloc().set( -1.0f, -1.0f );
         b2Vec2 q1 = b2Vec2.malloc().set( -1.0f, 1.0f );
@@ -73,7 +73,7 @@ public class TestDistance {
         return 0;
     }
 
-    static int ShapeDistanceTest()
+    private int ShapeDistanceTest()
     {
         b2Vec2.Buffer vas = b2Vec2.mallocSafe(b2Vec2.malloc().set( -1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, 1.0f ), b2Vec2.malloc().set( -1.0f, 1.0f ) );
 
@@ -96,7 +96,7 @@ public class TestDistance {
         return 0;
     }
 
-    static int ShapeCastTest( )
+    private int ShapeCastTest( )
     {
         b2Vec2.Buffer vas = b2Vec2.mallocSafe(b2Vec2.malloc().set( -1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, 1.0f ), b2Vec2.malloc().set( -1.0f, 1.0f ) );
 
@@ -131,7 +131,7 @@ public class TestDistance {
     //
     // Measured cutoff matches 2 * distance * edge^2 < FLT_EPSILON to three digits, and it tracks the
     // contact edge alone. Widening the plank from 1 m to 100 m changes nothing.
-    static int ShapeDistanceShortEdgeTest( )
+    private int ShapeDistanceShortEdgeTest( )
     {
         float halfThickness = 0.0016f;
 
@@ -174,7 +174,7 @@ public class TestDistance {
     // Enable once b2ShapeDistance stops reporting the false overlap. The assert aborts the run, so
     // leaving it on would take the rest of the suite with it.
     public static final boolean B2_SHORT_EDGE_CAST_REPRO = true;
-    static int ShapeCastShortEdgeTest()
+    private int ShapeCastShortEdgeTest()
     {
         float halfThickness = 0.0002f;
 
@@ -207,8 +207,7 @@ public class TestDistance {
         return 0;
     }
 
-
-    static int TimeOfImpactTest( )
+    private int TimeOfImpactTest( )
     {
         b2Vec2.Buffer vas = b2Vec2.mallocSafe(b2Vec2.malloc().set( -1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, -1.0f ), b2Vec2.malloc().set( 1.0f, 1.0f ), b2Vec2.malloc().set( -1.0f, 1.0f ) );
         
@@ -234,14 +233,14 @@ public class TestDistance {
 
     int DistanceTest( )
     {
-        RUN_SUBTEST(() -> SegmentDistanceTest() );
-        RUN_SUBTEST(() -> ShapeDistanceTest() );
-        RUN_SUBTEST(() -> ShapeCastTest() );
-        RUN_SUBTEST(() -> ShapeDistanceShortEdgeTest() );
+        RUN_SUBTEST( this::SegmentDistanceTest );
+        RUN_SUBTEST( this::ShapeDistanceTest );
+        RUN_SUBTEST( this::ShapeCastTest );
+        RUN_SUBTEST( this::ShapeDistanceShortEdgeTest );
 if (B2_SHORT_EDGE_CAST_REPRO) {
-        RUN_SUBTEST(() -> ShapeCastShortEdgeTest() );
+        RUN_SUBTEST( this::ShapeCastShortEdgeTest );
 }
-        RUN_SUBTEST(() -> TimeOfImpactTest() );
+        RUN_SUBTEST( this::TimeOfImpactTest );
 
         return 0;
     }

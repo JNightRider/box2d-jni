@@ -50,12 +50,12 @@ import static org.box2d.jni.test.TestMacros.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test_dynamic_tree.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.9
  */
 public class TestDynamicTree {
     
-    static int TreeCreateDestroy( )
+    private int TreeCreateDestroy( )
     {
         b2AABB a = b2AABB.malloc()
                 .lowerBound( b2Vec2.malloc().set( -1.0f, -1.0f ) )
@@ -84,7 +84,7 @@ public class TestDynamicTree {
         return 0.0f;
     };
 
-    static int TreeRayCastTest( )
+    private int TreeRayCastTest( )
     {
         // Test AABB centered at origin with bounds [-1, -1] to [1, 1]
         b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
@@ -298,7 +298,7 @@ public class TestDynamicTree {
         return true;
     };
 
-    static int TreeMultipleProxiesTest( )
+    private int TreeMultipleProxiesTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -324,7 +324,7 @@ public class TestDynamicTree {
         return 0;
     }
 
-    static int TreeQueryTest( )
+    private int TreeQueryTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -357,7 +357,7 @@ public class TestDynamicTree {
         return 0;
     }
 
-    static int TreeMoveAndEnlargeTest( )
+    private int TreeMoveAndEnlargeTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -386,7 +386,7 @@ public class TestDynamicTree {
         return 0;
     }
 
-    static int TreeRebuildAndValidateTest( )
+    private int TreeRebuildAndValidateTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -408,7 +408,7 @@ public class TestDynamicTree {
         return 0;
     }
 
-    static int TreeRowHeightTest( )
+    private int TreeRowHeightTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -428,7 +428,7 @@ public class TestDynamicTree {
         return 0;
     }
 
-    static int TreeGridHeightTest( )
+    private int TreeGridHeightTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -455,7 +455,7 @@ public class TestDynamicTree {
 
     private static final int GRID_COUNT = 20;
 
-    static int TreeGridMovementTest( )
+    private int TreeGridMovementTest( )
     {
         b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
 
@@ -508,15 +508,15 @@ public class TestDynamicTree {
 
     int DynamicTreeTest( )
     {
-        RUN_SUBTEST(() -> TreeCreateDestroy() );
-        RUN_SUBTEST(() -> TreeRayCastTest() );
-        RUN_SUBTEST(() -> TreeMultipleProxiesTest() );
-        RUN_SUBTEST(() -> TreeQueryTest() );
-        RUN_SUBTEST(() -> TreeMoveAndEnlargeTest() );
-        RUN_SUBTEST(() -> TreeRebuildAndValidateTest() );
-        RUN_SUBTEST(() -> TreeRowHeightTest() );
-        RUN_SUBTEST(() -> TreeGridHeightTest() );
-        RUN_SUBTEST(() -> TreeGridMovementTest() );
+        RUN_SUBTEST( this::TreeCreateDestroy );
+        RUN_SUBTEST( this::TreeRayCastTest );
+        RUN_SUBTEST( this::TreeMultipleProxiesTest );
+        RUN_SUBTEST( this::TreeQueryTest );
+        RUN_SUBTEST( this::TreeMoveAndEnlargeTest );
+        RUN_SUBTEST( this::TreeRebuildAndValidateTest );
+        RUN_SUBTEST( this::TreeRowHeightTest );
+        RUN_SUBTEST( this::TreeGridHeightTest );
+        RUN_SUBTEST( this::TreeGridMovementTest );
 
         // todo test queries versus brute force
 

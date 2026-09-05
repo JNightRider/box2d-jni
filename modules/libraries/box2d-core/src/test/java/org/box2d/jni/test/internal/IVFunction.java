@@ -30,33 +30,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.test.internal;
 
-import java.util.function.Function;
+import java.io.Serializable;
+
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  *
  * @author wil
- * @param <R>
+ * @version 1.0.0
+ * @since 1.3.0
  */
 @FunctionalInterface
-public interface Extern<R> {
+public interface IVFunction extends Serializable {
 
-    static <V, R> Extern<R> extern(V object, Function<V, R> func) {
-        return new Extern<R>() {
-            @Override
-            public R invoke() {
-                return func.apply(object);
-            }
+    int call();
 
-            @Override
-            public String $() {
-                return object.getClass().getSimpleName();
-            }
-        };
-    }
+    default String name() {
+        try {
+            Method writeReplace = getClass().getDeclaredMethod("writeReplace");
+            writeReplace.setAccessible(true);
 
-    R invoke();
-    
-    default String $() {
-        return getClass().getSimpleName();
+            SerializedLambda lambda = (SerializedLambda) writeReplace.invoke(this);
+            return lambda.getImplMethodName();
+        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            throw new IllegalStateException("The method name could not be obtained", e);
+        }
     }
 }

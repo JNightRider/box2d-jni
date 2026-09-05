@@ -33,7 +33,7 @@ package org.box2d.jni.test;
 import java.util.Objects;
 
 import org.box2d.jni.system.UintptrBuffer;
-import org.box2d.jni.test.internal.Extern;
+import org.box2d.jni.test.internal.IVFunction;
 
 import static java.lang.System.out;
 import static org.box2d.jni.include.Base.*;
@@ -51,37 +51,37 @@ public final class TestMacros {
     
     static String filter; 
     
-    public static void RUN_TEST( Extern<Integer> T ) {
+    public static void RUN_TEST( IVFunction T ) {
         do                                        
         {
             long testTicks = b2GetTicks();
-            int result = T.invoke();
+            int result = T.call();
             float s = 0.001f * b2GetMilliseconds( testTicks );
             if ( result == 1 )
             {
-                out.printf( "test failed: "  + T.$() + "\n" );
+                out.printf( "test failed: "  + T.name()+ "\n" );
                 System.exit(1);
             }
             else
             {
-                out.printf( "test passed: " + T.$() + " after %.2f s\n", s );
+                out.printf( "test passed: " + T.name()+ " after %.2f s\n", s );
             }
         }
         while ( false );
     }
     
-    public static void RUN_SUBTEST( Extern<Integer> T ) {
+    public static void RUN_SUBTEST( IVFunction T ) {
         do
         {
-            int result = T.invoke();
+            int result = T.call();
             if ( result == 1 )
             {
-                out.printf( "  subtest failed: " + T.$() + "\n" );
+                out.printf( "  subtest failed: " + T.name()+ "\n" );
                 System.exit(1);
             }
             else
             {
-                out.printf( "  subtest passed: " + T.$() + "\n" );
+                out.printf( "  subtest passed: " + T.name()+ "\n" );
             }
         }
         while ( false );
@@ -125,11 +125,11 @@ public final class TestMacros {
     public static void MAYBE_UNUSED( Object x ) { /*( (void)( x ) )*/ }
     
     // Filter-aware test runner: skips tests that don't match the filter
-    public static void MAYBE_RUN_TEST(Extern<Integer> T) {
+    public static void MAYBE_RUN_TEST(IVFunction T) {
         do {
-            if ( filter != null && Objects.equals(filter, T.$()) )
+            if ( filter != null && Objects.equals(filter, T.name()) )
             {
-                out.printf( "test skipped: "  + T.$() + "\n" );
+                out.printf( "test skipped: "  + T.name()+ "\n" );
                 break;
             }
             RUN_TEST(T);

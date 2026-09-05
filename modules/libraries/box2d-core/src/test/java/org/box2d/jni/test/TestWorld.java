@@ -57,7 +57,7 @@ import static org.box2d.jni.test.TestMacros.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test_world.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.9
  */
 public class TestWorld {
@@ -222,7 +222,7 @@ public class TestWorld {
         return 0;
     }
 
-    static int TestIsValid( )
+    private int TestIsValid( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         b2WorldId worldId = b2CreateWorld( worldDef, b2WorldId.malloc() );
@@ -371,7 +371,7 @@ public class TestWorld {
         return 0;
     }
 
-    static int TestSensor( )
+    private int TestSensor( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         b2WorldId worldId = b2CreateWorld( worldDef, b2WorldId.malloc() );
@@ -480,7 +480,7 @@ public class TestWorld {
 //        return 0;
 //    }
 
-    static int ChainSegmentShapeTest( )
+    private int ChainSegmentShapeTest( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         worldDef.gravity(b2Vec2.malloc().set( 0.0f, -10.0f ));
@@ -579,7 +579,7 @@ public class TestWorld {
         return 0;
     }
 
-    static int DeferredMassFlagSyncTest( )
+    private int DeferredMassFlagSyncTest( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         b2WorldId worldId = b2CreateWorld( worldDef, b2WorldId.malloc() );
@@ -602,7 +602,7 @@ public class TestWorld {
         return 0;
     }
 
-    static int EnableSleepFlagSyncTest( )
+    private int EnableSleepFlagSyncTest( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         b2WorldId worldId = b2CreateWorld( worldDef, b2WorldId.malloc() );
@@ -623,7 +623,7 @@ public class TestWorld {
         return 0;
     }
 
-    static int EnableContactRecyclingTest( )
+    private int EnableContactRecyclingTest( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         b2WorldId worldId = b2CreateWorld( worldDef, b2WorldId.malloc() );
@@ -653,7 +653,7 @@ public class TestWorld {
         return 0;
     }
 
-    static int SetBulletDriftTest( )
+    private int SetBulletDriftTest( )
     {
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         b2WorldId worldId = b2CreateWorld( worldDef, b2WorldId.malloc() );
@@ -700,19 +700,19 @@ public class TestWorld {
 
     int WorldTest( )
     {
-            RUN_SUBTEST(() -> HelloWorld() );
-            RUN_SUBTEST(() -> EmptyWorld() );
-            RUN_SUBTEST(() -> DestroyAllBodiesWorld() );
-            RUN_SUBTEST(() -> TestIsValid() );
-            RUN_SUBTEST(() -> TestWorldRecycle() );
-            RUN_SUBTEST(() -> TestWorldCoverage() );
-            RUN_SUBTEST(() -> TestSensor() );
-            //RUN_SUBTEST(() -> TestSetWorkerCount() );
-            RUN_SUBTEST(() -> ChainSegmentShapeTest() );
-            RUN_SUBTEST(() -> SetBulletDriftTest() );
-            RUN_SUBTEST(() -> DeferredMassFlagSyncTest() );
-            RUN_SUBTEST(() -> EnableSleepFlagSyncTest() );
-            RUN_SUBTEST(() -> EnableContactRecyclingTest() );
+            RUN_SUBTEST( this::HelloWorld );
+            RUN_SUBTEST( this::EmptyWorld );
+            RUN_SUBTEST( this::DestroyAllBodiesWorld );
+            RUN_SUBTEST( this::TestIsValid );
+            RUN_SUBTEST( this::TestWorldRecycle );
+            RUN_SUBTEST( this::TestWorldCoverage );
+            RUN_SUBTEST( this::TestSensor );
+            //RUN_SUBTEST( this::TestSetWorkerCount );
+            RUN_SUBTEST( this::ChainSegmentShapeTest );
+            RUN_SUBTEST( this::SetBulletDriftTest );
+            RUN_SUBTEST( this::DeferredMassFlagSyncTest );
+            RUN_SUBTEST( this::EnableSleepFlagSyncTest );
+            RUN_SUBTEST( this::EnableContactRecyclingTest );
 
             return 0;
     }

@@ -44,12 +44,12 @@ import static org.box2d.jni.test.TestMacros.*;
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test_collision.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class TestCollision {
 
-    static int AABBTest( )
+    private int AABBTest( )
     {
         b2AABB a = b2AABB.malloc();
         a.lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f ));
@@ -71,7 +71,7 @@ public class TestCollision {
     // manifold far from the origin must match the same manifold at the origin. Float loses this past
     // ~1e7 m where the ULP grows larger than the overlap, which is the whole point of large world mode.
     @SuppressWarnings("unchecked")
-    static int LargeWorldManifoldTest( )
+    private int LargeWorldManifoldTest( )
     {
             b2Polygon boxA = b2MakeBox( 0.5f, 0.5f, b2Polygon.malloc() );
             b2Polygon boxB = b2MakeBox( 0.5f, 0.5f, b2Polygon.malloc() );
@@ -114,7 +114,7 @@ if (defined( BOX2D_DOUBLE_PRECISION )) {
     // shape and its speculative margin stay inside their box far from the origin. A float build would
     // round the extent away into the ULP (~1 m at 1e7) and clip the shape out of its own box.
     @SuppressWarnings("unchecked")
-    static int LargeWorldAABBTest( )
+    private int LargeWorldAABBTest( )
     {
             // Rounded box: 0.5 half extents plus 0.1 radius, so the tight extent is 0.6 each way
             b2Polygon box = b2MakeRoundedBox( 0.5f, 0.5f, 0.1f, b2Polygon.malloc() );
@@ -142,9 +142,9 @@ if (defined( BOX2D_DOUBLE_PRECISION )) {
 
     int CollisionTest( )
     {
-        RUN_SUBTEST(() -> AABBTest() );
-        RUN_SUBTEST(() -> LargeWorldManifoldTest() );
-        RUN_SUBTEST(() -> LargeWorldAABBTest() );
+        RUN_SUBTEST( this::AABBTest );
+        RUN_SUBTEST( this::LargeWorldManifoldTest );
+        RUN_SUBTEST( this::LargeWorldAABBTest );
         return 0;
     }
 }
