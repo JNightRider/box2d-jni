@@ -43,7 +43,7 @@ import org.box2d.jni.system.Library;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public enum b2TreeNodeFlags {
@@ -98,7 +98,7 @@ public enum b2TreeNodeFlags {
      *
      * @return int
      */
-    protected Integer value() {
+    public Integer value() {
         return b2Type;
     }
 

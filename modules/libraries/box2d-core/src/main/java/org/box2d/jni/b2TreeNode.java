@@ -59,8 +59,8 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  *
  * @author wil
+ * @version 1.1.1
  * @since 1.0.0
- * @version 1.1.0
  */
 public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
 
@@ -376,6 +376,17 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
         return new Buffer(ptr, capacity);
     }
 
+    /**
+     * Reserve an amount n of memory for the object {@code b2TreeNode}.
+     *
+     * @param address Buffer address
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer createSafe(long address, int capacity) {
+        return address == NULL ? null : new Buffer(address, capacity);
+    }
+
     // -----------------------------------
     
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
@@ -399,7 +410,7 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     // -----------------------------------
 
     /** An array of {@code b2TreeNode} structs. */
-    public static class Buffer extends StructBuffer<b2TreeNode, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2TreeNode, Buffer> implements ConstB2TreeNode.ConstBuffer<b2TreeNode, Buffer>, JNINative {
 
         /** An element that provides information about the structure. */
         private static final b2TreeNode ELEMENT_FACTORY = b2TreeNode.factory();

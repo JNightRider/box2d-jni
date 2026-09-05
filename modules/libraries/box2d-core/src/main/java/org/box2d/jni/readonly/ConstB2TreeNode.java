@@ -35,7 +35,7 @@ package org.box2d.jni.readonly;
  * constant of type <code>b2TreeNode</code>. (native type: const b2TreeNode)
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public interface ConstB2TreeNode extends ConstStruct {
@@ -95,4 +95,15 @@ public interface ConstB2TreeNode extends ConstStruct {
      * @return short
      */
     short flags();
+
+    /**
+     * A template that handles the representation of a constant pointer (buffer)
+     * of constant structures such as {@code ConstB2TreeNode}
+     *
+     * @param <T> The type of object stored in this buffer
+     * @param <SELF> The type of this buffer
+     */
+    interface ConstBuffer<T extends ConstB2TreeNode, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
+        /* nothing */
+    }
 }
