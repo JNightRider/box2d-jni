@@ -1,2 +1,32 @@
+plugins {
+    id 'iOS'
+}
 
 description = 'box2d-jni ios'
+
+ext {
+    baseName = "${artifact}" // for artifacts
+    libraryVersion = "${jjVersion}"
+    groupID = 'io.github.jnightrider'
+}
+
+ios {
+    miinVersion = '15.0'
+
+    infoPlist {
+        CFBundleShortVersionString = libraryVersion
+        CFBundleExecutable = "box2djni"
+        CFBundleName = "Box2dJNI"
+        CFBundleVersion = 1
+        CFBundleIdentifier {
+            device {
+                identifier = 'org.box2d.jni.ios'
+            }
+            simulator {
+                identifier = 'org.box2d.jni.ios.simulator'
+            }
+        }
+    }
+
+
+}
