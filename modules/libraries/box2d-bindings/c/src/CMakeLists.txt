@@ -1,4 +1,5 @@
-add_library(box2d-bindings SHARED
+## sources Box2d-JNI
+set(BOX2D_BINDINGS_SOURCES
     common_tools.c
     org_box2d_jni_libc_LibCFloat.c
     org_box2d_jni_libc_LibCMath.c
@@ -24,6 +25,16 @@ add_library(box2d-bindings SHARED
     box2d/org_box2d_jni_include_MathFunctions.c
     box2d/org_box2d_jni_include_Types.c
 )
+
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    add_library(box2d-bindings STATIC
+        ${BOX2D_BINDINGS_SOURCES}
+    )
+else()
+    add_library(box2d-bindings SHARED
+        ${BOX2D_BINDINGS_SOURCES}
+    )
+endif()
 
 set_target_properties(box2d-bindings PROPERTIES
     OUTPUT_NAME "box2d-bindings${BINDINGS_SUFFIX}"

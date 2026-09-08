@@ -119,6 +119,9 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
 
         BUILD_IN_SOURCE 1
     )
+elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    set(CMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE NO)
+
 else()
     # Configure JNI headers
     find_package(JNI REQUIRED)

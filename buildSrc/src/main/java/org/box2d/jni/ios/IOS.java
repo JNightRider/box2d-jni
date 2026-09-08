@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.ios;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -58,33 +59,39 @@ public class IOS implements Plugin<Project> {
             task.dependsOn(prepareIosFrameworkInputs);
         });
     }
-    
-    public static String xcrun(ExecOperations execOperations, String sdk, String tool ) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        execOperations.exec(spec -> {
-            spec.commandLine(
-                "xcrun",
-                "--sdk",
-                sdk,
-                "--find",
-                tool
-            );
-            spec.setStandardOutput(output);
-        });
-        return output.toString(StandardCharsets.UTF_8).trim();
+
+    public static String xcrun(ExecOperations execOperations, String sdk, String tool) {
+        try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            execOperations.exec(spec -> {
+                spec.commandLine(
+                        "xcrun",
+                        "--sdk",
+                        sdk,
+                        "--find",
+                        tool
+                );
+                spec.setStandardOutput(output);
+            });
+            return output.toString(StandardCharsets.UTF_8).trim();
+        } catch (IOException ex) {
+            return null;
+        }
     }
-    
+
     public static String sdkPath(ExecOperations execOperations, String sdk) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        execOperations.exec(spec -> {
-            spec.commandLine(
-                "xcrun",
-                "--sdk",
-                sdk,
-                "--show-sdk-path"
-            );
-            spec.setStandardOutput(output);
-        });
-        return output.toString(StandardCharsets.UTF_8).trim();
+        try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            execOperations.exec(spec -> {
+                spec.commandLine(
+                        "xcrun",
+                        "--sdk",
+                        sdk,
+                        "--show-sdk-path"
+                );
+                spec.setStandardOutput(output);
+            });
+            return output.toString(StandardCharsets.UTF_8).trim();
+        } catch (IOException ex) {
+            return null;
+        }
     }
 }
