@@ -120,6 +120,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
         BUILD_IN_SOURCE 1
     )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+find_package(JNI REQUIRED)
     message(STATUS "Compiling libffi for iOS")
 
     set(CMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE NO)
