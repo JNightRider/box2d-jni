@@ -79,7 +79,7 @@ public class Xconfigure extends DefaultTask {
                 BuildType type = buildType.getBuildType().get();
                 Flavor fv = flavor.getFlavor().get();
                 
-                File buildDir = IOUtils.buildNameDir(outputDir, "ios_" + device.getArchitecture(), type, fv);
+                File buildDir = IOUtils.buildNameDir(outputDir, "ios-" + device.getType() + '_' + device.getArchitecture(), type, fv);
                 IOUtils.checkDir(buildDir);
                 
                 String arguments = IOSProperties.getCMakeArguments(iosp, buildType, flavor);
@@ -89,6 +89,7 @@ public class Xconfigure extends DefaultTask {
                 logMore("workDir:   ", workDir);
                 logMore("outputDir: ", outputDir);
                 logMore("buildDir:  ", buildDir);
+                logMore("arch:      ", device.getType() + '_' + device.getNativeArch());
 
                 cmd.exec((exec) -> {
                     exec.commandLine(

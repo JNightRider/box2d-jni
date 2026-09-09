@@ -73,9 +73,13 @@ public enum Device {
     }
 
     public String getArchitecture() {
+        return architecture;
+    }
+
+    public String getNativeArch() {
         if (architecture.startsWith("device-")) {
-            return architecture.substring(6, architecture.length());
-        }        
+            return architecture.substring(7, architecture.length());
+        }
         return architecture;
     }
 

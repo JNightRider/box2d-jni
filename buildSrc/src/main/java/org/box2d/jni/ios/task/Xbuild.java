@@ -69,7 +69,7 @@ public class Xbuild extends DefaultTask {
                 BuildType type = buildType.getBuildType().get();
                 Flavor fv = flavor.getFlavor().get();
                 
-                File buildDir = IOUtils.buildNameDir(outputDir, "ios_" + device.getArchitecture(), type, fv);
+                File buildDir = IOUtils.buildNameDir(outputDir, "ios-" + device.getType() + '_' + device.getArchitecture(), type, fv);
                 
                 log("Build " + type.getName() + ':' + fv.getName());
                 logMore("buildDir:", buildDir);
