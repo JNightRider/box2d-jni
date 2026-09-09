@@ -11,22 +11,38 @@ ext {
 }
 
 ios {
-    miinVersion = '15.0'
+    miVersion = '15.0'
 
-    infoPlist {
-        CFBundleShortVersionString = libraryVersion
-        CFBundleExecutable = "box2djni"
-        CFBundleName = "Box2dJNI"
-        CFBundleVersion = 1
-        CFBundleIdentifier {
-            device {
-                identifier = 'org.box2d.jni.ios'
-            }
-            simulator {
-                identifier = 'org.box2d.jni.ios.simulator'
-            }
+    def target = findProject('box2d.jni.ios.target')
+    if (!target) {
+        devices 'device-arm64', 'arm64', 'x86_64'
+    } else if (target == 'Device_ARM64') {
+        devices 'device-arm64'
+    } else if (target == 'Simulator_ARM64') {
+        devices 'arm64'
+    } else if (target == 'Simulator_x86_64') {
+        devices 'x86_64'
+    }
+
+    cmake {
+        workingDir = "${rootDir}/modules/libraries/box2d-bindings/c"
+    }
+
+    buildTypes {
+        debug {
+            arguments '-DTYPE_DEBUG=ON'
+        }
+        release {
+            arguments '-DTYPE_DEBUG=OFF'
         }
     }
 
-
+    productFlavors {
+        dp {
+            arguments '-DBOX2D_DOUBLE_PRECISION=ON'
+        }
+        sp {
+            arguments '-DBOX2D_DOUBLE_PRECISION=OFF'
+        }
+    }
 }

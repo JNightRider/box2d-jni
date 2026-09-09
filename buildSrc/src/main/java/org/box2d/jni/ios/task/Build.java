@@ -28,37 +28,24 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.ios;
+package org.box2d.jni.ios.task;
 
-import javax.inject.Inject;
-import org.gradle.api.Action;
-import org.gradle.api.model.ObjectFactory;
-import org.gradle.api.provider.Property;
+import org.box2d.jni.ios.IOSProperties;
+import org.gradle.api.DefaultTask;
+import org.gradle.api.tasks.TaskAction;
 
 /**
  *
  * @author wil
  */
-public abstract class IOSSetup {
-    
-    private final Property<String> miinVersion;
-    private final InfoPlist infoPlist;
-    
-    @Inject
-    public IOSSetup(ObjectFactory objects) {
-        miinVersion = objects.property(String.class);
-        infoPlist = objects.newInstance(InfoPlist.class);
-    }
+public class Build extends DefaultTask {
+    public static final String NAME = "build";
 
-    public InfoPlist getInfoPlist() {
-        return infoPlist;
-    }
-
-    public Property<String> getMiinVersion() {
-        return miinVersion;
-    }
-    
-    public void infoPlist(Action<? super InfoPlist> action) {
-        action.execute(infoPlist);
+    @TaskAction
+    public void build() {
+        IOSProperties setup = getProject().getExtensions()
+                                          .getByType(IOSProperties.class);
+        
+        System.out.println("build<>");
     }
 }

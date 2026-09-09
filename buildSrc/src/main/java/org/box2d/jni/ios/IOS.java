@@ -30,11 +30,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.ios;
 
+import org.box2d.jni.ios.task.Build;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.box2d.jni.ios.task.Xconfigure;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.process.ExecOperations;
 
@@ -50,13 +53,34 @@ public class IOS implements Plugin<Project> {
     public void apply(Project target) {
         target.getExtensions().create(
                 "ios",
-                IOSSetup.class
-        );
-        TaskProvider<TaskBuild> build = target.getTasks().register("build", TaskBuild.class);
-        TaskProvider<TaskPrepareIosFrameworkInputs> prepareIosFrameworkInputs = target.getTasks().register("prepareIosFrameworkInputs", TaskPrepareIosFrameworkInputs.class);
+                IOSProperties.class
+        );        
+        TaskContainer tasks = target.getTasks();
         
-        build.configure(task -> {
-            task.dependsOn(prepareIosFrameworkInputs);
+        TaskProvider<Build> build = tasks.register(Build.NAME, Build.class);
+        
+        TaskProvider<Xconfigure> configureIosDevice = tasks.register("configureIosDeviceARM64", Xconfigure.class, Device.device_arm64);
+        TaskProvider<Xconfigure> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", Xconfigure.class, Device.simulator_arm64);
+        TaskProvider<Xconfigure> configureIosSimulatorX86_64 = tasks.register("configureIosSimulator_x86_64", Xconfigure.class, Device.simulator_x86_64);
+
+        build.configure((task) -> {
+            IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);
+            Device[] devices = Device.parseValues(
+                iosp.getDevices().get()
+            );
+
+            for (Device device : devices) {
+                switch (device) {
+                    case device_arm64 ->
+                        task.dependsOn(configureIosDevice);
+                    case simulator_arm64 ->
+                        task.dependsOn(configureIosSimulatorArm64);
+                    case simulator_x86_64 ->
+                        task.dependsOn(configureIosSimulatorX86_64);
+                    default ->
+                        throw new AssertionError();
+                }
+            }
         });
     }
 

@@ -27,21 +27,54 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-package org.box2d.jni.ios;
+ */
+package org.box2d.jni.cmake;
 
-import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.TaskAction;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.inject.Inject;
+
+import org.gradle.api.model.ObjectFactory;
+import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.Property;
 
 /**
  *
  * @author wil
  */
-public class TaskBuild extends DefaultTask {
-    
-    @TaskAction
-    public void build() {
-        
-        IOSSetup setup = getProject().getExtensions().getByType(IOSSetup.class);
+public class CMakeProperty {
+
+    private final Property<String> workingDir;
+    private final ListProperty<String> cFlags;
+    private final ListProperty<String> arguments;
+
+    @Inject
+    public CMakeProperty(ObjectFactory objects) {
+        workingDir = objects.property(String.class);
+        cFlags = objects.listProperty(String.class);
+        arguments = objects.listProperty(String.class);
+
+        cFlags.convention(new ArrayList<>());
+        arguments.convention(new ArrayList<>());
+    }
+
+    public void arguments(String... values) {
+        arguments.addAll(Arrays.asList(values));
+    }
+
+    public void cFlags(String... values) {
+        cFlags.addAll(Arrays.asList(values));
+    }
+
+    public Property<String> getWorkingDir() {
+        return workingDir;
+    }
+
+    public ListProperty<String> getcFlags() {
+        return cFlags;
+    }
+
+    public ListProperty<String> getArguments() {
+        return arguments;
     }
 }

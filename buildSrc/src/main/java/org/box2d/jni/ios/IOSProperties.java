@@ -30,30 +30,67 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.ios;
 
+import java.util.ArrayList;
 import javax.inject.Inject;
+import org.box2d.jni.cmake.BuildTypeProperty;
+import org.box2d.jni.cmake.CMakeProperty;
+import org.box2d.jni.cmake.FlavorProperty;
+import org.gradle.api.Action;
+import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.model.ObjectFactory;
+import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 
 /**
  *
  * @author wil
  */
-public class CFBundleIdentifier {
+public abstract class IOSProperties {
     
-    private final String name;
-    private final Property<String> identifier;
+    private final Property<String> miVersion;
+    private final CMakeProperty cmake;
+    
+    private final NamedDomainObjectContainer<BuildTypeProperty> buildTypes;
+    private final NamedDomainObjectContainer<FlavorProperty> productFlavors;
+    private final ListProperty<String> devices;
     
     @Inject
-    public CFBundleIdentifier(String name, ObjectFactory objects) {
-        this.name = name;
-        this.identifier = objects.property(String.class);
+    public IOSProperties(ObjectFactory objects) {
+        miVersion = objects.property(String.class);
+        cmake = objects.newInstance(CMakeProperty.class);
+        
+        buildTypes = objects.domainObjectContainer(BuildTypeProperty.class);
+        productFlavors = objects.domainObjectContainer(FlavorProperty.class);
+        
+        devices = objects.listProperty(String.class);
+        devices.convention(new ArrayList<>());
+    }
+    
+    public void devices(String... values) {
+        devices.addAll(values);
     }
 
-    public String getName() {
-        return name;
+    public void cmake(Action<? super CMakeProperty> action) {
+        action.execute(cmake);
     }
 
-    public Property<String> getIdentifier() {
-        return identifier;
+    public NamedDomainObjectContainer<BuildTypeProperty> getBuildTypes() {
+        return buildTypes;
+    }
+
+    public NamedDomainObjectContainer<FlavorProperty> getProductFlavors() {
+        return productFlavors;
+    }
+
+    public ListProperty<String> getDevices() {
+        return devices;
+    }
+
+    public Property<String> getMiVersion() {
+        return miVersion;
+    }
+
+    public CMakeProperty getCMake() {
+        return cmake;
     }
 }
