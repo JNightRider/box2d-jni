@@ -234,7 +234,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 
     # Host de Autotools. El target real de iOS se indica mediante -target.
     if(IOS_ARCH STREQUAL "arm64")
-        set(LIBFFI_AUTOTOOLS_HOST "aarch64-apple-darwin")
+        set(LIBFFI_AUTOTOOLS_HOST "arm-apple-darwin")
     elseif(IOS_ARCH STREQUAL "x86_64")
         set(LIBFFI_AUTOTOOLS_HOST "x86_64-apple-darwin")
     else()
@@ -282,6 +282,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 
                 "./configure"
                 "--host=${LIBFFI_AUTOTOOLS_HOST}"
+                "--target=${LIBFFI_AUTOTOOLS_HOST}"
                 "--prefix=${LIBFFI_PREFIX}"
                 --disable-shared
                 --enable-static
