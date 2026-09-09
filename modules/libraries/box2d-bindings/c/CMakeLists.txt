@@ -120,7 +120,181 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
         BUILD_IN_SOURCE 1
     )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    message(STATUS "Compiling libffi for iOS")
+
     set(CMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE NO)
+
+    # Un ExternalProject de libffi debe compilar solamente una arquitectura.
+    # Device arm64, Simulator arm64 o Simulator x86_64.
+    list(LENGTH CMAKE_OSX_ARCHITECTURES IOS_ARCH_COUNT)
+
+    if(NOT IOS_ARCH_COUNT EQUAL 1)
+        message(FATAL_ERROR
+            "libffi debe compilarse una arquitectura por directorio de build. "
+            "Valor recibido: CMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}"
+        )
+    endif()
+
+    list(GET CMAKE_OSX_ARCHITECTURES 0 IOS_ARCH)
+
+    if(NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "13.0")
+    endif()
+
+    # Detectar SDK utilizado por el build principal.
+    #
+    # Valores esperados:
+    #   iphoneos
+    #   iphonesimulator
+    if(CMAKE_OSX_SYSROOT MATCHES "iphonesimulator")
+        set(IOS_SDK_NAME "iphonesimulator")
+        set(IOS_PLATFORM_NAME "simulator")
+    elseif(CMAKE_OSX_SYSROOT MATCHES "iphoneos")
+        set(IOS_SDK_NAME "iphoneos")
+        set(IOS_PLATFORM_NAME "device")
+    else()
+        message(FATAL_ERROR
+            "SDK de iOS no reconocido: ${CMAKE_OSX_SYSROOT}. "
+            "Usa iphoneos o iphonesimulator."
+        )
+    endif()
+
+    find_program(XCRUN_EXECUTABLE xcrun REQUIRED)
+
+    execute_process(
+        COMMAND
+            ${XCRUN_EXECUTABLE}
+            --sdk ${IOS_SDK_NAME}
+            --show-sdk-path
+
+        OUTPUT_VARIABLE IOS_SDK_PATH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        COMMAND_ERROR_IS_FATAL ANY
+    )
+
+    execute_process(
+        COMMAND
+            ${XCRUN_EXECUTABLE}
+            --sdk ${IOS_SDK_NAME}
+            --find clang
+
+        OUTPUT_VARIABLE IOS_CLANG
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        COMMAND_ERROR_IS_FATAL ANY
+    )
+
+    execute_process(
+        COMMAND
+            ${XCRUN_EXECUTABLE}
+            --sdk ${IOS_SDK_NAME}
+            --find ar
+
+        OUTPUT_VARIABLE IOS_AR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        COMMAND_ERROR_IS_FATAL ANY
+    )
+
+    execute_process(
+        COMMAND
+            ${XCRUN_EXECUTABLE}
+            --sdk ${IOS_SDK_NAME}
+            --find ranlib
+
+        OUTPUT_VARIABLE IOS_RANLIB
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        COMMAND_ERROR_IS_FATAL ANY
+    )
+
+    # Triple utilizado por Clang.
+    if(IOS_PLATFORM_NAME STREQUAL "device")
+        if(NOT IOS_ARCH STREQUAL "arm64")
+            message(FATAL_ERROR
+                "Actualmente iOS Device debe compilarse como arm64. "
+                "Arquitectura recibida: ${IOS_ARCH}"
+            )
+        endif()
+
+        set(IOS_CLANG_TARGET
+            "${IOS_ARCH}-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}"
+        )
+
+    elseif(IOS_PLATFORM_NAME STREQUAL "simulator")
+        if(NOT IOS_ARCH STREQUAL "arm64"
+           AND NOT IOS_ARCH STREQUAL "x86_64")
+            message(FATAL_ERROR
+                "Arquitectura no soportada para iOS Simulator: ${IOS_ARCH}. "
+                "Usa arm64 o x86_64."
+            )
+        endif()
+
+        set(IOS_CLANG_TARGET
+            "${IOS_ARCH}-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}-simulator"
+        )
+    endif()
+
+    # Host de Autotools. El target real de iOS se indica mediante -target.
+    if(IOS_ARCH STREQUAL "arm64")
+        set(LIBFFI_AUTOTOOLS_HOST "aarch64-apple-darwin")
+    elseif(IOS_ARCH STREQUAL "x86_64")
+        set(LIBFFI_AUTOTOOLS_HOST "x86_64-apple-darwin")
+    else()
+        message(FATAL_ERROR
+            "Arquitectura iOS no soportada: ${IOS_ARCH}"
+        )
+    endif()
+
+    # Evita que Device, Simulator arm64 y Simulator x86_64
+    # escriban en el mismo directorio.
+    set(LIBFFI_PREFIX
+        "${CMAKE_BINARY_DIR}/extern/libffi/${IOS_SDK_NAME}-${IOS_ARCH}"
+    )
+
+    set(LIBFFI_BUILD_DIR
+        "${CMAKE_BINARY_DIR}/extern/libffi-build/${IOS_SDK_NAME}-${IOS_ARCH}"
+    )
+
+    set(LIBFFI_CFLAGS
+        "-target ${IOS_CLANG_TARGET} -arch ${IOS_ARCH} -isysroot ${IOS_SDK_PATH} -fPIC"
+    )
+
+    message(STATUS "iOS SDK=${IOS_SDK_NAME}")
+    message(STATUS "iOS SDK path=${IOS_SDK_PATH}")
+    message(STATUS "iOS architecture=${IOS_ARCH}")
+    message(STATUS "iOS target=${IOS_CLANG_TARGET}")
+    message(STATUS "iOS deployment target=${CMAKE_OSX_DEPLOYMENT_TARGET}")
+    message(STATUS "libffi prefix=${LIBFFI_PREFIX}")
+    message(STATUS "libffi CFLAGS=${LIBFFI_CFLAGS}")
+
+    ExternalProject_Add(libffi_project
+        SOURCE_DIR
+            "${CMAKE_SOURCE_DIR}/extern/libffi"
+
+        BINARY_DIR
+            "${LIBFFI_BUILD_DIR}"
+
+        CONFIGURE_COMMAND
+            ${CMAKE_COMMAND} -E env
+                "CC=${IOS_CLANG}"
+                "AR=${IOS_AR}"
+                "RANLIB=${IOS_RANLIB}"
+                "CFLAGS=${LIBFFI_CFLAGS}"
+                "CPPFLAGS=${LIBFFI_CFLAGS}"
+
+                "./configure"
+                "--host=${LIBFFI_AUTOTOOLS_HOST}"
+                "--prefix=${LIBFFI_PREFIX}"
+                --disable-shared
+                --enable-static
+                --disable-docs
+                --disable-multi-os-directory
+
+        BUILD_COMMAND ${CMAKE_MAKE_PROGRAM} -j
+
+        INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install
+
+        BUILD_BYPRODUCTS
+            "${LIBFFI_PREFIX}/lib/libffi.a"
+    )
 
 else()
     # Configure JNI headers
