@@ -120,7 +120,25 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
         BUILD_IN_SOURCE 1
     )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
-find_package(JNI REQUIRED)
+
+    if(NOT EXISTS "$ENV{JAVA_HOME}/include/jni.h")
+        message(FATAL_ERROR
+            "No se encontro $ENV{JAVA_HOME}/include/jni.h"
+        )
+    endif()
+
+    if(NOT EXISTS "$ENV{JAVA_HOME}/include/darwin/jni_md.h")
+        message(FATAL_ERROR
+            "No se encontro $ENV{JAVA_HOME}/include/darwin/jni_md.h"
+        )
+    endif()
+
+    set(JNI_INCLUDE_DIRS
+        "$ENV{JAVA_HOME}/include"
+        "$ENV{JAVA_HOME}/include/darwin"
+    )
+
+
     message(STATUS "Compiling libffi for iOS")
 
     set(CMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE NO)
