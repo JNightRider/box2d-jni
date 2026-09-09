@@ -50,6 +50,12 @@ import org.gradle.process.ExecOperations;
  */
 public class IOS implements Plugin<Project> {
 
+    private static final Object[] DEPENDS = {
+        ":modules:libraries:box2d-bindings:unpackBox2dSource",
+        ":modules:libraries:box2d-bindings:unpackLibffiSource",
+        ":modules:libraries:box2d-core:classes"
+    };
+
     @Override
     public void apply(Project target) {
         target.getExtensions().create(
@@ -68,6 +74,18 @@ public class IOS implements Plugin<Project> {
         TaskProvider<Xbuild> buildIosSimulatorArm64 = tasks.register("buildIosSimulator_ARM64", Xbuild.class, Device.simulator_arm64);
         TaskProvider<Xbuild> buildIosSimulatorX86_64 = tasks.register("buildIosSimulator_x86_64", Xbuild.class, Device.simulator_x86_64);
         
+        // --- [ configure ] ---
+        configureIosDevice.configure((task) -> {
+            task.dependsOn(DEPENDS);
+        });
+        configureIosSimulatorArm64.configure((task) -> {
+            task.dependsOn(DEPENDS);
+        });
+        configureIosSimulatorX86_64.configure((task) -> {
+            task.dependsOn(DEPENDS);
+        });
+
+        // --- [ build ] ---
         buildIosDevice.configure((task) -> {
             task.dependsOn(configureIosDevice);
         });
@@ -83,12 +101,7 @@ public class IOS implements Plugin<Project> {
             Device[] devices = Device.parseValues(
                 iosp.getDevices().get()
             );
-            task.dependsOn(
-            ":modules:libraries:box2d-bindings:unpackBox2dSource",
-            ":modules:libraries:box2d-bindings:unpackLibffiSource",
-            ":modules:libraries:box2d-core:classes"
-            );
-            
+
             for (Device device : devices) {
                 switch (device) {
                     case device_arm64 ->
