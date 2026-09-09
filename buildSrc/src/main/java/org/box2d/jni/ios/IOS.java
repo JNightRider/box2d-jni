@@ -83,7 +83,12 @@ public class IOS implements Plugin<Project> {
             Device[] devices = Device.parseValues(
                 iosp.getDevices().get()
             );
-
+            task.dependsOn(
+            ":modules:libraries:box2d-bindings:unpackBox2dSource",
+            ":modules:libraries:box2d-bindings:unpackLibffiSource",
+            ":modules:libraries:box2d-core:classes"
+            );
+            
             for (Device device : devices) {
                 switch (device) {
                     case device_arm64 ->
