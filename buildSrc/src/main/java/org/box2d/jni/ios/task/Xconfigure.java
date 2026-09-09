@@ -100,7 +100,7 @@ public class Xconfigure extends DefaultTask {
                         "-DCMAKE_SYSTEM_NAME=iOS",
                         "-DCMAKE_OSX_SYSROOT=" + device.getType(),
                         "-DCMAKE_OSX_DEPLOYMENT_TARGET=" + minVersion,
-                        "-DCMAKE_OSX_ARCHITECTURES=" + device.getArchitecture(),
+                        "-DCMAKE_OSX_ARCHITECTURES=" + device.getNativeArch(),
                         "-DCMAKE_BUILD_TYPE=" + type.getName(),
                         "-DBUILD_SHARED_LIBS=OFF",
                         "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
