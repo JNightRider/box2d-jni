@@ -32,6 +32,12 @@ jobs:
       - name: gradlew build
         run: |
             ./gradlew -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false -Pbox2d.jni.ios=true build
+      - name: Upload test        
+        uses: actions/upload-artifact@v7
+        with:
+          name: box2d-jni-test
+          path: |
+            ./**
 
 #  Android:
 #    if: contains(toJson(github.event.commits), '[ci skip] ') == false
