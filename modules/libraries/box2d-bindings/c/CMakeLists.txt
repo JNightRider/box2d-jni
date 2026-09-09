@@ -278,7 +278,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
                 "AR=${IOS_AR}"
                 "RANLIB=${IOS_RANLIB}"
                 "CFLAGS=${LIBFFI_CFLAGS}"
-                "CPPFLAGS=${LIBFFI_CFLAGS}"
+                "LDFLAGS=${LIBFFI_CFLAGS}"
 
                 "./configure"
                 "--host=${LIBFFI_AUTOTOOLS_HOST}"
