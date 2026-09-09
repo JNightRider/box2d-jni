@@ -45,12 +45,15 @@ import org.gradle.api.provider.Property;
 public class CMakeProperty {
 
     private final Property<String> workingDir;
+    private final Property<String> outputDir;
+    
     private final ListProperty<String> cFlags;
     private final ListProperty<String> arguments;
 
     @Inject
     public CMakeProperty(ObjectFactory objects) {
         workingDir = objects.property(String.class);
+        outputDir = objects.property(String.class);
         cFlags = objects.listProperty(String.class);
         arguments = objects.listProperty(String.class);
 
@@ -64,6 +67,26 @@ public class CMakeProperty {
 
     public void cFlags(String... values) {
         cFlags.addAll(Arrays.asList(values));
+    }
+
+    public Property<String> getOutputDir() {
+        return outputDir;
+    }
+ 
+    public String getCFlagsStr() {
+        StringBuilder builder = new StringBuilder();
+        for (String command : cFlags.get()) {
+            builder.append(command).append(' ');
+        }
+        return String.valueOf(builder).trim();
+    }
+
+    public String getArgumentsStr() {
+        StringBuilder builder = new StringBuilder();
+        for (String command : arguments.get()) {
+            builder.append(command).append(' ');
+        }
+        return String.valueOf(builder).trim();
     }
 
     public Property<String> getWorkingDir() {

@@ -34,6 +34,7 @@ import org.box2d.jni.ios.task.Build;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.box2d.jni.ios.task.Xbuild;
 import org.box2d.jni.ios.task.Xconfigure;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -63,6 +64,20 @@ public class IOS implements Plugin<Project> {
         TaskProvider<Xconfigure> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", Xconfigure.class, Device.simulator_arm64);
         TaskProvider<Xconfigure> configureIosSimulatorX86_64 = tasks.register("configureIosSimulator_x86_64", Xconfigure.class, Device.simulator_x86_64);
 
+        TaskProvider<Xbuild> buildIosDevice = tasks.register("buildIosDeviceARM64", Xbuild.class, Device.device_arm64);
+        TaskProvider<Xbuild> buildIosSimulatorArm64 = tasks.register("buildIosSimulator_ARM64", Xbuild.class, Device.simulator_arm64);
+        TaskProvider<Xbuild> buildIosSimulatorX86_64 = tasks.register("buildIosSimulator_x86_64", Xbuild.class, Device.simulator_x86_64);
+        
+        buildIosDevice.configure((task) -> {
+            task.dependsOn(configureIosDevice);
+        });
+        buildIosSimulatorArm64.configure((task) -> {
+            task.dependsOn(configureIosSimulatorArm64);
+        });
+        buildIosSimulatorX86_64.configure((task) -> {
+            task.dependsOn(configureIosSimulatorX86_64);
+        });
+        
         build.configure((task) -> {
             IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);
             Device[] devices = Device.parseValues(
@@ -72,11 +87,11 @@ public class IOS implements Plugin<Project> {
             for (Device device : devices) {
                 switch (device) {
                     case device_arm64 ->
-                        task.dependsOn(configureIosDevice);
+                        task.dependsOn(buildIosDevice);
                     case simulator_arm64 ->
-                        task.dependsOn(configureIosSimulatorArm64);
+                        task.dependsOn(buildIosSimulatorArm64);
                     case simulator_x86_64 ->
-                        task.dependsOn(configureIosSimulatorX86_64);
+                        task.dependsOn(buildIosSimulatorX86_64);
                     default ->
                         throw new AssertionError();
                 }

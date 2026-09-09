@@ -31,48 +31,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.ios.task;
 
 import java.io.File;
-import java.util.List;
 import javax.inject.Inject;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
-import org.box2d.jni.cmake.BuildTypeProperty;
-
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
-import org.box2d.jni.util.Debug;
-import static org.box2d.jni.util.Debug.*;
 import org.box2d.jni.util.IOUtils;
-
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecOperations;
+import static org.box2d.jni.util.Debug.*;
 
 /**
  *
  * @author wil
  */
-public class Xconfigure extends DefaultTask {
+public class Xbuild extends DefaultTask {
 
     private final Device device;
     private final ExecOperations cmd;
 
     @Inject
-    public Xconfigure(Device device, ExecOperations cmd) {
+    public Xbuild(Device device, ExecOperations cmd) {
         this.device = device;
         this.cmd = cmd;
     }
 
     @TaskAction
-    public void configure() {
+    public void build() {
         IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
         iosp.getBuildTypes().all((buildType) -> {
             iosp.getProductFlavors().all((flavor) -> {
-                String minVersion = iosp.getMiVersion().get();
-                String workDir = iosp.getCMake()
-                                     .getWorkingDir()
-                                     .get();
-
-                File outputDir = IOUtils.checkDir(
+                 File outputDir = IOUtils.checkDir(
                     iosp.getCMake().getOutputDir().get()
                 );
                 
@@ -80,34 +70,21 @@ public class Xconfigure extends DefaultTask {
                 Flavor fv = flavor.getFlavor().get();
                 
                 File buildDir = IOUtils.buildNameDir(outputDir, "ios_" + device.getArchitecture(), type, fv);
-                IOUtils.checkDir(buildDir);
                 
-                String arguments = IOSProperties.getCMakeArguments(iosp, buildType, flavor);
-                
-                log("CMake " + type.getName() + ':' + fv.getName());
-                logMore("minVersion:", minVersion);
-                logMore("workDir:   ", workDir);
-                logMore("outputDir: ", outputDir);
-                logMore("buildDir:  ", buildDir);
+                log("Build " + type.getName() + ':' + fv.getName());
+                logMore("buildDir:", buildDir);
+                logMore("target:   ", type.getName());
 
                 cmd.exec((exec) -> {
                     exec.commandLine(
                         "cmake",
-                        "-S", workDir,
-                        "-B", buildDir,
-                        "-G", "Xcode",
-                        "-DCMAKE_SYSTEM_NAME=iOS",
-                        "-DCMAKE_OSX_SYSROOT=" + device.getType(),
-                        "-DCMAKE_OSX_DEPLOYMENT_TARGET=" + minVersion,
-                        "-DCMAKE_OSX_ARCHITECTURES=" + device.getArchitecture(),
-                        "-DCMAKE_BUILD_TYPE=" + type.getName(),
-                        "-DBUILD_SHARED_LIBS=OFF",
-                        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
-                        "-DBOX2D_BUILD_IOS=ON",
-                         arguments
+                        "--build", buildDir,
+                        "--config", type.getName(),
+                        "--parallel"
                     );
                 });
-            });            
+
+            });
         });
     }
 }

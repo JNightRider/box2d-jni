@@ -47,6 +47,29 @@ import org.gradle.api.provider.Property;
  */
 public abstract class IOSProperties {
     
+    public static String getCMakeArguments(IOSProperties iosp, BuildTypeProperty buildType, FlavorProperty flavor) {
+        StringBuilder builder = new StringBuilder();
+        CMakeProperty makeProperty = iosp.getCMake();
+        
+        String cFlags = (
+            makeProperty.getCFlagsStr() + ' ' + buildType.getCFlagsStr() + ' ' + flavor.getCFlagsStr()
+        ).trim();
+        
+        String argumnets = (
+            makeProperty.getArgumentsStr() + ' ' + buildType.getArgumentsStr() + ' ' + flavor.getArgumentsStr()
+        ).trim();
+        
+        builder.append(argumnets);
+        if (! cFlags.isEmpty()) {
+            builder.append(' ')
+                   .append("-DCMAKE_C_FLAGS=")
+                   .append('"')
+                   .append(cFlags)
+                   .append('"');
+        }
+        return String.valueOf(builder).trim();
+    }
+    
     private final Property<String> miVersion;
     private final CMakeProperty cmake;
     

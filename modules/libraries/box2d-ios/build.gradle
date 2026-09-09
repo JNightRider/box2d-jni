@@ -26,6 +26,7 @@ ios {
 
     cmake {
         workingDir = "${rootDir}/modules/libraries/box2d-bindings/c"
+        outputDir = "${layout.buildDirectory.asFile.get()}/cxx"
     }
 
     buildTypes {
