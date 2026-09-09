@@ -18,6 +18,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
       - name: Verify toolchain
         run: |
           java -version
@@ -28,7 +29,10 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-path
           xcrun --sdk iphonesimulator --show-sdk-version
           xcrun --sdk iphonesimulator --show-sdk-path
-    
+      - name: gradlew build
+        run: |
+            ./gradlew -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false -Pbox2d.jni.ios=true build
+
 #  Android:
 #    if: contains(toJson(github.event.commits), '[ci skip] ') == false
 #    runs-on: ubuntu-latest
