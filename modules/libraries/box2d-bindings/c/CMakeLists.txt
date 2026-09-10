@@ -139,20 +139,9 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         message(FATAL_ERROR "Unrecognized iOS SDK: ${CMAKE_OSX_SYSROOT}"  )
     endif()
 
-    find_program(XCRUN_EXECUTABLE
-        NAMES xcrun
-        REQUIRED
-    )
-
-    find_program(MAKE_EXECUTABLE
-        NAMES gmake make
-        REQUIRED
-    )
-
-    find_program(SH_EXECUTABLE
-        NAMES sh
-        REQUIRED
-    )
+    find_program(XCRUN_EXECUTABLE NAMES xcrun REQUIRED )
+    find_program(MAKE_EXECUTABLE NAMES gmake make REQUIRED )
+    find_program(SH_EXECUTABLE NAMES sh REQUIRED )
 
     execute_process(
         COMMAND
@@ -339,8 +328,8 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
                 "CFLAGS=${LIBFFI_CFLAGS}"
                 "CPPFLAGS=-isysroot ${IOS_SDK_PATH}"
                 "LDFLAGS=-target ${IOS_CLANG_TARGET} -arch ${IOS_ARCH} -isysroot ${IOS_SDK_PATH}"
-            "${SH_EXECUTABLE}"
-                "${LIBFFI_SOURCE_DIR}/configure"
+
+                "./configure"
                 "--host=${LIBFFI_AUTOTOOLS_HOST}"
                 "--prefix=${LIBFFI_PREFIX}"
                 --disable-shared
