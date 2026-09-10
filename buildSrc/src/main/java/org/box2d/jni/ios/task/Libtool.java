@@ -31,6 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.ios.task;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
@@ -91,23 +93,22 @@ public class Libtool extends DefaultTask {
             throw new IllegalStateException("The file does not exist: " + libffi);
         }
         
-        StringBuilder names = new StringBuilder();
+        List<File> libraries = new ArrayList<>();
         for (File file : nativeFile.listFiles()) {
             logMore("\t<&" + file);
-            names.append(file).append(' ');
+            libraries.add(file);
         }
         logMore("\t<&" + libffi);
         
         File outDir = new File(buildFile, "xcode-native");
         IOUtils.checkDir(outDir);
 
+        libraries.add(libffi);
+
         cmd.exec((exec) -> {
-            exec.commandLine(
-                "libtool", "-static",
-                String.valueOf(names).trim(),
-                libffi,
-                "-o", new File(outDir, "libbox2d-jni-ios.a")
-            );
+            exec.commandLine("libtool", "-static");
+            exec.args(libraries);
+            exec.args("-o", new File(outDir, "libbox2d-jni-ios.a"));
         });
     }
 }
