@@ -105,6 +105,7 @@ public class Xconfigure extends DefaultTask {
                         "-DBUILD_SHARED_LIBS=OFF",
                         "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
                         "-DBOX2D_BUILD_IOS=ON",
+                        "-DBINDINGS_SUFFIX=_" + type.getName() + fv.getName(),
                          arguments
                     );
                 });
