@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.ios;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import org.box2d.jni.cmake.BuildTypeProperty;
 import org.box2d.jni.cmake.CMakeProperty;
@@ -47,27 +48,29 @@ import org.gradle.api.provider.Property;
  */
 public abstract class IOSProperties {
     
-    public static String getCMakeArguments(IOSProperties iosp, BuildTypeProperty buildType, FlavorProperty flavor) {
-        StringBuilder builder = new StringBuilder();
+    public static List<String> getCMakeArguments(IOSProperties iosp, BuildTypeProperty buildType, FlavorProperty flavor) {
+        List<String> args = new ArrayList<>();
         CMakeProperty makeProperty = iosp.getCMake();
-        
+
+        for (String val : iosp.getCMake().getArguments().get()) {
+            args.add(val);
+        }
+        for (String val : buildType.getArguments().get()) {
+            args.add(val);
+        }
+        for (String val : flavor.getArguments().get()) {
+            args.add(val);
+        }
+
         String cFlags = (
             makeProperty.getCFlagsStr() + ' ' + buildType.getCFlagsStr() + ' ' + flavor.getCFlagsStr()
         ).trim();
-        
-        String argumnets = (
-            makeProperty.getArgumentsStr() + ' ' + buildType.getArgumentsStr() + ' ' + flavor.getArgumentsStr()
-        ).trim();
-        
-        builder.append(argumnets);
         if (! cFlags.isEmpty()) {
-            builder.append(' ')
-                   .append("-DCMAKE_C_FLAGS=")
-                   .append('"')
-                   .append(cFlags)
-                   .append('"');
+            args.add(
+                    "-DCMAKE_C_FLAGS=" + cFlags
+            );
         }
-        return String.valueOf(builder).trim();
+        return args;
     }
     
     private final Property<String> miVersion;

@@ -82,7 +82,7 @@ public class Xconfigure extends DefaultTask {
                 File buildDir = IOUtils.buildNameDir(outputDir, "ios-" + device.getType() + '_' + device.getArchitecture(), type, fv);
                 IOUtils.checkDir(buildDir);
                 
-                String arguments = IOSProperties.getCMakeArguments(iosp, buildType, flavor);
+                List<String> arguments = IOSProperties.getCMakeArguments(iosp, buildType, flavor);
                 
                 log("CMake " + type.getName() + ':' + fv.getName());
                 logMore("minVersion:", minVersion);
@@ -93,21 +93,24 @@ public class Xconfigure extends DefaultTask {
 
                 cmd.exec((exec) -> {
                     exec.commandLine(
-                        "cmake",
-                        "-S", workDir,
-                        "-B", buildDir,
-                        "-G", "Xcode",
-                        "-DCMAKE_SYSTEM_NAME=iOS",
-                        "-DCMAKE_OSX_SYSROOT=" + device.getType(),
-                        "-DCMAKE_OSX_DEPLOYMENT_TARGET=" + minVersion,
-                        "-DCMAKE_OSX_ARCHITECTURES=" + device.getNativeArch(),
-                        "-DCMAKE_BUILD_TYPE=" + type.getName(),
-                        "-DBUILD_SHARED_LIBS=OFF",
-                        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
-                        "-DBOX2D_BUILD_IOS=ON",
-                        "-DBINDINGS_SUFFIX=_" + type.getName() + fv.getName(),
-                         arguments
+                            "cmake",
+                            "-S", workDir,
+                            "-B", buildDir,
+                            "-G", "Xcode"
                     );
+                    exec.args(
+                            "-DCMAKE_SYSTEM_NAME=iOS",
+                            "-DCMAKE_OSX_SYSROOT=" + device.getType(),
+                            "-DCMAKE_OSX_DEPLOYMENT_TARGET=" + minVersion,
+                            "-DCMAKE_OSX_ARCHITECTURES=" + device.getNativeArch(),
+                            "-DCMAKE_BUILD_TYPE=" + type.getName(),
+                            "-DBUILD_SHARED_LIBS=OFF",
+                            "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+                            "-DBOX2D_BUILD_IOS=ON",
+                            "-DBINDINGS_SUFFIX=_" + type.getName() + fv.getName()
+                    );
+                    exec.args(arguments);
+
                 });
             });            
         });
