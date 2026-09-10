@@ -86,14 +86,28 @@ public class Libtool extends DefaultTask {
     }
     
     private void libtoolStatic(File buildFile, File nativeFile) {
-        File libffi = new File(buildFile, "extern/libffi/iphoneos-arm64/lib/libffi.a");
+        File libffi = new File(buildFile, "extern/libffi/lib/libffi.a");
         if (! libffi.exists()) {
-            throw new IllegalStateException("libfii.a");
+            throw new IllegalStateException("The file does not exist: " + libffi);
         }
         
+        StringBuilder names = new StringBuilder();
         for (File file : nativeFile.listFiles()) {
             logMore("\t<&" + file);
+            names.append(file).append(' ');
         }
         logMore("\t<&" + libffi);
+        
+        File outDir = new File(buildFile, "xcode-native");
+        IOUtils.checkDir(outDir);
+
+        cmd.exec((exec) -> {
+            exec.commandLine(
+                "libtool", "-static",
+                String.valueOf(names).trim(),
+                libffi,
+                "-o", new File(outDir, "libbox2d-jni-ios.a")
+            );
+        });
     }
 }

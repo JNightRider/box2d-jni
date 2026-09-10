@@ -101,6 +101,18 @@ public class IOS implements Plugin<Project> {
             task.dependsOn(configureIosSimulatorX86_64);
         });
         
+        
+        // --- [ libtool ] ---
+        libtoolIosDevice.configure((task) -> {
+            task.dependsOn(buildIosDevice);
+        });
+        libtoolIosSimulatorArm64.configure((task) -> {
+            task.dependsOn(buildIosSimulatorArm64);
+        });
+        libtoolIosSimulatorX86_64.configure((task) -> {
+            task.dependsOn(buildIosSimulatorX86_64);
+        });
+        
         build.configure((task) -> {
             IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);
             Device[] devices = Device.parseValues(
@@ -110,11 +122,11 @@ public class IOS implements Plugin<Project> {
             for (Device device : devices) {
                 switch (device) {
                     case device_arm64 ->
-                        task.dependsOn(buildIosDevice);
+                        task.dependsOn(libtoolIosDevice);
                     case simulator_arm64 ->
-                        task.dependsOn(buildIosSimulatorArm64);
+                        task.dependsOn(libtoolIosSimulatorArm64);
                     case simulator_x86_64 ->
-                        task.dependsOn(buildIosSimulatorX86_64);
+                        task.dependsOn(libtoolIosSimulatorX86_64);
                     default ->
                         throw new AssertionError();
                 }
