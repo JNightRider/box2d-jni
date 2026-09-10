@@ -328,8 +328,8 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
                 "CFLAGS=${LIBFFI_CFLAGS}"
                 "CPPFLAGS=-isysroot ${IOS_SDK_PATH}"
                 "LDFLAGS=-target ${IOS_CLANG_TARGET} -arch ${IOS_ARCH} -isysroot ${IOS_SDK_PATH}"
-
-                "./configure"
+            "${SH_EXECUTABLE}"
+                "${LIBFFI_SOURCE_DIR}/configure"
                 "--host=${LIBFFI_AUTOTOOLS_HOST}"
                 "--prefix=${LIBFFI_PREFIX}"
                 --disable-shared
