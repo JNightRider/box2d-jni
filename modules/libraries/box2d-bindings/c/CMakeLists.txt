@@ -155,13 +155,6 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         ERROR_VARIABLE IOS_SDK_ERROR
     )
 
-    if(NOT IOS_SDK_RESULT EQUAL 0 OR NOT EXISTS "${IOS_SDK_PATH}")
-        message(FATAL_ERROR
-            "No se pudo obtener el SDK ${IOS_SDK_NAME}:\n"
-            "${IOS_SDK_ERROR}"
-        )
-    endif()
-
     execute_process(
         COMMAND
             "${XCRUN_EXECUTABLE}"
@@ -173,13 +166,6 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         OUTPUT_STRIP_TRAILING_WHITESPACE
         ERROR_VARIABLE IOS_CLANG_ERROR
     )
-
-    if(NOT IOS_CLANG_RESULT EQUAL 0 OR NOT EXISTS "${IOS_CLANG}")
-        message(FATAL_ERROR
-            "No se pudo localizar clang para ${IOS_SDK_NAME}:\n"
-            "${IOS_CLANG_ERROR}"
-        )
-    endif()
 
     execute_process(
         COMMAND
@@ -193,13 +179,6 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         ERROR_VARIABLE IOS_AR_ERROR
     )
 
-    if(NOT IOS_AR_RESULT EQUAL 0 OR NOT EXISTS "${IOS_AR}")
-        message(FATAL_ERROR
-            "No se pudo localizar ar:\n"
-            "${IOS_AR_ERROR}"
-        )
-    endif()
-
     execute_process(
         COMMAND
             "${XCRUN_EXECUTABLE}"
@@ -212,81 +191,25 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         ERROR_VARIABLE IOS_RANLIB_ERROR
     )
 
-    if(NOT IOS_RANLIB_RESULT EQUAL 0 OR NOT EXISTS "${IOS_RANLIB}")
-        message(FATAL_ERROR
-            "No se pudo localizar ranlib:\n"
-            "${IOS_RANLIB_ERROR}"
-        )
-    endif()
-
     if(IOS_PLATFORM_NAME STREQUAL "device")
-        if(NOT IOS_ARCH STREQUAL "arm64")
-            message(FATAL_ERROR
-                "Arquitectura iOS Device no soportada: ${IOS_ARCH}"
-            )
-        endif()
-
-        set(IOS_CLANG_TARGET
-            "arm64-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}"
-        )
-
-        set(LIBFFI_AUTOTOOLS_HOST
-            "aarch64-apple-darwin"
-        )
+        set(IOS_CLANG_TARGET "arm64-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}")
+        set(LIBFFI_AUTOTOOLS_HOST "aarch64-apple-darwin" )
     else()
         if(IOS_ARCH STREQUAL "arm64")
-            set(IOS_CLANG_TARGET
-                "arm64-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}-simulator"
-            )
-
-            set(LIBFFI_AUTOTOOLS_HOST
-                "aarch64-apple-darwin"
-            )
+            set(IOS_CLANG_TARGET "arm64-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}-simulator")
+            set(LIBFFI_AUTOTOOLS_HOST "aarch64-apple-darwin" )
         elseif(IOS_ARCH STREQUAL "x86_64")
-            set(IOS_CLANG_TARGET
-                "x86_64-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}-simulator"
-            )
-
-            set(LIBFFI_AUTOTOOLS_HOST
-                "x86_64-apple-darwin"
-            )
+            set(IOS_CLANG_TARGET "x86_64-apple-ios${CMAKE_OSX_DEPLOYMENT_TARGET}-simulator")
+            set(LIBFFI_AUTOTOOLS_HOST "x86_64-apple-darwin" )
         else()
-            message(FATAL_ERROR
-                "Arquitectura del simulador no soportada: ${IOS_ARCH}"
-            )
+            message(FATAL_ERROR "Unsupported simulator architecture: ${IOS_ARCH}")
         endif()
     endif()
 
-    set(LIBFFI_SOURCE_DIR
-        "${CMAKE_CURRENT_SOURCE_DIR}/extern/libffi"
-    )
-
-    set(LIBFFI_PREFIX
-        "${CMAKE_BINARY_DIR}/extern/libffi/${IOS_SDK_NAME}-${IOS_ARCH}"
-    )
-
-    set(LIBFFI_BUILD_DIR
-        "${CMAKE_BINARY_DIR}/extern/libffi-build/${IOS_SDK_NAME}-${IOS_ARCH}"
-    )
-
-    set(LIBFFI_LOG_DIR
-        "${CMAKE_BINARY_DIR}/extern/libffi-logs/${IOS_SDK_NAME}-${IOS_ARCH}"
-    )
-
-    if(NOT EXISTS "${LIBFFI_SOURCE_DIR}")
-        message(FATAL_ERROR
-            "No existe LIBFFI_SOURCE_DIR:\n"
-            "  ${LIBFFI_SOURCE_DIR}"
-        )
-    endif()
-
-    if(NOT EXISTS "${LIBFFI_SOURCE_DIR}/configure")
-        message(FATAL_ERROR
-            "No existe el script configure:\n"
-            "  ${LIBFFI_SOURCE_DIR}/configure\n"
-            "Comprueba que se descomprimio el tarball oficial de libffi."
-        )
-    endif()
+    set(LIBFFI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/extern/libffi")
+    set(LIBFFI_PREFIX "${CMAKE_BINARY_DIR}/extern/libffi/${IOS_SDK_NAME}-${IOS_ARCH}")
+    set(LIBFFI_BUILD_DIR "${CMAKE_BINARY_DIR}/extern/libffi-build/${IOS_SDK_NAME}-${IOS_ARCH}")
+    set(LIBFFI_LOG_DIR "${CMAKE_BINARY_DIR}/extern/libffi-logs/${IOS_SDK_NAME}-${IOS_ARCH}")
 
     set(LIBFFI_CFLAGS
         "-target ${IOS_CLANG_TARGET} -arch ${IOS_ARCH} -isysroot ${IOS_SDK_PATH} -fPIC"
@@ -307,18 +230,10 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
     message(STATUS "libffi CFLAGS=${LIBFFI_CFLAGS}")
 
     ExternalProject_Add(libffi_project
-        PREFIX
-            "${CMAKE_BINARY_DIR}/libffi_project-prefix"
-
-        SOURCE_DIR
-            "${LIBFFI_SOURCE_DIR}"
-
-        BINARY_DIR
-            "${LIBFFI_BUILD_DIR}"
-
-        LOG_DIR
-            "${LIBFFI_LOG_DIR}"
-
+        PREFIX "${CMAKE_BINARY_DIR}/libffi_project-prefix"
+        SOURCE_DIR "${LIBFFI_SOURCE_DIR}"
+        BINARY_DIR "${LIBFFI_BUILD_DIR}"
+        LOG_DIR  "${LIBFFI_LOG_DIR}"
 
         CONFIGURE_COMMAND
             "${CMAKE_COMMAND}" -E env
@@ -328,6 +243,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
                 "CFLAGS=${LIBFFI_CFLAGS}"
                 "CPPFLAGS=-isysroot ${IOS_SDK_PATH}"
                 "LDFLAGS=-target ${IOS_CLANG_TARGET} -arch ${IOS_ARCH} -isysroot ${IOS_SDK_PATH}"
+
             "${SH_EXECUTABLE}"
                 "${LIBFFI_SOURCE_DIR}/configure"
                 "--host=${LIBFFI_AUTOTOOLS_HOST}"
@@ -337,14 +253,9 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
                 --disable-docs
                 --disable-multi-os-directory
 
-        BUILD_COMMAND
-            "${MAKE_EXECUTABLE}" -j2
-
-        INSTALL_COMMAND
-            "${MAKE_EXECUTABLE}" install
-
-        BUILD_BYPRODUCTS
-            "${LIBFFI_PREFIX}/lib/libffi.a"
+        BUILD_COMMAND "${MAKE_EXECUTABLE}" -j2
+        INSTALL_COMMAND "${MAKE_EXECUTABLE}" install
+        BUILD_BYPRODUCTS "${LIBFFI_PREFIX}/lib/libffi.a"
 
         LOG_CONFIGURE OFF
         LOG_BUILD OFF
