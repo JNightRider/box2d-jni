@@ -34,6 +34,7 @@ import org.box2d.jni.ios.task.Build;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.box2d.jni.ios.task.Libtool;
 import org.box2d.jni.ios.task.Xbuild;
 import org.box2d.jni.ios.task.Xconfigure;
 import org.gradle.api.Plugin;
@@ -73,6 +74,10 @@ public class IOS implements Plugin<Project> {
         TaskProvider<Xbuild> buildIosDevice = tasks.register("buildIosDeviceARM64", Xbuild.class, Device.device_arm64);
         TaskProvider<Xbuild> buildIosSimulatorArm64 = tasks.register("buildIosSimulator_ARM64", Xbuild.class, Device.simulator_arm64);
         TaskProvider<Xbuild> buildIosSimulatorX86_64 = tasks.register("buildIosSimulator_x86_64", Xbuild.class, Device.simulator_x86_64);
+        
+        TaskProvider<Libtool> libtoolIosDevice = tasks.register("libtoolIosDeviceARM64", Libtool.class, Device.device_arm64);
+        TaskProvider<Libtool> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", Libtool.class, Device.simulator_arm64);
+        TaskProvider<Libtool> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", Libtool.class, Device.simulator_x86_64);
         
         // --- [ configure ] ---
         configureIosDevice.configure((task) -> {

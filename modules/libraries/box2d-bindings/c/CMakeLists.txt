@@ -207,7 +207,6 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
     endif()
 
     set(LIBFFI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/extern/libffi")
-    set(LIBFFI_PREFIX "${CMAKE_BINARY_DIR}/extern/libffi/${IOS_SDK_NAME}-${IOS_ARCH}")
     set(LIBFFI_BUILD_DIR "${CMAKE_BINARY_DIR}/extern/libffi-build/${IOS_SDK_NAME}-${IOS_ARCH}")
     set(LIBFFI_LOG_DIR "${CMAKE_BINARY_DIR}/extern/libffi-logs/${IOS_SDK_NAME}-${IOS_ARCH}")
 
@@ -226,7 +225,6 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
     message(STATUS "Make executable=${MAKE_EXECUTABLE}")
     message(STATUS "libffi source=${LIBFFI_SOURCE_DIR}")
     message(STATUS "libffi build=${LIBFFI_BUILD_DIR}")
-    message(STATUS "libffi prefix=${LIBFFI_PREFIX}")
     message(STATUS "libffi CFLAGS=${LIBFFI_CFLAGS}")
 
     ExternalProject_Add(libffi_project
