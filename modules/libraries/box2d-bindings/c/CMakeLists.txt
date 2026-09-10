@@ -256,16 +256,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         BUILD_COMMAND "${MAKE_EXECUTABLE}" -j2
         INSTALL_COMMAND "${MAKE_EXECUTABLE}" install
         BUILD_BYPRODUCTS "${LIBFFI_PREFIX}/lib/libffi.a"
-
-        LOG_CONFIGURE OFF
-        LOG_BUILD OFF
-        LOG_INSTALL OFF
-
-        USES_TERMINAL_CONFIGURE TRUE
-        USES_TERMINAL_BUILD TRUE
-        USES_TERMINAL_INSTALL TRUE
     )
-
 
 else()
     # Configure JNI headers
