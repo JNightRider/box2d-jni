@@ -41,6 +41,7 @@ import java.util.Map;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
 import org.box2d.jni.ios.task.Libtool;
+import org.box2d.jni.ios.task.Lipo;
 import org.box2d.jni.ios.task.Xbuild;
 import org.box2d.jni.ios.task.Xcframework;
 import org.box2d.jni.ios.task.Xconfigure;
@@ -93,7 +94,9 @@ public class IOS implements Plugin<Project> {
 
             for (Flavor flavor : Flavor.values()) {
                 TaskProvider<Xcframework> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), Xcframework.class, type, flavor);
-                taskXcframework.configure((task) -> {
+                TaskProvider<Lipo> taskLipo = tasks.register("lipo" + type.getName() + flavor.getName(), Lipo.class, type, flavor);
+                
+                taskLipo.configure((task) -> {
                     IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);
                     Device[] devices = Device.parseValues(
                             iosp.getDevices().get()
@@ -111,6 +114,10 @@ public class IOS implements Plugin<Project> {
                                 throw new AssertionError();
                         }
                     }
+                });
+                
+                taskXcframework.configure((task) -> {
+                    task.dependsOn(taskLipo);
                 });
                 map.put(flavor, taskXcframework);
             }

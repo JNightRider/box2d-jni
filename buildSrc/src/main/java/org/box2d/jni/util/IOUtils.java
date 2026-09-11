@@ -31,6 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
 
@@ -40,6 +44,18 @@ import org.box2d.jni.Flavor;
  */
 public class IOUtils {
     
+    public static void flCopy(List<File> sources, File output) {
+        try {
+            output.mkdirs();
+            for (File file : sources) {
+                File newFile = new File(output, file.getName());
+                Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("The file could not be copied", e);
+        }
+    }
+
     public static File buildNameDir(File root, String prefix, BuildType type, Flavor flavor) {
         String name = prefix + '-' + type.getName() + '_' + flavor.getName();
         return new File(root, name);

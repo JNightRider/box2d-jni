@@ -36,11 +36,10 @@ import java.util.List;
 import javax.inject.Inject;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
-import org.box2d.jni.cmake.BuildTypeProperty;
-import org.box2d.jni.cmake.FlavorProperty;
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
-import static org.box2d.jni.util.Debug.*;
+import static org.box2d.jni.util.Debug.log;
+import static org.box2d.jni.util.Debug.logMore;
 import org.box2d.jni.util.IOUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
@@ -50,48 +49,70 @@ import org.gradle.process.ExecOperations;
  *
  * @author wil
  */
-public class Xcframework extends DefaultTask {
-
+public class Lipo extends DefaultTask {
+    
     private final BuildType targetType;
     private final Flavor targetFlavor;
     private final ExecOperations cmd;
 
     @Inject
-    public Xcframework(BuildType targetType, Flavor targetFlavor, ExecOperations cmd) {
+    public Lipo(BuildType targetType, Flavor targetFlavor, ExecOperations cmd) {
         this.targetType = targetType;
         this.targetFlavor = targetFlavor;
         this.cmd = cmd;
     }
-
+    
     @TaskAction
-    public void framework() {
-//        log("Xcframework " + targetType + ':' + targetFlavor);
-//        
-//        IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
-//        File buildDir = new File(iosp.getCMake().getOutputDir().get());
-//        File outputDir = new File(buildDir, "Xcframework");
-//        
-//        File[] files = buildDir.listFiles();
-//        List<File> xcfile    = new ArrayList<>();
-//        for (File file : files) {
-//            String name = file.getName();
-//
-//            if (name.contains(targetType.getName() + '_' + targetFlavor.getName())) {
-//                File liba = new File(file, "xcode-native/libbox2d-jni-ios.a");
-//                logMore(" << " + liba);
-//                
-//                xcfile.add(liba);
-//            }
-//        }
-//
-//        if (!xcfile.isEmpty()) {
-//            cmd.exec((exec) -> {
-//                exec.commandLine("xcodebuild", "-create-xcframework");
-//                for (File liba : xcfile) {
-//                    exec.args("-library", liba);
-//                }
-//                exec.args("-output", outputDir.getAbsolutePath() + "/Box2DBindings-" + targetType.getName() + "_" + targetFlavor.getName() + ".xcframework");
-//            });
-//        }
+    public void lipo() {
+        log("Lipo " + targetType + ':' + targetFlavor);
+        
+        IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
+        File buildDir = getProject().getLayout().getBuildDirectory().getAsFile().get();
+        File cxxDir =  new File(iosp.getCMake().getOutputDir().get());
+
+        File outputDir = new File(buildDir, "Xcframework/ios" + targetType.getName() + targetFlavor.getName());
+        IOUtils.checkDir(outputDir);
+        
+        
+        List<File> simulator = new ArrayList<>();
+        List<File> device    = new ArrayList<>();
+        for (File file : cxxDir.listFiles()) {
+            String name = file.getName();
+
+            if (checkTypes(name)) {
+                File liba = new File(file, "xcode-native/libbox2d-jni-ios.a");
+                
+                if (checkSimulator(name)) {
+                    simulator.add(liba);
+                } else {
+                    device.add(liba);
+                }
+            }
+        }
+        
+        cmd.exec((exec) -> {
+            exec.commandLine("lipo", "-create");
+            for (File file : simulator) {
+                exec.args(file);
+            }
+            exec.args("-output", new File(outputDir, "simulator/libbox2d-jni-ios.a"));
+        });
+        
+        IOUtils.flCopy(device, new File(outputDir, "device"));
+    }
+    
+    private boolean checkTypes(String name ){
+        if (name.contains(targetType.getName() + '_' + targetFlavor.getName())) {
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean checkSimulator(String name) {
+        if (name.contains(Device.simulator_arm64.getType()) ||
+                name.contains(Device.simulator_x86_64.getType())) {
+            return true;
+        }
+        return false;
     }
 }
