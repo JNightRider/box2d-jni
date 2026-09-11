@@ -70,7 +70,7 @@ public class Lipo extends DefaultTask {
         File buildDir = getProject().getLayout().getBuildDirectory().getAsFile().get();
         File cxxDir =  new File(iosp.getCMake().getOutputDir().get());
 
-        File outputDir = new File(buildDir, "Xcframework/ios" + targetType.getName() + targetFlavor.getName());
+        File outputDir = new File(buildDir, "lipo/ios" + targetType.getName() + targetFlavor.getName());
         IOUtils.checkDir(outputDir);
         
         

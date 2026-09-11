@@ -65,33 +65,23 @@ public class Xcframework extends DefaultTask {
 
     @TaskAction
     public void framework() {
-//        log("Xcframework " + targetType + ':' + targetFlavor);
-//        
-//        IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
-//        File buildDir = new File(iosp.getCMake().getOutputDir().get());
-//        File outputDir = new File(buildDir, "Xcframework");
-//        
-//        File[] files = buildDir.listFiles();
-//        List<File> xcfile    = new ArrayList<>();
-//        for (File file : files) {
-//            String name = file.getName();
-//
-//            if (name.contains(targetType.getName() + '_' + targetFlavor.getName())) {
-//                File liba = new File(file, "xcode-native/libbox2d-jni-ios.a");
-//                logMore(" << " + liba);
-//                
-//                xcfile.add(liba);
-//            }
-//        }
-//
-//        if (!xcfile.isEmpty()) {
-//            cmd.exec((exec) -> {
-//                exec.commandLine("xcodebuild", "-create-xcframework");
-//                for (File liba : xcfile) {
-//                    exec.args("-library", liba);
-//                }
-//                exec.args("-output", outputDir.getAbsolutePath() + "/Box2DBindings-" + targetType.getName() + "_" + targetFlavor.getName() + ".xcframework");
-//            });
-//        }
+        log("Xcframework " + targetType + ':' + targetFlavor);
+        
+        //IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
+        File buildDir = getProject().getLayout().getBuildDirectory().getAsFile().get();
+        File Xcframework = new File(buildDir, "lipo/ios" + targetType.getName() + targetFlavor.getName());
+
+        cmd.exec((exec) -> {
+            exec.commandLine("xcodebuild", "-create-xcframework");
+            exec.args(
+                    "-library", new File(Xcframework, "device/libbox2d-jni-ios.a"),
+                    "-library", new File(Xcframework, "simulator/libbox2d-jni-ios.a")
+            );
+            
+            File outputDir = new File(buildDir, "Xcframework");
+            IOUtils.checkDir(outputDir);
+            
+            exec.args("-output", outputDir.getAbsolutePath() + "/Box2DBindings-" + targetType.getName() + "_" + targetFlavor.getName() + ".xcframework");
+        });
     }
 }
