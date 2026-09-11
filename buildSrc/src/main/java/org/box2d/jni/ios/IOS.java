@@ -34,8 +34,13 @@ import org.box2d.jni.ios.task.Build;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import org.box2d.jni.BuildType;
+import org.box2d.jni.Flavor;
 import org.box2d.jni.ios.task.Libtool;
 import org.box2d.jni.ios.task.Xbuild;
+import org.box2d.jni.ios.task.Xcframework;
 import org.box2d.jni.ios.task.Xconfigure;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -78,6 +83,19 @@ public class IOS implements Plugin<Project> {
         TaskProvider<Libtool> libtoolIosDevice = tasks.register("libtoolIosDeviceARM64", Libtool.class, Device.device_arm64);
         TaskProvider<Libtool> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", Libtool.class, Device.simulator_arm64);
         TaskProvider<Libtool> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", Libtool.class, Device.simulator_x86_64);
+        
+        Map<BuildType, Map<Flavor, TaskProvider<Xcframework>>> xcfMap = new HashMap<>();
+        for (BuildType type : BuildType.values()) {
+            Map<Flavor, TaskProvider<Xcframework>> map = new HashMap<>();
+            
+            for (Flavor flavor : Flavor.values()) {
+                TaskProvider<Xcframework> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), Xcframework.class, type, flavor);
+                map.put(flavor, taskXcframework);
+            }
+            
+            xcfMap.put(type, map);
+        }
+        
         
         // --- [ configure ] ---
         configureIosDevice.configure((task) -> {
@@ -131,6 +149,16 @@ public class IOS implements Plugin<Project> {
                         throw new AssertionError();
                 }
             }
+            
+            iosp.getBuildTypes().all((type) -> {
+                Map<Flavor, TaskProvider<Xcframework>> entry = xcfMap.get(type.getBuildType().get());
+                
+                iosp.getProductFlavors().all((flavor) -> {
+                    TaskProvider<Xcframework> deps = entry.get(flavor.getFlavor().get());
+                    
+                    task.dependsOn(deps);
+                });
+            });
         });
     }
 
