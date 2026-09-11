@@ -34,7 +34,9 @@ import org.box2d.jni.ios.task.Build;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
@@ -42,6 +44,7 @@ import org.box2d.jni.ios.task.Libtool;
 import org.box2d.jni.ios.task.Xbuild;
 import org.box2d.jni.ios.task.Xcframework;
 import org.box2d.jni.ios.task.Xconfigure;
+import org.gradle.api.DefaultTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
@@ -137,14 +140,21 @@ public class IOS implements Plugin<Project> {
                 iosp.getDevices().get()
             );
 
+            List<TaskProvider<? extends DefaultTask>> listDepends = new ArrayList<>();
             for (Device device : devices) {
                 switch (device) {
-                    case device_arm64 ->
+                    case device_arm64 -> {
+                        listDepends.add(libtoolIosDevice);
                         task.dependsOn(libtoolIosDevice);
-                    case simulator_arm64 ->
+                    }
+                    case simulator_arm64 -> {
+                        listDepends.add(libtoolIosSimulatorArm64);
                         task.dependsOn(libtoolIosSimulatorArm64);
-                    case simulator_x86_64 ->
+                    }
+                    case simulator_x86_64 -> {
+                        listDepends.add(libtoolIosSimulatorX86_64);
                         task.dependsOn(libtoolIosSimulatorX86_64);
+                    }
                     default ->
                         throw new AssertionError();
                 }
@@ -155,7 +165,11 @@ public class IOS implements Plugin<Project> {
                 
                 iosp.getProductFlavors().all((flavor) -> {
                     TaskProvider<Xcframework> deps = entry.get(flavor.getFlavor().get());
-                    
+                    deps.configure((t) -> {
+                        for (TaskProvider<? extends DefaultTask> provider : listDepends) {
+                            t.dependsOn(provider);
+                        }
+                    });
                     task.dependsOn(deps);
                 });
             });
