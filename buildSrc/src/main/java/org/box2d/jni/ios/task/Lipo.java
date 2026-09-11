@@ -95,7 +95,7 @@ public class Lipo extends DefaultTask {
             for (File file : simulator) {
                 exec.args(file);
             }
-            exec.args("-output", new File(outputDir, "simulator/libbox2d-jni-ios.a"));
+            exec.args("-output", new File(IOUtils.checkDir(new File(outputDir, "simulato")), "libbox2d-jni-ios.a"));
         });
         
         IOUtils.flCopy(device, new File(outputDir, "device"));
