@@ -44,7 +44,7 @@ import org.box2d.jni.ios.task.Libtool;
 import org.box2d.jni.ios.task.Lipo;
 import org.box2d.jni.ios.task.Xbuild;
 import org.box2d.jni.ios.task.Xcframework;
-import org.box2d.jni.ios.task.Xconfigure;
+import org.box2d.jni.ios.task.XconfigureTask;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -76,9 +76,9 @@ public class IOS implements Plugin<Project> {
         
         TaskProvider<Build> build = tasks.register(Build.NAME, Build.class);
         
-        TaskProvider<Xconfigure> configureIosDevice = tasks.register("configureIosDeviceARM64", Xconfigure.class, Device.device_arm64);
-        TaskProvider<Xconfigure> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", Xconfigure.class, Device.simulator_arm64);
-        TaskProvider<Xconfigure> configureIosSimulatorX86_64 = tasks.register("configureIosSimulator_x86_64", Xconfigure.class, Device.simulator_x86_64);
+        TaskProvider<XconfigureTask> configureIosDevice = tasks.register("configureIosDeviceARM64", XconfigureTask.class, Device.device_arm64);
+        TaskProvider<XconfigureTask> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", XconfigureTask.class, Device.simulator_arm64);
+        TaskProvider<XconfigureTask> configureIosSimulatorX86_64 = tasks.register("configureIosSimulator_x86_64", XconfigureTask.class, Device.simulator_x86_64);
 
         TaskProvider<Xbuild> buildIosDevice = tasks.register("buildIosDeviceARM64", Xbuild.class, Device.device_arm64);
         TaskProvider<Xbuild> buildIosSimulatorArm64 = tasks.register("buildIosSimulator_ARM64", Xbuild.class, Device.simulator_arm64);

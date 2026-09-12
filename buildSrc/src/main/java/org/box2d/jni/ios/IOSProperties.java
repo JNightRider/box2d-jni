@@ -48,7 +48,7 @@ import org.gradle.api.provider.Property;
  */
 public abstract class IOSProperties {
     
-    public static List<String> getCMakeArguments(IOSProperties iosp, BuildTypeProperty buildType, FlavorProperty flavor) {
+    public static List<String> makeCMakeArguments(IOSProperties iosp, BuildTypeProperty buildType, FlavorProperty flavor) {
         List<String> args = new ArrayList<>();
         CMakeProperty makeProperty = iosp.getCMake();
 

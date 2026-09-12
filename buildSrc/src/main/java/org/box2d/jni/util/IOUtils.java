@@ -74,4 +74,33 @@ public class IOUtils {
         }
         return file;
     }
+    
+    public static File ioBuildFile(Object ...names) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < names.length; i++) {
+            builder.append(names[i]);
+            if ((i + 1 ) < names.length) {
+                builder.append(File.separator);
+            }
+        }
+        return new File(String.valueOf(builder));
+    }
+    
+    public static File ioDir(File parent, String child) {
+        return ioDir(new File(parent, child));
+    }
+    
+    public static File ioDir(String path) {
+        return ioDir(new File(path));
+    }
+    
+    public static File ioDir(File path) {
+        if (path.exists()) {
+            return path;
+        }
+        if (! path.mkdirs()) {
+            throw new IllegalStateException("The route could not be created: " + path);
+        }
+        return path;
+    }
 }
