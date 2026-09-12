@@ -39,7 +39,6 @@ import org.box2d.jni.Flavor;
 import org.box2d.jni.ios.BuildDirectory;
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
-import org.box2d.jni.util.IOUtils;
 
 import static org.box2d.jni.ios.IOSProperties.*;
 import static org.box2d.jni.util.Debug.*;
