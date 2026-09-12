@@ -61,7 +61,7 @@ public class PrePackageTask extends DefaultTask {
         log("PrePackageTask ");
         for (File file : xcframeworks.listFiles()) {
             String name = file.getName();
-            String dirnm = name.substring(0, name.indexOf("."));
+            String dirnm = name.substring(0, name.length() - 12);
             
             logMore(" XcframeworkDir << " + file);
             logMore(" name           << " + dirnm);
