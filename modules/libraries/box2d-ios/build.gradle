@@ -1,0 +1,49 @@
+plugins {
+    id 'iOS'
+}
+
+description = 'box2d-jni ios'
+
+ext {
+    baseName = "${artifact}" // for artifacts
+    libraryVersion = "${jjVersion}"
+    groupID = 'io.github.jnightrider'
+}
+
+ios {
+    miVersion = '15.0'
+
+    def target = findProject('box2d.jni.ios.target')
+    if (!target) {
+        devices 'device-arm64', 'arm64', 'x86_64'
+    } else if (target == 'Device_ARM64') {
+        devices 'device-arm64'
+    } else if (target == 'Simulator_ARM64') {
+        devices 'arm64'
+    } else if (target == 'Simulator_x86_64') {
+        devices 'x86_64'
+    }
+
+    cmake {
+        workingDir = "${rootDir}/modules/libraries/box2d-bindings/c"
+        outputDir = "${layout.buildDirectory.asFile.get()}/cxx"
+    }
+
+    buildTypes {
+        debug {
+            arguments '-DTYPE_DEBUG=ON'
+        }
+        release {
+            arguments '-DTYPE_DEBUG=OFF'
+        }
+    }
+
+    productFlavors {
+        dp {
+            arguments '-DBOX2D_DOUBLE_PRECISION=ON'
+        }
+        sp {
+            arguments '-DBOX2D_DOUBLE_PRECISION=OFF'
+        }
+    }
+}

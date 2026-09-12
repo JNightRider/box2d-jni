@@ -1,0 +1,179 @@
+/*
+BSD 3-Clause License
+
+Copyright (c) 2026, Night Rider
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.box2d.jni.ios;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.box2d.jni.BuildType;
+import org.box2d.jni.Flavor;
+import org.box2d.jni.ios.task.BuildTask;
+import org.box2d.jni.ios.task.IosJarTask;
+import org.box2d.jni.ios.task.LibtoolTask;
+import org.box2d.jni.ios.task.LipoTask;
+import org.box2d.jni.ios.task.PrePackageTask;
+import org.box2d.jni.ios.task.XbuildTask;
+import org.box2d.jni.ios.task.XcframeworkTask;
+import org.box2d.jni.ios.task.XconfigureTask;
+
+import org.gradle.api.Plugin;
+import org.gradle.api.Project;
+import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
+
+/**
+ *
+ * @author wil
+ * @version 1.0.0
+ * @since 1.3.0
+ */
+public class IOS implements Plugin<Project> {
+
+    private static final Object[] DEPENDS = {
+        ":modules:libraries:box2d-bindings:unpackBox2dSource",
+        ":modules:libraries:box2d-bindings:unpackLibffiSource",
+        ":modules:libraries:box2d-core:classes"
+    };
+
+    @Override
+    public void apply(Project target) {
+        target.getExtensions().create(
+                "ios",
+                IOSProperties.class
+        );
+        TaskContainer tasks = target.getTasks();
+
+        TaskProvider<BuildTask> build = tasks.register(BuildTask.NAME, BuildTask.class);
+
+        TaskProvider<XconfigureTask> configureIosDevice = tasks.register("configureIosDeviceARM64", XconfigureTask.class, Device.device_arm64);
+        TaskProvider<XconfigureTask> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", XconfigureTask.class, Device.simulator_arm64);
+        TaskProvider<XconfigureTask> configureIosSimulatorX86_64 = tasks.register("configureIosSimulator_x86_64", XconfigureTask.class, Device.simulator_x86_64);
+
+        TaskProvider<XbuildTask> buildIosDevice = tasks.register("buildIosDeviceARM64", XbuildTask.class, Device.device_arm64);
+        TaskProvider<XbuildTask> buildIosSimulatorArm64 = tasks.register("buildIosSimulator_ARM64", XbuildTask.class, Device.simulator_arm64);
+        TaskProvider<XbuildTask> buildIosSimulatorX86_64 = tasks.register("buildIosSimulator_x86_64", XbuildTask.class, Device.simulator_x86_64);
+
+        TaskProvider<LibtoolTask> libtoolIosDevice = tasks.register("libtoolIosDeviceARM64", LibtoolTask.class, Device.device_arm64);
+        TaskProvider<LibtoolTask> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", LibtoolTask.class, Device.simulator_arm64);
+        TaskProvider<LibtoolTask> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", LibtoolTask.class, Device.simulator_x86_64);
+
+        TaskProvider<PrePackageTask> prepareIosPackage = tasks.register("prepareIosPackage", PrePackageTask.class);
+        TaskProvider<IosJarTask> iosJar = tasks.register("iosJar", IosJarTask.class);
+        iosJar.configure((task) -> {
+            task.dependsOn(prepareIosPackage);
+        });
+
+        Map<BuildType, Map<Flavor, TaskProvider<XcframeworkTask>>> xcfMap = new HashMap<>();
+        for (BuildType type : BuildType.values()) {
+            Map<Flavor, TaskProvider<XcframeworkTask>> map = new HashMap<>();
+
+            for (Flavor flavor : Flavor.values()) {
+                TaskProvider<XcframeworkTask> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), XcframeworkTask.class, type, flavor);
+                TaskProvider<LipoTask> taskLipo = tasks.register("lipo" + type.getName() + flavor.getName(), LipoTask.class, type, flavor);
+
+                taskLipo.configure((task) -> {
+                    IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);
+                    Device[] devices = Device.parseValues(
+                            iosp.getDevices().get()
+                    );
+
+                    for (Device device : devices) {
+                        switch (device) {
+                            case device_arm64 ->
+                                task.dependsOn(libtoolIosDevice);
+                            case simulator_arm64 ->
+                                task.dependsOn(libtoolIosSimulatorArm64);
+                            case simulator_x86_64 ->
+                                task.dependsOn(libtoolIosSimulatorX86_64);
+                            default ->
+                                throw new AssertionError();
+                        }
+                    }
+                });
+
+                taskXcframework.configure((task) -> {
+                    task.dependsOn(taskLipo);
+                });
+                map.put(flavor, taskXcframework);
+            }
+
+            xcfMap.put(type, map);
+        }
+        prepareIosPackage.configure((task) -> {
+            IOSProperties iosp = target.getExtensions()
+                    .getByType(IOSProperties.class);
+            iosp.getBuildTypes().all((type) -> {
+                Map<Flavor, TaskProvider<XcframeworkTask>> entry = xcfMap.get(type.getBuildType().get());
+                iosp.getProductFlavors().all((fv) -> {
+                    TaskProvider<XcframeworkTask> taskXcframework = entry.get(fv.getFlavor().get());
+                    task.dependsOn(taskXcframework);
+                });
+            });
+        });
+
+        // --- [ configure ] ---
+        configureIosDevice.configure((task) -> {
+            task.dependsOn(DEPENDS);
+        });
+        configureIosSimulatorArm64.configure((task) -> {
+            task.dependsOn(DEPENDS);
+        });
+        configureIosSimulatorX86_64.configure((task) -> {
+            task.dependsOn(DEPENDS);
+        });
+
+        // --- [ build ] ---
+        buildIosDevice.configure((task) -> {
+            task.dependsOn(configureIosDevice);
+        });
+        buildIosSimulatorArm64.configure((task) -> {
+            task.dependsOn(configureIosSimulatorArm64);
+        });
+        buildIosSimulatorX86_64.configure((task) -> {
+            task.dependsOn(configureIosSimulatorX86_64);
+        });
+
+        // --- [ libtool ] ---
+        libtoolIosDevice.configure((task) -> {
+            task.dependsOn(buildIosDevice);
+        });
+        libtoolIosSimulatorArm64.configure((task) -> {
+            task.dependsOn(buildIosSimulatorArm64);
+        });
+        libtoolIosSimulatorX86_64.configure((task) -> {
+            task.dependsOn(buildIosSimulatorX86_64);
+        });
+
+        build.configure((task) -> {
+            task.dependsOn(iosJar);
+        });
+    }
+}
