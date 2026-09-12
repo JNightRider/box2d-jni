@@ -42,7 +42,7 @@ public final class IOCheck {
         if (!file.exists()) {
             throw new IllegalStateException("The file cannot be found: " + file);
         }
-        if (!file.isDirectory()) {
+        if (!file.isFile()) {
             throw new IllegalStateException("The path is not a file: " + file);
         }
     }
