@@ -43,7 +43,7 @@ import org.box2d.jni.Flavor;
 import org.box2d.jni.ios.task.LibtoolTask;
 import org.box2d.jni.ios.task.LipoTask;
 import org.box2d.jni.ios.task.XbuildTask;
-import org.box2d.jni.ios.task.Xcframework;
+import org.box2d.jni.ios.task.XcframeworkTask;
 import org.box2d.jni.ios.task.XconfigureTask;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Plugin;
@@ -88,12 +88,12 @@ public class IOS implements Plugin<Project> {
         TaskProvider<LibtoolTask> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", LibtoolTask.class, Device.simulator_arm64);
         TaskProvider<LibtoolTask> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", LibtoolTask.class, Device.simulator_x86_64);
 
-        Map<BuildType, Map<Flavor, TaskProvider<Xcframework>>> xcfMap = new HashMap<>();
+        Map<BuildType, Map<Flavor, TaskProvider<XcframeworkTask>>> xcfMap = new HashMap<>();
         for (BuildType type : BuildType.values()) {
-            Map<Flavor, TaskProvider<Xcframework>> map = new HashMap<>();
+            Map<Flavor, TaskProvider<XcframeworkTask>> map = new HashMap<>();
 
             for (Flavor flavor : Flavor.values()) {
-                TaskProvider<Xcframework> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), Xcframework.class, type, flavor);
+                TaskProvider<XcframeworkTask> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), XcframeworkTask.class, type, flavor);
                 TaskProvider<LipoTask> taskLipo = tasks.register("lipo" + type.getName() + flavor.getName(), LipoTask.class, type, flavor);
                 
                 taskLipo.configure((task) -> {
@@ -163,10 +163,10 @@ public class IOS implements Plugin<Project> {
         build.configure((task) -> {
             IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);            
             iosp.getBuildTypes().all((type) -> {
-                Map<Flavor, TaskProvider<Xcframework>> entry = xcfMap.get(type.getBuildType().get());
+                Map<Flavor, TaskProvider<XcframeworkTask>> entry = xcfMap.get(type.getBuildType().get());
                 
                 iosp.getProductFlavors().all((flavor) -> {
-                    TaskProvider<Xcframework> deps = entry.get(flavor.getFlavor().get());
+                    TaskProvider<XcframeworkTask> deps = entry.get(flavor.getFlavor().get());
                     task.dependsOn(deps);
                 });
             });

@@ -280,7 +280,7 @@ public final class BuildDirectory {
     }
 
     public File getBuildFile() {
-        return project.getBuildFile();
+        return project.getLayout().getBuildDirectory().getAsFile().get();
     }
 
     public File getCXXDir() {

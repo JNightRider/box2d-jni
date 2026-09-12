@@ -51,14 +51,14 @@ import org.gradle.process.ExecOperations;
  *
  * @author wil
  */
-public class Xcframework extends DefaultTask {
+public class XcframeworkTask extends DefaultTask {
 
     private final BuildType targetType;
     private final Flavor targetFlavor;
     private final ExecOperations cmd;
 
     @Inject
-    public Xcframework(BuildType targetType, Flavor targetFlavor, ExecOperations cmd) {
+    public XcframeworkTask(BuildType targetType, Flavor targetFlavor, ExecOperations cmd) {
         this.targetType = targetType;
         this.targetFlavor = targetFlavor;
         this.cmd = cmd;
