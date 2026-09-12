@@ -97,18 +97,20 @@ public class XconfigureTask extends DefaultTask {
         IOSProperties iosp       = getProject().getExtensions()
                                                .getByType(IOSProperties.class);
         
-        BuildDirectory.Data data = directory.getData();
+        BuildDirectory.CMakeData data = directory.getCMakeData();
         File workDir = data.getCMakeWorkingDir();
         
         String minVersion = iosp.getMiVersion().get();
         iosp.getBuildTypes().all((buildType) -> {
             iosp.getProductFlavors().all((flavor) -> {
                 BuildType type = buildType.getBuildType().get();
-                Flavor fv      = flavor.getFlavor().get();
+                Flavor fv      = flavor.getFlavor().get();                
                 
-                File buildDir = data.getCMakeBuildTypeDir(device, buildType, flavor);
-                IOUtils.checkDir(buildDir);
-                
+                File buildDir  = data.device(device)
+                                     .flavorProperty(flavor)
+                                     .buildTypeProperty(buildType)
+                                     .getCMakeBuildTypeDir();
+
                 List<String> arguments = makeCMakeArguments(iosp, buildType, flavor);                
                 log("CMake " + type.getName() + ':' + fv.getName());
                 logMore("minVersion:", minVersion);

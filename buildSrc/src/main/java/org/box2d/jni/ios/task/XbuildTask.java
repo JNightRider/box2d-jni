@@ -87,13 +87,16 @@ public class XbuildTask extends DefaultTask {
         IOSProperties iosp       = getProject().getExtensions()
                                                .getByType(IOSProperties.class);
         
-        BuildDirectory.Data data = directory.getData();        
+        BuildDirectory.CMakeData data = directory.getCMakeData();        
         iosp.getBuildTypes().all((buildType) -> {
             iosp.getProductFlavors().all((flavor) -> {                
                 BuildType type = buildType.getBuildType().get();
                 Flavor fv      = flavor.getFlavor().get();
                 
-                File buildDir = data.getCMakeBuildTypeDir(device, buildType, flavor);
+                File buildDir = data.device(device)
+                                    .buildTypeProperty(buildType)
+                                    .flavorProperty(flavor)
+                                    .getCMakeBuildTypeDir();
                 
                 log("Build " + type.getName() + ':' + fv.getName());
                 logMore("buildDir:", buildDir);

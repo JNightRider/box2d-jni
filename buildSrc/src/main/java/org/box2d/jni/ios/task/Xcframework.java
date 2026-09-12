@@ -38,6 +38,7 @@ import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
 import org.box2d.jni.cmake.BuildTypeProperty;
 import org.box2d.jni.cmake.FlavorProperty;
+import org.box2d.jni.ios.BuildDirectory;
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
 import static org.box2d.jni.util.Debug.*;
@@ -67,21 +68,17 @@ public class Xcframework extends DefaultTask {
     public void framework() {
         log("Xcframework " + targetType + ':' + targetFlavor);
         
-        //IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
-        File buildDir = getProject().getLayout().getBuildDirectory().getAsFile().get();
-        File Xcframework = new File(buildDir, "lipo/ios" + targetType.getName() + targetFlavor.getName());
-
+        BuildDirectory directory = BuildDirectory.getInstance(this);        
+        BuildDirectory.Xcframework data = directory.getXcframework()
+                                                .buildTypeProperty(targetType)
+                                                .flavorProperty(targetFlavor);
         cmd.exec((exec) -> {
             exec.commandLine("xcodebuild", "-create-xcframework");
             exec.args(
-                    "-library", new File(Xcframework, "device/libbox2d-jni-ios.a"),
-                    "-library", new File(Xcframework, "simulator/libbox2d-jni-ios.a")
-            );
-            
-            File outputDir = new File(buildDir, "Xcframework");
-            IOUtils.checkDir(outputDir);
-            
-            exec.args("-output", outputDir.getAbsolutePath() + "/Box2DBindings-" + targetType.getName() + "_" + targetFlavor.getName() + ".xcframework");
+                    "-library", data.getLipoData().getOutputFile(true),
+                    "-library", data.getLipoData().getOutputFile(false)
+            );        
+            exec.args("-output", data.getXcframeworkFile());
         });
     }
 }

@@ -33,82 +33,102 @@ package org.box2d.jni.ios.task;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
+import org.box2d.jni.ios.BuildDirectory;
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
 import static org.box2d.jni.util.Debug.*;
-import org.box2d.jni.util.IOUtils;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecOperations;
 
 /**
+ * Since a static library does not include its dependencies, this task handles
+ * merging them into a single library.
+ *
+ * <pre><code>
+ * libtool -static libxxx.a libxxxadd.a libffi.a -o /path/libxxx.a
+ * </code></pre>
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.3.0
  */
 public class Libtool extends DefaultTask {
 
+    /** Device type. */
     private final Device device;
+    /** Command executor. */
     private final ExecOperations cmd;
 
+    /**
+     * Task constructor {@code Libtool}.
+     *
+     * @param device Device
+     * @param cmd ExecOperations
+     */
     @Inject
     public Libtool(Device device, ExecOperations cmd) {
         this.device = device;
         this.cmd = cmd;
     }
 
+    /**
+     * Start the task to be executed
+     */
     @TaskAction
     public void libtool() {
-        IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
+        BuildDirectory directory = BuildDirectory.getInstance(this);
+        IOSProperties iosp       = getProject().getExtensions()
+                                               .getByType(IOSProperties.class);
+        
+        BuildDirectory.LibtoolData data = directory.getLibtoolData();
+        
         iosp.getBuildTypes().all((buildType) -> {
-            iosp.getProductFlavors().all((flavor) -> {
-                File outputDir = IOUtils.checkDir(
-                    iosp.getCMake().getOutputDir().get()
-                );
-                
+            iosp.getProductFlavors().all((flavor) -> {                
                 BuildType type = buildType.getBuildType().get();
-                Flavor fv = flavor.getFlavor().get();
+                Flavor fv      = flavor.getFlavor().get();
                 
-                File buildDir = IOUtils.buildNameDir(outputDir, "ios-" + device.getType() + '_' + device.getArchitecture(), type, fv);
-                File nativeDir = new File(buildDir, "natives/" + type.getName());
-                
-                if (!nativeDir.exists()) {
-                    throw new IllegalStateException("The working directory does not exist: " + nativeDir);
-                }
-                
+                File nativeDir = data.device(device)
+                                     .buildTypeProperty(buildType)
+                                     .flavorProperty(flavor)
+                                     .getMakeData()
+                                     .getCMakeNativeDir();
+
                 log("Libtool " + type.getName() + ':' + fv.getName());
-                logMore("dir:  ", buildDir);
                 logMore("arch: ", device.getType() + '_' + device.getNativeArch());
                 
-                libtoolStatic(buildDir, nativeDir);
+                libtoolStatic(data, nativeDir);
             });            
         });
     }
-    
-    private void libtoolStatic(File buildFile, File nativeFile) {
-        File libffi = new File(buildFile, "extern/libffi/lib/libffi.a");
-        if (! libffi.exists()) {
-            throw new IllegalStateException("The file does not exist: " + libffi);
-        }
-        
+
+    /**
+     * Start the merge command for all dependencies.
+     *
+     * @param data LibtoolData
+     * @param nativeFile File
+     */
+    private void libtoolStatic(BuildDirectory.LibtoolData data, File nativeFile) {
+        File libffi = data.getMakeData().getCMakeLibffi();
+
         List<File> libraries = new ArrayList<>();
         for (File file : nativeFile.listFiles()) {
             logMore("\t<&" + file);
             libraries.add(file);
         }
         logMore("\t<&" + libffi);
-        
-        File outDir = new File(buildFile, "xcode-native");
-        IOUtils.checkDir(outDir);
 
         libraries.add(libffi);
-
         cmd.exec((exec) -> {
             exec.commandLine("libtool", "-static");
             exec.args(libraries);
-            exec.args("-o", new File(outDir, "libbox2d-jni-ios.a"));
+            exec.args("-o", data.getXCodeNativeFile());
         });
     }
 }

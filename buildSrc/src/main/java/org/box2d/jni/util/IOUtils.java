@@ -44,7 +44,7 @@ import org.box2d.jni.Flavor;
  */
 public class IOUtils {
     
-    public static void flCopy(List<File> sources, File output) {
+    public static void ioCPFile(List<File> sources, File output) {
         try {
             output.mkdirs();
             for (File file : sources) {
@@ -56,26 +56,7 @@ public class IOUtils {
         }
     }
 
-    public static File buildNameDir(File root, String prefix, BuildType type, Flavor flavor) {
-        String name = prefix + '-' + type.getName() + '_' + flavor.getName();
-        return new File(root, name);
-    }
-    
-    public static File checkDir(String file) {
-        return checkDir(new File(file));
-    }
-    
-    public static File checkDir(File file) {
-        if (file.exists()) {
-            return file;
-        }
-        if (! file.mkdirs()) {
-            throw new IllegalStateException("mkdird: " + file);
-        }
-        return file;
-    }
-    
-    public static File ioBuildFile(Object ...names) {
+    public static File ioMakePath(Object ...names) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < names.length; i++) {
             builder.append(names[i]);

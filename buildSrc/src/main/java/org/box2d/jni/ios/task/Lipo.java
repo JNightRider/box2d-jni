@@ -36,11 +36,13 @@ import java.util.List;
 import javax.inject.Inject;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
+import org.box2d.jni.ios.BuildDirectory;
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
 import static org.box2d.jni.util.Debug.log;
 import static org.box2d.jni.util.Debug.logMore;
 import org.box2d.jni.util.IOUtils;
+import static org.box2d.jni.util.IOUtils.ioCPFile;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecOperations;
@@ -66,13 +68,12 @@ public class Lipo extends DefaultTask {
     public void lipo() {
         log("Lipo " + targetType + ':' + targetFlavor);
         
-        IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
-        File buildDir = getProject().getLayout().getBuildDirectory().getAsFile().get();
-        File cxxDir =  new File(iosp.getCMake().getOutputDir().get());
+        BuildDirectory directory = BuildDirectory.getInstance(this);        
+        BuildDirectory.LipoData data = directory.getLipoData()
+                                                .buildTypeProperty(targetType)
+                                                .flavorProperty(targetFlavor);
 
-        File outputDir = new File(buildDir, "lipo/ios" + targetType.getName() + targetFlavor.getName());
-        IOUtils.checkDir(outputDir);
-        
+        File cxxDir =  directory.getCXXDir();
         
         List<File> simulator = new ArrayList<>();
         List<File> device    = new ArrayList<>();
@@ -80,7 +81,7 @@ public class Lipo extends DefaultTask {
             String name = file.getName();
 
             if (checkTypes(name)) {
-                File liba = new File(file, "xcode-native/libbox2d-jni-ios.a");
+                File liba = data.getToolData().getXCodeNativeFile(file);
                 
                 if (checkSimulator(name)) {
                     simulator.add(liba);
@@ -95,10 +96,10 @@ public class Lipo extends DefaultTask {
             for (File file : simulator) {
                 exec.args(file);
             }
-            exec.args("-output", new File(IOUtils.checkDir(new File(outputDir, "simulator")), "libbox2d-jni-ios.a"));
+            exec.args("-output", data.getOutputFile(false));
         });
         
-        IOUtils.flCopy(device, new File(outputDir, "device"));
+        ioCPFile(device, data.getOutputDir(true));
     }
     
     private boolean checkTypes(String name ){

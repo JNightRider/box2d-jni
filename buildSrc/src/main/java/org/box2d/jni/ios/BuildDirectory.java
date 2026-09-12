@@ -35,6 +35,7 @@ import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
 import org.box2d.jni.cmake.BuildTypeProperty;
 import org.box2d.jni.cmake.FlavorProperty;
+import static org.box2d.jni.util.IOCheck.*;
 import static org.box2d.jni.util.IOUtils.*;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
@@ -50,14 +51,172 @@ public final class BuildDirectory {
         return new BuildDirectory(project);
     }
     
-    public static class Data {
+    public static final class Xcframework {
+        
+        private final LipoData lipoData;
+        private final File outputDir;
 
-        private final IOSProperties iosp;
-
-        public Data(IOSProperties iosp) {
-            this.iosp = iosp;
+        public Xcframework(LipoData lipoData, File outputDir) {
+            this.lipoData = lipoData;
+            this.outputDir = outputDir;
         }
 
+        public Xcframework buildTypeProperty(BuildType typeProperty) {
+            lipoData.buildTypeProperty(typeProperty);
+            return this;
+        }
+
+        public Xcframework flavorProperty(Flavor flavorProperty) {
+            lipoData.flavorProperty(flavorProperty);
+            return this;
+        }
+
+        public LipoData getLipoData() {
+            return lipoData;
+        }
+        
+        public File getXcframeworkFile() {
+            return ioMakePath(
+                    outputDir.getAbsolutePath(), 
+                    "Box2DBindings-" + lipoData.getToolData().getMakeData().getType().getName()   + 
+                                 "_" + lipoData.getToolData().getMakeData().getFlavor().getName() + ".xcframework"
+            );
+        }
+    }
+    
+    public static class LipoData {
+        private final LibtoolData toolData;
+        private final File outputDir;
+
+        public LipoData(LibtoolData toolData, File outputDir) {
+            this.toolData = toolData;
+            this.outputDir = outputDir;
+        }
+        
+        public LipoData buildTypeProperty(BuildType typeProperty) {
+            toolData.buildTypeProperty(typeProperty);
+            return this;
+        }
+
+        public LipoData flavorProperty(Flavor flavorProperty) {
+            toolData.flavorProperty(flavorProperty);
+            return this;
+        }
+
+        public LibtoolData getToolData() {
+            return toolData;
+        }
+        
+        public File getOutputDir() {
+            File dir = ioMakePath(outputDir, "/ios" + toolData.getMakeData().getType().getName() + toolData.getMakeData().getFlavor().getName());
+            return ioDir(dir);
+        }
+        
+        public File getOutputDir(boolean isDevice) {
+            return ioDir(getOutputDir(), isDevice ? "device" : "simulator");
+        }
+        
+        public File getOutputFile(boolean isDevice) {
+            return ioMakePath(getOutputDir(isDevice), "libbox2d-jni-ios.a");
+        }
+    }
+    
+    public static class LibtoolData {
+        private final CMakeData makeData;
+
+        public LibtoolData(CMakeData makeData) {
+            this.makeData = makeData;
+        }
+
+        public LibtoolData device(Device device) {
+            makeData.device(device);
+            return this;
+        }
+
+        public LibtoolData buildTypeProperty(BuildTypeProperty typeProperty) {
+            makeData.buildTypeProperty(typeProperty);
+            return this;
+        }
+
+        public LibtoolData flavorProperty(FlavorProperty flavorProperty) {
+            makeData.flavorProperty(flavorProperty);
+            return this;
+        }
+        
+        public LibtoolData buildTypeProperty(BuildType typeProperty) {
+            makeData.buildTypeProperty(typeProperty);
+            return this;
+        }
+
+        public LibtoolData flavorProperty(Flavor flavorProperty) {
+            makeData.flavorProperty(flavorProperty);
+            return this;
+        }
+
+        public CMakeData getMakeData() {
+            return makeData;
+        }
+        
+        public File getXCodeNativeDir() {
+            return ioDir(getMakeData().getCMakeBuildTypeDir(), "xcode-native");
+        }
+        
+        public File getXCodeNativeFile() {
+            return ioMakePath(getXCodeNativeDir(), "libbox2d-jni-ios.a");
+        }
+        
+        public File getXCodeNativeFile(File variant) {
+            return ioMakePath(variant, "xcode-native", "libbox2d-jni-ios.a");
+        }
+    }
+    
+    public static class CMakeData {
+
+        private final IOSProperties iosp;
+        private Device device;
+        private BuildType typeProperty;
+        private Flavor flavorProperty;
+
+        public CMakeData(IOSProperties iosp) {
+            this.iosp = iosp;
+        }
+ 
+        private void check() {
+            if (device == null || typeProperty == null || flavorProperty == null) {
+                throw new NullPointerException(
+                        "device=" + device + '\n'
+                        + "typeProperty=" + typeProperty + '\n'
+                        + "flavorProperty=" + flavorProperty + '\n'
+                );
+            }
+        }
+
+        public CMakeData device(Device device) {
+            this.device = device;
+            return this;
+        }
+
+        public CMakeData buildTypeProperty(BuildTypeProperty typeProperty) {
+            this.typeProperty = typeProperty.getBuildType().get();
+            return this;
+        }
+
+        public CMakeData flavorProperty(FlavorProperty flavorProperty) {
+            this.flavorProperty = flavorProperty.getFlavor().get();
+            return this;
+        }
+
+        public CMakeData buildTypeProperty(BuildType typeProperty) {
+            this.typeProperty = typeProperty;
+            return this;
+        }
+
+        public CMakeData flavorProperty(Flavor flavorProperty) {
+            this.flavorProperty = flavorProperty;
+            return this;
+        }
+
+        
         public File getCMakeWorkingDir() {
             return ioDir(
                     iosp.getCMake()
@@ -74,13 +233,38 @@ public final class BuildDirectory {
             );
         }
         
-        public File getCMakeBuildTypeDir(Device device, BuildTypeProperty typeProperty, FlavorProperty flavorProperty) {
-            BuildType type = typeProperty.getBuildType().get();
-            Flavor fv = flavorProperty.getFlavor().get();
-            
+        public File getCMakeBuildTypeDir() {
+            check();
             String prefix = "ios-" + device.getType() + '_' + device.getArchitecture();
-            String nameDir = prefix + '-' + type.getName() + '_' + fv.getName();
+            String nameDir = prefix + '-' + typeProperty.getName() + '_' + flavorProperty.getName();
             return ioDir(getCMakeOutputDir(), nameDir);
+        }
+        
+        public File getCMakeNativeDir() {
+            check();
+            File buildDir = getCMakeBuildTypeDir();
+            File nativeDir = ioMakePath(buildDir, "natives", typeProperty.getName());
+            checkDir(nativeDir);
+            return nativeDir;
+        }
+        
+        public File getCMakeLibffi() {
+            File buildDir = getCMakeBuildTypeDir();
+            File libfii = ioMakePath(buildDir, "extern/libffi/lib/libffi.a");
+            checkFile(libfii);
+            return libfii;
+        }
+
+        public Device getDevice() {
+            return device;
+        }
+
+        public BuildType getType() {
+            return typeProperty;
+        }
+
+        public Flavor getFlavor() {
+            return flavorProperty;
         }
     }
 
@@ -111,9 +295,21 @@ public final class BuildDirectory {
         return ioDir(getBuildFile(), DIR_XFRAMEWORK);
     }
     
-    public Data getData() {
+    public CMakeData getCMakeData() {
         IOSProperties iosp = project.getExtensions()
                                     .getByType(IOSProperties.class);
-        return new Data(iosp);
+        return new CMakeData(iosp);
+    }
+    
+    public LibtoolData getLibtoolData() {
+        return new LibtoolData(getCMakeData());
+    }
+    
+    public LipoData getLipoData() {
+        return new LipoData(getLibtoolData(), getLipoDir());
+    }
+    
+    public Xcframework getXcframework() {
+        return new Xcframework(getLipoData(), getXcframeworkDir());
     }
 }
