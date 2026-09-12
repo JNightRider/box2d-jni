@@ -55,10 +55,12 @@ public final class BuildDirectory {
         
         private final LipoData lipoData;
         private final File outputDir;
+        private final String version;
 
-        public Xcframework(LipoData lipoData, File outputDir) {
+        public Xcframework(LipoData lipoData, File outputDir, String version) {
             this.lipoData = lipoData;
             this.outputDir = outputDir;
+            this.version = version;
         }
 
         public Xcframework buildTypeProperty(BuildType typeProperty) {
@@ -74,16 +76,21 @@ public final class BuildDirectory {
         public LipoData getLipoData() {
             return lipoData;
         }
-        
+
         public File getXcframeworkFile() {
+            String prefix = lipoData.getToolData().getMakeData().getType().getName();
+            if (prefix.equalsIgnoreCase(BuildType.Release.getName())) {
+                prefix = "";
+            }
+
             return ioMakePath(
-                    outputDir.getAbsolutePath(), 
-                    "Box2DBindings-" + lipoData.getToolData().getMakeData().getType().getName()   + 
-                                 "_" + lipoData.getToolData().getMakeData().getFlavor().getName() + ".xcframework"
+                    outputDir.getAbsolutePath(),
+                    "box2d-jni-" + version + "-ios_" + prefix
+                    + lipoData.getToolData().getMakeData().getFlavor().getName() + ".xcframework"
             );
         }
     }
-    
+
     public static class LipoData {
         private final LibtoolData toolData;
         private final File outputDir;
@@ -331,6 +338,7 @@ public final class BuildDirectory {
     }
     
     public Xcframework getXcframework() {
-        return new Xcframework(getLipoData(), getXcframeworkDir());
+        Object jjVersion = project.findProperty("jjVersion");
+        return new Xcframework(getLipoData(), getXcframeworkDir(), String.valueOf(jjVersion));
     }
 }
