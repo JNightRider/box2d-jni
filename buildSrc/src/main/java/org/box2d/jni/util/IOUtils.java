@@ -44,6 +44,16 @@ import org.box2d.jni.Flavor;
  */
 public class IOUtils {
     
+    public static void ioCPFile(File source, File output, String name) {
+        try {
+            output.mkdirs();
+            File newFile = new File(output, name);
+            Files.copy(source.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new IllegalStateException("The file could not be copied", e);
+        }
+    }
+
     public static void ioCPFile(List<File> sources, File output) {
         try {
             output.mkdirs();

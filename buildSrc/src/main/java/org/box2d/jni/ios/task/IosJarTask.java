@@ -27,41 +27,65 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.ios.task;
 
 import java.io.File;
-import javax.inject.Inject;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.jar.Attributes;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
 import org.box2d.jni.ios.BuildDirectory;
-import org.box2d.jni.ios.IOSProperties;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.file.FileSystemOperations;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  *
  * @author wil
  */
-public class BuildTask extends DefaultTask {
-    public static final String NAME = "build";
+public class IosJarTask extends DefaultTask {
 
-    private final FileSystemOperations fs;
-    
-    @Inject
-    public BuildTask(FileSystemOperations fs) {
-        this.fs = fs;
+    public IosJarTask() {
     }
     
     @TaskAction
-    public void build() {
+    public void jar() throws IOException {
         BuildDirectory directory = BuildDirectory.getInstance(this);
-        File lib = new File(getProject().getRootDir(), "lib");
         
-        System.out.println(">> " + lib);
-        fs.sync((spect) -> {
-            spect.from(directory.getOutputsLib());
-            spect.into(lib);
-            spect.include("**/*.jar");
-        });        
+        Manifest manifest = new Manifest();
+        manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
+        
+        File outputDir = directory.getOutputsTmpDir();
+        for (File dir : outputDir.listFiles()) {
+            File outlib = new File(directory.getOutputsLib(), dir.getName() + ".jar");
+            
+            try (JarOutputStream target = new JarOutputStream(new FileOutputStream(outlib), manifest)) {
+                makeJar(dir, dir, target);
+            }
+        }
+    }
+    
+    private void makeJar(File rootDir, File sourceDir, JarOutputStream target) throws IOException {
+        File[] files = sourceDir.listFiles();
+        if (files == null) {
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                makeJar(rootDir, file, target);
+                continue;
+            }
+
+            String relativePath = rootDir.toURI().relativize(file.toURI()).getPath();
+            JarEntry entry = new JarEntry(relativePath);
+            entry.setTime(file.lastModified());
+            target.putNextEntry(entry);
+            Files.copy(file.toPath(), target);
+            target.closeEntry();
+        }
     }
 }

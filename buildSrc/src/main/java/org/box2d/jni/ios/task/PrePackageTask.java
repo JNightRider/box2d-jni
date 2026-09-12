@@ -27,13 +27,14 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.ios.task;
 
 import java.io.File;
 import javax.inject.Inject;
 import org.box2d.jni.ios.BuildDirectory;
-import org.box2d.jni.ios.IOSProperties;
+import static org.box2d.jni.util.Debug.*;
+import static org.box2d.jni.util.IOUtils.ioCPFile;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.FileSystemOperations;
 import org.gradle.api.tasks.TaskAction;
@@ -42,26 +43,36 @@ import org.gradle.api.tasks.TaskAction;
  *
  * @author wil
  */
-public class BuildTask extends DefaultTask {
-    public static final String NAME = "build";
+public class PrePackageTask extends DefaultTask {
 
     private final FileSystemOperations fs;
-    
+
     @Inject
-    public BuildTask(FileSystemOperations fs) {
+    public PrePackageTask(FileSystemOperations fs) {
         this.fs = fs;
     }
     
     @TaskAction
-    public void build() {
+    public void prePackage() {
         BuildDirectory directory = BuildDirectory.getInstance(this);
-        File lib = new File(getProject().getRootDir(), "lib");
+        File xcframeworks = directory.getXcframeworkDir();
+        File metadata = new File(getProject().getProjectDir(), "src/main/Metadata.json");
         
-        System.out.println(">> " + lib);
-        fs.sync((spect) -> {
-            spect.from(directory.getOutputsLib());
-            spect.into(lib);
-            spect.include("**/*.jar");
-        });        
+        log("PrePackageTask ");
+        for (File file : xcframeworks.listFiles()) {
+            String name = file.getName();
+            String dirnm = name.substring(0, name.indexOf("."));
+            
+            logMore(" XcframeworkDir << " + file);
+            logMore(" name           << " + dirnm);
+            
+            fs.sync((spec) -> {
+                spec.from(file);
+                spec.into(new File(directory.getOutputsTmpDir(dirnm), name));
+                spec.include("**/*");
+            });
+            
+            ioCPFile(metadata, directory.getOutputsTmpDir(dirnm), name + ".json");
+        }
     }
 }

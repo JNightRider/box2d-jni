@@ -271,7 +271,8 @@ public final class BuildDirectory {
     public static final String
             DIR_CXX = "cxx",
             DIR_LIPO = "lipo",
-            DIR_XFRAMEWORK = "Xcframework";
+            DIR_XFRAMEWORK = "Xcframework",
+            DIR_OUTPUTS_LIB = "outputs";
 
     private final Project project;
 
@@ -289,6 +290,26 @@ public final class BuildDirectory {
 
     public File getLipoDir() {
         return ioDir(getBuildFile(), DIR_LIPO);
+    }
+    
+    public File getOutputsDir() {
+        return ioDir(getBuildFile(), DIR_OUTPUTS_LIB);
+    }
+    
+    public File getOutputsTmpDir() {
+        return ioDir(getOutputsDir(), "tmp");
+    }
+    
+    public File getOutputsTmpDir(String name) {
+        return ioDir(getOutputsTmpDir(), name + "/lib/ios/");
+    }
+    
+    public File getOutputsLib() {
+        return ioDir(getOutputsDir(), "lib");
+    }
+    
+    public File getOutputsLibDir(String name) {
+        return ioDir(getOutputsLib(), name + "/lib/ios/");
     }
 
     public File getXcframeworkDir() {

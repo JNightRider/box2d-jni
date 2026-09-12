@@ -40,8 +40,10 @@ import java.util.List;
 import java.util.Map;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
+import org.box2d.jni.ios.task.IosJarTask;
 import org.box2d.jni.ios.task.LibtoolTask;
 import org.box2d.jni.ios.task.LipoTask;
+import org.box2d.jni.ios.task.PrePackageTask;
 import org.box2d.jni.ios.task.XbuildTask;
 import org.box2d.jni.ios.task.XcframeworkTask;
 import org.box2d.jni.ios.task.XconfigureTask;
@@ -88,10 +90,14 @@ public class IOS implements Plugin<Project> {
         TaskProvider<LibtoolTask> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", LibtoolTask.class, Device.simulator_arm64);
         TaskProvider<LibtoolTask> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", LibtoolTask.class, Device.simulator_x86_64);
 
-        Map<BuildType, Map<Flavor, TaskProvider<XcframeworkTask>>> xcfMap = new HashMap<>();
+        
+        TaskProvider<PrePackageTask> prepareIosPackage = tasks.register("prepareIosPackage", PrePackageTask.class);
+        TaskProvider<IosJarTask> iosJar = tasks.register("iosJar", IosJarTask.class);
+        iosJar.configure((task) -> {
+            task.dependsOn(prepareIosPackage);
+        });
+        
         for (BuildType type : BuildType.values()) {
-            Map<Flavor, TaskProvider<XcframeworkTask>> map = new HashMap<>();
-
             for (Flavor flavor : Flavor.values()) {
                 TaskProvider<XcframeworkTask> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), XcframeworkTask.class, type, flavor);
                 TaskProvider<LipoTask> taskLipo = tasks.register("lipo" + type.getName() + flavor.getName(), LipoTask.class, type, flavor);
@@ -119,10 +125,10 @@ public class IOS implements Plugin<Project> {
                 taskXcframework.configure((task) -> {
                     task.dependsOn(taskLipo);
                 });
-                map.put(flavor, taskXcframework);
+                prepareIosPackage.configure((task) -> {
+                    task.dependsOn(taskXcframework);
+                });
             }
-
-            xcfMap.put(type, map);
         }
 
         
@@ -161,15 +167,7 @@ public class IOS implements Plugin<Project> {
         });
         
         build.configure((task) -> {
-            IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);            
-            iosp.getBuildTypes().all((type) -> {
-                Map<Flavor, TaskProvider<XcframeworkTask>> entry = xcfMap.get(type.getBuildType().get());
-                
-                iosp.getProductFlavors().all((flavor) -> {
-                    TaskProvider<XcframeworkTask> deps = entry.get(flavor.getFlavor().get());
-                    task.dependsOn(deps);
-                });
-            });
+            task.dependsOn(iosJar);
         });
     }
 
