@@ -51,14 +51,14 @@ import org.gradle.process.ExecOperations;
  *
  * @author wil
  */
-public class Lipo extends DefaultTask {
+public class LipoTask extends DefaultTask {
     
     private final BuildType targetType;
     private final Flavor targetFlavor;
     private final ExecOperations cmd;
 
     @Inject
-    public Lipo(BuildType targetType, Flavor targetFlavor, ExecOperations cmd) {
+    public LipoTask(BuildType targetType, Flavor targetFlavor, ExecOperations cmd) {
         this.targetType = targetType;
         this.targetFlavor = targetFlavor;
         this.cmd = cmd;

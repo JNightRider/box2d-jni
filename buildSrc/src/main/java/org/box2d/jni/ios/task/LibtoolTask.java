@@ -59,7 +59,7 @@ import org.gradle.process.ExecOperations;
  * @version 1.0.0
  * @since 1.3.0
  */
-public class Libtool extends DefaultTask {
+public class LibtoolTask extends DefaultTask {
 
     /** Device type. */
     private final Device device;
@@ -73,7 +73,7 @@ public class Libtool extends DefaultTask {
      * @param cmd ExecOperations
      */
     @Inject
-    public Libtool(Device device, ExecOperations cmd) {
+    public LibtoolTask(Device device, ExecOperations cmd) {
         this.device = device;
         this.cmd = cmd;
     }

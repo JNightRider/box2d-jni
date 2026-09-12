@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.ios;
 
-import org.box2d.jni.ios.task.Build;
+import org.box2d.jni.ios.task.BuildTask;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -40,8 +40,8 @@ import java.util.List;
 import java.util.Map;
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
-import org.box2d.jni.ios.task.Libtool;
-import org.box2d.jni.ios.task.Lipo;
+import org.box2d.jni.ios.task.LibtoolTask;
+import org.box2d.jni.ios.task.LipoTask;
 import org.box2d.jni.ios.task.XbuildTask;
 import org.box2d.jni.ios.task.Xcframework;
 import org.box2d.jni.ios.task.XconfigureTask;
@@ -74,7 +74,7 @@ public class IOS implements Plugin<Project> {
         );        
         TaskContainer tasks = target.getTasks();
         
-        TaskProvider<Build> build = tasks.register(Build.NAME, Build.class);
+        TaskProvider<BuildTask> build = tasks.register(BuildTask.NAME, BuildTask.class);
         
         TaskProvider<XconfigureTask> configureIosDevice = tasks.register("configureIosDeviceARM64", XconfigureTask.class, Device.device_arm64);
         TaskProvider<XconfigureTask> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", XconfigureTask.class, Device.simulator_arm64);
@@ -84,9 +84,9 @@ public class IOS implements Plugin<Project> {
         TaskProvider<XbuildTask> buildIosSimulatorArm64 = tasks.register("buildIosSimulator_ARM64", XbuildTask.class, Device.simulator_arm64);
         TaskProvider<XbuildTask> buildIosSimulatorX86_64 = tasks.register("buildIosSimulator_x86_64", XbuildTask.class, Device.simulator_x86_64);
         
-        TaskProvider<Libtool> libtoolIosDevice = tasks.register("libtoolIosDeviceARM64", Libtool.class, Device.device_arm64);
-        TaskProvider<Libtool> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", Libtool.class, Device.simulator_arm64);
-        TaskProvider<Libtool> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", Libtool.class, Device.simulator_x86_64);
+        TaskProvider<LibtoolTask> libtoolIosDevice = tasks.register("libtoolIosDeviceARM64", LibtoolTask.class, Device.device_arm64);
+        TaskProvider<LibtoolTask> libtoolIosSimulatorArm64 = tasks.register("libtoolIosSimulator_ARM64", LibtoolTask.class, Device.simulator_arm64);
+        TaskProvider<LibtoolTask> libtoolIosSimulatorX86_64 = tasks.register("libtoolIosSimulator_x86_64", LibtoolTask.class, Device.simulator_x86_64);
 
         Map<BuildType, Map<Flavor, TaskProvider<Xcframework>>> xcfMap = new HashMap<>();
         for (BuildType type : BuildType.values()) {
@@ -94,7 +94,7 @@ public class IOS implements Plugin<Project> {
 
             for (Flavor flavor : Flavor.values()) {
                 TaskProvider<Xcframework> taskXcframework = tasks.register("XcframeworkIos" + type.getName() + flavor.getName(), Xcframework.class, type, flavor);
-                TaskProvider<Lipo> taskLipo = tasks.register("lipo" + type.getName() + flavor.getName(), Lipo.class, type, flavor);
+                TaskProvider<LipoTask> taskLipo = tasks.register("lipo" + type.getName() + flavor.getName(), LipoTask.class, type, flavor);
                 
                 taskLipo.configure((task) -> {
                     IOSProperties iosp = target.getExtensions().getByType(IOSProperties.class);

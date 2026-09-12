@@ -38,7 +38,7 @@ import org.gradle.api.tasks.TaskAction;
  *
  * @author wil
  */
-public class Build extends DefaultTask {
+public class BuildTask extends DefaultTask {
     public static final String NAME = "build";
 
     @TaskAction
