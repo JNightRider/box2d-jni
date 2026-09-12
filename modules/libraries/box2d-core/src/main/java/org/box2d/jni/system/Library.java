@@ -47,7 +47,7 @@ import static org.box2d.jni.system.Sys.*;
  * shared libraries.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Library {
@@ -59,18 +59,21 @@ public final class Library {
                libname = Sys.B2JNI_LIB_NAME.get(null);
 
         apiLog("Initializing box2d-jni v1.0.0");
-        
-        if (libpath == null && libname == null) {
-            loadSystem("org/box2d/jni/natives", "box2d-bindings");
-        } else {
-            if (libpath == null) {
-                System.loadLibrary(libname);
+        if (Platform.get() == Platform.iOS) {
+            systemInfo();
+        } else {        
+            if (libpath == null && libname == null) {
+                loadSystem("org/box2d/jni/natives", "box2d-bindings");
             } else {
-                File libfile = new File(libpath, libname);
-                if (libfile.exists() && libfile.canRead()) {
-                    System.load(libfile.getAbsolutePath());
+                if (libpath == null) {
+                    System.loadLibrary(libname);
                 } else {
-                    throw new IllegalStateException("The library could not be loaded: " + libfile);
+                    File libfile = new File(libpath, libname);
+                    if (libfile.exists() && libfile.canRead()) {
+                        System.load(libfile.getAbsolutePath());
+                    } else {
+                        throw new IllegalStateException("The library could not be loaded: " + libfile);
+                    }
                 }
             }
         }
@@ -83,11 +86,22 @@ public final class Library {
     public static void initialize() {
         // intentionally empty to trigger static initializer
     }
-    
+
+    private static void systemInfo() {
+        Platform platform = Platform.get();
+        Platform.Architecture arch = Platform.getArchitecture();
+
+        apiLog("Platform: ");
+        apiLogMore("OS: %c{" + platform.getName() + "}", Color.PURPLE);
+        apiLogMore("ARCH: %c{" + arch.getName() + "}", Color.PURPLE);
+        apiLogMore("VM: %c{" + Platform.getJavaName() + "}", Color.PURPLE);
+        apiLogMore("VM Ver: %c{" + Platform.getJavaVersion() + "}", Color.PURPLE);
+    }
+
     public static void loadSystem(String module, String name) throws UnsatisfiedLinkError {
         loadSystem(System::load, System::loadLibrary, Library.class, module, name);
     }
-    
+
     @SuppressWarnings("try")
     public static void loadSystem(
         Consumer<String> load,
@@ -97,15 +111,7 @@ public final class Library {
         String name
     ) throws UnsatisfiedLinkError
     {
-        Platform platform = Platform.get();
-        Platform.Architecture arch = Platform.getArchitecture();
-        
-        apiLog("Platform: ");
-        apiLogMore("OS: %c{" + platform.getName() + "}", Color.PURPLE);
-        apiLogMore("ARCH: %c{" + arch.getName() + "}", Color.PURPLE);
-        apiLogMore("VM: %c{" + Platform.getJavaName() + "}", Color.PURPLE);
-        apiLogMore("VM Ver: %c{" + Platform.getJavaVersion() + "}", Color.PURPLE);
-
+        systemInfo();
         boolean dprecision = BOX2D_DOUBLE_PRECISION.get(false),
                 ndebug     = BOX2D_NDEBUG.get(false);
 
@@ -119,6 +125,9 @@ public final class Library {
         
         StringBuilder builLibPath = new StringBuilder();
         builLibPath.append(module);
+
+        Platform platform = Platform.get();
+        Platform.Architecture arch = Platform.getArchitecture();
         if (platform == Platform.Android) {
             try {
                 System.loadLibrary("box2d-bindings_" + compilation + precision);
