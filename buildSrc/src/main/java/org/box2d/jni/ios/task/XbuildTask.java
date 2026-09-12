@@ -31,45 +31,69 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.ios.task;
 
 import java.io.File;
+
 import javax.inject.Inject;
+
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
+import org.box2d.jni.ios.BuildDirectory;
 import org.box2d.jni.ios.Device;
 import org.box2d.jni.ios.IOSProperties;
-import org.box2d.jni.util.IOUtils;
+import static org.box2d.jni.util.Debug.*;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecOperations;
-import static org.box2d.jni.util.Debug.*;
 
 /**
+ * Class responsible for compiling or generating binaries for iOS device
+ * architectures.
+ *
+ * <pre><code>
+ * cmake --build /path/buildDir \
+ *  --config Debug|Release \
+ *  --parallel
+ * </code></pre>
  *
  * @author wil
+ * @version 1.0.0
+ * @since 1.3.0
  */
-public class Xbuild extends DefaultTask {
+public class XbuildTask extends DefaultTask {
 
+    /** Device type. */
     private final Device device;
+    /** Command executor. */
     private final ExecOperations cmd;
 
+    /**
+     * Task constructor {@code Xbuild}.
+     *
+     * @param device Device
+     * @param cmd ExecOperations
+     */
     @Inject
-    public Xbuild(Device device, ExecOperations cmd) {
+    public XbuildTask(Device device, ExecOperations cmd) {
         this.device = device;
         this.cmd = cmd;
     }
 
+    /**
+     * Start the task to be executed
+     */
     @TaskAction
     public void build() {
-        IOSProperties iosp = getProject().getExtensions().getByType(IOSProperties.class);
+        BuildDirectory directory = BuildDirectory.getInstance(this);
+        IOSProperties iosp       = getProject().getExtensions()
+                                               .getByType(IOSProperties.class);
+        
+        BuildDirectory.Data data = directory.getData();        
         iosp.getBuildTypes().all((buildType) -> {
-            iosp.getProductFlavors().all((flavor) -> {
-                 File outputDir = IOUtils.checkDir(
-                    iosp.getCMake().getOutputDir().get()
-                );
-                
+            iosp.getProductFlavors().all((flavor) -> {                
                 BuildType type = buildType.getBuildType().get();
-                Flavor fv = flavor.getFlavor().get();
+                Flavor fv      = flavor.getFlavor().get();
                 
-                File buildDir = IOUtils.buildNameDir(outputDir, "ios-" + device.getType() + '_' + device.getArchitecture(), type, fv);
+                File buildDir = data.getCMakeBuildTypeDir(device, buildType, flavor);
                 
                 log("Build " + type.getName() + ':' + fv.getName());
                 logMore("buildDir:", buildDir);
