@@ -32,8 +32,9 @@ package org.box2d.jni.ios.task;
 
 import java.io.File;
 import javax.inject.Inject;
+
 import org.box2d.jni.ios.BuildDirectory;
-import org.box2d.jni.ios.IOSProperties;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.FileSystemOperations;
 import org.gradle.api.tasks.TaskAction;
@@ -56,8 +57,7 @@ public class BuildTask extends DefaultTask {
     public void build() {
         BuildDirectory directory = BuildDirectory.getInstance(this);
         File lib = new File(getProject().getRootDir(), "lib");
-        
-        System.out.println(">> " + lib);
+
         fs.sync((spect) -> {
             spect.from(directory.getOutputsLib());
             spect.into(lib);

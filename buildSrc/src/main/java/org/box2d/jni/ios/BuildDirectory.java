@@ -31,12 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.ios;
 
 import java.io.File;
+
 import org.box2d.jni.BuildType;
 import org.box2d.jni.Flavor;
 import org.box2d.jni.cmake.BuildTypeProperty;
 import org.box2d.jni.cmake.FlavorProperty;
 import static org.box2d.jni.util.IOCheck.*;
 import static org.box2d.jni.util.IOUtils.*;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 
