@@ -96,7 +96,7 @@ robovm {
 
     iosSignIdentity = ""
     iosProvisioningProfile = ""
-    iosSkipSigning = true // Change to false when compiling for the App Store or a real device.
+    iosSkipSigning = false // Change to false when compiling for the App Store or a real device.
 }
 
 tasks.withType(JavaExec).configureEach { // Java runtime options:
