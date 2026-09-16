@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id 'java'
+    id 'application'
     id 'iOS'
 }
 
@@ -62,7 +62,18 @@ ios {
     }
 }
 
+// Register JVM-execution tasks:
+
+application {
+    // default settings for the 'run' task:
+    mainClass = 'org.box2d.jni.test.Main'
+}
+
 dependencies {
+    // Box2d-JNI
+    testImplementation project(':modules:libraries:box2d-core')
+    testRuntimeOnly fileTree(dir: "${rootDir}/lib", include: ['*.jar'])
+
     // RoboVM runtime base libraries
     testImplementation 'com.mobidevelop.robovm:robovm-rt:2.3.26'
     testImplementation 'com.mobidevelop.robovm:robovm-cocoatouch:2.3.26'
@@ -76,4 +87,8 @@ robovm {
     iosSignIdentity = ""
     iosProvisioningProfile = ""
     iosSkipSigning = true // Change to false when compiling for the App Store or a real device.
+}
+
+tasks.withType(JavaExec).configureEach { // Java runtime options:
+    classpath sourceSets.test.runtimeClasspath
 }

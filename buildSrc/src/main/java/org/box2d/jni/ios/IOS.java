@@ -48,6 +48,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
+import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
  *
@@ -71,7 +72,10 @@ public class IOS implements Plugin<Project> {
         );
         TaskContainer tasks = target.getTasks();
 
-        TaskProvider<BuildTask> build = tasks.register(BuildTask.NAME, BuildTask.class);
+        TaskProvider<BuildTask> iosBuild = tasks.register(BuildTask.NAME, BuildTask.class);
+        tasks.withType(JavaCompile.class).configureEach((t) -> {
+            t.dependsOn(iosBuild);
+        });
 
         TaskProvider<XconfigureTask> configureIosDevice = tasks.register("configureIosDeviceARM64", XconfigureTask.class, Device.device_arm64);
         TaskProvider<XconfigureTask> configureIosSimulatorArm64 = tasks.register("configureIosSimulator_ARM64", XconfigureTask.class, Device.simulator_arm64);
@@ -172,7 +176,7 @@ public class IOS implements Plugin<Project> {
             task.dependsOn(buildIosSimulatorX86_64);
         });
 
-        build.configure((task) -> {
+        iosBuild.configure((task) -> {
             task.dependsOn(iosJar);
         });
     }
