@@ -1,5 +1,5 @@
 {
-    "name": "Box2dJNI",
+    "name": "libbox2d-jni-ios.a",
     "link": true,
     "embed": false,
     "forceLoad": true

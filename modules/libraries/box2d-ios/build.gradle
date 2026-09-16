@@ -1,6 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        // Plugin de RoboVM (MobiVM) for Gradle
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.26'
+    }
+}
+
 plugins {
+    id 'java'
     id 'iOS'
 }
+
+apply plugin: 'robovm'
 
 description = 'box2d-jni ios'
 
@@ -46,4 +60,20 @@ ios {
             arguments '-DBOX2D_DOUBLE_PRECISION=OFF'
         }
     }
+}
+
+dependencies {
+    // RoboVM runtime base libraries
+    testImplementation 'com.mobidevelop.robovm:robovm-rt:2.3.26'
+    testImplementation 'com.mobidevelop.robovm:robovm-cocoatouch:2.3.26'
+}
+
+// RoboVM Ahead-Of-Time (AOT) Compiler Configuration
+robovm {
+    // It points to the application configuration properties file for iOS.
+    configFile = file('robovm.properties')
+
+    iosSignIdentity = ""
+    iosProvisioningProfile = ""
+    iosSkipSigning = true // Change to false when compiling for the App Store or a real device.
 }

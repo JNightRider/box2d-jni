@@ -57,6 +57,7 @@ public class PrePackageTask extends DefaultTask {
         BuildDirectory directory = BuildDirectory.getInstance(this);
         File xcframeworks = directory.getXcframeworkDir();
         File metadata = new File(getProject().getProjectDir(), "src/main/Metadata.json");
+        File robovmxml = new File(getProject().getProjectDir(), "src/main/META-INF/robovm/robovm.xml");
         
         log("PrePackageTask ");
         for (File file : xcframeworks.listFiles()) {
@@ -68,11 +69,12 @@ public class PrePackageTask extends DefaultTask {
             
             fs.sync((spec) -> {
                 spec.from(file);
-                spec.into(new File(directory.getOutputsTmpDir(dirnm), name));
+                spec.into(new File(directory.getOutputsTmpDir(dirnm, BuildDirectory.OUT_DIR_PATH), name));
                 spec.include("**/*");
             });
             
-            ioCPFile(metadata, directory.getOutputsTmpDir(dirnm), name + ".json");
+            ioCPFile(metadata, directory.getOutputsTmpDir(dirnm,  BuildDirectory.OUT_DIR_PATH), name + ".json");
+            ioCPFile(robovmxml, directory.getOutputsTmpDir(dirnm,  BuildDirectory.OUT_DIR_ROBOVM), "robovm.xml");
         }
     }
 }

@@ -44,7 +44,7 @@ import org.gradle.api.tasks.TaskAction;
  * @author wil
  */
 public class BuildTask extends DefaultTask {
-    public static final String NAME = "build";
+    public static final String NAME = "buildIOS";
 
     private final FileSystemOperations fs;
     

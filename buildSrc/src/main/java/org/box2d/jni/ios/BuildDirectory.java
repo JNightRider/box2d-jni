@@ -278,10 +278,14 @@ public final class BuildDirectory {
     }
 
     public static final String
-            DIR_CXX = "cxx",
-            DIR_LIPO = "lipo",
-            DIR_XFRAMEWORK = "Xcframework",
+            DIR_CXX         = "cxx",
+            DIR_LIPO        = "lipo",
+            DIR_XFRAMEWORK  = "Xcframework",
             DIR_OUTPUTS_LIB = "outputs";
+    
+    public static final String
+            OUT_DIR_ROBOVM = "/META-INF/robovm/ios",
+            OUT_DIR_PATH   =  OUT_DIR_ROBOVM + "/libs";
 
     private final Project project;
 
@@ -309,16 +313,16 @@ public final class BuildDirectory {
         return ioDir(getOutputsDir(), "tmp");
     }
     
-    public File getOutputsTmpDir(String name) {
-        return ioDir(getOutputsTmpDir(), name + "/lib/ios/");
+    public File getOutputsTmpDir(String name, String path) {
+        return ioDir(getOutputsTmpDir(), name + path);
     }
     
     public File getOutputsLib() {
         return ioDir(getOutputsDir(), "lib");
     }
     
-    public File getOutputsLibDir(String name) {
-        return ioDir(getOutputsLib(), name + "/lib/ios/");
+    public File getOutputsLibDir(String name, String path) {
+        return ioDir(getOutputsLib(), name + path);
     }
 
     public File getXcframeworkDir() {
