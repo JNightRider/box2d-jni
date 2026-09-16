@@ -31,7 +31,7 @@ jobs:
           xcrun --sdk iphonesimulator --show-sdk-path
       - name: gradlew build
         run: |
-            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.flavor=Sp -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false -Pbox2d.jni.ios=true :modules:libraries:box2d-ios:launchIOSDevice \
+            ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.flavor=Sp -Pbox2d.jni.android=false -Pbox2d.jni.desktop=false -Pbox2d.jni.ios=true :modules:libraries:box2d-ios:launchIOSDevice --stacktrace \
             -x test
 
 #  Android:

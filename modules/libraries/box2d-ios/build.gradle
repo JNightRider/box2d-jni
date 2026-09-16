@@ -94,9 +94,10 @@ robovm {
     // It points to the application configuration properties file for iOS.
     configFile = file("${projectDir}/robovm.properties")
 
-    iosSignIdentity = ""
+    /*iosSignIdentity = ""
     iosProvisioningProfile = ""
     iosSkipSigning = false // Change to false when compiling for the App Store or a real device.
+    */
 }
 
 tasks.withType(JavaExec).configureEach { // Java runtime options:
