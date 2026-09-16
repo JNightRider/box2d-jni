@@ -85,8 +85,8 @@ dependencies {
     testRuntimeOnly fileTree(dir: "${rootDir}/lib", include: ['*.jar'])
 
     // RoboVM runtime base libraries
-    testImplementation 'com.mobidevelop.robovm:robovm-rt:2.3.26'
-    testImplementation 'com.mobidevelop.robovm:robovm-cocoatouch:2.3.26'
+    implementation 'com.mobidevelop.robovm:robovm-rt:2.3.26'
+    implementation 'com.mobidevelop.robovm:robovm-cocoatouch:2.3.26'
 }
 
 // RoboVM Ahead-Of-Time (AOT) Compiler Configuration
