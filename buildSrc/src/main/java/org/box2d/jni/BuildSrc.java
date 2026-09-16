@@ -32,14 +32,30 @@ package org.box2d.jni;
 
 import java.util.Base64;
 
+import org.gradle.api.Project;
+
 /**
  * Utility methods used in Gradle builds.
  *
  * @author wil
- * @version 1.2.0
+ * @version 1.2.1
  * @since 1.0.0
  */
 public final class BuildSrc {
+
+    /**
+     * Check if the project is a module for desktop platforms.
+     *
+     * @param project Project
+     * @return boolean
+     */
+    public static boolean isDesktopProject(Project project) {
+        String name = project.getName();
+        if (name == null) {
+            return false;
+        }
+        return !(name.endsWith("android") || name.endsWith("ios"));
+    }
 
     /**
      * Check if the object is a {@code boolean}; otherwise, try to convert it

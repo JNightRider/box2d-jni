@@ -1,11 +1,12 @@
+import org.box2d.jni.BuildSrc
+
 allprojects {
     group = 'org.box2d.jni'
     version = "${jjVersion}"
 }
 
 subprojects {
-    def name = project.name
-    if (! name.endsWith("android")) {
+    if ( BuildSrc.isDesktopProject(project) ) {
         apply plugin: 'java'            // to build JVM
         apply plugin: 'java-library'    // to build JVM libraries
         apply plugin: 'application'     // to build JVM applications
