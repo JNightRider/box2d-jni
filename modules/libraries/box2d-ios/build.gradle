@@ -44,20 +44,30 @@ ios {
     }
 
     buildTypes {
-        debug {
-            arguments '-DTYPE_DEBUG=ON'
+        def bt = findProperty('box2d.jni.bt')
+        if (!bt || bt == 'Debug') {
+            debug {
+                arguments '-DTYPE_DEBUG=ON'
+            }
         }
-        release {
-            arguments '-DTYPE_DEBUG=OFF'
+        if (!bt || bt == 'Release') {
+            release {
+                arguments '-DTYPE_DEBUG=OFF'
+            }
         }
     }
 
     productFlavors {
-        dp {
-            arguments '-DBOX2D_DOUBLE_PRECISION=ON'
+        def flavor = findProperty('box2d.jni.flavor')
+        if (!flavor || flavor == 'Dp') {
+            dp {
+                arguments '-DBOX2D_DOUBLE_PRECISION=ON'
+            }
         }
-        sp {
-            arguments '-DBOX2D_DOUBLE_PRECISION=OFF'
+        if (!flavor || flavor == 'Sp') {
+            sp {
+                arguments '-DBOX2D_DOUBLE_PRECISION=OFF'
+            }
         }
     }
 }
