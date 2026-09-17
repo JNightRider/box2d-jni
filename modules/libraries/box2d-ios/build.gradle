@@ -102,6 +102,19 @@ robovm {
     */
 }
 
+tasks.matching {
+    it.name in [
+        'launchConsole',
+        'launchIPhoneSimulator',
+        'launchIPadSimulator',
+        'launchIOSDevice',
+        'robovmInstall',
+        'robovmArchive'
+    ]
+}.configureEach {
+    dependsOn tasks.named('classes')
+}
+
 tasks.withType(JavaExec).configureEach { // Java runtime options:
     classpath sourceSets.test.runtimeClasspath
 }
