@@ -58,6 +58,20 @@ public final class BuildSrc {
     }
 
     /**
+     * Check if the project is a module for iOS platforms.
+     *
+     * @param project Project
+     * @return boolean
+     */
+    public static boolean isIOSProject(Project project) {
+        String name = project.getName();
+        if (name == null) {
+            return false;
+        }
+        return name.endsWith("ios");
+    }
+
+    /**
      * Check if the object is a {@code boolean}; otherwise, try to convert it
      * into one.
      *
