@@ -10,6 +10,7 @@ buildscript {
 }
 
 plugins {
+    id 'java'
     id 'application'
     id 'iOS'
 }
@@ -72,6 +73,23 @@ ios {
     }
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                    'src/main/java',
+                    'src/iosTest/java'
+            ]
+        }
+        resources {
+            srcDirs = [
+                    'src/main/resources',
+                    'src/iosTest/resources'
+            ]
+        }
+    }
+}
+
 // Register JVM-execution tasks:
 
 application {
@@ -81,8 +99,8 @@ application {
 
 dependencies {
     // Box2d-JNI
-    testImplementation project(':modules:libraries:box2d-core')
-    testRuntimeOnly fileTree(dir: "${rootDir}/lib", include: ['*.jar'])
+    implementation project(':modules:libraries:box2d-core')
+    runtimeOnly fileTree(dir: "${rootDir}/lib", include: ['*.jar'])
 
     // RoboVM runtime base libraries
     implementation 'com.mobidevelop.robovm:robovm-rt:2.3.26'
@@ -93,28 +111,4 @@ dependencies {
 robovm {
     // It points to the application configuration properties file for iOS.
     configFile = file("${projectDir}/robovm.xml")
-
-
-
-    /*iosSignIdentity = ""
-    iosProvisioningProfile = ""
-    iosSkipSigning = false // Change to false when compiling for the App Store or a real device.
-    */
-}
-
-tasks.matching {
-    it.name in [
-        'launchConsole',
-        'launchIPhoneSimulator',
-        'launchIPadSimulator',
-        'launchIOSDevice',
-        'robovmInstall',
-        'robovmArchive'
-    ]
-}.configureEach {
-    dependsOn tasks.named('classes')
-}
-
-tasks.withType(JavaExec).configureEach { // Java runtime options:
-    classpath sourceSets.test.runtimeClasspath
 }
