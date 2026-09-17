@@ -92,7 +92,7 @@ dependencies {
 // RoboVM Ahead-Of-Time (AOT) Compiler Configuration
 robovm {
     // It points to the application configuration properties file for iOS.
-    configFile = file("${projectDir}/robovm.properties")
+   // configFile = file("${projectDir}/robovm.properties")
 
     /*iosSignIdentity = ""
     iosProvisioningProfile = ""
