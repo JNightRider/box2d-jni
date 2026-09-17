@@ -3,23 +3,5 @@
     <executableName>Box2dJNI</executableName>
     <mainClass>org.box2d.jni.test.Main</mainClass>
     <os>ios</os>
-
-    <iosInfoPList>
-        <dict>
-            <key>CFBundleDisplayName</key>
-            <string>Box2dJNI</string>
-
-            <key>CFBundleIdentifier</key>
-            <string>org.box2d.jni.test</string>
-
-            <key>CFBundleShortVersionString</key>
-            <string>1.0</string>
-
-            <key>CFBundleVersion</key>
-            <string>15</string>
-
-            <key>MinimumOSVersion</key>
-            <string>15.0</string>
-        </dict>
-    </iosInfoPList>
+    <target>ios</target>
 </config>
