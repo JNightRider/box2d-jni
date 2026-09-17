@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+        "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>CFBundleDisplayName</key>
+        <string>Box2dJNI</string>
+
+        <key>CFBundleIdentifier</key>
+        <string>org.box2d.jni.test</string>
+
+        <key>CFBundleShortVersionString</key>
+        <string>1.0</string>
+
+        <key>CFBundleVersion</key>
+        <string>15</string>
+
+        <key>MinimumOSVersion</key>
+        <string>15.0</string>
+    </dict>
+</plist>
