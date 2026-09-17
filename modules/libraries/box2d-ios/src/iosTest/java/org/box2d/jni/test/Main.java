@@ -56,9 +56,12 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("<ini>");
         b2WorldDef worldDef = b2DefaultWorldDef(b2WorldDef.malloc());
         worldDef.gravity(b2Vec2.malloc().set(0.0f, -10.0f));
 
+        
+        System.out.println("<box2d>");
         b2WorldId worldId = b2CreateWorld(worldDef, b2WorldId.malloc());
 
         b2BodyDef groundBodyDef = b2DefaultBodyDef(b2BodyDef.malloc());
