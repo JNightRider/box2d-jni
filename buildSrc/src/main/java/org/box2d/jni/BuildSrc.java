@@ -68,7 +68,9 @@ public final class BuildSrc {
         if (name == null) {
             return false;
         }
-        return name.endsWith("ios");
+        return name.endsWith("ios") || checkBool(
+                project.findProperty("box2d.jni.ios")
+        );
     }
 
     /**
