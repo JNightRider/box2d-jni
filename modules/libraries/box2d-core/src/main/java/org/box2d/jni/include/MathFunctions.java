@@ -60,44 +60,6 @@ import static org.box2d.jni.system.ArenaAlloc.*;
 public final class MathFunctions {
     static { Library.initialize(); }
 
-    /**
-     * The PI number used by box2d in the native layer.
-     */
-    public static final float B2_PI = nB2_PI();
-    /* Native bindings: {@code #define B2_PI } */
-    public static native float nB2_PI();
-    
-    /** A vector at the origin. */
-    public static final b2Vec2 b2Vec2_zero = b2Vec2.malloc().set( 0.0f, 0.0f );
-    /** A rotation identity. */
-    public static final b2Rot b2Rot_identity = b2Rot.malloc().set( 1.0f, 0.0f );
-    /** A transformed identity. */
-    public static final b2Transform b2Transform_identity = b2Transform.malloc() ;
-    /** A matrix of zeros. */
-    public static final b2Mat22 b2Mat22_zero = b2Mat22.malloc();
-
-    /** Native bindings: {@code static const b2Pos b2Pos_zero = { 0.0f, 0.0f };} */
-    public static final b2Pos b2Pos_zero = b2Pos.malloc().set( 0.0f, 0.0f );
-    /** Native bindings: {@code static const b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };} */
-    public static final b2WorldTransform b2WorldTransform_identity = b2WorldTransform.malloc();
-
-    static {
-        try (ArenaAlloc arena = allocPush()) {
-            b2Transform_identity.set(
-                b2Vec2.calloc(arena).set(0.0f, 0.0f),
-                b2Rot.calloc(arena).set(1.0f, 0.0f)
-            );
-            b2Mat22_zero.set(
-                b2Vec2.calloc(arena).set(0.0f, 0.0f),
-                b2Vec2.calloc(arena).set(0.0f, 0.0f)
-            );
-            b2WorldTransform_identity.set(
-                b2Pos.calloc(arena).set(0.0f, 0.0f),
-                b2Rot.calloc(arena).set(1.0f, 0.0f)
-            );
-        }
-    }
-
     // --- [ b2IsValidFloat ] ---
     
     /**
