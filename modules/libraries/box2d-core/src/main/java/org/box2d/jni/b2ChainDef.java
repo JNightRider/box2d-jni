@@ -41,21 +41,23 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2ChainDef
  * {
- * 	void* userData;
- * 	const b2Vec2* points;
- * 	int count;
- * 	const b2SurfaceMaterial* materials;
- * 	int materialCount;
- * 	b2Filter filter;
- * 	bool isLoop;
- * 	bool enableSensorEvents;
- * 	int internalValue;
+ *      void* userData;
+ *      const b2Vec2* points;
+ *      int pointCount;
+ *      b2Vec2 ghost1;
+ *      b2Vec2 ghost2;
+ *      const b2SurfaceMaterial* materials;
+ *      int materialCount;
+ *      b2Filter filter;
+ *      bool isLoop;
+ *      bool enableSensorEvents;
+ *      int internalValue;
  * } b2ChainDef;
  * </code></pre>
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
 
@@ -69,7 +71,9 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     private static final int
             USER_DATA,
             POINTS,
-            COUNT,
+            POINT_COUNT,
+            GHOST1,
+            GHOST2,
             MATERIALS,
             MATERIAL_COUNT,
             FILTER,
@@ -78,11 +82,12 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
             INTERNAL_VALUE;
 
     static {
-
         Layout layout = __struct(
                 __member(POINTER_SIZE),
                 __member(POINTER_SIZE),
                 __member(4),
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
+                __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(POINTER_SIZE),
                 __member(4),
                 __member(b2Filter.SIZEOF, b2Filter.ALIGNOF),
@@ -93,13 +98,15 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
 
         USER_DATA = layout.offsetof(0);
         POINTS = layout.offsetof(1);
-        COUNT = layout.offsetof(2);
-        MATERIALS = layout.offsetof(3);
-        MATERIAL_COUNT = layout.offsetof(4);
-        FILTER = layout.offsetof(5);
-        IS_LOOP = layout.offsetof(6);
-        ENABLE_SENSOR_EVENTS = layout.offsetof(7);
-        INTERNAL_VALUE = layout.offsetof(8);
+        POINT_COUNT = layout.offsetof(2);
+        GHOST1 = layout.offsetof(3);
+        GHOST2 = layout.offsetof(4);
+        MATERIALS = layout.offsetof(5);
+        MATERIAL_COUNT = layout.offsetof(6);
+        FILTER = layout.offsetof(7);
+        IS_LOOP = layout.offsetof(8);
+        ENABLE_SENSOR_EVENTS = layout.offsetof(9);
+        INTERNAL_VALUE = layout.offsetof(10);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -141,9 +148,15 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     /** @return Returns the property {@code points} */
     @Override
     public long points() { return npoints(address()); }
-    /** @return Returns the property {@code count} */
+    /** @return Returns the property {@code pointCount} */
     @Override
-    public int count() { return ncount(address()); }
+    public int pointCount() { return npointCount(address()); }
+    /** @return Returns the property {@code ghost1} */
+    @Override
+    public b2Vec2 ghost1() { return nghost1(address()); }
+    /** @return Returns the property {@code ghost2} */
+    @Override
+    public b2Vec2 ghost2() { return nghost2(address()); }
     /** @return Returns the property {@code materials} */
     @Override
     public long materials() { return nmaterials(address()); }
@@ -186,13 +199,35 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     }
 
     /**
-     * Set the value of property {@code count}
+     * Set the value of property {@code pointCount}
      *
      * @param value The value
      * @return b2ChainDef
      */
-    public b2ChainDef count(int value) {
-        ncount(address(), value);
+    public b2ChainDef pointCount(int value) {
+        npointCount(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code ghost1}
+     *
+     * @param value The value
+     * @return b2ChainDef
+     */
+    public b2ChainDef ghost1(b2Vec2 value) {
+        nghost1(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code ghost2}
+     *
+     * @param value The value
+     * @return b2ChainDef
+     */
+    public b2ChainDef ghost2(b2Vec2 value) {
+        nghost2(address(), value);
         return this;
     }
 
@@ -387,7 +422,9 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
     
     public static long nuserData(long address)               { return memGetAddress(address + USER_DATA);              }
     public static long npoints(long address)                 { return memGetAddress(address + POINTS);                 }
-    public static int ncount(long address)                   { return memGetInt(address + COUNT);                      }
+    public static int npointCount(long address)              { return memGetInt(address + POINT_COUNT);                }
+    public static b2Vec2 nghost1(long address)               { return b2Vec2.createSafe(() -> address + GHOST1);       }
+    public static b2Vec2 nghost2(long address)               { return b2Vec2.createSafe(() -> address + GHOST2);       }
     public static long nmaterials(long address)              { return memGetAddress(address + MATERIALS);              }
     public static int nmaterialCount(long address)           { return memGetInt(address + MATERIAL_COUNT);             }
     public static b2Filter nfilter(long address)             { return b2Filter.createSafe(() -> address + FILTER);     }
@@ -397,7 +434,9 @@ public class b2ChainDef extends Struct<b2ChainDef> implements ConstB2ChainDef {
 
     public static void nuserData(long address, long value)               { memPutAddress(address + USER_DATA, value);                         }
     public static void npoints(long address, b2Vec2.Buffer value)        { memPutAddress(address + POINTS, value.address0());           }
-    public static void ncount(long address, int value)                   { memPutInt(address + COUNT, value);                                 }
+    public static void npointCount(long address, int value)              { memPutInt(address + POINT_COUNT, value);                           }
+    public static void nghost1(long address, b2Vec2 value)               { nmemcpy(address + GHOST1, value.address(), b2Vec2.SIZEOF);   }
+    public static void nghost2(long address, b2Vec2 value)               { nmemcpy(address + GHOST2, value.address(), b2Vec2.SIZEOF);   }
     public static void nmaterials(long address, b2SurfaceMaterial.Buffer value) { memPutAddress(address + MATERIALS, value.address0()); }
     public static void nmaterialCount(long address, int value)           { memPutInt(address + MATERIAL_COUNT, value);                        }
     public static void nfilter(long address, b2Filter value)             { nmemcpy(address + FILTER, value.address(), b2Filter.SIZEOF); }
