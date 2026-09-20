@@ -113,7 +113,7 @@ public class b2Filter extends Struct<b2Filter> implements ConstB2Filter {
     /**
      * Initializes this struct with the specified values.
      *
-     * @param categoryBits the valur {@code }
+     * @param categoryBits the valur {@code categoryBits}
      * @param maskBits the valur {@code maskBits}
      * @param groupIndex the valur {@code groupIndex}
      *
