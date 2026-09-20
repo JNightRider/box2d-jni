@@ -43,11 +43,9 @@ import org.box2d.jni.b2Vec2;
 import org.box2d.jni.b2WorldTransform;
 
 import org.box2d.jni.readonly.ConstB2Vec2;
-import org.box2d.jni.system.ArenaAlloc;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
-import static org.box2d.jni.system.ArenaAlloc.*;
 
 /**
  * Class that represents the {@code <math_functions.h>} header of box2d.
