@@ -35,7 +35,7 @@ package org.box2d.jni.readonly;
  * constant of type <code>b2TreeNode</code>. (native type: const b2TreeNode)
  *
  * @author wil
- * @version 1.0.1
+ * @version 2.0.0
  * @since 1.0.0
  */
 public interface ConstB2TreeNode extends ConstStruct {
@@ -48,53 +48,34 @@ public interface ConstB2TreeNode extends ConstStruct {
     ConstB2AABB aabb();
 
     /**
-     * Category bits for collision filtering
+     * In 3D this space is used by the AABB z components.
      *
      * @return long
      */
-    long categoryBits();
+    long padding();
 
     /**
-     * Children (internal node)
-     *
-     * @return ConstB2TreeNodeChildren
-     */
-    ConstB2TreeNodeChildren children();
-
-    /**
-     * User data (leaf node)
-     *
-     * @return long
-     */
-    long userData();
-
-    /**
-     * The node parent index (allocated node)
+     * bit 31 : 1 for leaf node
+     * bit 30 : 1 for moved flag
+     * bits 0-29 : index of the sibling pair node or the proxy id for a leaf
      *
      * @return int
      */
-    int parent();
+    int flagIndex();
 
     /**
-     * The node freelist next index (free node)
+     * The height of an internal node. A leaf has zero height.
      *
      * @return int
      */
-    int next();
+    int height();
 
     /**
-     * 2 - height
+     * The shape index for a leaf. Truncated from proxy user data.
      *
-     * @return short
+     * @return int
      */
-    short height();
-
-    /**
-     * 2 - flags
-     *
-     * @return short
-     */
-    short flags();
+    int shapeIndex();
 
     /**
      * A template that handles the representation of a constant pointer (buffer)
