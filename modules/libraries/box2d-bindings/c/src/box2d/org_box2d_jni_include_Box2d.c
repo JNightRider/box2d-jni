@@ -4408,170 +4408,170 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateReplay
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_StepFrame
+ * Method:    nb2Replay_StepFrame
  * Signature: (J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1StepFrame
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1StepFrame
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2RecPlayer_StepFrame( (b2RecPlayer*)player );
+    return (jboolean)b2Replay_StepFrame( (b2Replay*)player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetWorldId
+ * Method:    nb2Replay_GetWorldId
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetWorldId
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetWorldId
     (JNIEnv *__env, jclass clazz, jlong player, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2WorldId*)__result = b2RecPlayer_GetWorldId( (const b2RecPlayer* )player );
+    *(b2WorldId*)__result = b2Replay_GetWorldId( (const b2Replay* )player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_Restart
+ * Method:    nb2Replay_Restart
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1Restart
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1Restart
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RecPlayer_Restart( (b2RecPlayer*) player );
+    b2Replay_Restart( (b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_SeekFrame
+ * Method:    nb2Replay_SeekFrame
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1SeekFrame
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1SeekFrame
     (JNIEnv *__env, jclass clazz, jlong player, jint targetFrame)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RecPlayer_SeekFrame( (b2RecPlayer*) player, targetFrame );
+    b2Replay_SeekFrame( (b2Replay*) player, targetFrame );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetFrame
+ * Method:    nb2Replay_GetFrame
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetFrame
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetFrame
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint) b2RecPlayer_GetFrame( (const b2RecPlayer*) player );
+    return (jint) b2Replay_GetFrame( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetInfo
+ * Method:    nb2Replay_GetInfo
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetInfo
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetInfo
     (JNIEnv *__env, jclass clazz, jlong player, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2RecPlayerInfo*)__result = b2RecPlayer_GetInfo( (const b2RecPlayer*) player );
+    *(b2ReplayInfo*)__result = b2Replay_GetInfo( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_IsAtEnd
+ * Method:    nb2Replay_IsAtEnd
  * Signature: (J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1IsAtEnd
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1IsAtEnd
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2RecPlayer_IsAtEnd( (const b2RecPlayer*) player );
+    return (jboolean)b2Replay_IsAtEnd( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_HasDiverged
+ * Method:    nb2Replay_HasDiverged
  * Signature: (J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1HasDiverged
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1HasDiverged
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2RecPlayer_HasDiverged( (const b2RecPlayer*) player );
+    return (jboolean)b2Replay_HasDiverged( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetDivergeFrame
+ * Method:    nb2Replay_GetDivergeFrame
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetDivergeFrame
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetDivergeFrame
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint) b2RecPlayer_GetDivergeFrame( (const b2RecPlayer*) player );
+    return (jint) b2Replay_GetDivergeFrame( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_SetKeyframePolicy
+ * Method:    nb2Replay_SetKeyframePolicy
  * Signature: (JJI)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1SetKeyframePolicy
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1SetKeyframePolicy
     (JNIEnv *__env, jclass clazz, jlong player, jlong budgetBytes, jint minIntervalFrames)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RecPlayer_SetKeyframePolicy( (b2RecPlayer*)player, (size_t)budgetBytes, minIntervalFrames );
+    b2Replay_SetKeyframePolicy( (b2Replay*)player, (size_t)budgetBytes, minIntervalFrames );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetKeyframeBudget
+ * Method:    nb2Replay_GetKeyframeBudget
  * Signature: (J)J
  */
-JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetKeyframeBudget
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetKeyframeBudget
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jlong)(size_t) b2RecPlayer_GetKeyframeBudget( (const b2RecPlayer*) player );
+    return (jlong)(size_t) b2Replay_GetKeyframeBudget( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetKeyframeMinInterval
+ * Method:    nb2Replay_GetKeyframeMinInterval
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetKeyframeMinInterval
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetKeyframeMinInterval
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint) b2RecPlayer_GetKeyframeMinInterval( (const b2RecPlayer*) player );
+    return (jint) b2Replay_GetKeyframeMinInterval( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetKeyframeInterval
+ * Method:    nb2Replay_GetKeyframeInterval
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetKeyframeInterval
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetKeyframeInterval
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint) b2RecPlayer_GetKeyframeInterval( (const b2RecPlayer* )player );
+    return (jint) b2Replay_GetKeyframeInterval( (const b2Replay* )player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetKeyframeBytes
+ * Method:    nb2Replay_GetKeyframeBytes
  * Signature: (J)J
  */
-JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetKeyframeBytes
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetKeyframeBytes
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jlong)(size_t) b2RecPlayer_GetKeyframeBytes( (const b2RecPlayer*) player );
+    return (jlong)(size_t) b2Replay_GetKeyframeBytes( (const b2Replay*) player );
 }
 
 /*
@@ -4583,77 +4583,77 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DestroyReplay
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DestroyReplay( (b2RecPlayer*) player );
+    b2DestroyReplay( (b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_DrawFrameQueries
+ * Method:    nb2Replay_DrawFrameQueries
  * Signature: (JJI)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1DrawFrameQueries
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1DrawFrameQueries
     (JNIEnv *__env, jclass clazz, jlong player, jlong draw, jint queryIndex)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RecPlayer_DrawFrameQueries( (b2RecPlayer*)player, (b2DebugDraw*)draw, queryIndex );
+    b2Replay_DrawFrameQueries( (b2Replay*)player, (b2DebugDraw*)draw, queryIndex );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetFrameQueryCount
+ * Method:    nb2Replay_GetFrameQueryCount
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetFrameQueryCount
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetFrameQueryCount
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint) b2RecPlayer_GetFrameQueryCount( (const b2RecPlayer*) player );
+    return (jint) b2Replay_GetFrameQueryCount( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetFrameQuery
+ * Method:    nb2Replay_GetFrameQuery
  * Signature: (JIJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetFrameQuery
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetFrameQuery
     (JNIEnv *__env, jclass clazz, jlong player, jint index, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2RecQueryInfo*)__result = b2RecPlayer_GetFrameQuery( (const b2RecPlayer*) player, index );
+    *(b2ReplayQueryInfo*)__result = b2Replay_GetFrameQuery( (const b2Replay*) player, index );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetFrameQueryHit
+ * Method:    nb2Replay_GetFrameQueryHit
  * Signature: (JIIJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetFrameQueryHit
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetFrameQueryHit
     (JNIEnv *__env, jclass clazz, jlong player, jint queryIndex, jint hitIndex, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2RecQueryHit*)__result = b2RecPlayer_GetFrameQueryHit( (const b2RecPlayer* )player, queryIndex, hitIndex );
+    *(b2ReplayQueryHit*)__result = b2Replay_GetFrameQueryHit( (const b2Replay* )player, queryIndex, hitIndex );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetBodyCount
+ * Method:    nb2Replay_GetBodyCount
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetBodyCount
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetBodyCount
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint) b2RecPlayer_GetBodyCount( (const b2RecPlayer*) player );
+    return (jint) b2Replay_GetBodyCount( (const b2Replay*) player );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_GetBodyId
+ * Method:    nb2Replay_GetBodyId
  * Signature: (JIJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetBodyId
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Replay_1GetBodyId
     (JNIEnv *__env, jclass clazz, jlong player, jint index, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2BodyId*)__result = b2RecPlayer_GetBodyId( (const b2RecPlayer*)player, index );
+    *(b2BodyId*)__result = b2Replay_GetBodyId( (const b2Replay*)player, index );
 }

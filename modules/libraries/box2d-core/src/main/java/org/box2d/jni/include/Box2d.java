@@ -6455,244 +6455,244 @@ public final class Box2d {
     /* {@code B2_API b2Replay* b2CreateReplay( const void* data, int size, int workerCount ); } */
     public static native long nb2CreateReplay(long data, int size, int workerCount);
 
-    // --- [ b2RecPlayer_StepFrame ] ---
+    // --- [ b2Replay_StepFrame ] ---
 
     /**
-     * {@code B2_API bool b2RecPlayer_StepFrame( b2Replay* player ); }
+     * {@code B2_API bool b2Replay_StepFrame( b2Replay* player ); }
      *
      * @param player long
      *
      * @return boolean
      */
-    public static boolean b2RecPlayer_StepFrame(b2Replay player) {
+    public static boolean b2Replay_StepFrame(b2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_StepFrame(player.address());
+        return nb2Replay_StepFrame(player.address());
     }
 
-    /* {@code B2_API bool b2RecPlayer_StepFrame( b2Replay* player ); } */
-    public static native boolean nb2RecPlayer_StepFrame(long player);
+    /* {@code B2_API bool b2Replay_StepFrame( b2Replay* player ); } */
+    public static native boolean nb2Replay_StepFrame(long player);
 
-    // --- [ b2RecPlayer_GetWorldId ] ---
+    // --- [ b2Replay_GetWorldId ] ---
 
     /**
-     * {@code B2_API b2WorldId b2RecPlayer_GetWorldId( const b2Replay* player ); }
+     * {@code B2_API b2WorldId b2Replay_GetWorldId( const b2Replay* player ); }
      *
      * @param player long
      * @param __result store
      *
      * @return b2WorldId
      */
-    public static b2WorldId b2RecPlayer_GetWorldId(ConstB2Replay player, b2WorldId __result) {
+    public static b2WorldId b2Replay_GetWorldId(ConstB2Replay player, b2WorldId __result) {
         checkPointers(player, __result);
-        nb2RecPlayer_GetWorldId(player.address(), __result.address());
+        nb2Replay_GetWorldId(player.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2WorldId b2RecPlayer_GetWorldId( const b2Replay* player ); } */
-    public static native void nb2RecPlayer_GetWorldId(long player, long __result);
+    /* {@code B2_API b2WorldId b2Replay_GetWorldId( const b2Replay* player ); } */
+    public static native void nb2Replay_GetWorldId(long player, long __result);
 
-    // --- [ b2RecPlayer_Restart ] ---
+    // --- [ b2Replay_Restart ] ---
 
     /**
-     * {@code B2_API void b2RecPlayer_Restart( b2Replay* player ); }
+     * {@code B2_API void b2Replay_Restart( b2Replay* player ); }
      *
      * @param player long
      */
-    public static void b2RecPlayer_Restart(b2Replay player) {
+    public static void b2Replay_Restart(b2Replay player) {
         checkPointers(player);
-        nb2RecPlayer_Restart(player.address());
+        nb2Replay_Restart(player.address());
     }
 
-    /* {@code B2_API void b2RecPlayer_Restart( b2Replay* player ); } */
-    public static native void nb2RecPlayer_Restart(long player);
+    /* {@code B2_API void b2Replay_Restart( b2Replay* player ); } */
+    public static native void nb2Replay_Restart(long player);
 
-    // --- [ b2RecPlayer_SeekFrame ] ---
+    // --- [ b2Replay_SeekFrame ] ---
 
     /**
-     * {@code B2_API void b2RecPlayer_SeekFrame( b2Replay* player, int targetFrame ); }
+     * {@code B2_API void b2Replay_SeekFrame( b2Replay* player, int targetFrame ); }
      *
      * @param player long
      * @param targetFrame int
      */
-    public static void b2RecPlayer_SeekFrame(b2Replay player, int targetFrame) {
+    public static void b2Replay_SeekFrame(b2Replay player, int targetFrame) {
         checkPointers(player);
-        nb2RecPlayer_SeekFrame(player.address(), targetFrame);
+        nb2Replay_SeekFrame(player.address(), targetFrame);
     }
 
-    /* {@code B2_API void b2RecPlayer_SeekFrame( b2Replay* player, int targetFrame ); } */
-    public static native void nb2RecPlayer_SeekFrame(long player, int targetFrame);
+    /* {@code B2_API void b2Replay_SeekFrame( b2Replay* player, int targetFrame ); } */
+    public static native void nb2Replay_SeekFrame(long player, int targetFrame);
 
-    // --- [ b2RecPlayer_GetFrame ] ---
+    // --- [ b2Replay_GetFrame ] ---
 
     /**
-     * {@code B2_API int b2RecPlayer_GetFrame( const b2Replay* player ); }
+     * {@code B2_API int b2Replay_GetFrame( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return int
      */
-    public static int b2RecPlayer_GetFrame(ConstB2Replay player) {
+    public static int b2Replay_GetFrame(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetFrame(player.address());
+        return nb2Replay_GetFrame(player.address());
     }
 
-    /* {@code B2_API int b2RecPlayer_GetFrame( const b2Replay* player ); } */
-    public static native int nb2RecPlayer_GetFrame(long player);
+    /* {@code B2_API int b2Replay_GetFrame( const b2Replay* player ); } */
+    public static native int nb2Replay_GetFrame(long player);
 
-    // --- [ b2RecPlayer_GetInfo ] ---
+    // --- [ b2Replay_GetInfo ] ---
 
     /**
-     * {@code B2_API b2ReplayInfo b2RecPlayer_GetInfo( const b2Replay* player ); }
+     * {@code B2_API b2ReplayInfo b2Replay_GetInfo( const b2Replay* player ); }
      *
      * @param player long
      * @param __result store
      *
      * @return b2ReplayInfo
      */
-    public static b2ReplayInfo b2RecPlayer_GetInfo(ConstB2Replay player, b2ReplayInfo __result) {
+    public static b2ReplayInfo b2Replay_GetInfo(ConstB2Replay player, b2ReplayInfo __result) {
         checkPointers(player, __result);
-        nb2RecPlayer_GetInfo(player.address(), __result.address());
+        nb2Replay_GetInfo(player.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2ReplayInfo b2RecPlayer_GetInfo( const b2Replay* player ); } */
-    public static native void nb2RecPlayer_GetInfo(long player, long __result);
+    /* {@code B2_API b2ReplayInfo b2Replay_GetInfo( const b2Replay* player ); } */
+    public static native void nb2Replay_GetInfo(long player, long __result);
 
-    // --- [ b2RecPlayer_IsAtEnd ] ---
+    // --- [ b2Replay_IsAtEnd ] ---
 
     /**
-     * {@code B2_API bool b2RecPlayer_IsAtEnd( const b2Replay* player ); }
+     * {@code B2_API bool b2Replay_IsAtEnd( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return boolean
      */
-    public static boolean b2RecPlayer_IsAtEnd(ConstB2Replay player) {
+    public static boolean b2Replay_IsAtEnd(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_IsAtEnd(player.address());
+        return nb2Replay_IsAtEnd(player.address());
     }
 
-    /* {@code B2_API bool b2RecPlayer_IsAtEnd( const b2Replay* player ); } */
-    public static native boolean nb2RecPlayer_IsAtEnd(long player);
+    /* {@code B2_API bool b2Replay_IsAtEnd( const b2Replay* player ); } */
+    public static native boolean nb2Replay_IsAtEnd(long player);
 
-    // --- [ b2RecPlayer_HasDiverged ] ---
+    // --- [ b2Replay_HasDiverged ] ---
 
     /**
-     * {@code B2_API bool b2RecPlayer_HasDiverged( const b2Replay* player ); }
+     * {@code B2_API bool b2Replay_HasDiverged( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return boolean
      */
-    public static boolean b2RecPlayer_HasDiverged(ConstB2Replay player) {
+    public static boolean b2Replay_HasDiverged(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_HasDiverged(player.address());
+        return nb2Replay_HasDiverged(player.address());
     }
 
-    /* {@code B2_API bool b2RecPlayer_HasDiverged( const b2Replay* player ); } */
-    public static native boolean nb2RecPlayer_HasDiverged(long player);
+    /* {@code B2_API bool b2Replay_HasDiverged( const b2Replay* player ); } */
+    public static native boolean nb2Replay_HasDiverged(long player);
 
-    // --- [ b2RecPlayer_GetDivergeFrame ] ---
+    // --- [ b2Replay_GetDivergeFrame ] ---
 
     /**
-     * {@code B2_API int b2RecPlayer_GetDivergeFrame( const b2Replay* player ); }
+     * {@code B2_API int b2Replay_GetDivergeFrame( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return int
      */
-    public static int b2RecPlayer_GetDivergeFrame(ConstB2Replay player) {
+    public static int b2Replay_GetDivergeFrame(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetDivergeFrame(player.address());
+        return nb2Replay_GetDivergeFrame(player.address());
     }
 
-    /* {@code B2_API int b2RecPlayer_GetDivergeFrame( const b2Replay* player ); } */
-    public static native int nb2RecPlayer_GetDivergeFrame(long player);
+    /* {@code B2_API int b2Replay_GetDivergeFrame( const b2Replay* player ); } */
+    public static native int nb2Replay_GetDivergeFrame(long player);
 
-    // --- [ b2RecPlayer_SetKeyframePolicy ] ---
+    // --- [ b2Replay_SetKeyframePolicy ] ---
 
     /**
-     * {@code B2_API void b2RecPlayer_SetKeyframePolicy( b2Replay* player, size_t budgetBytes, int minIntervalFrames ); }
+     * {@code B2_API void b2Replay_SetKeyframePolicy( b2Replay* player, size_t budgetBytes, int minIntervalFrames ); }
      *
      * @param player long
      * @param budgetBytes long
      * @param minIntervalFrames int
      */
-    public static void b2RecPlayer_SetKeyframePolicy(b2Replay player, long budgetBytes, int minIntervalFrames) {
+    public static void b2Replay_SetKeyframePolicy(b2Replay player, long budgetBytes, int minIntervalFrames) {
         checkPointers(player);
-        nb2RecPlayer_SetKeyframePolicy(player.address(), budgetBytes, minIntervalFrames);
+        nb2Replay_SetKeyframePolicy(player.address(), budgetBytes, minIntervalFrames);
     }
 
-    /* {@code B2_API void b2RecPlayer_SetKeyframePolicy( b2Replay* player, size_t budgetBytes, int minIntervalFrames ); } */
-    public static native void nb2RecPlayer_SetKeyframePolicy(long player, long budgetBytes, int minIntervalFrames);
+    /* {@code B2_API void b2Replay_SetKeyframePolicy( b2Replay* player, size_t budgetBytes, int minIntervalFrames ); } */
+    public static native void nb2Replay_SetKeyframePolicy(long player, long budgetBytes, int minIntervalFrames);
 
-    // --- [ b2RecPlayer_GetKeyframeBudget ] ---
+    // --- [ b2Replay_GetKeyframeBudget ] ---
 
     /**
-     * {@code B2_API size_t b2RecPlayer_GetKeyframeBudget( const b2Replay* player ); }
+     * {@code B2_API size_t b2Replay_GetKeyframeBudget( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return long
      */
-    public static long b2RecPlayer_GetKeyframeBudget(ConstB2Replay player) {
+    public static long b2Replay_GetKeyframeBudget(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetKeyframeBudget(player.address());
+        return nb2Replay_GetKeyframeBudget(player.address());
     }
 
-    /* {@code B2_API size_t b2RecPlayer_GetKeyframeBudget( const b2Replay* player ); } */
-    public static native long nb2RecPlayer_GetKeyframeBudget(long player);
+    /* {@code B2_API size_t b2Replay_GetKeyframeBudget( const b2Replay* player ); } */
+    public static native long nb2Replay_GetKeyframeBudget(long player);
 
-    // --- [ b2RecPlayer_GetKeyframeMinInterval ] ---
+    // --- [ b2Replay_GetKeyframeMinInterval ] ---
 
     /**
-     * {@code B2_API int b2RecPlayer_GetKeyframeMinInterval( const b2Replay* player ); }
+     * {@code B2_API int b2Replay_GetKeyframeMinInterval( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return int
      */
-    public static int b2RecPlayer_GetKeyframeMinInterval(ConstB2Replay player) {
+    public static int b2Replay_GetKeyframeMinInterval(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetKeyframeMinInterval(player.address());
+        return nb2Replay_GetKeyframeMinInterval(player.address());
     }
 
-    /* {@code B2_API int b2RecPlayer_GetKeyframeMinInterval( const b2Replay* player ); } */
-    public static native int nb2RecPlayer_GetKeyframeMinInterval(long player);
+    /* {@code B2_API int b2Replay_GetKeyframeMinInterval( const b2Replay* player ); } */
+    public static native int nb2Replay_GetKeyframeMinInterval(long player);
 
-    // --- [ b2RecPlayer_GetKeyframeInterval ] ---
+    // --- [ b2Replay_GetKeyframeInterval ] ---
 
     /**
-     * {@code B2_API int b2RecPlayer_GetKeyframeInterval( const b2Replay* player ); }
+     * {@code B2_API int b2Replay_GetKeyframeInterval( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return int
      */
-    public static int b2RecPlayer_GetKeyframeInterval(ConstB2Replay player) {
+    public static int b2Replay_GetKeyframeInterval(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetKeyframeInterval(player.address());
+        return nb2Replay_GetKeyframeInterval(player.address());
     }
 
-    /* {@code B2_API int b2RecPlayer_GetKeyframeInterval( const b2Replay* player ); } */
-    public static native int nb2RecPlayer_GetKeyframeInterval(long player);
+    /* {@code B2_API int b2Replay_GetKeyframeInterval( const b2Replay* player ); } */
+    public static native int nb2Replay_GetKeyframeInterval(long player);
 
-    // --- [ b2RecPlayer_GetKeyframeBytes ] ---
+    // --- [ b2Replay_GetKeyframeBytes ] ---
 
     /**
-     * {@code B2_API size_t b2RecPlayer_GetKeyframeBytes( const b2Replay* player ); }
+     * {@code B2_API size_t b2Replay_GetKeyframeBytes( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return long
      */
-    public static long b2RecPlayer_GetKeyframeBytes(ConstB2Replay player) {
+    public static long b2Replay_GetKeyframeBytes(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetKeyframeBytes(player.address());
+        return nb2Replay_GetKeyframeBytes(player.address());
     }
 
-    /* {@code B2_API size_t b2RecPlayer_GetKeyframeBytes( const b2Replay* player ); } */
-    public static native long nb2RecPlayer_GetKeyframeBytes(long player);
+    /* {@code B2_API size_t b2Replay_GetKeyframeBytes( const b2Replay* player ); } */
+    public static native long nb2Replay_GetKeyframeBytes(long player);
 
     // --- [ b2DestroyReplay ] ---
 
@@ -6709,44 +6709,44 @@ public final class Box2d {
     /* {@code B2_API void b2DestroyReplay( b2Replay* player ); } */
     public static native void nb2DestroyReplay(long player);
 
-    // --- [ b2RecPlayer_DrawFrameQueries ] ---
+    // --- [ b2Replay_DrawFrameQueries ] ---
 
     /**
-     * {@code B2_API void b2RecPlayer_DrawFrameQueries( b2Replay* player, b2DebugDraw* draw, int queryIndex ); }
+     * {@code B2_API void b2Replay_DrawFrameQueries( b2Replay* player, b2DebugDraw* draw, int queryIndex ); }
      *
      * @param player long
      * @param draw long
      * @param queryIndex int
      */
-    public static void b2RecPlayer_DrawFrameQueries(b2Replay player, b2DebugDraw draw, int queryIndex) {
+    public static void b2Replay_DrawFrameQueries(b2Replay player, b2DebugDraw draw, int queryIndex) {
         checkPointers(player, draw);
-        nb2RecPlayer_DrawFrameQueries(player.address(), draw.address(), queryIndex);
+        nb2Replay_DrawFrameQueries(player.address(), draw.address(), queryIndex);
     }
 
-    /* {@code B2_API void b2RecPlayer_DrawFrameQueries( b2Replay* player, b2DebugDraw* draw, int queryIndex ); } */
-    public static native void nb2RecPlayer_DrawFrameQueries(long player, long draw, int queryIndex);
+    /* {@code B2_API void b2Replay_DrawFrameQueries( b2Replay* player, b2DebugDraw* draw, int queryIndex ); } */
+    public static native void nb2Replay_DrawFrameQueries(long player, long draw, int queryIndex);
 
-    // --- [ b2RecPlayer_GetFrameQueryCount ] ---
+    // --- [ b2Replay_GetFrameQueryCount ] ---
 
     /**
-     * {@code B2_API int b2RecPlayer_GetFrameQueryCount( const b2Replay* player ); }
+     * {@code B2_API int b2Replay_GetFrameQueryCount( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return int
      */
-    public static int b2RecPlayer_GetFrameQueryCount(ConstB2Replay player) {
+    public static int b2Replay_GetFrameQueryCount(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetFrameQueryCount(player.address());
+        return nb2Replay_GetFrameQueryCount(player.address());
     }
 
-    /* {@code B2_API int b2RecPlayer_GetFrameQueryCount( const b2Replay* player ); } */
-    public static native int nb2RecPlayer_GetFrameQueryCount(long player);
+    /* {@code B2_API int b2Replay_GetFrameQueryCount( const b2Replay* player ); } */
+    public static native int nb2Replay_GetFrameQueryCount(long player);
 
-    // --- [ b2RecPlayer_GetFrameQuery ] ---
+    // --- [  b2Replay_GetFrameQuery ] ---
 
     /**
-     * {@code B2_API b2RecQueryInfo b2RecPlayer_GetFrameQuery( const b2Replay* player, int index ); }
+     * {@code B2_API b2RecQueryInfo b2Replay_GetFrameQuery( const b2Replay* player, int index ); }
      *
      * @param player long
      * @param index int
@@ -6754,19 +6754,19 @@ public final class Box2d {
      *
      * @return b2RecQueryInfo
      */
-    public static b2RecQueryInfo b2RecPlayer_GetFrameQuery(ConstB2Replay player, int index, b2RecQueryInfo __result) {
+    public static b2RecQueryInfo b2Replay_GetFrameQuery(ConstB2Replay player, int index, b2RecQueryInfo __result) {
         checkPointers(player, __result);
-        nb2RecPlayer_GetFrameQuery(player.address(), index, __result.address());
+        nb2Replay_GetFrameQuery(player.address(), index, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2RecQueryInfo b2RecPlayer_GetFrameQuery( const b2Replay* player, int index ); } */
-    public static native void nb2RecPlayer_GetFrameQuery(long player, int index, long __result);
+    /* {@code B2_API b2RecQueryInfo  b2Replay_GetFrameQuery( const b2Replay* player, int index ); } */
+    public static native void nb2Replay_GetFrameQuery(long player, int index, long __result);
 
     // --- [ b2RecPlayer_GetFrameQueryHit ] ---
 
     /**
-     * {@code B2_API b2RecQueryHit b2RecPlayer_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); }
+     * {@code B2_API b2RecQueryHit b2Replay_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); }
      *
      * @param player long
      * @param queryIndex int
@@ -6775,36 +6775,36 @@ public final class Box2d {
      *
      * @return b2RecQueryHit
      */
-    public static b2RecQueryHit b2RecPlayer_GetFrameQueryHit(ConstB2Replay player, int queryIndex, int hitIndex, b2RecQueryHit __result) {
+    public static b2RecQueryHit b2Replay_GetFrameQueryHit(ConstB2Replay player, int queryIndex, int hitIndex, b2RecQueryHit __result) {
         checkPointers(player, __result);
-        nb2RecPlayer_GetFrameQueryHit(player.address(), queryIndex, hitIndex, __result.address());
+        nb2Replay_GetFrameQueryHit(player.address(), queryIndex, hitIndex, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2RecQueryHit b2RecPlayer_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); } */
-    public static native void nb2RecPlayer_GetFrameQueryHit(long player, int queryIndex, int hitIndex, long __result);
+    /* {@code B2_API b2RecQueryHit b2Replay_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); } */
+    public static native void nb2Replay_GetFrameQueryHit(long player, int queryIndex, int hitIndex, long __result);
 
     // --- [ b2RecPlayer_GetBodyCount ] ---
 
     /**
-     * {@code B2_API int b2RecPlayer_GetBodyCount( const b2Replay* player ); }
+     * {@code B2_API int b2Replay_GetBodyCount( const b2Replay* player ); }
      *
      * @param player long
      *
      * @return int
      */
-    public static int b2RecPlayer_GetBodyCount(ConstB2Replay player) {
+    public static int b2Replay_GetBodyCount(ConstB2Replay player) {
         checkPointers(player);
-        return nb2RecPlayer_GetBodyCount(player.address());
+        return nb2Replay_GetBodyCount(player.address());
     }
 
-    /* {@code B2_API int b2RecPlayer_GetBodyCount( const b2Replay* player ); } */
-    public static native int nb2RecPlayer_GetBodyCount(long player);
+    /* {@code B2_API int b2Replay_GetBodyCount( const b2Replay* player ); } */
+    public static native int nb2Replay_GetBodyCount(long player);
 
     // --- [ b2RecPlayer_GetBodyId ] ---
 
     /**
-     * {@code B2_API b2BodyId b2RecPlayer_GetBodyId( const b2Replay* player, int index ); }
+     * {@code B2_API b2BodyId b2Replay_GetBodyId( const b2Replay* player, int index ); }
      *
      * @param player long
      * @param index int
@@ -6812,14 +6812,14 @@ public final class Box2d {
      *
      * @return b2BodyId
      */
-    public static b2BodyId b2RecPlayer_GetBodyId(ConstB2Replay player, int index, b2BodyId __result) {
+    public static b2BodyId b2Replay_GetBodyId(ConstB2Replay player, int index, b2BodyId __result) {
         checkPointers(player, __result);
-            nb2RecPlayer_GetBodyId(player.address(), index, __result.address());
+        nb2Replay_GetBodyId(player.address(), index, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2BodyId b2RecPlayer_GetBodyId( const b2Replay* player, int index ); } */
-    public static native void nb2RecPlayer_GetBodyId(long player, int index, long __result);
+    /* {@code B2_API b2BodyId b2Replay_GetBodyId( const b2Replay* player, int index ); } */
+    public static native void nb2Replay_GetBodyId(long player, int index, long __result);
 
     /** private constructor. */
     private Box2d() {}
