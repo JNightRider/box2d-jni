@@ -3659,17 +3659,17 @@ public final class Box2d {
     // --- [ b2Chain_GetSurfaceMaterial ] ---
 
     /**
-     * {@code B2_API b2SurfaceMaterial b2Chain_GetSurfaceMaterial( b2ChainId chainId, int materialIndex ); }
+     * {@code B2_API b2SurfaceMaterial b2Chain_GetSurfaceMaterial( b2ChainId chainId, int segmentIndex ); }
      *
      * @param chainId b2ChainId
-     * @param materialIndex int
+     * @param segmentIndex int
      * @param __result store
      *
      * @return b2SurfaceMaterial
      */
-    public static b2SurfaceMaterial b2Chain_GetSurfaceMaterial(b2ChainId chainId, int materialIndex, b2SurfaceMaterial __result) {
+    public static b2SurfaceMaterial b2Chain_GetSurfaceMaterial(b2ChainId chainId, int segmentIndex, b2SurfaceMaterial __result) {
         checkPointers(chainId, __result);
-        nb2Chain_GetSurfaceMaterial(chainId.address(), materialIndex, __result.address());
+        nb2Chain_GetSurfaceMaterial(chainId.address(), segmentIndex, __result.address());
         return __result;
     }
 

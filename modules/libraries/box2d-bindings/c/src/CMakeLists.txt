@@ -16,7 +16,6 @@ add_library(box2d-bindings SHARED
     box2d/org_box2d_jni_b2ReplayQueryType.c
     box2d/org_box2d_jni_b2ShapeType.c
     box2d/org_box2d_jni_b2TOIState.c
-    box2d/org_box2d_jni_b2TreeNodeFlags.c
     box2d/org_box2d_jni_include_Base.c
     box2d/org_box2d_jni_include_Box2d.c
     box2d/org_box2d_jni_include_Collision.c

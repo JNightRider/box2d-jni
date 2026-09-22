@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "common_tools.h"
 
 #include "box2d/box2d.h"
-#include "box2d/jni/org_box2d_jni_b2ReplayQueryType.h.h"
+#include "box2d/jni/org_box2d_jni_b2ReplayQueryType.h"
 
 /*
  * Class:     org_box2d_jni_b2ReplayQueryType
