@@ -1089,14 +1089,14 @@ public final class Collision {
         nb2DestroyDynamicTree(tree.address());
     }
 
-    /* {@code B2_API void b2DynamicTree_Destroy( b2DynamicTree* tree ); } */
+    /* {@code B2_API void b2DestroyDynamicTree( b2DynamicTree* tree ); } */
     public static native void nb2DestroyDynamicTree(long tree);
 
 
     // --- [ b2DynamicTree_CreateProxy ] ---
 
     /**
-     * {@code B2_API int b2DynamicTree_CreateProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); }
+     * {@code B2_API int b2CreateTreeProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); }
      *
      * @param tree b2DynamicTree
      * @param aabb b2AABB
@@ -1105,13 +1105,13 @@ public final class Collision {
      *
      * @return int
      */
-    public static int b2DynamicTree_CreateProxy(b2DynamicTree tree, b2AABB aabb, long categoryBits, long userData) {
+    public static int b2CreateTreeProxy(b2DynamicTree tree, b2AABB aabb, long categoryBits, long userData) {
         checkPointers(tree, aabb);
-        return nb2DynamicTree_CreateProxy(tree.address(), aabb.address(), categoryBits, userData);
+        return nb2CreateTreeProxy(tree.address(), aabb.address(), categoryBits, userData);
     }
 
-    /* {@code B2_API int b2DynamicTree_CreateProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); } */
-    public static native int nb2DynamicTree_CreateProxy(long tree, long aabb, long categoryBits, long userData);
+    /* {@code B2_API int b2CreateTreeProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); } */
+    public static native int nb2CreateTreeProxy(long tree, long aabb, long categoryBits, long userData);
 
 
     // --- [ b2DynamicTree_DestroyProxy ] ---

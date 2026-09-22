@@ -698,15 +698,15 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DestroyDynamicTre
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_CreateProxy
+ * Method:    nb2CreateTreeProxy
  * Signature: (JJJJ)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1CreateProxy
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2CreateTreeProxy
     (JNIEnv *__env, jclass clazz, jlong tree, jlong aabbAdd, jlong categoryBits, jlong userData)
 {
     b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2DynamicTree_CreateProxy( (b2DynamicTree*) tree, *aabb, (uint64_t)categoryBits, (uint64_t)userData );
+    return (jint)b2CreateTreeProxy( (b2DynamicTree*) tree, *aabb, (uint64_t)categoryBits, (uint64_t)userData );
 }
 
 /*

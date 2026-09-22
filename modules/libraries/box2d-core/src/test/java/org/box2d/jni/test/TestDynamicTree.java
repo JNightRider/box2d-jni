@@ -89,7 +89,7 @@ public class TestDynamicTree {
         // Test AABB centered at origin with bounds [-1, -1] to [1, 1]
         b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
         b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
-        int proxyId = b2DynamicTree_CreateProxy( tree, a, 1, 0 );
+        int proxyId = b2CreateTreeProxy( tree, a, 1, 0 );
 
         b2RayCastInput input = b2RayCastInput.calloc();
         input.maxFraction( 1.0f );
@@ -306,9 +306,9 @@ public class TestDynamicTree {
         b2AABB a2 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
         b2AABB a3 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 3.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 5.0f, 1.0f ));
 
-        int id1 = b2DynamicTree_CreateProxy( tree, a1, 0x1l, 42 );
-        int id2 = b2DynamicTree_CreateProxy( tree, a2, 0x2l, 43 );
-        int id3 = b2DynamicTree_CreateProxy( tree, a3, 0x4l, 44 );
+        int id1 = b2CreateTreeProxy( tree, a1, 0x1l, 42 );
+        int id2 = b2CreateTreeProxy( tree, a2, 0x2l, 43 );
+        int id3 = b2CreateTreeProxy( tree, a3, 0x4l, 44 );
 
         ENSURE( b2DynamicTree_GetProxyCount( tree ) == 3 );
 
@@ -333,10 +333,10 @@ public class TestDynamicTree {
         b2AABB a3 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 3.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 5.0f, 1.0f ));
 
         @SuppressWarnings("unused")
-        int id1 = b2DynamicTree_CreateProxy( tree, a1, 0xFFl, 0 );
-        int id2 = b2DynamicTree_CreateProxy( tree, a2, 0xFFl, 0 );
+        int id1 = b2CreateTreeProxy( tree, a1, 0xFFl, 0 );
+        int id2 = b2CreateTreeProxy( tree, a2, 0xFFl, 0 );
         @SuppressWarnings("unused")
-        int id3 = b2DynamicTree_CreateProxy( tree, a3, 0xFFl, 0 );
+        int id3 = b2CreateTreeProxy( tree, a3, 0xFFl, 0 );
 
         b2AABB queryA = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -2.0f, -2.0f )).upperBound(b2Vec2.malloc().set( 2.0f, 2.0f ));
 
@@ -362,7 +362,7 @@ public class TestDynamicTree {
         b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 0.0f, 0.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
-        int id = b2DynamicTree_CreateProxy( tree, a, 0x1l, 100 );
+        int id = b2CreateTreeProxy( tree, a, 0x1l, 100 );
 
         // Move proxy to a new place
         b2AABB moved = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 10.0f, 10.0f )).upperBound(b2Vec2.malloc().set( 11.0f, 11.0f ));
@@ -395,7 +395,7 @@ public class TestDynamicTree {
         {
             float x = (float)i * 2.0f;
             b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( x - 0.5f, -0.5f )).upperBound(b2Vec2.malloc().set( x + 0.5f, 0.5f ));
-            b2DynamicTree_CreateProxy( tree, a, 0xFFl, (long)i );
+            b2CreateTreeProxy( tree, a, 0xFFl, (long)i );
         }
 
         int sorted = b2DynamicTree_Rebuild( tree, true );
@@ -417,7 +417,7 @@ public class TestDynamicTree {
         {
             float x = 1.0f * i;
             b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( x, 0.0f )).upperBound(b2Vec2.malloc().set( x + 1.0f, 1.0f ));
-            b2DynamicTree_CreateProxy( tree, a, 1, (long)i );
+            b2CreateTreeProxy( tree, a, 1, (long)i );
         }
 
         float minHeight = log2f((float)columnCount);
@@ -441,7 +441,7 @@ public class TestDynamicTree {
             {
                 float y = 1.0f * j;
                 b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( x, y )).upperBound(b2Vec2.malloc().set( x + 1.0f, y + 1.0f ));
-                b2DynamicTree_CreateProxy( tree, a, 1, (long)i );
+                b2CreateTreeProxy( tree, a, 1, (long)i );
             }
         }
 
@@ -468,7 +468,7 @@ public class TestDynamicTree {
             {
                 float y = 1.0f * j;
                 b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( x, y )).upperBound(b2Vec2.malloc().set( x + 1.0f, y + 1.0f ));
-                proxyIds[index] = b2DynamicTree_CreateProxy( tree, a, 1, (long)i );
+                proxyIds[index] = b2CreateTreeProxy( tree, a, 1, (long)i );
                 index += 1;
             }
         }
