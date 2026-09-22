@@ -1190,7 +1190,7 @@ public final class Box2d {
     // --- [ b2World_Snapshot ] ---
 
     /**
-     * {@code B2_API int b2World_Snapshot( b2WorldId worldId, uint8_t* image, int capacity ); }
+     * {@code B2_API int b2World_GetSnapshot( b2WorldId worldId, uint8_t* image, int capacity ); }
      *
      * @param worldId b2WorldId
      * @param image long
@@ -1198,13 +1198,13 @@ public final class Box2d {
      *
      * @return int
      */
-    public static int b2World_Snapshot(b2WorldId worldId, ByteBuffer image, int capacity) {
+    public static int b2World_GetSnapshot(b2WorldId worldId, ByteBuffer image, int capacity) {
         checkPointers(worldId);
-        return nb2World_Snapshot(worldId.address(), image, capacity);
+        return nb2World_GetSnapshot(worldId.address(), image, capacity);
     }
 
-    /* {@code B2_API int b2World_Snapshot( b2WorldId worldId, uint8_t* image, int capacity ); } */
-    public static native int nb2World_Snapshot(long worldId, ByteBuffer image, int capacity);
+    /* {@code B2_API int b2World_GetSnapshot( b2WorldId worldId, uint8_t* image, int capacity ); } */
+    public static native int nb2World_GetSnapshot(long worldId, ByteBuffer image, int capacity);
 
     // --- [ b2World_Restore ] ---
 

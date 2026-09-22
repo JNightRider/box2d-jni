@@ -749,15 +749,15 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2LoadRecordingFromFil
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2World_Snapshot
+ * Method:    nb2World_GetSnapshot
  * Signature: (JLjava/nio/ByteBuffer;I)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1Snapshot
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetSnapshot
     (JNIEnv *__env, jclass clazz, jlong worldId, jobject buffer, jint capacity)
 {
     ADDRESS_UINT8_BUFFER(__env, buffer, image, __len)
     UNUSED_PARAMS(__len, clazz)
-    return (jint)b2World_Snapshot( *(b2WorldId*) worldId, image, capacity );
+    return (jint)b2World_GetSnapshot( *(b2WorldId*) worldId, image, capacity );
 }
 
 /*
