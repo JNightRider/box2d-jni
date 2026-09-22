@@ -1232,14 +1232,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMassData
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_ApplyMassFromShapes
+ * Method:    nb2Body_UpdateMassFromShapes
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1ApplyMassFromShapes
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1UpdateMassFromShapes
     (JNIEnv *__env, jclass clazz, jlong bodyId)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_ApplyMassFromShapes( *(b2BodyId*)bodyId );
+    b2Body_UpdateMassFromShapes( *(b2BodyId*)bodyId );
 }
 
 /*

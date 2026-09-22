@@ -1936,17 +1936,17 @@ public final class Box2d {
     // --- [ b2Body_ApplyMassFromShapes ] ---
 
     /**
-     * {@code B2_API void b2Body_ApplyMassFromShapes( b2BodyId bodyId ); }
+     * {@code B2_API void b2Body_UpdateMassFromShapes( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      */
-    public static void b2Body_ApplyMassFromShapes(b2BodyId bodyId) {
+    public static void b2Body_UpdateMassFromShapes(b2BodyId bodyId) {
         checkPointers(bodyId);
-        nb2Body_ApplyMassFromShapes(bodyId.address());
+        nb2Body_UpdateMassFromShapes(bodyId.address());
     }
 
-    /* {@code B2_API void b2Body_ApplyMassFromShapes( b2BodyId bodyId ); } */
-    public static native void nb2Body_ApplyMassFromShapes(long bodyId);
+    /* {@code B2_API void b2Body_UpdateMassFromShapes( b2BodyId bodyId ); } */
+    public static native void nb2Body_UpdateMassFromShapes(long bodyId);
 
     // --- [ b2Body_SetLinearDamping ] ---
 
