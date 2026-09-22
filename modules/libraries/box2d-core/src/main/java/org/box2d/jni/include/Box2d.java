@@ -1172,8 +1172,6 @@ public final class Box2d {
         }
     }
 
-    // --- [ b2LoadRecordingFromFile ] ---
-
     /**
      * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
      *
