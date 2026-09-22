@@ -38,20 +38,20 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2RecQueryHit
+ * typedef struct b2ReplayQueryHit
  * {
  *     b2ShapeId shape;
  *     b2Pos point;
  *     b2Vec2 normal;
  *     float fraction;
- * } b2RecQueryHit;
+ * } b2ReplayQueryHit;
  * </code></pre>
  * 
  * @author wil
+ * @version 2.0.0
  * @since 1.0.0
- * @version 1.0.0
  */
-public class b2RecQueryHit extends Struct<b2RecQueryHit> {
+public class b2ReplayQueryHit extends Struct<b2ReplayQueryHit> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -88,7 +88,7 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      *
      * @param ptr A reference pointer.
      */
-    public b2RecQueryHit(Pointer ptr) {
+    public b2ReplayQueryHit(Pointer ptr) {
         super(ptr);
     }
 
@@ -97,7 +97,7 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      *
      * @param address A virtual memory address
      */
-    public b2RecQueryHit(long address) {
+    public b2ReplayQueryHit(long address) {
         super(address);
     }
 
@@ -107,7 +107,7 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2RecQueryHit(long address, boolean factor) {
+    protected b2ReplayQueryHit(long address, boolean factor) {
         super(address, factor);
     }
 
@@ -124,9 +124,9 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      * Set the value of property {@code shape}
      *
      * @param value b2ShapeId
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public b2RecQueryHit shape(b2ShapeId value) {
+    public b2ReplayQueryHit shape(b2ShapeId value) {
         nshape(address(), value);
         return this;
     }
@@ -135,9 +135,9 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      * Set the value of property {@code point}
      *
      * @param value b2Pos
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public b2RecQueryHit point(b2Pos value) {
+    public b2ReplayQueryHit point(b2Pos value) {
         npoint(address(), value);
         return this;
     }
@@ -146,9 +146,9 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      * Set the value of property {@code normal}
      *
      * @param value b2Vec2
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public b2RecQueryHit normal(b2Vec2 value) {
+    public b2ReplayQueryHit normal(b2Vec2 value) {
         nnormal(address(), value);
         return this;
     }
@@ -157,9 +157,9 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
      * Set the value of property {@code fraction}
      *
      * @param value float
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public b2RecQueryHit fraction(float value) {
+    public b2ReplayQueryHit fraction(float value) {
         nfraction(address(), value);
         return this;
     }
@@ -174,48 +174,48 @@ public class b2RecQueryHit extends Struct<b2RecQueryHit> {
     /*(non-Javadoc)
      */
     @Override
-    protected b2RecQueryHit create(long address, Pointer ptr) {
-        return ptr == null ? new b2RecQueryHit(address) : new b2RecQueryHit(ptr);
+    protected b2ReplayQueryHit create(long address, Pointer ptr) {
+        return ptr == null ? new b2ReplayQueryHit(address) : new b2ReplayQueryHit(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryHit}.
+     * Reserve memory for the new object {@code b2ReplayQueryHit}.
      *
      * @param alloc Custom memory manager
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public static b2RecQueryHit alloc(AllocFunc alloc) {
+    public static b2ReplayQueryHit alloc(AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
-        return address == NULL ? null : new b2RecQueryHit(() -> address);
+        return address == NULL ? null : new b2ReplayQueryHit(() -> address);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryHit}.
+     * Reserve memory for the new object {@code b2ReplayQueryHit}.
      *
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public static b2RecQueryHit calloc() {
-        return new b2RecQueryHit(ncalloc(1, SIZEOF));
+    public static b2ReplayQueryHit calloc() {
+        return new b2ReplayQueryHit(ncalloc(1, SIZEOF));
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryHit}.
+     * Reserve memory for the new object {@code b2ReplayQueryHit}.
      *
      * @param arean arena
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public static b2RecQueryHit calloc(ArenaAlloc arean) {
+    public static b2ReplayQueryHit calloc(ArenaAlloc arean) {
         long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
-        return new b2RecQueryHit(() -> ptr);
+        return new b2ReplayQueryHit(() -> ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryHit}.
+     * Reserve memory for the new object {@code b2ReplayQueryHit}.
      *
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public static b2RecQueryHit malloc() {
-        return new b2RecQueryHit(nmalloc(SIZEOF));
+    public static b2ReplayQueryHit malloc() {
+        return new b2ReplayQueryHit(nmalloc(SIZEOF));
     }
 
     // -----------------------------------

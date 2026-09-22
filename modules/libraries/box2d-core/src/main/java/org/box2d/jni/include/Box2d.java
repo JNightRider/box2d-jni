@@ -67,7 +67,7 @@ import org.box2d.jni.b2QueryFilter;
 import org.box2d.jni.b2RayResult;
 import org.box2d.jni.b2Replay;
 import org.box2d.jni.b2ReplayInfo;
-import org.box2d.jni.b2RecQueryHit;
+import org.box2d.jni.b2ReplayQueryHit;
 import org.box2d.jni.b2ReplayQueryInfo;
 import org.box2d.jni.b2Recording;
 import org.box2d.jni.b2RestitutionCallbackI;
@@ -6766,22 +6766,22 @@ public final class Box2d {
     // --- [ b2RecPlayer_GetFrameQueryHit ] ---
 
     /**
-     * {@code B2_API b2RecQueryHit b2Replay_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); }
+     * {@code B2_API b2ReplayQueryHit b2Replay_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); }
      *
      * @param player long
      * @param queryIndex int
      * @param hitIndex int
      * @param __result store
      *
-     * @return b2RecQueryHit
+     * @return b2ReplayQueryHit
      */
-    public static b2RecQueryHit b2Replay_GetFrameQueryHit(ConstB2Replay player, int queryIndex, int hitIndex, b2RecQueryHit __result) {
+    public static b2ReplayQueryHit b2Replay_GetFrameQueryHit(ConstB2Replay player, int queryIndex, int hitIndex, b2ReplayQueryHit __result) {
         checkPointers(player, __result);
         nb2Replay_GetFrameQueryHit(player.address(), queryIndex, hitIndex, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2RecQueryHit b2Replay_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); } */
+    /* {@code B2_API b2ReplayQueryHit b2Replay_GetFrameQueryHit( const b2Replay* player, int queryIndex, int hitIndex ); } */
     public static native void nb2Replay_GetFrameQueryHit(long player, int queryIndex, int hitIndex, long __result);
 
     // --- [ b2RecPlayer_GetBodyCount ] ---
