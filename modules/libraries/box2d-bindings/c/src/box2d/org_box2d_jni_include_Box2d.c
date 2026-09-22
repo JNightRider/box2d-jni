@@ -4390,7 +4390,7 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateReplay
     (JNIEnv *__env, jclass clazz, jlong data, jint size, jint workerCount)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Player* ptr = b2CreateReplay((const void*) data, size, workerCount);
+    b2Replay* ptr = b2CreateReplay((const void*) data, size, workerCount);
     return (jlong)(uintptr_t)ptr;
 }
 
