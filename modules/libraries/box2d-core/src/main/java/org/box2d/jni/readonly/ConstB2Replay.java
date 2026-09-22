@@ -32,12 +32,12 @@ package org.box2d.jni.readonly;
 
 /**
  * Interface that is responsible for representing a native object that is a
- * constant of type <code>b2RecPlayer</code>. (native type: const b2RecPlayer)
+ * constant of type <code>b2Replay</code>. (native type: const b2Replay)
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public interface ConstB2RecPlayer extends ConstStruct {
+public interface ConstB2Replay extends ConstStruct {
     
 }
