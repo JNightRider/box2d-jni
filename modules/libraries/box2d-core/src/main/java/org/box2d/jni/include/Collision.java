@@ -1057,7 +1057,7 @@ public final class Collision {
     /* {@code B2_API b2LocalManifold b2CollideChainSegmentAndPolygon( const b2ChainSegment* segmentA, const b2Polygon* polygonB, b2Transform xf, b2SimplexCache* cache ); } */
     public static native void nb2CollideChainSegmentAndPolygon(long segmentA, long polygonB, long xf, long cache, long __result);
 
-    // --- [ b2DynamicTree_Create ] ---
+    // --- [ b2CreateDynamicTree ] ---
 
     /**
      * {@code B2_API b2DynamicTree b2CreateDynamicTree( int proxyCapacity ); }
@@ -1077,7 +1077,7 @@ public final class Collision {
     public static native void nb2CreateDynamicTree(int proxyCapacity, long __result);
 
 
-    // --- [ b2DynamicTree_Destroy ] ---
+    // --- [ b2DestroyDynamicTree ] ---
 
     /**
      * {@code B2_API void b2DestroyDynamicTree( b2DynamicTree* tree ); }
@@ -1093,7 +1093,7 @@ public final class Collision {
     public static native void nb2DestroyDynamicTree(long tree);
 
 
-    // --- [ b2DynamicTree_CreateProxy ] ---
+    // --- [ b2CreateTreeProxy ] ---
 
     /**
      * {@code B2_API int b2CreateTreeProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); }
@@ -1114,7 +1114,7 @@ public final class Collision {
     public static native int nb2CreateTreeProxy(long tree, long aabb, long categoryBits, long userData);
 
 
-    // --- [ b2DynamicTree_DestroyProxy ] ---
+    // --- [ b2DestroyTreeProxy ] ---
 
     /**
      * {@code B2_API void b2DestroyTreeProxy( b2DynamicTree* tree, int proxyId ); }

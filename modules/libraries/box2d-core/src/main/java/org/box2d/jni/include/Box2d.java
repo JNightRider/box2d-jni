@@ -1172,6 +1172,8 @@ public final class Box2d {
         }
     }
 
+    // --- [ b2LoadRecordingFromFile ] ---
+
     /**
      * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
      *
@@ -1187,7 +1189,7 @@ public final class Box2d {
     /* {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); } */
     public static native long nb2LoadRecordingFromFile(long path);
 
-    // --- [ b2World_Snapshot ] ---
+    // --- [ b2World_GetSnapshot ] ---
 
     /**
      * {@code B2_API int b2World_GetSnapshot( b2WorldId worldId, uint8_t* image, int capacity ); }
@@ -1933,7 +1935,7 @@ public final class Box2d {
     /* {@code B2_API b2MassData b2Body_GetMassData( b2BodyId bodyId ); } */
     public static native void nb2Body_GetMassData(long bodyId, long __result);
 
-    // --- [ b2Body_ApplyMassFromShapes ] ---
+    // --- [ b2Body_UpdateMassFromShapes ] ---
 
     /**
      * {@code B2_API void b2Body_UpdateMassFromShapes( b2BodyId bodyId ); }
@@ -6436,7 +6438,7 @@ public final class Box2d {
     /* {@code B2_API bool b2ValidateReplay( const void* data, int size, int workerCount ); } */
     public static native boolean nb2ValidateReplay(long data, int size, int workerCount);
     
-    // --- [ b2RecPlayer_Create ] ---
+    // --- [ b2CreateReplay ] ---
 
     /**
      * {@code B2_API b2Replay* b2CreateReplay( const void* data, int size, int workerCount ); }
@@ -6694,7 +6696,7 @@ public final class Box2d {
     /* {@code B2_API size_t b2RecPlayer_GetKeyframeBytes( const b2Replay* player ); } */
     public static native long nb2RecPlayer_GetKeyframeBytes(long player);
 
-    // --- [ b2RecPlayer_Destroy ] ---
+    // --- [ b2DestroyReplay ] ---
 
     /**
      * {@code B2_API void b2DestroyReplay( b2Replay* player ); }
