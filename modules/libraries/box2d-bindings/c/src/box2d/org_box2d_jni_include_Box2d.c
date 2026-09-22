@@ -4576,14 +4576,14 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1GetKeyfra
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_Destroy
+ * Method:    nb2DestroyReplay
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1Destroy
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DestroyReplay
     (JNIEnv *__env, jclass clazz, jlong player)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RecPlayer_Destroy( (b2RecPlayer*) player );
+    b2DestroyReplay( (b2RecPlayer*) player );
 }
 
 /*

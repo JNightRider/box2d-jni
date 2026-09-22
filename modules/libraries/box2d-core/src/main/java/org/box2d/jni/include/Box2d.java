@@ -6697,17 +6697,17 @@ public final class Box2d {
     // --- [ b2RecPlayer_Destroy ] ---
 
     /**
-     * {@code B2_API void b2RecPlayer_Destroy( b2Replay* player ); }
+     * {@code B2_API void b2DestroyReplay( b2Replay* player ); }
      *
      * @param player long
      */
-    public static void b2RecPlayer_Destroy(b2Replay player) {
+    public static void b2DestroyReplay(b2Replay player) {
         checkPointers(player);
-        nb2RecPlayer_Destroy(player.address());
+        nb2DestroyReplay(player.address());
     }
 
-    /* {@code B2_API void b2RecPlayer_Destroy( b2Replay* player ); } */
-    public static native void nb2RecPlayer_Destroy(long player);
+    /* {@code B2_API void b2DestroyReplay( b2Replay* player ); } */
+    public static native void nb2DestroyReplay(long player);
 
     // --- [ b2RecPlayer_DrawFrameQueries ] ---
 
