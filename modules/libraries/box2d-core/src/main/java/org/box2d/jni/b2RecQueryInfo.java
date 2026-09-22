@@ -39,16 +39,16 @@ import static org.box2d.jni.system.Memory.*;
 /**
  * <pre><code>
  * typedef struct b2RecQueryInfo
- * {
- *     b2RecQueryType type;
- *     b2QueryFilter filter; // zeroed for the shape local query types
- *     b2AABB aabb;          // overlap AABB
- *     b2Pos origin;         // ray and cast origin
- *     b2Vec2 translation;   // ray and cast translation
- *     b2ShapeId shape;      // target shape for the shape local query types
- *     int hitCount;         // number of recorded results
- * } b2RecQueryInfo;
- * </code></pre>
+{
+    b2ReplayQueryType type;
+    b2QueryFilter filter; // zeroed for the shape local query types
+    b2AABB aabb;          // overlap AABB
+    b2Pos origin;         // ray and cast origin
+    b2Vec2 translation;   // ray and cast translation
+    b2ShapeId shape;      // target shape for the shape local query types
+    int hitCount;         // number of recorded results
+} b2RecQueryInfo;
+</code></pre>
  * 
  * @author wil
  * @since 1.0.0
@@ -124,7 +124,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     }
 
     /** @return Returns the property {@code type} */
-    public b2RecQueryType type() { return ntype(address()); }
+    public b2ReplayQueryType type() { return ntype(address()); }
     /** @return Returns the property {@code filter} */
     public b2QueryFilter filter() { return nfilter(address()); }
     /** @return Returns the property {@code aabb} */
@@ -141,10 +141,10 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     /**
      * Set the value of property {@code type}
      * 
-     * @param value b2RecQueryType
+     * @param value b2ReplayQueryType
      * @return b2RecQueryInfo
      */
-    public b2RecQueryInfo type(b2RecQueryType value) {
+    public b2RecQueryInfo type(b2ReplayQueryType value) {
         ntype(address(), value);
         return this;
     }
@@ -284,7 +284,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
 
     // -----------------------------------
     
-    public static b2RecQueryType ntype(long address) { return b2RecQueryType.valueOf(memGetInt(address + TYPE)); }
+    public static b2ReplayQueryType ntype(long address) { return b2ReplayQueryType.valueOf(memGetInt(address + TYPE)); }
     public static b2QueryFilter nfilter(long address) { return b2QueryFilter.createSafe(() -> address + FILTER); }
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
     public static b2Pos norigin(long address) { return b2Pos.createSafe(() -> address + ORIGIN); }
@@ -292,7 +292,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     public static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
     public static int nhitCount(long address) { return memGetInt(address + HIT_COUNT); }
 
-    public static void ntype(long address, b2RecQueryType value) { memPutInt(address + TYPE, value.value()); }
+    public static void ntype(long address, b2ReplayQueryType value) { memPutInt(address + TYPE, value.value()); }
     public static void nfilter(long address, b2QueryFilter value) { nmemcpy(address + FILTER, value.address(), b2QueryFilter.SIZEOF); }
     public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF); }
     public static void norigin(long address, b2Pos value) { nmemcpy(address + ORIGIN, value.address(), b2Pos.DSIZEOF); }

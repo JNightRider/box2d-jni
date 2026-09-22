@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /*
- * File:   org_box2d_jni_b2RecQueryType.c
+ * File:   org_box2d_jni_b2ReplayQueryType.c
  * Author: wil
  */
 
@@ -39,112 +39,112 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "common_tools.h"
 
 #include "box2d/box2d.h"
-#include "box2d/jni/org_box2d_jni_b2RecQueryType.h"
+#include "box2d/jni/org_box2d_jni_b2ReplayQueryType.h.h"
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryOverlapAABB
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryOverlapAABB
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryOverlapAABB
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryOverlapAABB
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryOverlapAABB;
+    return (jint)b2_replayQueryOverlapAABB;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryOverlapShape
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryOverlapShape
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryOverlapShape
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryOverlapShape
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryOverlapShape;
+    return (jint)b2_replayQueryOverlapShape;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryCastRay
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryCastRay
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryCastRay
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryCastRay
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryCastRay;
+    return (jint)b2_replayQueryCastRay;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryCastShape
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryCastShape
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryCastShape
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryCastShape
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryCastShape;
+    return (jint)b2_replayQueryCastShape;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryCollideMover
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryCollideMover
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryCollideMover
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryCollideMover
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryCollideMover;
+    return (jint)b2_replayQueryCollideMover;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryCastRayClosest
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryCastRayClosest
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryCastRayClosest
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryCastRayClosest
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryCastRayClosest;
+    return (jint)b2_replayQueryCastRayClosest;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryCastMover
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryCastMover
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryCastMover
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryCastMover
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryCastMover;
+    return (jint)b2_replayQueryCastMover;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryShapeTestPoint
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryShapeTestPoint
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryShapeTestPoint
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryShapeTestPoint
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryShapeTestPoint;
+    return (jint)b2_replayQueryShapeTestPoint;
 }
 
 /*
- * Class:     org_box2d_jni_b2RecQueryType
- * Method:    nb2_recQueryShapeRayCast
+ * Class:     org_box2d_jni_b2ReplayQueryType
+ * Method:    nb2_replayQueryShapeRayCast
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2RecQueryType_nb2_1recQueryShapeRayCast
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2ReplayQueryType_nb2_1replayQueryShapeRayCast
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_recQueryShapeRayCast;
+    return (jint)b2_replayQueryShapeRayCast;
 }

@@ -13,7 +13,7 @@ add_library(box2d-bindings SHARED
     org_box2d_jni_system_VarType.c
     box2d/org_box2d_jni_b2BodyType.c
     box2d/org_box2d_jni_b2JointType.c
-    box2d/org_box2d_jni_b2RecQueryType.c
+    box2d/org_box2d_jni_b2ReplayQueryType.c
     box2d/org_box2d_jni_b2ShapeType.c
     box2d/org_box2d_jni_b2TOIState.c
     box2d/org_box2d_jni_b2TreeNodeFlags.c
