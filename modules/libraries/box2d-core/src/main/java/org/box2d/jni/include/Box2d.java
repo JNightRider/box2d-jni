@@ -66,7 +66,7 @@ import org.box2d.jni.b2Profile;
 import org.box2d.jni.b2QueryFilter;
 import org.box2d.jni.b2RayResult;
 import org.box2d.jni.b2Replay;
-import org.box2d.jni.b2RecPlayerInfo;
+import org.box2d.jni.b2ReplayInfo;
 import org.box2d.jni.b2RecQueryHit;
 import org.box2d.jni.b2RecQueryInfo;
 import org.box2d.jni.b2Recording;
@@ -6542,20 +6542,20 @@ public final class Box2d {
     // --- [ b2RecPlayer_GetInfo ] ---
 
     /**
-     * {@code B2_API b2RecPlayerInfo b2RecPlayer_GetInfo( const b2Replay* player ); }
+     * {@code B2_API b2ReplayInfo b2RecPlayer_GetInfo( const b2Replay* player ); }
      *
      * @param player long
      * @param __result store
      *
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public static b2RecPlayerInfo b2RecPlayer_GetInfo(ConstB2Replay player, b2RecPlayerInfo __result) {
+    public static b2ReplayInfo b2RecPlayer_GetInfo(ConstB2Replay player, b2ReplayInfo __result) {
         checkPointers(player, __result);
         nb2RecPlayer_GetInfo(player.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2RecPlayerInfo b2RecPlayer_GetInfo( const b2Replay* player ); } */
+    /* {@code B2_API b2ReplayInfo b2RecPlayer_GetInfo( const b2Replay* player ); } */
     public static native void nb2RecPlayer_GetInfo(long player, long __result);
 
     // --- [ b2RecPlayer_IsAtEnd ] ---
