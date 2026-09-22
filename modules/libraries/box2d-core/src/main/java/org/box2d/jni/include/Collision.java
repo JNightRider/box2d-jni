@@ -1117,18 +1117,18 @@ public final class Collision {
     // --- [ b2DynamicTree_DestroyProxy ] ---
 
     /**
-     * {@code B2_API void b2DynamicTree_DestroyProxy( b2DynamicTree* tree, int proxyId ); }
+     * {@code B2_API void b2DestroyTreeProxy( b2DynamicTree* tree, int proxyId ); }
      *
      * @param tree b2DynamicTree
      * @param proxyId int
      */
-    public static void b2DynamicTree_DestroyProxy(b2DynamicTree tree, int proxyId) {
+    public static void b2DestroyTreeProxy(b2DynamicTree tree, int proxyId) {
         checkPointers(tree);
-        nb2DynamicTree_DestroyProxy(tree.address(), proxyId);
+        nb2DestroyTreeProxy(tree.address(), proxyId);
     }
 
-    /* {@code B2_API void b2DynamicTree_DestroyProxy( b2DynamicTree* tree, int proxyId ); } */
-    public static native void nb2DynamicTree_DestroyProxy(long tree, int proxyId);
+    /* {@code B2_API void b2DestroyTreeProxy( b2DynamicTree* tree, int proxyId ); } */
+    public static native void nb2DestroyTreeProxy(long tree, int proxyId);
 
     // --- [ b2DynamicTree_MoveProxy ] ---
 

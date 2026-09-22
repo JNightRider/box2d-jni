@@ -711,14 +711,14 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2CreateTreeProxy
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_DestroyProxy
+ * Method:    nb2DestroyTreeProxy
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1DestroyProxy
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DestroyTreeProxy
     (JNIEnv *__env, jclass clazz, jlong tree, jint proxyId)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_DestroyProxy( (b2DynamicTree*) tree, proxyId );
+    b2DestroyTreeProxy( (b2DynamicTree*) tree, proxyId );
 }
 
 /*
