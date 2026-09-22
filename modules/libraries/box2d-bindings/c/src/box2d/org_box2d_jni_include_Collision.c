@@ -674,15 +674,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideChainSegme
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Create
+ * Method:    nb2CreateDynamicTree
  * Signature: (IJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Create
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CreateDynamicTree
     (JNIEnv *__env, jclass clazz, jint proxyCapacity, jlong __result)
 {
-    b2DynamicTree* ptr = (b2DynamicTree*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_Create( proxyCapacity );
+    *(b2DynamicTree*)__result = b2CreateDynamicTree( proxyCapacity );
 }
 
 /*

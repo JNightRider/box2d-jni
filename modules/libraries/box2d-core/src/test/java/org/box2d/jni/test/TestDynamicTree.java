@@ -88,7 +88,7 @@ public class TestDynamicTree {
     {
         // Test AABB centered at origin with bounds [-1, -1] to [1, 1]
         b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
         int proxyId = b2DynamicTree_CreateProxy( tree, a, 1, 0 );
 
         b2RayCastInput input = b2RayCastInput.calloc();
@@ -300,7 +300,7 @@ public class TestDynamicTree {
 
     private int TreeMultipleProxiesTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         b2AABB a1 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -5.0f, -1.0f )).upperBound(b2Vec2.malloc().set( -3.0f, 1.0f ));
         b2AABB a2 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
@@ -326,7 +326,7 @@ public class TestDynamicTree {
 
     private int TreeQueryTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         b2AABB a1 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -5.0f, -1.0f )).upperBound(b2Vec2.malloc().set( -3.0f, 1.0f ));
         b2AABB a2 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
@@ -359,7 +359,7 @@ public class TestDynamicTree {
 
     private int TreeMoveAndEnlargeTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         b2AABB a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 0.0f, 0.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ));
         int id = b2DynamicTree_CreateProxy( tree, a, 0x1l, 100 );
@@ -388,7 +388,7 @@ public class TestDynamicTree {
 
     private int TreeRebuildAndValidateTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         // Create a number of proxies to make rebuild meaningful
         for ( int i = 0; i < 12; ++i )
@@ -410,7 +410,7 @@ public class TestDynamicTree {
 
     private int TreeRowHeightTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         int columnCount = 200;
         for (int i = 0; i < columnCount; ++i)
@@ -430,7 +430,7 @@ public class TestDynamicTree {
 
     private int TreeGridHeightTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         int columnCount = 20;
         int rowCount = 20;
@@ -457,7 +457,7 @@ public class TestDynamicTree {
 
     private int TreeGridMovementTest( )
     {
-        b2DynamicTree tree = b2DynamicTree_Create( 16, b2DynamicTree.malloc() );
+        b2DynamicTree tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() );
 
         int[] proxyIds = new int[GRID_COUNT * GRID_COUNT];
         int index = 0;

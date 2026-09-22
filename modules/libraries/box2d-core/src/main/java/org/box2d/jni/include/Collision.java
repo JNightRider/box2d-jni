@@ -72,7 +72,6 @@ import org.box2d.jni.readonly.ConstB2Vec2;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
-import static org.box2d.jni.system.Pointer.*;
 
 /**
  * Class that represents the {@code <collision.h>} header of box2d.
@@ -1061,21 +1060,21 @@ public final class Collision {
     // --- [ b2DynamicTree_Create ] ---
 
     /**
-     * {@code B2_API b2DynamicTree b2DynamicTree_Create( int proxyCapacity ); }
+     * {@code B2_API b2DynamicTree b2CreateDynamicTree( int proxyCapacity ); }
      *
      * @param proxyCapacity int
      * @param __result store
      *
      * @return b2DynamicTree
      */
-    public static b2DynamicTree b2DynamicTree_Create(int proxyCapacity, b2DynamicTree __result) {
+    public static b2DynamicTree b2CreateDynamicTree(int proxyCapacity, b2DynamicTree __result) {
         checkPointers(__result);
-        nb2DynamicTree_Create(proxyCapacity, __result.address());
+        nb2CreateDynamicTree(proxyCapacity, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2DynamicTree b2DynamicTree_Create( int proxyCapacity ); } */
-    public static native void nb2DynamicTree_Create(int proxyCapacity, long __result);
+    /* {@code B2_API b2DynamicTree b2CreateDynamicTree( int proxyCapacity ); } */
+    public static native void nb2CreateDynamicTree(int proxyCapacity, long __result);
 
 
     // --- [ b2DynamicTree_Destroy ] ---
