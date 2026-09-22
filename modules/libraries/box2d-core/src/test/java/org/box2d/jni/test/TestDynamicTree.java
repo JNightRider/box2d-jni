@@ -277,7 +277,7 @@ public class TestDynamicTree {
             ENSURE( proxyHit.get(0) == proxyId );
         }
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
 
         return 0;
     }
@@ -320,7 +320,7 @@ public class TestDynamicTree {
         ENSURE( b2DynamicTree_GetCategoryBits( tree, id2 ) == 0x2l );
         ENSURE( b2DynamicTree_GetCategoryBits( tree, id3 ) == 0x4l );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 
@@ -353,7 +353,7 @@ public class TestDynamicTree {
         ENSURE( list.get(0) >= 1 ); // at least one proxy should be collected
         ENSURE( allStats.leafVisits() >= 1 );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 
@@ -382,7 +382,7 @@ public class TestDynamicTree {
         ENSURE( got2.lowerBound().x() <= enlarge.lowerBound().x() + 1e-6f );
         ENSURE( got2.upperBound().x() >= enlarge.upperBound().x() - 1e-6f );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 
@@ -404,7 +404,7 @@ public class TestDynamicTree {
         ENSURE( b2DynamicTree_GetByteCount( tree ) > 0 );
         ENSURE( b2DynamicTree_GetHeight( tree ) > 0 );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 
@@ -424,7 +424,7 @@ public class TestDynamicTree {
 
         ENSURE( b2DynamicTree_GetHeight( tree ) < 2.0f * minHeight );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 
@@ -449,7 +449,7 @@ public class TestDynamicTree {
 
         ENSURE( b2DynamicTree_GetHeight( tree ) < 2.0f * minHeight );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 
@@ -502,7 +502,7 @@ public class TestDynamicTree {
         int height3 = b2DynamicTree_GetHeight( tree );
         ENSURE( height3 < 2.0f * minHeight );
 
-        b2DynamicTree_Destroy( tree );
+        b2DestroyDynamicTree( tree );
         return 0;
     }
 

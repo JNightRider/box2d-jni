@@ -1080,17 +1080,17 @@ public final class Collision {
     // --- [ b2DynamicTree_Destroy ] ---
 
     /**
-     * {@code B2_API void b2DynamicTree_Destroy( b2DynamicTree* tree ); }
+     * {@code B2_API void b2DestroyDynamicTree( b2DynamicTree* tree ); }
      *
      * @param tree b2DynamicTree
      */
-    public static void b2DynamicTree_Destroy(b2DynamicTree tree) {
+    public static void b2DestroyDynamicTree(b2DynamicTree tree) {
         checkPointers(tree);
-        nb2DynamicTree_Destroy(tree.address());
+        nb2DestroyDynamicTree(tree.address());
     }
 
     /* {@code B2_API void b2DynamicTree_Destroy( b2DynamicTree* tree ); } */
-    public static native void nb2DynamicTree_Destroy(long tree);
+    public static native void nb2DestroyDynamicTree(long tree);
 
 
     // --- [ b2DynamicTree_CreateProxy ] ---

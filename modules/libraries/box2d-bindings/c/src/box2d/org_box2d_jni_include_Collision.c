@@ -686,14 +686,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CreateDynamicTree
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Destroy
+ * Method:    nb2DestroyDynamicTree
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Destroy
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DestroyDynamicTree
     (JNIEnv *__env, jclass clazz, jlong tree)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_Destroy( (b2DynamicTree*) tree );
+    b2DestroyDynamicTree( (b2DynamicTree*) tree );
 }
 
 /*
