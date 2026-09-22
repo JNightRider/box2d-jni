@@ -2396,18 +2396,6 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Chain_1GetSegments
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Chain_GetSurfaceMaterialCount
- * Signature: (J)I
- */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Chain_1GetSurfaceMaterialCount
-    (JNIEnv *__env, jclass clazz, jlong chainId)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jint) b2Chain_GetSurfaceMaterialCount( *(b2ChainId*)chainId );
-}
-
-/*
- * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2Chain_SetSurfaceMaterial
  * Signature: (JJI)V
  */
