@@ -6439,7 +6439,7 @@ public final class Box2d {
     // --- [ b2RecPlayer_Create ] ---
 
     /**
-     * {@code B2_API b2Replay* b2RecPlayer_Create( const void* data, int size, int workerCount ); }
+     * {@code B2_API b2Replay* b2CreateReplay( const void* data, int size, int workerCount ); }
      *
      * @param data long
      * @param size int
@@ -6447,13 +6447,13 @@ public final class Box2d {
      *
      * @return b2Replay*
      */
-    public static b2Replay b2RecPlayer_Create(long data, int size, int workerCount) {
-        long __result = nb2RecPlayer_Create(data, size, workerCount);
+    public static b2Replay b2CreateReplay(long data, int size, int workerCount) {
+        long __result = nb2CreateReplay(data, size, workerCount);
         return b2Replay.createSafe(() -> __result);
     }
 
-    /* {@code B2_API b2Replay* b2RecPlayer_Create( const void* data, int size, int workerCount ); } */
-    public static native long nb2RecPlayer_Create(long data, int size, int workerCount);
+    /* {@code B2_API b2Replay* b2CreateReplay( const void* data, int size, int workerCount ); } */
+    public static native long nb2CreateReplay(long data, int size, int workerCount);
 
     // --- [ b2RecPlayer_StepFrame ] ---
 

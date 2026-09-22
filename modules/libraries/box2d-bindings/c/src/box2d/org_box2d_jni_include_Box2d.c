@@ -4395,14 +4395,14 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2ValidateReplay
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RecPlayer_Create
+ * Method:    nb2CreateReplay
  * Signature: (JII)J
  */
-JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2RecPlayer_1Create
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateReplay
     (JNIEnv *__env, jclass clazz, jlong data, jint size, jint workerCount)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RecPlayer* ptr = b2RecPlayer_Create((const void*) data, size, workerCount);
+    b2Player* ptr = b2CreateReplay((const void*) data, size, workerCount);
     return (jlong)(uintptr_t)ptr;
 }
 
