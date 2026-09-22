@@ -68,7 +68,7 @@ import org.box2d.jni.b2RayResult;
 import org.box2d.jni.b2Replay;
 import org.box2d.jni.b2ReplayInfo;
 import org.box2d.jni.b2RecQueryHit;
-import org.box2d.jni.b2RecQueryInfo;
+import org.box2d.jni.b2ReplayQueryInfo;
 import org.box2d.jni.b2Recording;
 import org.box2d.jni.b2RestitutionCallbackI;
 import org.box2d.jni.b2Rot;
@@ -6746,21 +6746,21 @@ public final class Box2d {
     // --- [  b2Replay_GetFrameQuery ] ---
 
     /**
-     * {@code B2_API b2RecQueryInfo b2Replay_GetFrameQuery( const b2Replay* player, int index ); }
+     * {@code B2_API b2ReplayQueryInfo b2Replay_GetFrameQuery( const b2Replay* player, int index ); }
      *
      * @param player long
      * @param index int
      * @param __result store
      *
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public static b2RecQueryInfo b2Replay_GetFrameQuery(ConstB2Replay player, int index, b2RecQueryInfo __result) {
+    public static b2ReplayQueryInfo b2Replay_GetFrameQuery(ConstB2Replay player, int index, b2ReplayQueryInfo __result) {
         checkPointers(player, __result);
         nb2Replay_GetFrameQuery(player.address(), index, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2RecQueryInfo  b2Replay_GetFrameQuery( const b2Replay* player, int index ); } */
+    /* {@code B2_API b2ReplayQueryInfo  b2Replay_GetFrameQuery( const b2Replay* player, int index ); } */
     public static native void nb2Replay_GetFrameQuery(long player, int index, long __result);
 
     // --- [ b2RecPlayer_GetFrameQueryHit ] ---
