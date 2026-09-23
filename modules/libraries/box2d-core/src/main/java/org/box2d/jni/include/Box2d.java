@@ -564,6 +564,72 @@ public final class Box2d {
     /* {@code B2_API float b2World_GetRestitutionThreshold( b2WorldId worldId ); } */
     public static native float nb2World_GetRestitutionThreshold(long worldId);
 
+    // --- [ b2World_SetRestitutionIterations ] ---
+
+    /**
+     * {@code B2_API void b2World_SetRestitutionIterations( b2WorldId worldId, int iterations ); }
+     *
+     * @param worldId b2WorldId
+     * @param iterations int
+     */
+    public static void b2World_SetRestitutionIterations(b2WorldId worldId, int iterations) {
+        checkPointers(worldId);
+        nb2World_SetRestitutionIterations(worldId.address(), iterations);
+    }
+
+    /* {@code B2_API void b2World_SetRestitutionIterations( b2WorldId worldId, int iterations ); } */
+    public static native void nb2World_SetRestitutionIterations(long worldId, int iterations);
+
+    // --- [ b2World_GetRestitutionIterations ] ---
+
+    /**
+     * {@code B2_API int b2World_GetRestitutionIterations( b2WorldId worldId ); }
+     *
+     * @param worldId b2WorldId
+     *
+     * @return int
+     */
+    public static int b2World_GetRestitutionIterations(b2WorldId worldId) {
+        checkPointers(worldId);
+        return nb2World_GetRestitutionIterations(worldId.address());
+    }
+
+    /* {@code B2_API int b2World_GetRestitutionIterations( b2WorldId worldId ); } */
+    public static native int nb2World_GetRestitutionIterations(long worldId);
+
+    // --- [ b2World_EnableRestitutionPropagation ] ---
+
+    /**
+     * {@code B2_API void b2World_EnableRestitutionPropagation( b2WorldId worldId, bool flag ); }
+     *
+     * @param worldId b2WorldId
+     * @param flag boolean
+     */
+    public static void b2World_EnableRestitutionPropagation(b2WorldId worldId, boolean flag) {
+        checkPointers(worldId);
+        nb2World_EnableRestitutionPropagation(worldId.address(), flag);
+    }
+
+    /* {@code B2_API void b2World_EnableRestitutionPropagation( b2WorldId worldId, bool flag ); } */
+    public static native void nb2World_EnableRestitutionPropagation(long worldId, boolean flag);
+
+    // --- [ b2World_IsRestitutionPropagationEnabled ] ---
+
+    /**
+     * {@code B2_API bool b2World_IsRestitutionPropagationEnabled( b2WorldId worldId ); }
+     *
+     * @param worldId b2WorldId
+     *
+     * @return boolean
+     */
+    public static boolean b2World_IsRestitutionPropagationEnabled(b2WorldId worldId) {
+        checkPointers(worldId);
+        return nb2World_IsRestitutionPropagationEnabled(worldId.address());
+    }
+
+    /* {@code B2_API bool b2World_IsRestitutionPropagationEnabled( b2WorldId worldId ); } */
+    public static native boolean nb2World_IsRestitutionPropagationEnabled(long worldId);
+
     // --- [ b2World_SetHitEventThreshold ] ---
 
     /**
