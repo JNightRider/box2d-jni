@@ -326,6 +326,54 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetRestituti
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_SetRestitutionIterations
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetRestitutionIterations
+    (JNIEnv *__env, jclass clazz, jlong worldId, jint iterations)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2World_SetRestitutionIterations( *(b2WorldId*)worldId, iterations );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_GetRestitutionIterations
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetRestitutionIterations
+    (JNIEnv *__env, jclass clazz, jlong worldId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jint)b2World_GetRestitutionIterations( *(b2WorldId*)worldId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_EnableRestitutionPropagation
+ * Signature: (JZ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1EnableRestitutionPropagation
+    (JNIEnv *__env, jclass clazz, jlong worldId, jboolean flag)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2World_EnableRestitutionPropagation( *(b2WorldId*)worldId, flag );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_IsRestitutionPropagationEnabled
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1IsRestitutionPropagationEnabled
+    (JNIEnv *__env, jclass clazz, jlong worldId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean)b2World_IsRestitutionPropagationEnabled( *(b2WorldId*)worldId );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_SetHitEventThreshold
  * Signature: (JF)V
  */
