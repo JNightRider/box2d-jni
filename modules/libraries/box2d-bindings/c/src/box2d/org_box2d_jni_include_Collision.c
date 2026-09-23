@@ -801,28 +801,26 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Quer
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_RayCast
+ * Method:    nb2DynamicTree_CastRay
  * Signature: (JJJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1RayCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1CastRay
     (JNIEnv *__env, jclass clazz, jlong tree, jlong input, jlong maskBits, jlong callback, jlong context, jlong __result)
 {
-    b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_RayCast( (const b2DynamicTree*) tree, (const b2RayCastInput*) input, (uint64_t) maskBits, (b2TreeRayCastCallbackFcn*) callback, (void*) context );
+    *(b2TreeStats*)__result = b2DynamicTree_CastRay( (const b2DynamicTree*) tree, (const b2RayCastInput*) input, (uint64_t) maskBits, (b2TreeRayCastCallbackFcn*) callback, (void*) context );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_BoxCast
+ * Method:    nb2DynamicTree_CastBox
  * Signature: (JJJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1BoxCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1CastBox
     (JNIEnv *__env, jclass clazz, jlong tree, jlong input, jlong maskBits, jlong callback, jlong context, jlong __result)
 {
-    b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_BoxCast( (const b2DynamicTree*) tree, (const b2BoxCastInput*)input, (uint64_t) maskBits, (b2TreeBoxCastCallbackFcn*) callback, (void*) context );
+    *(b2TreeStats*)__result = b2DynamicTree_CastBox( (const b2DynamicTree*) tree, (const b2BoxCastInput*)input, (uint64_t) maskBits, (b2TreeBoxCastCallbackFcn*) callback, (void*) context );
 }
 
 /*

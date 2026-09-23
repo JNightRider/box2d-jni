@@ -1249,10 +1249,10 @@ public final class Collision {
      *                                                   void* context ); } */
     public static native void nb2DynamicTree_QueryAll(long tree, long aabb, long callback, long context, long __result);
 
-    // --- [ b2DynamicTree_RayCast ] ---
+    // --- [ b2DynamicTree_CastRay ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2DynamicTree_RayCast( const b2DynamicTree* tree, const b2RayCastInput* input, uint64_t maskBits, b2TreeRayCastCallbackFcn* callback, void* context ); }
+     * {@code B2_API b2TreeStats b2DynamicTree_CastRay( const b2DynamicTree* tree, const b2RayCastInput* input, uint64_t maskBits, b2TreeRayCastCallbackFcn* callback, void* context ); }
      *
      * @param tree ConstB2DynamicTree
      * @param input ConstB2RayCastInput
@@ -1263,19 +1263,19 @@ public final class Collision {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2DynamicTree_RayCast(ConstB2DynamicTree tree, ConstB2RayCastInput input, long maskBits, b2TreeRayCastCallbackFcnI callback, long context, b2TreeStats __result) {
+    public static b2TreeStats b2DynamicTree_CastRay(ConstB2DynamicTree tree, ConstB2RayCastInput input, long maskBits, b2TreeRayCastCallbackFcnI callback, long context, b2TreeStats __result) {
         checkPointers(tree, input, callback, __result);
-        nb2DynamicTree_RayCast(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
+        nb2DynamicTree_CastRay(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2DynamicTree_RayCast( const b2DynamicTree* tree, const b2RayCastInput* input, uint64_t maskBits, b2TreeRayCastCallbackFcn* callback, void* context ); } */
-    public static native void nb2DynamicTree_RayCast(long tree, long input, long maskBits, long callback, long context, long __result);
+    /* {@code B2_API b2TreeStats b2DynamicTree_CastRay( const b2DynamicTree* tree, const b2RayCastInput* input, uint64_t maskBits, b2TreeRayCastCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_CastRay(long tree, long input, long maskBits, long callback, long context, long __result);
 
-    // --- [ b2DynamicTree_ShapeCast ] ---
+    // --- [ b2DynamicTree_CastBox ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2DynamicTree_BoxCast( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); }
+     * {@code B2_API b2TreeStats b2DynamicTree_CastBox( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); }
      * 
      * @param tree ConstB2DynamicTree
      * @param input ConstB2ShapeCastInput
@@ -1286,14 +1286,14 @@ public final class Collision {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2DynamicTree_BoxCast(ConstB2DynamicTree tree, ConstB2ShapeCastInput input, long maskBits, b2TreeBoxCastCallbackFcnI callback, long context, b2TreeStats __result) {
+    public static b2TreeStats b2DynamicTree_CastBox(ConstB2DynamicTree tree, ConstB2ShapeCastInput input, long maskBits, b2TreeBoxCastCallbackFcnI callback, long context, b2TreeStats __result) {
         checkPointers(tree, input, callback, __result);
-        nb2DynamicTree_BoxCast(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
+        nb2DynamicTree_CastBox(tree.address(), input.address(), maskBits, callback.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2DynamicTree_BoxCast( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); } */
-    public static native void nb2DynamicTree_BoxCast(long tree, long input, long maskBits, long callback, long context, long __result);
+    /* {@code B2_API b2TreeStats b2DynamicTree_CastBox( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_CastBox(long tree, long input, long maskBits, long callback, long context, long __result);
 
 
     // --- [ b2DynamicTree_GetHeight ] ---

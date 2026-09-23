@@ -104,7 +104,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -118,7 +118,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -132,7 +132,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -146,7 +146,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -160,7 +160,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == -1 );
         }
@@ -174,7 +174,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == -1 );
         }
@@ -188,7 +188,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -202,7 +202,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -216,7 +216,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == -1 );
         }
@@ -230,7 +230,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -244,7 +244,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == -1 );
         }
@@ -258,7 +258,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
@@ -272,7 +272,7 @@ public class TestDynamicTree {
 
             IntBuffer proxyHit = memCreateIntBuffer(1);
             proxyHit.put(0, -1);
-            b2DynamicTree_RayCast( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() );
 
             ENSURE( proxyHit.get(0) == proxyId );
         }
