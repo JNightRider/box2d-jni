@@ -42,18 +42,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /*
  * Class:     org_box2d_jni_include_Base
- * Method:    nB2_ENABLE_VALIDATION
- * Signature: ()Z
- */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Base_nB2_1ENABLE_1VALIDATION
-    (JNIEnv *__env, jclass clazz)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jboolean)B2_ENABLE_VALIDATION;
-}
-
-/*
- * Class:     org_box2d_jni_include_Base
  * Method:    nb2SetAllocator
  * Signature: (JJ)V
  */

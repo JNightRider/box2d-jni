@@ -58,17 +58,6 @@ public final class Base {
     /** Native bindings: {@code #define B2_HASH_INIT 5381} */
     public static final int B2_HASH_INIT = 5381;
 
-    /**
-     * #if defined( BOX2D_VALIDATE ) && !defined( NDEBUG )
-     * #define B2_ENABLE_VALIDATION 1
-     * #else
-     * #define B2_ENABLE_VALIDATION 0
-     * #endif
-     */
-    public static final boolean B2_ENABLE_VALIDATION = nB2_ENABLE_VALIDATION();
-    /* Native bindings: {@code #define B2_ENABLE_VALIDATION xx} */
-    public static native boolean nB2_ENABLE_VALIDATION();
-
     /** Significant API and behavior changes. */
     public static final int B2_VERSION_MAJOR = 3;
 
