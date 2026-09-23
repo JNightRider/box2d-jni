@@ -31,16 +31,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.include;
 
 import org.box2d.jni.system.Library;
-import org.box2d.jni.system.Pointer;
 
 import static org.box2d.jni.include.MathFunctions.*;
 import static org.box2d.jni.include.MathTypes.*;
+import static org.box2d.jni.system.Pointer.*;
 
 /**
  * Class that represents the {@code <constants.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Constants {
@@ -55,7 +55,7 @@ public final class Constants {
      * #endif
      * }
      */
-    public static final Number B2_HUGE = Pointer.BOX2D_DOUBLE_PRECISION
+    public static final Number B2_HUGE = BOX2D_DOUBLE_PRECISION
                             ? (1.0e9f * b2GetLengthUnitsPerMeter())
                             : (1.0e5f * b2GetLengthUnitsPerMeter());
 
@@ -108,6 +108,10 @@ public final class Constants {
 
     /** {@code #define B2_TIME_TO_SLEEP 0.5f } */
     public static final float B2_TIME_TO_SLEEP = 0.5f;
+
+    /** The maximum number of restitution iterations. Needed to avoid a solver overflow. */
+    public static final int B2_MAX_RESTITUTION_ITERATIONS = 63;
+
     /** private constructor */
     private Constants() {}
 }
