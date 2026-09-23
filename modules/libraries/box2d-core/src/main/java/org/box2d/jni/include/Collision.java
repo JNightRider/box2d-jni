@@ -1147,25 +1147,6 @@ public final class Collision {
     /* {@code B2_API void b2DynamicTree_MoveProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); } */
     public static native void nb2DynamicTree_MoveProxy(long tree, int proxyId, long aabb);
 
-
-    // --- [ b2DynamicTree_EnlargeProxy ] ---
-
-    /**
-     * {@code B2_API void b2DynamicTree_EnlargeProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); }
-     *
-     * @param tree b2DynamicTree
-     * @param proxyId int
-     * @param aabb b2AABB
-     */
-    public static void b2DynamicTree_EnlargeProxy(b2DynamicTree tree, int proxyId, b2AABB aabb) {
-        checkPointers(tree, aabb);
-        nb2DynamicTree_EnlargeProxy(tree.address(), proxyId, aabb.address());
-    }
-
-    /* {@code B2_API void b2DynamicTree_EnlargeProxy( b2DynamicTree* tree, int proxyId, b2AABB aabb ); } */
-    public static native void nb2DynamicTree_EnlargeProxy(long tree, int proxyId, long aabb);
-
-
     // --- [ b2DynamicTree_SetCategoryBits ] ---
 
     /**

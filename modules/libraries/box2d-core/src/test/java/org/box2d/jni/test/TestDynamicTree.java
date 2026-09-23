@@ -376,7 +376,7 @@ public class TestDynamicTree {
 
         // Now enlarge the proxy
         b2AABB enlarge = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 9.5f, 9.5f )).upperBound(b2Vec2.malloc().set( 11.5f, 11.5f ));
-        b2DynamicTree_EnlargeProxy( tree, id, enlarge );
+        //b2DynamicTree_EnlargeProxy( tree, id, enlarge );
 
         b2AABB got2 = b2DynamicTree_GetAABB( tree, id, b2AABB.malloc() );
         ENSURE( got2.lowerBound().x() <= enlarge.lowerBound().x() + 1e-6f );

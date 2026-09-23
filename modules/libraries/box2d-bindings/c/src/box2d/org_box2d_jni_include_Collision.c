@@ -736,19 +736,6 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Move
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_EnlargeProxy
- * Signature: (JIJ)V
- */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1EnlargeProxy
-    (JNIEnv *__env, jclass clazz, jlong tree, jint proxyId, jlong aabbAdd)
-{
-    b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
-    UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_EnlargeProxy( (b2DynamicTree*) tree, proxyId, *aabb );
-}
-
-/*
- * Class:     org_box2d_jni_include_Collision
  * Method:    nb2DynamicTree_SetCategoryBits
  * Signature: (JIJ)V
  */
