@@ -99,6 +99,7 @@ import org.box2d.jni.readonly.ConstB2Polygon;
 import org.box2d.jni.readonly.ConstB2PrismaticJointDef;
 import org.box2d.jni.readonly.ConstB2Recording;
 import org.box2d.jni.readonly.ConstB2RevoluteJointDef;
+import org.box2d.jni.readonly.ConstB2Replay;
 import org.box2d.jni.readonly.ConstB2Segment;
 import org.box2d.jni.readonly.ConstB2ShapeDef;
 import org.box2d.jni.readonly.ConstB2ShapeProxy;
@@ -113,7 +114,6 @@ import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Checks.*;
 import static org.box2d.jni.system.MemoryUtil.*;
-import org.box2d.jni.readonly.ConstB2Replay;
 
 /**
  * Class that represents the {@code <box2d.h>} header of box2d.
