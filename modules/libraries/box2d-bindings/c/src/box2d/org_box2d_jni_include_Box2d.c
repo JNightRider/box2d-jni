@@ -2396,6 +2396,18 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Chain_1GetSegments
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2Chain_SetAllSurfaceMaterials
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Chain_1SetAllSurfaceMaterials
+    (JNIEnv *__env, jclass clazz, jlong chainId, jlong material)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2Chain_SetAllSurfaceMaterials( *(b2ChainId*)chainId, (const b2SurfaceMaterial*)material );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2Chain_SetSurfaceMaterial
  * Signature: (JJI)V
  */

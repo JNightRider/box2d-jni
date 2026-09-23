@@ -3622,6 +3622,22 @@ public final class Box2d {
     /* {@code B2_API int b2Chain_GetSegments( b2ChainId chainId, b2ShapeId* segmentArray, int capacity ); } */
     public static native int nb2Chain_GetSegments(long chainId, long segmentArray, int capacity);
 
+    // --- [ b2Chain_SetAllSurfaceMaterials ] ---
+
+    /**
+     * {@code B2_API void b2Chain_SetAllSurfaceMaterials( b2ChainId chainId, const b2SurfaceMaterial* material ); }
+     *
+     * @param chainId b2ChainId
+     * @param material ConstB2SurfaceMaterial
+     */
+    public static void b2Chain_SetAllSurfaceMaterials(b2ChainId chainId, ConstB2SurfaceMaterial material) {
+        checkPointers(chainId, material);
+        nb2Chain_SetAllSurfaceMaterials(chainId.address(), material.address());
+    }
+
+    /* {@code B2_API void b2Chain_SetAllSurfaceMaterials( b2ChainId chainId, const b2SurfaceMaterial* material ); } */
+    public static native void nb2Chain_SetAllSurfaceMaterials(long chainId, long material);
+
     // --- [ b2Chain_SetSurfaceMaterial ] ---
 
     /**
