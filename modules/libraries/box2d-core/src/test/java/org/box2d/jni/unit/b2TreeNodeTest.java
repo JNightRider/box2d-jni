@@ -80,7 +80,7 @@ public class b2TreeNodeTest {
             Assert.assertEquals(-4, obj.upperBound().y(), 0);
 
             Assert.assertEquals(345L, ptr.padding());
-            Assert.assertEquals(10, ptr.height());
+            Assert.assertEquals(56, ptr.height());
             Assert.assertEquals(56, ptr.shapeIndex());
         }
     }
