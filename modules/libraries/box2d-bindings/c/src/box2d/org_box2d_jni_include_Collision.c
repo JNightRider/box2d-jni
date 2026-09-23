@@ -910,18 +910,6 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Vali
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_ValidateNoEnlarged
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1ValidateNoEnlarged
-    (JNIEnv *__env, jclass clazz, jlong tree)
-{
-    UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_ValidateNoEnlarged( (const b2DynamicTree*) tree );
-}
-
-/*
- * Class:     org_box2d_jni_include_Collision
  * Method:    nb2SolvePlanes
  * Signature: (JJIJ)V
  */

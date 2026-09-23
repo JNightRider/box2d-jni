@@ -1423,22 +1423,6 @@ public final class Collision {
     /* {@code B2_API void b2DynamicTree_Validate( const b2DynamicTree* tree ); } */
     public static native void nb2DynamicTree_Validate(long tree);
 
-
-    // --- [ b2DynamicTree_ValidateNoEnlarged ] ---
-
-    /**
-     * {@code B2_API void b2DynamicTree_ValidateNoEnlarged( const b2DynamicTree* tree ); }
-     *
-     * @param tree ConstB2DynamicTree
-     */
-    public static void b2DynamicTree_ValidateNoEnlarged(ConstB2DynamicTree tree) {
-        checkPointers(tree);
-        nb2DynamicTree_ValidateNoEnlarged(tree.address());
-    }
-
-    /* {@code B2_API void b2DynamicTree_ValidateNoEnlarged( const b2DynamicTree* tree ); } */
-    public static native void nb2DynamicTree_ValidateNoEnlarged(long tree);
- 
     // --- [ b2SolvePlanes ] ---
 
     /**
