@@ -861,18 +861,6 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetP
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Rebuild
- * Signature: (JZ)I
- */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Rebuild
-    (JNIEnv *__env, jclass clazz, jlong tree, jboolean fullBuild)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jint)b2DynamicTree_Rebuild( (b2DynamicTree*) tree, (bool)fullBuild );
-}
-
-/*
- * Class:     org_box2d_jni_include_Collision
  * Method:    nb2DynamicTree_GetByteCount
  * Signature: (J)I
  */

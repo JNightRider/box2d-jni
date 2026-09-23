@@ -1350,25 +1350,6 @@ public final class Collision {
     /* {@code B2_API int b2DynamicTree_GetProxyCount( const b2DynamicTree* tree ); } */
     public static native int nb2DynamicTree_GetProxyCount(long tree);
 
-    // --- [ b2DynamicTree_Rebuild ] ---
-
-    /**
-     * {@code B2_API int b2DynamicTree_Rebuild( b2DynamicTree* tree, bool fullBuild ); }
-     *
-     * @param tree b2DynamicTree
-     * @param fullBuild boolean
-     *
-     * @return int
-     */
-    public static int b2DynamicTree_Rebuild(b2DynamicTree tree, boolean fullBuild) {
-        checkPointers(tree);
-        return nb2DynamicTree_Rebuild(tree.address(), fullBuild);
-    }
-
-    /* {@code B2_API int b2DynamicTree_Rebuild( b2DynamicTree* tree, bool fullBuild ); } */
-    public static native int nb2DynamicTree_Rebuild(long tree, boolean fullBuild);
-
-
     // --- [ b2DynamicTree_GetByteCount ] ---
 
     /**
