@@ -68,7 +68,16 @@ public final class Base {
     public static final boolean B2_ENABLE_VALIDATION = nB2_ENABLE_VALIDATION();
     /* Native bindings: {@code #define B2_ENABLE_VALIDATION xx} */
     public static native boolean nB2_ENABLE_VALIDATION();
-    
+
+    /** Significant API and behavior changes. */
+    public static final int B2_VERSION_MAJOR = 3;
+
+    /** API changes and features. */
+    public static final int B2_VERSION_MINOR = 2;
+
+    /** Bug fixes. No API changes. */
+    public static final int B2_VERSION_REVISION = 0;
+
     // --- [ b2SetAllocator ] ---
 
     /**
