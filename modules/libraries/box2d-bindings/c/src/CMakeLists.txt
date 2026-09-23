@@ -21,6 +21,7 @@ add_library(box2d-bindings SHARED
     box2d/org_box2d_jni_include_Collision.c
     box2d/org_box2d_jni_include_Id.c
     box2d/org_box2d_jni_include_MathFunctions.c
+    box2d/org_box2d_jni_include_MathTypes.c
     box2d/org_box2d_jni_include_Types.c
 )
 
