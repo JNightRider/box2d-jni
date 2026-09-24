@@ -50,7 +50,7 @@ import static org.box2d.jni.system.ArenaAlloc.*;
  * @since 2.0.0
  */
 @SuppressWarnings("unchecked")
-public class MathTypes {
+public final class MathTypes {
     static {
         Library.initialize();
     }
@@ -92,4 +92,7 @@ public class MathTypes {
             );
         }
     }
+
+    /** private constructor */
+    private MathTypes() {}
 }
