@@ -33,7 +33,8 @@ package org.box2d.jni.test
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 
-import org.box2d.jni.include.Base
+import org.box2d.jni.*
+import org.box2d.jni.include.Base.*
 
 import org.box2d.jni.test.TestMacros.MAYBE_RUN_TEST
 import org.box2d.jni.test.TestMacros.filter
@@ -69,15 +70,28 @@ class Main {
     private val ShapeTest: KFunction<Int> = TestShape()::ShapeTest
     private val WorldTest: KFunction<Int> = TestWorld()::WorldTest
 
+    val TestAssertFcn: b2AssertFcnI = b2AssertFcnI { condition: String?, fileName: String?, lineNumber: Int ->
+        System.err.printf("BOX2D ASSERTION: %s, %s, line %d\n", condition, fileName, lineNumber)
+        System.err.flush()
+        1
+    }
+
+    val TestLogFcn: b2LogFcnI = b2LogFcnI { message: String? ->
+        System.out.printf("Box2D: %s\n", message)
+    }
+
     @Test fun main() {
         val args = InstrumentationRegistry.getArguments()
+        b2SetAssertFcn( TestAssertFcn );
+        b2SetLogFcn( TestLogFcn );
+
         /*const char* */ filter = null;
         if (args.size() > 0)
         {
             filter = args.getString("-f")
         }
 
-        val ticks = Base.b2GetTicks()
+        val ticks = b2GetTicks()
         System.out.printf("Starting Box2D unit tests\n")
         if (filter != null) {
             System.out.printf("Filter: %s\n", filter)
@@ -96,7 +110,7 @@ class Main {
         System.out.printf("======================================\n")
         System.out.printf("All Box2D tests passed!\n")
 
-        val duration = Base.b2GetMilliseconds(ticks)
+        val duration = b2GetMilliseconds(ticks)
         System.out.printf("Test duration = %.2f s\n", 0.001f * duration)
     }
 }
