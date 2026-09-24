@@ -69,6 +69,8 @@ public class b2WorldDefTest {
             ptr.gravity().x(0.0f).y(-9.8f);
 
             ptr.restitutionThreshold(1.0f);
+            ptr.restitutionIterations(100);
+            ptr.enableRestitutionPropagation(true);
             ptr.hitEventThreshold(2.0f);
             ptr.contactHertz(60.0f);
             ptr.contactDampingRatio(0.7f);
@@ -132,6 +134,8 @@ public class b2WorldDefTest {
             Assert.assertEquals(-9.8f, ptr.gravity().y(), 0.0001f);
 
             Assert.assertEquals(1.0f, ptr.restitutionThreshold(), 0.0001f);
+            Assert.assertEquals(100, ptr.restitutionIterations());
+            Assert.assertEquals(true, ptr.enableRestitutionPropagation());
             Assert.assertEquals(2.0f, ptr.hitEventThreshold(), 0.0001f);
             Assert.assertEquals(60.0f, ptr.contactHertz(), 0.0001f);
             Assert.assertEquals(0.7f, ptr.contactDampingRatio(), 0.0001f);

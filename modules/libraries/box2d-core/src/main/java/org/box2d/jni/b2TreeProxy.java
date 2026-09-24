@@ -31,25 +31,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2TreeNodeChildren;
+import org.box2d.jni.readonly.ConstB2TreeProxy;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2TreeNodeChildren
+ * typedef struct b2TreeProxy
  * {
- *     int child1;
- *     int child2;
- * } b2TreeNodeChildren;
+ *     uint64_t userData;
+ *     uint64_t categoryBits;
+ *     int32_t node;
+ *     int32_t next;
+ * } b2TreeProxy;
  * </code></pre>
- * 
+ *
  * @author wil
- * @since 1.0.0
  * @version 1.0.0
+ * @since 2.0.0
  */
-public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements ConstB2TreeNodeChildren {
+public class b2TreeProxy extends Struct<b2TreeProxy> implements ConstB2TreeProxy {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -59,17 +61,23 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
 
     /** The struct member offsets. */
     private static final int
-            CHILD1,
-            CHILD2;
+            USER_DATA,
+            CATEGORY_BITS,
+            NODE,
+            NEXT;
 
     static {
         Layout layout = __struct(
+                __member(8),
+                __member(8),
                 __member(4),
                 __member(4)
         );
 
-        CHILD1 = layout.offsetof(0);
-        CHILD2 = layout.offsetof(1);
+        USER_DATA = layout.offsetof(0);
+        CATEGORY_BITS = layout.offsetof(1);
+        NODE = layout.offsetof(2);
+        NEXT = layout.offsetof(3);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -80,7 +88,7 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
      *
      * @param ptr A reference pointer.
      */
-    public b2TreeNodeChildren(Pointer ptr) {
+    public b2TreeProxy(Pointer ptr) {
         super(ptr);
     }
 
@@ -89,7 +97,7 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
      *
      * @param address A virtual memory address
      */
-    public b2TreeNodeChildren(long address) {
+    public b2TreeProxy(long address) {
         super(address);
     }
 
@@ -99,36 +107,67 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2TreeNodeChildren(long address, boolean factor) {
+    protected b2TreeProxy(long address, boolean factor) {
         super(address, factor);
     }
 
-    /** @return Returns the property {@code child1} */
+    /** @return Returns the property {@code userData} */
     @Override
-    public int child1() { return nchild1(address()); }
-    /** @return Returns the property {@code child2} */
+    public long userData() { return nuserData(address()); }
+
+    /** @return Returns the property {@code categoryBits} */
     @Override
-    public int child2() { return nchild2(address()); }
+    public long categoryBits() { return ncategoryBits(address()); }
+
+    /** @return Returns the property {@code node} */
+    @Override
+    public int node() { return nnode(address()); }
+
+    /** @return Returns the property {@code next} */
+    @Override
+    public int next() { return nnext(address()); }
 
     /**
-     * Set the value of property {@code child1}
-     * 
-     * @param value int
-     * @return b2TreeNodeChildren
+     * Set the value of property {@code userData}
+     *
+     * @param value long
+     * @return b2TreeProxy
      */
-    public b2TreeNodeChildren child1(int value) {
-        nchild1(address(), value);
+    public b2TreeProxy userData(long value) {
+        nuserData(address(), value);
         return this;
     }
 
     /**
-     * Set the value of property {@code child2}
-     * 
-     * @param value int
-     * @return b2TreeNodeChildren
+     * Set the value of property {@code categoryBits}
+     *
+     * @param value long
+     * @return b2TreeProxy
      */
-    public b2TreeNodeChildren child2(int value) {
-        nchild2(address(), value);
+    public b2TreeProxy categoryBits(long value) {
+        ncategoryBits(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code node}
+     *
+     * @param value int
+     * @return b2TreeProxy
+     */
+    public b2TreeProxy node(int value) {
+        nnode(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code next}
+     *
+     * @param value int
+     * @return b2TreeProxy
+     */
+    public b2TreeProxy next(int value) {
+        nnext(address(), value);
         return this;
     }
 
@@ -142,8 +181,8 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     /*(non-Javadoc)
      */
     @Override
-    protected b2TreeNodeChildren create(long address, Pointer ptr) {
-        return ptr == null ? new b2TreeNodeChildren(address) : new b2TreeNodeChildren(ptr);
+    protected b2TreeProxy create(long address, Pointer ptr) {
+        return ptr == null ? new b2TreeProxy(address) : new b2TreeProxy(ptr);
     }
 
     // -----------------------------------
@@ -151,67 +190,67 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     /**
      * Internal use of the buffer.
      *
-     * @return b2TreeNodeChildren
+     * @return b2TreeProxy
      */
-    private static b2TreeNodeChildren factory() {
-        return new b2TreeNodeChildren(-1L, true);
+    private static b2TreeProxy factory() {
+        return new b2TreeProxy(-1L, true);
     }
 
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2TreeNodeChildren
+     * @return b2TreeProxy
      */
-    public static b2TreeNodeChildren createSafe(Pointer ptr) {
+    public static b2TreeProxy createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2TreeNodeChildren(ptr);
+        return new b2TreeProxy(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2TreeNodeChildren}.
+     * Reserve memory for the new object {@code b2TreeProxy}.
      *
      * @param alloc Custom memory manager
-     * @return b2TreeNodeChildren
+     * @return b2TreeProxy
      */
-    public static b2TreeNodeChildren alloc(AllocFunc alloc) {
+    public static b2TreeProxy alloc(AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
-        return address == NULL ? null : new b2TreeNodeChildren(() -> address);
+        return address == NULL ? null : new b2TreeProxy(() -> address);
     }
 
     /**
-     * Reserve memory for the new object {@code b2TreeNodeChildren}.
+     * Reserve memory for the new object {@code b2TreeProxy}.
      *
-     * @return b2TreeNodeChildren
+     * @return b2TreeProxy
      */
-    public static b2TreeNodeChildren calloc() {
-        return new b2TreeNodeChildren(ncalloc(1, SIZEOF));
+    public static b2TreeProxy calloc() {
+        return new b2TreeProxy(ncalloc(1, SIZEOF));
     }
 
     /**
-     * Reserve memory for the new object {@code b2TreeNodeChildren}.
+     * Reserve memory for the new object {@code b2TreeProxy}.
      *
      * @param arean arena
-     * @return b2TreeNodeChildren
+     * @return b2TreeProxy
      */
-    public static b2TreeNodeChildren calloc(ArenaAlloc arean) {
+    public static b2TreeProxy calloc(ArenaAlloc arean) {
         long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
-        return new b2TreeNodeChildren(() -> ptr);
+        return new b2TreeProxy(() -> ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2TreeNodeChildren}.
+     * Reserve memory for the new object {@code b2TreeProxy}.
      *
-     * @return b2TreeNodeChildren
+     * @return b2TreeProxy
      */
-    public static b2TreeNodeChildren malloc() {
-        return new b2TreeNodeChildren(nmalloc(SIZEOF));
+    public static b2TreeProxy malloc() {
+        return new b2TreeProxy(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2TreeNodeChildren}.
+     * Reserve an amount n of memory for the object {@code b2TreeProxy}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -221,7 +260,7 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2TreeNodeChildren}.
+     * Reserve an amount n of memory for the object {@code b2TreeProxy}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -233,7 +272,7 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2TreeNodeChildren}.
+     * Reserve an amount n of memory for the object {@code b2TreeProxy}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -243,7 +282,7 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2TreeNodeChildren}.
+     * Reserve an amount n of memory for the object {@code b2TreeProxy}.
      *
      * @param capacity Number of elements
      * @param arena Arean
@@ -255,20 +294,22 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
     }
 
     // -----------------------------------
-    
-    public static int nchild1(long address) { return memGetInt(address + CHILD1); }
-    public static int nchild2(long address) { return memGetInt(address + CHILD2); }
 
-    public static void nchild1(long address, int value) { memPutInt(address + CHILD1, value); }
-    public static void nchild2(long address, int value) { memPutInt(address + CHILD2, value); }
-    
+    public static long nuserData(long address)     { return memGetLong(address + USER_DATA);     }
+    public static long ncategoryBits(long address) { return memGetLong(address + CATEGORY_BITS); }
+    public static int nnode(long address) { return memGetInt(address + NODE); }
+    public static int nnext(long address) { return memGetInt(address + NEXT); }
+
+    public static void nuserData(long address, long value)     { memPutLong(address + USER_DATA, value);     }
+    public static void ncategoryBits(long address, long value) { memPutLong(address + CATEGORY_BITS, value); }
+    public static void nnode(long address, int value) { memPutInt(address + NODE, value); }
+    public static void nnext(long address, int value) { memPutInt(address + NEXT, value); }
     // -----------------------------------
 
-    /** An array of {@code b2TreeNodeChildren} structs. */
-    public static class Buffer extends StructBuffer<b2TreeNodeChildren, Buffer> implements JNINative {
-
+    /** An array of {@code b2TreeProxy} structs. */
+    public static class Buffer extends StructBuffer<b2TreeProxy, Buffer> implements JNINative {
         /** An element that provides information about the structure. */
-        private static final b2TreeNodeChildren ELEMENT_FACTORY = b2TreeNodeChildren.factory();
+        private static final b2TreeProxy ELEMENT_FACTORY = b2TreeProxy.factory();
 
         /**
          * Create a new buffer.
@@ -296,7 +337,7 @@ public class b2TreeNodeChildren extends Struct<b2TreeNodeChildren> implements Co
         /*(non-Javadoc)
          */
         @Override
-        protected b2TreeNodeChildren getElementFactory() {
+        protected b2TreeProxy getElementFactory() {
             return ELEMENT_FACTORY;
         }
 

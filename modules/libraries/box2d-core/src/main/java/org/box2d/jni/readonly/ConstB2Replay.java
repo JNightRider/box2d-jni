@@ -32,59 +32,12 @@ package org.box2d.jni.readonly;
 
 /**
  * Interface that is responsible for representing a native object that is a
- * constant of type <code>b2TreeNode</code>. (native type: const b2TreeNode)
+ * constant of type <code>b2Replay</code>. (native type: const b2Replay)
  *
  * @author wil
  * @version 2.0.0
  * @since 1.0.0
  */
-public interface ConstB2TreeNode extends ConstStruct {
-
-    /**
-     * The node bounding box
-     *
-     * @return ConstB2AABB
-     */
-    ConstB2AABB aabb();
-
-    /**
-     * In 3D this space is used by the AABB z components.
-     *
-     * @return long
-     */
-    long padding();
-
-    /**
-     * bit 31 : 1 for leaf node
-     * bit 30 : 1 for moved flag
-     * bits 0-29 : index of the sibling pair node or the proxy id for a leaf
-     *
-     * @return int
-     */
-    int flagIndex();
-
-    /**
-     * The height of an internal node. A leaf has zero height.
-     *
-     * @return int
-     */
-    int height();
-
-    /**
-     * The shape index for a leaf. Truncated from proxy user data.
-     *
-     * @return int
-     */
-    int shapeIndex();
-
-    /**
-     * A template that handles the representation of a constant pointer (buffer)
-     * of constant structures such as {@code ConstB2TreeNode}
-     *
-     * @param <T> The type of object stored in this buffer
-     * @param <SELF> The type of this buffer
-     */
-    interface ConstBuffer<T extends ConstB2TreeNode, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
-        /* nothing */
-    }
+public interface ConstB2Replay extends ConstStruct {
+    
 }

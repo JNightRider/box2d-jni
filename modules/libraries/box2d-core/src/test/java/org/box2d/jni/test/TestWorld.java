@@ -594,7 +594,7 @@ public class TestWorld {
         b2Circle circle = b2Circle.malloc().set( b2Vec2.malloc().set( 0.0f, 0.0f ), 0.5f );
         b2CreateCircleShape( bodyId, shapeDef, circle, b2ShapeId.malloc() );
 
-        b2Body_ApplyMassFromShapes( bodyId );
+        b2Body_UpdateMassFromShapes( bodyId );
 
         b2World_Step( worldId, 1.0f / 60.0f, 4 );
 

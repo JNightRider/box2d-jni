@@ -37,6 +37,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * A function responsible for obtaining (via metaprogramming) the name of the
+ * method targeted by the various tests.
  *
  * @author wil
  * @version 1.0.0
@@ -45,8 +47,20 @@ import java.lang.reflect.Method;
 @FunctionalInterface
 public interface IVFunction extends Serializable {
 
+    /**
+     * Invoke the function containing the test.
+     *
+     * @return 0 if the test completes successfully; 1 or greater if an error occurred.
+     */
     int call();
 
+    /**
+     * It obtains the name of the method targeted by this lambda expression
+     * using the "writeReplace" magic method, which Java employs when
+     * implementing a lambda function.
+     *
+     * @return String
+     */
     default String name() {
         try {
             Method writeReplace = getClass().getDeclaredMethod("writeReplace");

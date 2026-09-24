@@ -674,52 +674,51 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CollideChainSegme
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Create
+ * Method:    nb2CreateDynamicTree
  * Signature: (IJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Create
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CreateDynamicTree
     (JNIEnv *__env, jclass clazz, jint proxyCapacity, jlong __result)
 {
-    b2DynamicTree* ptr = (b2DynamicTree*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_Create( proxyCapacity );
+    *(b2DynamicTree*)__result = b2CreateDynamicTree( proxyCapacity );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Destroy
+ * Method:    nb2DestroyDynamicTree
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Destroy
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DestroyDynamicTree
     (JNIEnv *__env, jclass clazz, jlong tree)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_Destroy( (b2DynamicTree*) tree );
+    b2DestroyDynamicTree( (b2DynamicTree*) tree );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_CreateProxy
+ * Method:    nb2CreateTreeProxy
  * Signature: (JJJJ)I
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1CreateProxy
+JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2CreateTreeProxy
     (JNIEnv *__env, jclass clazz, jlong tree, jlong aabbAdd, jlong categoryBits, jlong userData)
 {
     b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2DynamicTree_CreateProxy( (b2DynamicTree*) tree, *aabb, (uint64_t)categoryBits, (uint64_t)userData );
+    return (jint)b2CreateTreeProxy( (b2DynamicTree*) tree, *aabb, (uint64_t)categoryBits, (uint64_t)userData );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_DestroyProxy
+ * Method:    nb2DestroyTreeProxy
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1DestroyProxy
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DestroyTreeProxy
     (JNIEnv *__env, jclass clazz, jlong tree, jint proxyId)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_DestroyProxy( (b2DynamicTree*) tree, proxyId );
+    b2DestroyTreeProxy( (b2DynamicTree*) tree, proxyId );
 }
 
 /*
@@ -733,19 +732,6 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Move
     b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
     UNUSED_PARAMS(__env, clazz)
     b2DynamicTree_MoveProxy( (b2DynamicTree*) tree, proxyId, *aabb );
-}
-
-/*
- * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_EnlargeProxy
- * Signature: (JIJ)V
- */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1EnlargeProxy
-    (JNIEnv *__env, jclass clazz, jlong tree, jint proxyId, jlong aabbAdd)
-{
-    b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
-    UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_EnlargeProxy( (b2DynamicTree*) tree, proxyId, *aabb );
 }
 
 /*
@@ -802,28 +788,26 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Quer
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_RayCast
+ * Method:    nb2DynamicTree_CastRay
  * Signature: (JJJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1RayCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1CastRay
     (JNIEnv *__env, jclass clazz, jlong tree, jlong input, jlong maskBits, jlong callback, jlong context, jlong __result)
 {
-    b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_RayCast( (const b2DynamicTree*) tree, (const b2RayCastInput*) input, (uint64_t) maskBits, (b2TreeRayCastCallbackFcn*) callback, (void*) context );
+    *(b2TreeStats*)__result = b2DynamicTree_CastRay( (const b2DynamicTree*) tree, (const b2RayCastInput*) input, (uint64_t) maskBits, (b2TreeRayCastCallbackFcn*) callback, (void*) context );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_BoxCast
+ * Method:    nb2DynamicTree_CastBox
  * Signature: (JJJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1BoxCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1CastBox
     (JNIEnv *__env, jclass clazz, jlong tree, jlong input, jlong maskBits, jlong callback, jlong context, jlong __result)
 {
-    b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_BoxCast( (const b2DynamicTree*) tree, (const b2BoxCastInput*)input, (uint64_t) maskBits, (b2TreeBoxCastCallbackFcn*) callback, (void*) context );
+    *(b2TreeStats*)__result = b2DynamicTree_CastBox( (const b2DynamicTree*) tree, (const b2BoxCastInput*)input, (uint64_t) maskBits, (b2TreeBoxCastCallbackFcn*) callback, (void*) context );
 }
 
 /*
@@ -877,18 +861,6 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetP
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Rebuild
- * Signature: (JZ)I
- */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Rebuild
-    (JNIEnv *__env, jclass clazz, jlong tree, jboolean fullBuild)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jint)b2DynamicTree_Rebuild( (b2DynamicTree*) tree, (bool)fullBuild );
-}
-
-/*
- * Class:     org_box2d_jni_include_Collision
  * Method:    nb2DynamicTree_GetByteCount
  * Signature: (J)I
  */
@@ -934,18 +906,6 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Vali
 {
     UNUSED_PARAMS(__env, clazz)
     b2DynamicTree_Validate( (const b2DynamicTree*) tree );
-}
-
-/*
- * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_ValidateNoEnlarged
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1ValidateNoEnlarged
-    (JNIEnv *__env, jclass clazz, jlong tree)
-{
-    UNUSED_PARAMS(__env, clazz)
-    b2DynamicTree_ValidateNoEnlarged( (const b2DynamicTree*) tree );
 }
 
 /*

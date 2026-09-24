@@ -41,29 +41,31 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2WorldDef
  * {
- *     b2Vec2 gravity;
- *     float restitutionThreshold;
- *     float hitEventThreshold;
- *     float contactHertz;
- *     float contactDampingRatio;
- *     float contactSpeed;
- *     float maximumLinearSpeed;
- *     b2FrictionCallback* frictionCallback;
- *     b2RestitutionCallback* restitutionCallback;
- *     bool enableSleep;
- *     bool enableContinuous;
- *     int workerCount;
- *     b2EnqueueTaskCallback* enqueueTask;
- *     b2FinishTaskCallback* finishTask;
- *     void* userTaskContext;
- *     void* userData;
- *     b2Capacity capacity;
- *     int internalValue;
+ * 	b2Vec2 gravity;
+ * 	float restitutionThreshold;
+ * 	int restitutionIterations;
+ * 	bool enableRestitutionPropagation;
+ * 	float hitEventThreshold;
+ * 	float contactHertz;
+ * 	float contactDampingRatio;
+ * 	float contactSpeed;
+ * 	float maximumLinearSpeed;
+ * 	b2FrictionCallback* frictionCallback;
+ * 	b2RestitutionCallback* restitutionCallback;
+ * 	bool enableSleep;
+ * 	bool enableContinuous;
+ * 	int workerCount;
+ * 	b2EnqueueTaskCallback* enqueueTask;
+ * 	b2FinishTaskCallback* finishTask;
+ * 	void* userTaskContext;
+ * 	void* userData;
+ * 	b2Capacity capacity;
+ * 	int internalValue;
  * } b2WorldDef;
  * </code></pre>
  * 
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
@@ -78,6 +80,8 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     private static final int
             GRAVITY,
             RESTITUTION_THRESHOLD,
+            RESTITUTION_ITERATIONS,
+            ENABLE_RESTITUTION_PROPAGATION,
             HIT_EVENT_THRESHOLD,
             CONTACT_HERTZ,
             CONTACT_DAMPING_RATIO,
@@ -100,6 +104,8 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
                 __member(4),
                 __member(4),
+                __member(1),
+                __member(4),
                 __member(4),
                 __member(4),
                 __member(4),
@@ -119,27 +125,24 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
 
         GRAVITY = layout.offsetof(0);
         RESTITUTION_THRESHOLD = layout.offsetof(1);
-        HIT_EVENT_THRESHOLD = layout.offsetof(2);
-        CONTACT_HERTZ = layout.offsetof(3);
-        CONTACT_DAMPING_RATIO = layout.offsetof(4);
-        CONTACT_SPEED = layout.offsetof(5);
-        MAXIMUM_LINEAR_SPEED = layout.offsetof(6);
-
-        FRICTION_CALLBACK = layout.offsetof(7);
-        RESTITUTION_CALLBACK = layout.offsetof(8);
-
-        ENABLE_SLEEP = layout.offsetof(9);
-        ENABLE_CONTINUOUS = layout.offsetof(10);
-
-        WORKER_COUNT = layout.offsetof(11);
-
-        ENQUEUE_TASK = layout.offsetof(12);
-        FINISH_TASK = layout.offsetof(13);
-        USER_TASK_CONTEXT = layout.offsetof(14);
-        USER_DATA = layout.offsetof(15);
-
-        CAPACITY = layout.offsetof(16);
-        INTERNAL_VALUE = layout.offsetof(17);
+        RESTITUTION_ITERATIONS = layout.offsetof(2);
+        ENABLE_RESTITUTION_PROPAGATION = layout.offsetof(3);
+        HIT_EVENT_THRESHOLD = layout.offsetof(4);
+        CONTACT_HERTZ = layout.offsetof(5);
+        CONTACT_DAMPING_RATIO = layout.offsetof(6);
+        CONTACT_SPEED = layout.offsetof(7);
+        MAXIMUM_LINEAR_SPEED = layout.offsetof(8);
+        FRICTION_CALLBACK = layout.offsetof(9);
+        RESTITUTION_CALLBACK = layout.offsetof(10);
+        ENABLE_SLEEP = layout.offsetof(11);
+        ENABLE_CONTINUOUS = layout.offsetof(12);
+        WORKER_COUNT = layout.offsetof(13);
+        ENQUEUE_TASK = layout.offsetof(14);
+        FINISH_TASK = layout.offsetof(15);
+        USER_TASK_CONTEXT = layout.offsetof(16);
+        USER_DATA = layout.offsetof(17);
+        CAPACITY = layout.offsetof(18);
+        INTERNAL_VALUE = layout.offsetof(19);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -176,61 +179,86 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /** @return Returns the property {@code gravity} */
     @Override
     public b2Vec2 gravity() { return ngravity(address()); }
+
     /** @return Returns the property {@code restitutionThreshold} */
     @Override
     public float restitutionThreshold() { return nrestitutionThreshold(address()); }
+
+    /** @return Returns the property {@code restitutionIterations} */
+    @Override
+    public int restitutionIterations() { return nrestitutionIterations(address()); }
+
+    /** @return Returns the property {@code enableRestitutionPropagation} */
+    @Override
+    public boolean enableRestitutionPropagation() { return nenableRestitutionPropagation(address()); }
+
     /** @return Returns the property {@code hitEventThreshold} */
     @Override
     public float hitEventThreshold() { return nhitEventThreshold(address()); }
+
     /** @return Returns the property {@code contactHertz} */
     @Override
     public float contactHertz() { return ncontactHertz(address()); }
+
     /** @return Returns the property {@code contactDampingRatio} */
     @Override
     public float contactDampingRatio() { return ncontactDampingRatio(address()); }
+
     /** @return Returns the property {@code contactSpeed} */
     @Override
     public float contactSpeed() { return ncontactSpeed(address()); }
+
     /** @return Returns the property {@code maximumLinearSpeed} */
     @Override
     public float maximumLinearSpeed() { return nmaximumLinearSpeed(address()); }
+
     /** @return Returns the property {@code frictionCallback} */
     @Override
     public long frictionCallback() { return nfrictionCallback(address()); }
+
     /** @return Returns the property {@code restitutionCallback} */
     @Override
     public long restitutionCallback() { return nrestitutionCallback(address()); }
+
     /** @return Returns the property {@code enableSleep} */
     @Override
     public boolean enableSleep() { return nenableSleep(address()); }
+
     /** @return Returns the property {@code enableContinuous} */
     @Override
     public boolean enableContinuous() { return nenableContinuous(address()); }
+
     /** @return Returns the property {@code workerCount} */
     @Override
     public int workerCount() { return nworkerCount(address()); }
+
     /** @return Returns the property {@code enqueueTask} */
     @Override
     public long enqueueTask() { return nenqueueTask(address()); }
+
     /** @return Returns the property {@code finishTask} */
     @Override
     public long finishTask() { return nfinishTask(address()); }
+
     /** @return Returns the property {@code userTaskContext} */
     @Override
     public long userTaskContext() { return nuserTaskContext(address()); }
+
     /** @return Returns the property {@code userData} */
     @Override
     public long userData() { return nuserData(address()); }
+
     /** @return Returns the property {@code capacity} */
     @Override
     public b2Capacity capacity() { return ncapacity(address()); }
+
     /** @return Returns the property {@code internalValue} */
     @Override
     public int internalValue() { return ninternalValue(address()); }
 
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value b2Vec2
      * @return b2WorldDef
      */
@@ -238,9 +266,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         ngravity(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value float
      * @return b2WorldDef
      */
@@ -248,9 +277,32 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nrestitutionThreshold(address(), value);
         return this;
     }
+
+    /**
+     * Set the value of property {@code restitutionIterations}
+     *
+     * @param value int
+     * @return b2WorldDef
+     */
+    public b2WorldDef restitutionIterations(int value) {
+        nrestitutionIterations(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code enableRestitutionPropagation}
+     *
+     * @param value boolean
+     * @return b2WorldDef
+     */
+    public b2WorldDef enableRestitutionPropagation(boolean value) {
+        nenableRestitutionPropagation(address(), value);
+        return this;
+    }
+    
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value float
      * @return b2WorldDef
      */
@@ -258,9 +310,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nhitEventThreshold(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value float
      * @return b2WorldDef
      */
@@ -268,9 +321,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         ncontactHertz(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value
      * @return b2WorldDef
      */
@@ -278,9 +332,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         ncontactDampingRatio(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value float
      * @return b2WorldDef
      */
@@ -288,9 +343,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         ncontactSpeed(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value float
      * @return b2WorldDef
      */
@@ -298,9 +354,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nmaximumLinearSpeed(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value b2FrictionCallbackI
      * @return b2WorldDef
      */
@@ -308,9 +365,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nfrictionCallback(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value b2RestitutionCallbackI
      * @return b2WorldDef
      */
@@ -318,9 +376,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nrestitutionCallback(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value boolean
      * @return b2WorldDef
      */
@@ -328,9 +387,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nenableSleep(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value boolean
      * @return b2WorldDef
      */
@@ -341,7 +401,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
 
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value int
      * @return b2WorldDef
      */
@@ -349,9 +409,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nworkerCount(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value b2EnqueueTaskCallbackI
      * @return b2WorldDef
      */
@@ -359,9 +420,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nenqueueTask(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value b2FinishTaskCallbackI
      * @return b2WorldDef
      */
@@ -369,9 +431,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nfinishTask(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value long
      * @return b2WorldDef
      */
@@ -379,9 +442,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nuserTaskContext(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value long
      * @return b2WorldDef
      */
@@ -389,9 +453,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         nuserData(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value b2Capacity
      * @return b2WorldDef
      */
@@ -399,9 +464,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         ncapacity(address(), value);
         return this;
     }
+
     /**
      * Set the value of property {@code gravity}
-     * 
+     *
      * @param value int
      * @return b2WorldDef
      */
@@ -409,7 +475,7 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
         ninternalValue(address(), value);
         return this;
     }
-    
+
     /*(non-Javadoc)
      */
     @Override
@@ -536,6 +602,8 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
 
     public static b2Vec2 ngravity(long address)                 { return b2Vec2.createSafe(() -> address + GRAVITY);            }
     public static float nrestitutionThreshold(long address)     { return memGetFloat(address + RESTITUTION_THRESHOLD);          }
+    public static int nrestitutionIterations(long address)      { return memGetInt(address + RESTITUTION_ITERATIONS);           }
+    public static boolean nenableRestitutionPropagation(long address) { return memGetByte(address + ENABLE_RESTITUTION_PROPAGATION) != 0; }
     public static float nhitEventThreshold(long address)        { return memGetFloat(address + HIT_EVENT_THRESHOLD);            }
     public static float ncontactHertz(long address)             { return memGetFloat(address + CONTACT_HERTZ);                  }
     public static float ncontactDampingRatio(long address)      { return memGetFloat(address + CONTACT_DAMPING_RATIO);          }
@@ -555,6 +623,8 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
 
     public static void ngravity(long address, b2Vec2 value)                 { nmemcpy(address + GRAVITY, value.address(), b2Vec2.SIZEOF);         }
     public static void nrestitutionThreshold(long address, float value)     { memPutFloat(address + RESTITUTION_THRESHOLD, value);                      }
+    public static void nrestitutionIterations(long address, int value)      { memPutInt(address + RESTITUTION_ITERATIONS, value);                       }
+    public static void nenableRestitutionPropagation(long address, boolean value) { memPutByte(address + ENABLE_RESTITUTION_PROPAGATION, (byte) (value ? 1 : 0)); }
     public static void nhitEventThreshold(long address, float value)        { memPutFloat(address + HIT_EVENT_THRESHOLD, value);                        }
     public static void ncontactHertz(long address, float value)             { memPutFloat(address + CONTACT_HERTZ, value);                              }
     public static void ncontactDampingRatio(long address, float value)      { memPutFloat(address + CONTACT_DAMPING_RATIO, value);                      }

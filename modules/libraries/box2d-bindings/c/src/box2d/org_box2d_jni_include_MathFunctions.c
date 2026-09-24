@@ -42,18 +42,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions
- * Method:    nB2_PI
- * Signature: ()F
- */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_MathFunctions_nB2_1PI
-    (JNIEnv *__env, jclass clazz)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jfloat) B2_PI;
-}
-
-/*
- * Class:     org_box2d_jni_include_MathFunctions
  * Method:    nb2IsValidFloat
  * Signature: (F)Z
  */
