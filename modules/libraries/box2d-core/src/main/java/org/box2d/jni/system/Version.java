@@ -46,26 +46,29 @@ import java.util.regex.Pattern;
  * @since 2.1.0
  */
 public final class Version {
-
     static {
         String version = getJarVersion();
         Matcher matcher = Pattern
                 .compile("^(\\d+)\\.(\\d+)\\.(\\d+)([ab])?$")
                 .matcher(version);
 
-        if (!matcher.find()) {
-            throw new IllegalStateException("Failed to parse Box2dJNI Version: " + version);
+        if (matcher.find()) {
+            VERSION_MAJOR
+                    = Integer.parseInt(matcher.group(1));
+            VERSION_MINOR
+                    = Integer.parseInt(matcher.group(2));
+            VERSION_REVISION
+                    = Integer.parseInt(matcher.group(3));
+            BUILD_TYPE = BuildType.valuePostfix(
+                    matcher.group(4)
+            );
+        } else {
+            BUILD_TYPE = null;
+            VERSION_MAJOR 
+                    = VERSION_MINOR
+                    = VERSION_REVISION
+                    = 0;
         }
-
-        String major = matcher.group(1);
-        String minor = matcher.group(2);
-        String revision = matcher.group(3);
-        String prefix = matcher.group(4);
-
-        VERSION_MAJOR = Integer.parseInt(major);
-        VERSION_MINOR = Integer.parseInt(minor);
-        VERSION_REVISION = Integer.parseInt(revision);
-        BUILD_TYPE = BuildType.valuePostfix(prefix);
     }
 
     /** Current version of library. */
@@ -77,13 +80,14 @@ public final class Version {
     /** The development state of the current build. */
     public static final BuildType BUILD_TYPE;
 
-    private static final String VERSION =
-        String.valueOf('v') 
-            + VERSION_MAJOR +
-        '.' + VERSION_MINOR +
-        '.' + VERSION_REVISION + 
-        ' ' + BUILD_TYPE.name;
-    
+    private static final String VERSION = BUILD_TYPE == null
+            ? "Unknown"
+            : String.valueOf('v')
+                + VERSION_MAJOR
+                + '.' + VERSION_MINOR
+                + '.' + VERSION_REVISION
+                + ' ' + BUILD_TYPE.name;
+
     /** The development state of the current build. */
     public enum BuildType {
         /** Work in progress, unstable. */
@@ -140,4 +144,6 @@ public final class Version {
         }
         return String.valueOf(builder).trim();
     }
+    /** private constructor. */
+    private Version() {}
 }
