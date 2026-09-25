@@ -41,25 +41,20 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2TreeNode
  * {
- *     b2AABB aabb;
- *     uint64_t categoryBits;
- *     union
- *     {
- *         b2TreeNodeChildren children;
- *         uint64_t userData;
- *     };
- *     union
- *     {
- *         int32_t parent;
- *         int32_t next;
- *     };
- *     uint16_t height;
- *     uint16_t flags;
+ * 	b2AABB aabb;
+ * 	uint64_t padding;
+ * 	uint32_t flagIndex;
+ * 	union
+ * 	{
+ *          int32_t height;
+ *          int32_t shapeIndex;
+ * 	};
+ * 
  * } b2TreeNode;
  * </code></pre>
  *
  * @author wil
- * @version 1.1.1
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
@@ -73,41 +68,27 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     /** The struct member offsets. */
     private static final int
             AABB,
-            CATEGORY_BITS,
-            CHILDREN,
-            USER_DATA,
-            PARENT,
-            NEXT,
+            PADDING,
+            FLAG_INDEX,
             HEIGHT,
-            FLAGS;
+            SHAPE_INDEX;
 
     static {
         Layout layout = __struct(
                 __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
                 __member(8),
-                __union(
-                        __member(b2TreeNodeChildren.SIZEOF, b2TreeNodeChildren.ALIGNOF),
-                        __member(8)
-                ),
+                __member(4),
                 __union(
                         __member(4),
                         __member(4)
-                ),
-                __member(2),
-                __member(2)
+                )
         );
 
         AABB = layout.offsetof(0);
-        CATEGORY_BITS = layout.offsetof(1);
-
-        CHILDREN = layout.offsetof(3);
-        USER_DATA = layout.offsetof(4);
-
-        PARENT = layout.offsetof(6);
-        NEXT = layout.offsetof(7);
-
-        HEIGHT = layout.offsetof(8);
-        FLAGS = layout.offsetof(9);
+        PADDING = layout.offsetof(1);
+        FLAG_INDEX = layout.offsetof(2);
+        HEIGHT = layout.offsetof(4);
+        SHAPE_INDEX = layout.offsetof(5);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -144,27 +125,18 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     /** @return Returns the property {@code aabb} */
     @Override
     public b2AABB aabb() { return naabb(address()); }
-    /** @return Returns the property {@code categoryBits} */
+    /** @return Returns the property {@code padding} */
     @Override
-    public long categoryBits() { return ncategoryBits(address()); }
-    /** @return Returns the property {@code children} */
+    public long padding() { return npadding(address()); }
+    /** @return Returns the property {@code flagIndex} */
     @Override
-    public b2TreeNodeChildren children() { return nchildren(address()); }
-    /** @return Returns the property {@code userData} */
-    @Override
-    public long userData() { return nuserData(address()); }
-    /** @return Returns the property {@code parent} */
-    @Override
-    public int parent() { return nparent(address()); }
-    /** @return Returns the property {@code next} */
-    @Override
-    public int next() { return nnext(address()); }
+    public int flagIndex() { return nflagIndex(address()); }
     /** @return Returns the property {@code height} */
     @Override
-    public short height() { return nheight(address()); }
+    public int height() { return nheight(address()); }
     /** @return Returns the property {@code flags} */
     @Override
-    public short flags() { return nflags(address()); }
+    public int shapeIndex() { return nshapeIndex(address()); }
 
     /**
      * Set the value of property {@code aabb}
@@ -178,79 +150,46 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
     }
 
     /**
-     * Set the value of property {@code categoryBits}
+     * Set the value of property {@code padding}
      *
      * @param value long
      * @return b2TreeNode
      */
-    public b2TreeNode categoryBits(long value) {
-        ncategoryBits(address(), value);
+    public b2TreeNode padding(long value) {
+        npadding(address(), value);
         return this;
     }
 
     /**
-     * Set the value of property {@code children}
+     * Set the value of property {@code flagIndex}
      *
      * @param value int
      * @return b2TreeNode
      */
-    public b2TreeNode children(b2TreeNodeChildren value) {
-        nchildren(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code userData}
-     *
-     * @param value long
-     * @return b2TreeNode
-     */
-    public b2TreeNode userData(long value) {
-        nuserData(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code parent}
-     *
-     * @param value int
-     * @return b2TreeNode
-     */
-    public b2TreeNode parent(int value) {
-        nparent(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code next}
-     *
-     * @param value int
-     * @return b2TreeNode
-     */
-    public b2TreeNode next(int value) {
-        nnext(address(), value);
+    public b2TreeNode flagIndex(int value) {
+        nflagIndex(address(), value);
         return this;
     }
 
     /**
      * Set the value of property {@code height}
      *
-     * @param value short
+     * @param value int
      * @return b2TreeNode
      */
-    public b2TreeNode height(short value) {
+    public b2TreeNode height(int value) {
         nheight(address(), value);
         return this;
     }
 
     /**
-     * Set the value of property {@code flags}
+     * Set the value of property {@code shapeIndex}
      *
-     * @param value short
+     * @param value int
      * @return b2TreeNode
      */
-    public b2TreeNode flags(short value) {
-        nflags(address(), value);
+    public b2TreeNode shapeIndex(int value) {
+        nshapeIndex(address(), value);
         return this;
     }
 
@@ -389,23 +328,17 @@ public class b2TreeNode extends Struct<b2TreeNode> implements ConstB2TreeNode {
 
     // -----------------------------------
     
-    public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
-    public static long ncategoryBits(long address) { return memGetLong(address + CATEGORY_BITS); }
-    public static b2TreeNodeChildren nchildren(long address) { return b2TreeNodeChildren.createSafe(() -> address + CHILDREN); }
-    public static long nuserData(long address) { return memGetLong(address + USER_DATA); }
-    public static int nparent(long address) { return memGetInt(address + PARENT); }
-    public static int nnext(long address) { return memGetInt(address + NEXT); }
-    public static short nheight(long address) { return memGetShort(address + HEIGHT); }
-    public static short nflags(long address) { return memGetShort(address + FLAGS); }
+    public static b2AABB naabb(long address)    { return b2AABB.createSafe(() -> address + AABB); }
+    public static long npadding(long address)   { return memGetLong(address + PADDING);           }
+    public static int nflagIndex(long address)  { return memGetInt(address + FLAG_INDEX);         }
+    public static int nheight(long address)     { return memGetInt(address + HEIGHT);             }
+    public static int nshapeIndex(long address) { return memGetInt(address + SHAPE_INDEX);        }
 
-    public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF);}
-    public static void ncategoryBits(long address, long value) { memPutLong(address + CATEGORY_BITS, value);}
-    public static void nchildren(long address, b2TreeNodeChildren value) { nmemcpy(address + CHILDREN, value.address(), b2TreeNodeChildren.SIZEOF); }
-    public static void nuserData(long address, long value) { memPutLong(address + USER_DATA, value);}
-    public static void nparent(long address, int value) { memPutInt(address + PARENT, value);}
-    public static void nnext(long address, int value) { memPutInt(address + NEXT, value);}
-    public static void nheight(long address, short value) { memPutShort(address + HEIGHT, value);}
-    public static void nflags(long address, short value) { memPutShort(address + FLAGS, value);}
+    public static void naabb(long address, b2AABB value)    { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF); }
+    public static void npadding(long address, long value)   { memPutLong(address + PADDING, value);                          }
+    public static void nflagIndex(long address, int value)  { memPutInt(address + FLAG_INDEX, value);                        }
+    public static void nheight(long address, int value)     { memPutInt(address + HEIGHT, value);                            }
+    public static void nshapeIndex(long address, int value) { memPutInt(address + SHAPE_INDEX, value);                       }
     
     // -----------------------------------
 

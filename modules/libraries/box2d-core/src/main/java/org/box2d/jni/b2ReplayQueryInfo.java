@@ -38,23 +38,23 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2RecQueryInfo
+ * typedef struct b2ReplayQueryInfo
  * {
- *     b2RecQueryType type;
- *     b2QueryFilter filter; // zeroed for the shape local query types
- *     b2AABB aabb;          // overlap AABB
- *     b2Pos origin;         // ray and cast origin
- *     b2Vec2 translation;   // ray and cast translation
- *     b2ShapeId shape;      // target shape for the shape local query types
- *     int hitCount;         // number of recorded results
- * } b2RecQueryInfo;
- * </code></pre>
+ * 	b2ReplayQueryType type;
+ * 	b2QueryFilter filter; // zeroed for the shape local query types
+ * 	b2AABB aabb;          // overlap AABB, relative to origin
+ * 	b2Pos origin;         // query origin
+ * 	b2Vec2 translation;   // ray and cast translation
+ * 	b2ShapeId shape;      // target shape for the shape local query types
+ * 	int hitCount;         // number of recorded results
+ * } b2ReplayQueryInfo;
+</code></pre>
  * 
  * @author wil
+ * @version 2.0.0
  * @since 1.0.0
- * @version 1.1.0
  */
-public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
+public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -100,7 +100,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      *
      * @param ptr A reference pointer.
      */
-    public b2RecQueryInfo(Pointer ptr) {
+    public b2ReplayQueryInfo(Pointer ptr) {
         super(ptr);
     }
 
@@ -109,7 +109,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      *
      * @param address A virtual memory address
      */
-    public b2RecQueryInfo(long address) {
+    public b2ReplayQueryInfo(long address) {
         super(address);
     }
 
@@ -119,12 +119,12 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2RecQueryInfo(long address, boolean factor) {
+    protected b2ReplayQueryInfo(long address, boolean factor) {
         super(address, factor);
     }
 
     /** @return Returns the property {@code type} */
-    public b2RecQueryType type() { return ntype(address()); }
+    public b2ReplayQueryType type() { return ntype(address()); }
     /** @return Returns the property {@code filter} */
     public b2QueryFilter filter() { return nfilter(address()); }
     /** @return Returns the property {@code aabb} */
@@ -141,10 +141,10 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     /**
      * Set the value of property {@code type}
      * 
-     * @param value b2RecQueryType
-     * @return b2RecQueryInfo
+     * @param value b2ReplayQueryType
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo type(b2RecQueryType value) {
+    public b2ReplayQueryInfo type(b2ReplayQueryType value) {
         ntype(address(), value);
         return this;
     }
@@ -153,9 +153,9 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Set the value of property {@code filter}
      * 
      * @param value b2QueryFilter
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo filter(b2QueryFilter value) {
+    public b2ReplayQueryInfo filter(b2QueryFilter value) {
         nfilter(address(), value);
         return this;
     }
@@ -164,9 +164,9 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Set the value of property {@code aabb}
      * 
      * @param value b2AABB
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo aabb(b2AABB value) {
+    public b2ReplayQueryInfo aabb(b2AABB value) {
         naabb(address(), value);
         return this;
     }
@@ -175,9 +175,9 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Set the value of property {@code origin}
      * 
      * @param value b2Pos
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo origin(b2Pos value) {
+    public b2ReplayQueryInfo origin(b2Pos value) {
         norigin(address(), value);
         return this;
     }
@@ -186,9 +186,9 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Set the value of property {@code translation}
      * 
      * @param value b2Vec2
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo translation(b2Vec2 value) {
+    public b2ReplayQueryInfo translation(b2Vec2 value) {
         ntranslation(address(), value);
         return this;
     }
@@ -197,9 +197,9 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Set the value of property {@code shape}
      * 
      * @param value b2ShapeId
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo shape(b2ShapeId value) {
+    public b2ReplayQueryInfo shape(b2ShapeId value) {
         nshape(address(), value);
         return this;
     }
@@ -208,9 +208,9 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Set the value of property {@code hitCount}
      * 
      * @param value int
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public b2RecQueryInfo hitCount(int value) {
+    public b2ReplayQueryInfo hitCount(int value) {
         nhitCount(address(), value);
         return this;
     }
@@ -225,8 +225,8 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     /*(non-Javadoc)
      */
     @Override
-    protected b2RecQueryInfo create(long address, Pointer ptr) {
-        return ptr == null ? new b2RecQueryInfo(address) : new b2RecQueryInfo(ptr);
+    protected b2ReplayQueryInfo create(long address, Pointer ptr) {
+        return ptr == null ? new b2ReplayQueryInfo(address) : new b2ReplayQueryInfo(ptr);
     }
 
     // -----------------------------------
@@ -235,56 +235,56 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public static b2RecQueryInfo createSafe(Pointer ptr) {
+    public static b2ReplayQueryInfo createSafe(Pointer ptr) {
         if (ptr == null) return null;
-        return new b2RecQueryInfo(ptr);
+        return new b2ReplayQueryInfo(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryInfo}.
+     * Reserve memory for the new object {@code b2ReplayQueryInfo}.
      *
      * @param alloc Custom memory manager
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public static b2RecQueryInfo alloc(AllocFunc alloc) {
+    public static b2ReplayQueryInfo alloc(AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
-        return address == NULL ? null : new b2RecQueryInfo(() -> address);
+        return address == NULL ? null : new b2ReplayQueryInfo(() -> address);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryInfo}.
+     * Reserve memory for the new object {@code b2ReplayQueryInfo}.
      *
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public static b2RecQueryInfo calloc() {
-        return new b2RecQueryInfo(ncalloc(1, SIZEOF));
+    public static b2ReplayQueryInfo calloc() {
+        return new b2ReplayQueryInfo(ncalloc(1, SIZEOF));
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryInfo}.
+     * Reserve memory for the new object {@code b2ReplayQueryInfo}.
      *
      * @param arean arena
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public static b2RecQueryInfo calloc(ArenaAlloc arean) {
+    public static b2ReplayQueryInfo calloc(ArenaAlloc arean) {
         long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
-        return new b2RecQueryInfo(() -> ptr);
+        return new b2ReplayQueryInfo(() -> ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecQueryInfo}.
+     * Reserve memory for the new object {@code b2ReplayQueryInfo}.
      *
-     * @return b2RecQueryInfo
+     * @return b2ReplayQueryInfo
      */
-    public static b2RecQueryInfo malloc() {
-        return new b2RecQueryInfo(nmalloc(SIZEOF));
+    public static b2ReplayQueryInfo malloc() {
+        return new b2ReplayQueryInfo(nmalloc(SIZEOF));
     }
 
     // -----------------------------------
     
-    public static b2RecQueryType ntype(long address) { return b2RecQueryType.valueOf(memGetInt(address + TYPE)); }
+    public static b2ReplayQueryType ntype(long address) { return b2ReplayQueryType.valueOf(memGetInt(address + TYPE)); }
     public static b2QueryFilter nfilter(long address) { return b2QueryFilter.createSafe(() -> address + FILTER); }
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
     public static b2Pos norigin(long address) { return b2Pos.createSafe(() -> address + ORIGIN); }
@@ -292,7 +292,7 @@ public class b2RecQueryInfo extends Struct<b2RecQueryInfo> {
     public static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
     public static int nhitCount(long address) { return memGetInt(address + HIT_COUNT); }
 
-    public static void ntype(long address, b2RecQueryType value) { memPutInt(address + TYPE, value.value()); }
+    public static void ntype(long address, b2ReplayQueryType value) { memPutInt(address + TYPE, value.value()); }
     public static void nfilter(long address, b2QueryFilter value) { nmemcpy(address + FILTER, value.address(), b2QueryFilter.SIZEOF); }
     public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF); }
     public static void norigin(long address, b2Pos value) { nmemcpy(address + ORIGIN, value.address(), b2Pos.DSIZEOF); }

@@ -58,7 +58,7 @@ public final class Library {
         String libpath = Sys.B2JNI_LIB_PATH.get(null),
                libname = Sys.B2JNI_LIB_NAME.get(null);
 
-        apiLog("Initializing box2d-jni v1.0.0");
+        apiLog("Initializing box2d-jni " +  Version.getVersion());
         if (Platform.get() == Platform.iOS) {
             systemInfo();
         } else {        

@@ -33,6 +33,7 @@ package org.box2d.jni.test;
 import org.box2d.jni.*
 
 import org.box2d.jni.include.MathFunctions.*
+import org.box2d.jni.include.MathTypes.*
 import org.box2d.jni.libc.LibCFloat.*
 import org.box2d.jni.libc.LibCMath.*
 import org.box2d.jni.system.Sys.*

@@ -35,7 +35,7 @@ package org.box2d.jni.readonly;
  * constant of type <code>b2ChainDef</code>. (native type: const b2ChainDef)
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public interface ConstB2ChainDef extends ConstStruct {
@@ -59,7 +59,24 @@ public interface ConstB2ChainDef extends ConstStruct {
      *
      * @return
      */
-    int count();
+    int pointCount();
+
+    /**
+     * Leading ghost point for an open chain. Distance from first point must be
+     * greater than B2_LINEAR_SLOP. Ignored for loops.
+     *
+     * @return ConstB2Vec2
+     */
+    ConstB2Vec2 ghost1();
+
+    /**
+     * Ending ghost point for an open chain. Distance from last point must be
+     * greater than B2_LINEAR_SLOP. Ignored for loops.
+     *
+     * @return ConstB2Vec2
+    *
+     */
+    ConstB2Vec2 ghost2();
 
     /**
      * Surface materials for each segment. These are cloned.

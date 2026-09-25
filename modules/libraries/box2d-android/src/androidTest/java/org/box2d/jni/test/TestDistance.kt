@@ -36,6 +36,7 @@ import org.box2d.jni.b2TOIState.*
 import org.box2d.jni.include.Collision.*
 import org.box2d.jni.include.Constants.*
 import org.box2d.jni.include.MathFunctions.*
+import org.box2d.jni.include.MathTypes.*
 
 import org.box2d.jni.libc.LibCFloat.*
 import org.box2d.jni.system.Pointer.*

@@ -48,7 +48,7 @@ import static org.box2d.jni.system.Memory.*;
  *
  * @author wil
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class b2Filter extends Struct<b2Filter> implements ConstB2Filter {
 
@@ -108,6 +108,26 @@ public class b2Filter extends Struct<b2Filter> implements ConstB2Filter {
      */
     protected b2Filter(long address, boolean factor) {
         super(address, factor);
+    }
+
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param categoryBits the valur {@code categoryBits}
+     * @param maskBits the valur {@code maskBits}
+     * @param groupIndex the valur {@code groupIndex}
+     *
+     * @return b2Filter
+     */
+    public b2Filter set(
+        long categoryBits,
+        long maskBits,
+        int groupIndex
+    ) {
+        categoryBits(categoryBits);
+        maskBits(maskBits);
+        groupIndex(groupIndex);
+        return this;
     }
 
     /** @return Returns the property {@code categoryBits} */

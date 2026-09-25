@@ -48,16 +48,25 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <base.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Base {
     static { Library.initialize(); }
     /** Used to indicate an unset or invalid index value.*/
     public static final int B2_NULL_INDEX = ( -1 );
-    /* Native bindings: {@code #define B2_HASH_INIT 5381} */
+    /** Native bindings: {@code #define B2_HASH_INIT 5381} */
     public static final int B2_HASH_INIT = 5381;
-    
+
+    /** Significant API and behavior changes. */
+    public static final int B2_VERSION_MAJOR = 3;
+
+    /** API changes and features. */
+    public static final int B2_VERSION_MINOR = 2;
+
+    /** Bug fixes. No API changes. */
+    public static final int B2_VERSION_REVISION = 0;
+
     // --- [ b2SetAllocator ] ---
 
     /**

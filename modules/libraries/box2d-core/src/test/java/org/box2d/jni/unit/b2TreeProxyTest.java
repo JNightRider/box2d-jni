@@ -28,63 +28,46 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.box2d.jni.readonly;
+package org.box2d.jni.unit;
+
+import org.box2d.jni.b2TreeProxy;
+import org.box2d.jni.system.ArenaAlloc;
+import org.box2d.jni.system.Sys;
+import static org.box2d.jni.system.ArenaAlloc.*;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * Interface that is responsible for representing a native object that is a
- * constant of type <code>b2TreeNode</code>. (native type: const b2TreeNode)
+ * A class to manage the unit tests of the {@link b2TreeProxy} class.
  *
  * @author wil
- * @version 2.0.0
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 2.0.0
  */
-public interface ConstB2TreeNode extends ConstStruct {
+public class b2TreeProxyTest {
+    static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
-     * The node bounding box
-     *
-     * @return ConstB2AABB
+     * Initialize all tests.
      */
-    ConstB2AABB aabb();
+    @Test
+    public void __constructor() {
+        struct();
+    }
 
     /**
-     * In 3D this space is used by the AABB z components.
-     *
-     * @return long
+     * Test the properties of the structure.
      */
-    long padding();
-
-    /**
-     * bit 31 : 1 for leaf node
-     * bit 30 : 1 for moved flag
-     * bits 0-29 : index of the sibling pair node or the proxy id for a leaf
-     *
-     * @return int
-     */
-    int flagIndex();
-
-    /**
-     * The height of an internal node. A leaf has zero height.
-     *
-     * @return int
-     */
-    int height();
-
-    /**
-     * The shape index for a leaf. Truncated from proxy user data.
-     *
-     * @return int
-     */
-    int shapeIndex();
-
-    /**
-     * A template that handles the representation of a constant pointer (buffer)
-     * of constant structures such as {@code ConstB2TreeNode}
-     *
-     * @param <T> The type of object stored in this buffer
-     * @param <SELF> The type of this buffer
-     */
-    interface ConstBuffer<T extends ConstB2TreeNode, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
-        /* nothing */
+    private void struct() {
+        try (ArenaAlloc arena = allocPush()) {
+            b2TreeProxy ptr = b2TreeProxy.calloc(arena);
+            ptr.categoryBits(10L)
+               .next(4)
+               .node(6);
+            Assert.assertEquals(10l, ptr.categoryBits());
+            Assert.assertEquals(4, ptr.next());
+            Assert.assertEquals(6, ptr.node());
+        }
     }
 }

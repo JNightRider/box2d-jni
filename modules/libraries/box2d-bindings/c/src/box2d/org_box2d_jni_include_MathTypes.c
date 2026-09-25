@@ -28,50 +28,26 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
 /*
- * File:   org_box2d_jni_b2TreeNodeFlags.c
+ * File:   org_box2d_jni_include_MathTypes.h
  * Author: wil
  */
 
 #include <stdlib.h>
 
 #include "common_tools.h"
-
-#include "box2d/collision.h"
-#include "box2d/jni/org_box2d_jni_b2TreeNodeFlags.h"
+#include "box2d/math_types.h"
+#include "box2d/jni/org_box2d_jni_include_MathTypes.h"
 
 /*
- * Class:     org_box2d_jni_b2TreeNodeFlags
- * Method:    nb2_allocatedNode
- * Signature: ()I
+ * Class:     org_box2d_jni_include_MathTypes
+ * Method:    nB2_PI
+ * Signature: ()F
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2TreeNodeFlags_nb2_1allocatedNode
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_MathTypes_nB2_1PI
     (JNIEnv *__env, jclass clazz)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_allocatedNode;
-}
-
-/*
- * Class:     org_box2d_jni_b2TreeNodeFlags
- * Method:    nb2_enlargedNode
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2TreeNodeFlags_nb2_1enlargedNode
-    (JNIEnv *__env, jclass clazz)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_enlargedNode;
-}
-
-/*
- * Class:     org_box2d_jni_b2TreeNodeFlags
- * Method:    nb2_leafNode
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_b2TreeNodeFlags_nb2_1leafNode
-    (JNIEnv *__env, jclass clazz)
-{
-    UNUSED_PARAMS(__env, clazz)
-    return (jint)b2_leafNode;
+    return (jfloat) B2_PI;
 }

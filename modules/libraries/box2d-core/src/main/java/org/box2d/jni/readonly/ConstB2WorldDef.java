@@ -35,7 +35,7 @@ package org.box2d.jni.readonly;
  * constant of type <code>b2WorldDef</code>. (native type: const b2WorldDef)
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public interface ConstB2WorldDef extends ConstStruct {
@@ -53,6 +53,22 @@ public interface ConstB2WorldDef extends ConstStruct {
      * @return float
      */
      float restitutionThreshold();
+
+    /**
+     * Number of iterations of the restitution solver. More iterations can lead
+     * to less box spinning.
+     *
+     * @see org.box2d.jni.include.Constants#B2_MAX_RESTITUTION_ITERATIONS
+     * @return int
+     */
+    int restitutionIterations();
+
+    /**
+     * Enable full contact propagation in the restitution solver. Expensive.
+     *
+     * @return boolean
+     */
+    boolean enableRestitutionPropagation();
 
     /**
      * Returns the property {@code hitEventThreshold}

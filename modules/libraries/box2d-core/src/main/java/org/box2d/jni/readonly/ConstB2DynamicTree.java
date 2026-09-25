@@ -27,7 +27,7 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.readonly;
 
 /**
@@ -36,87 +36,131 @@ package org.box2d.jni.readonly;
  * b2DynamicTree)
  *
  * @author wil
- * @version 1.0.1
+ * @version 2.0.0
  * @since 1.0.0
  */
 public interface ConstB2DynamicTree extends ConstStruct {
 
     /**
-     * The tree nodes
+     * Array of nodes. The root is at index zero and index 1 is empty. Otherwise
+     * siblings are paired at even indices. Has holes for free node pairs.
      *
-     * @return ConstB2TreeNode
+     * @return {@code b2TreeNode*}
      */
     long nodes();
 
     /**
-     * The root index
+     * Parent index per node. The free list is interweaved.
      *
-     * @return int
+     * @return {@code int32_t*}
      */
-    int root();
+    long parents();
 
     /**
-     * The number of nodes
+     * Proxy data split from node array as cold data.
      *
-     * @return int
+     * @return {@code b2TreeProxy*}
      */
-    int nodeCount();
+    long proxies();
+
+    /**
+     * Every allocated node has a lower index than this.
+     *
+     * @return {@code int32_t}
+     */
+    int nodeEnd();
 
     /**
      * The allocated node space
      *
-     * @return int
+     * @return {@code int32_t}
      */
     int nodeCapacity();
 
     /**
-     * Node free list
+     * Free pairs below nodeEnd
      *
-     * @return int
+     * @return {@code int32_t}
      */
-    int freeList();
+    int pairFreeList();
 
     /**
      * Number of proxies created
      *
-     * @return int
+     * @return {@code int32_t}
      */
     int proxyCount();
 
     /**
+     * The allocated proxy space
+     *
+     * @return {@code int32_t}
+     */
+    int proxyCapacity();
+
+    /**
+     * Proxy free list
+     *
+     * @return {@code int32_t}
+     */
+    int proxyFreeList();
+
+    /**
+     * Array of nodes for rebuild.
+     *
+     * @return {@code b2TreeNode*}
+     */
+    long swapNodes();
+
+    /**
      * Leaf indices for rebuild
      *
-     * @return IntBuffer
+     * @return {@code int32_t*}
      */
     long leafIndices();
 
     /**
+     * Leaves for the rebuild. May represent a proxy or a retained subtree.
+     *
+     * @return {@code b2TreeNode*}
+     */
+    long leafNodes();
+
+    /**
      * Leaf bounding boxes for rebuild
      *
-     * @return ConstB2AABB.ConstBuffer
+     * @return {@code b2AABB*}
      */
     long leafBoxes();
 
     /**
      * Leaf bounding box centers for rebuild
      *
-     * @return ConstB2Vec2.ConstBuffer
+     * @return {@code b2Vec2*}
      */
     long leafCenters();
 
     /**
      * Bins for sorting during rebuild
      *
-     * @return IntBuffer
+     * @return {@code int32_t*}
      */
     long binIndices();
 
     /**
      * Allocated space for rebuilding
      *
-     * @return int
+     * @return {@code int32_t}
      */
     int rebuildCapacity();
+
+    /**
+     * Rebuild orders the nodes so the children follow parents. Cache friendly
+     * for queries and refitting. The order can be disrupted by proxy creation.
+     *
+     * @return {@code bool}
+     */
+    boolean dfsOrdered();
 
     /**
      * A template that handles the representation of a constant pointer (buffer)

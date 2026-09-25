@@ -32,12 +32,40 @@ package org.box2d.jni.readonly;
 
 /**
  * Interface that is responsible for representing a native object that is a
- * constant of type <code>b2RecPlayer</code>. (native type: const b2RecPlayer)
+ * constant of type <code>b2TreeProxy</code>. (native type: const b2TreeProxy)
  *
  * @author wil
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.0.1
+ * @since 2.0.0
  */
-public interface ConstB2RecPlayer extends ConstStruct {
-    
+public interface ConstB2TreeProxy extends ConstStruct {
+
+    /**
+     * User data is an index instead of void* because it is used internally as a
+     * shape index.
+     *
+     * @return {@code uint64_t}
+     */
+    long userData();
+
+    /**
+     * Category bits for collision filtering.
+     *
+     * @return {@code uint64_t}
+     */
+    long categoryBits();
+
+    /**
+     * The leaf node. B2_NULL_INDEX for a free proxy.
+     *
+     * @return {@code int32_t}
+     */
+    int node();
+
+    /**
+     * Next free proxy.
+     *
+     * @return {@code int32_t}
+     */
+    int next();
 }

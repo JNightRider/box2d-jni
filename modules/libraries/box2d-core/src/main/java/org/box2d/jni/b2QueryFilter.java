@@ -104,6 +104,23 @@ public class b2QueryFilter extends Struct<b2QueryFilter> {
         super(address, factor);
     }
 
+    /**
+     * Initializes this struct with the specified values.
+     *
+     * @param categoryBits the valur {@code categoryBits}
+     * @param maskBits the valur {@code maskBits}
+     *
+     * @return b2QueryFilter
+     */
+    public b2QueryFilter set(
+        long categoryBits,
+        long maskBits
+    ) {
+        categoryBits(categoryBits);
+        maskBits(maskBits);
+        return this;
+    }
+
     /** @return Returns the property {@code categoryBits} */
     public long categoryBits() { return ncategoryBits(address()); }
     /** @return Returns the property {@code maskBits} */

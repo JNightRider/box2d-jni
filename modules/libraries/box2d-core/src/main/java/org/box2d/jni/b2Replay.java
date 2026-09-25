@@ -31,27 +31,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2RecPlayer;
 
 import static org.box2d.jni.system.Memory.*;
+import org.box2d.jni.readonly.ConstB2Replay;
 
 /**
  * <pre><code>
- * typedef struct b2RecPlayer b2RecPlayer;
+ * typedef struct b2Replay b2Replay;
  * </code></pre>
  * 
  * @author wil
+ * @version 2.0.0
  * @since 1.0.0
- * @version 1.0.0
  */
-public class b2RecPlayer extends Struct<b2RecPlayer> implements ConstB2RecPlayer {
+public class b2Replay extends Struct<b2Replay> implements ConstB2Replay {
     
     /**
      * Generates a reference to the given pointer.
      *
      * @param ptr A reference pointer.
      */
-    public b2RecPlayer(Pointer ptr) {
+    public b2Replay(Pointer ptr) {
         super(ptr);
     }
 
@@ -60,7 +60,7 @@ public class b2RecPlayer extends Struct<b2RecPlayer> implements ConstB2RecPlayer
      *
      * @param address A virtual memory address
      */
-    public b2RecPlayer(long address) {
+    public b2Replay(long address) {
         super(address);
     }
 
@@ -70,7 +70,7 @@ public class b2RecPlayer extends Struct<b2RecPlayer> implements ConstB2RecPlayer
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2RecPlayer(long address, boolean factor) {
+    protected b2Replay(long address, boolean factor) {
         super(address, factor);
     }
     
@@ -78,23 +78,23 @@ public class b2RecPlayer extends Struct<b2RecPlayer> implements ConstB2RecPlayer
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2RecPlayer
+     * @return b2Replay
      */
-    public static b2RecPlayer createSafe(Pointer ptr) {
+    public static b2Replay createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2RecPlayer(ptr);
+        return new b2Replay(ptr);
     }
     
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr address
-     * @return b2RecPlayer
+     * @return b2Replay
      */
-    public static b2RecPlayer create(long ptr) {
-        return new b2RecPlayer(ptr);
+    public static b2Replay create(long ptr) {
+        return new b2Replay(ptr);
     }
     
     /*(non-Javadoc)
@@ -111,7 +111,7 @@ public class b2RecPlayer extends Struct<b2RecPlayer> implements ConstB2RecPlayer
     /*(non-Javadoc)
      */
     @Override
-    protected b2RecPlayer create(long address, Pointer ptr) {
-        return ptr == null ? new b2RecPlayer(address) : new b2RecPlayer(ptr);
+    protected b2Replay create(long address, Pointer ptr) {
+        return ptr == null ? new b2Replay(address) : new b2Replay(ptr);
     }
 }

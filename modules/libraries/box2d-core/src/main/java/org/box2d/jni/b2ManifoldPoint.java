@@ -40,22 +40,21 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2ManifoldPoint
  * {
- *     b2Vec2 anchorA;
- *     b2Vec2 anchorB;
- *     float separation;
- *     float normalImpulse;
- *     float tangentImpulse;
- *     float restitutionVelocity;
- *     float totalNormalImpulse;
- *     float normalVelocity;
- *     float baseSeparation;
- *     uint16_t id;
- *     bool persisted;
+ * 	b2Vec2 anchorA;
+ * 	b2Vec2 anchorB;
+ * 	float separation;
+ * 	float normalImpulse;
+ * 	float tangentImpulse;
+ * 	float totalNormalImpulse;
+ * 	float normalVelocity;
+ * 	float baseSeparation;
+ * 	uint16_t id;
+ * 	bool persisted;
  * } b2ManifoldPoint;
  * </code></pre>
  * 
  * @author wil
- * @version 1.1.1
+ * @version 1.2.0
  * @since 1.0.0
  */
 public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
@@ -73,7 +72,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
             SEPARATION,
             NORMAL_IMPULSE,
             TANGENT_IMPULSE,
-            RESTITUTION_VELOCITY,
             TOTAL_NORMAL_IMPULSE,
             NORMAL_VELOCITY,
             BASE_SEPARATION,
@@ -90,7 +88,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
                 __member(4),
                 __member(4),
                 __member(4),
-                __member(4),
                 __member(2),
                 __member(1)
         );
@@ -100,12 +97,11 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
         SEPARATION = layout.offsetof(2);
         NORMAL_IMPULSE = layout.offsetof(3);
         TANGENT_IMPULSE = layout.offsetof(4);
-        RESTITUTION_VELOCITY = layout.offsetof(5);
-        TOTAL_NORMAL_IMPULSE = layout.offsetof(6);
-        NORMAL_VELOCITY = layout.offsetof(7);
-        BASE_SEPARATION = layout.offsetof(8);
-        ID = layout.offsetof(9);
-        PERSISTED = layout.offsetof(10);
+        TOTAL_NORMAL_IMPULSE = layout.offsetof(5);
+        NORMAL_VELOCITY = layout.offsetof(6);
+        BASE_SEPARATION = layout.offsetof(7);
+        ID = layout.offsetof(8);
+        PERSISTED = layout.offsetof(9);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -153,8 +149,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
     public float tangentImpulse() { return ntangentImpulse(address()); }
     /** @return Returns the property {@code totalNormalImpulse} */
     public float totalNormalImpulse() { return ntotalNormalImpulse(address()); }
-    /** @return Returns the property {@code restitutionVelocity} */
-    public float restitutionVelocity() { return nrestitutionVelocity(address()); }
     /** @return Returns the property {@code normalVelocity} */
     public float normalVelocity() { return nnormalVelocity(address()); }
     /** @return Returns the property {@code id} */
@@ -225,17 +219,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
      */
     public b2ManifoldPoint tangentImpulse(float value) {
         ntangentImpulse(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code restitutionVelocity}
-     *
-     * @param value float
-     * @return b2ManifoldPoint
-     */
-    public b2ManifoldPoint restitutionVelocity(float value) {
-        nrestitutionVelocity(address(), value);
         return this;
     }
 
@@ -424,7 +407,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
     public static float nnormalImpulse(long address)        { return memGetFloat(address + NORMAL_IMPULSE);       }
     public static float ntangentImpulse(long address)       { return memGetFloat(address + TANGENT_IMPULSE);      }
     public static float ntotalNormalImpulse(long address)   { return memGetFloat(address + TOTAL_NORMAL_IMPULSE); }
-    public static float nrestitutionVelocity(long address)  { return memGetFloat(address + RESTITUTION_VELOCITY); }
     public static float nnormalVelocity(long address)       { return memGetFloat(address + NORMAL_VELOCITY);      }
     public static short nid(long address)                   { return memGetShort(address + ID);                   }
     public static boolean npersisted(long address)          { return memGetByte(address + PERSISTED) != 0;        }
@@ -436,7 +418,6 @@ public class b2ManifoldPoint extends Struct<b2ManifoldPoint> {
     public static void nnormalImpulse(long address, float value)        { memPutFloat(address + NORMAL_IMPULSE, value);                      }
     public static void ntangentImpulse(long address, float value)       { memPutFloat(address + TANGENT_IMPULSE, value);                     }
     public static void ntotalNormalImpulse(long address, float value)   { memPutFloat(address + TOTAL_NORMAL_IMPULSE, value);                }
-    public static void nrestitutionVelocity(long address, float value)  { memPutFloat(address + RESTITUTION_VELOCITY, value);                }
     public static void nnormalVelocity(long address, float value)       { memPutFloat(address + NORMAL_VELOCITY, value);                     }
     public static void nid(long address, short value)                   { memPutShort(address + ID, value);                                  }
     public static void npersisted(long address, boolean value)          { memPutByte(address + PERSISTED, (byte) (value ? 1 : 0));           }

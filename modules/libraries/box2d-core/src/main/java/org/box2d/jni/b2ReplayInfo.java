@@ -38,7 +38,7 @@ import static org.box2d.jni.system.Memory.*;
 
 /**
  * <pre><code>
- * typedef struct b2RecPlayerInfo
+ * typedef struct b2ReplayInfo
  * {
  *     int frameCount;      // total recorded steps
  *     int workerCount;     // worker count used for the replay world
@@ -46,14 +46,14 @@ import static org.box2d.jni.system.Memory.*;
  *     int subStepCount;    // recorded sub-steps
  *     float lengthScale;   // length units per meter in effect when recorded
  *     b2AABB bounds;       // accumulated world bounds over the recording, zero-extent if unavailable
- * } b2RecPlayerInfo;
+ * } b2ReplayInfo;
  * </code></pre>
  *
  * @author wil
+ * @version 2.0.0
  * @since 1.0.0
- * @version 1.0.0
  */
-public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
+public class b2ReplayInfo extends Struct<b2ReplayInfo> {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -96,7 +96,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      *
      * @param ptr A reference pointer.
      */
-    public b2RecPlayerInfo(Pointer ptr) {
+    public b2ReplayInfo(Pointer ptr) {
         super(ptr);
     }
 
@@ -105,7 +105,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      *
      * @param address A virtual memory address
      */
-    public b2RecPlayerInfo(long address) {
+    public b2ReplayInfo(long address) {
         super(address);
     }
 
@@ -115,7 +115,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * @param address A virtual memory address
      * @param factor boolean
      */
-    protected b2RecPlayerInfo(long address, boolean factor) {
+    protected b2ReplayInfo(long address, boolean factor) {
         super(address, factor);
     }
 
@@ -136,9 +136,9 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * Set the value of property {@code frameCount}
      *
      * @param value int
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public b2RecPlayerInfo frameCount(int value) {
+    public b2ReplayInfo frameCount(int value) {
         nframeCount(address(), value);
         return this;
     }
@@ -147,9 +147,9 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * Set the value of property {@code workerCount}
      *
      * @param value int
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public b2RecPlayerInfo workerCount(int value) {
+    public b2ReplayInfo workerCount(int value) {
         nworkerCount(address(), value);
         return this;
     }
@@ -158,9 +158,9 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * Set the value of property {@code timeStep}
      *
      * @param value float
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public b2RecPlayerInfo timeStep(float value) {
+    public b2ReplayInfo timeStep(float value) {
         ntimeStep(address(), value);
         return this;
     }
@@ -169,9 +169,9 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * Set the value of property {@code subStepCount}
      *
      * @param value int
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public b2RecPlayerInfo subStepCount(int value) {
+    public b2ReplayInfo subStepCount(int value) {
         nsubStepCount(address(), value);
         return this;
     }
@@ -180,9 +180,9 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * Set the value of property {@code lengthScale}
      *
      * @param value float
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public b2RecPlayerInfo lengthScale(float value) {
+    public b2ReplayInfo lengthScale(float value) {
         nlengthScale(address(), value);
         return this;
     }
@@ -191,9 +191,9 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * Set the value of property {@code bounds}
      *
      * @param value b2AABB
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public b2RecPlayerInfo bounds(b2AABB value) {
+    public b2ReplayInfo bounds(b2AABB value) {
         nbounds(address(), value);
         return this;
     }
@@ -208,8 +208,8 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
     /*(non-Javadoc)
      */
     @Override
-    protected b2RecPlayerInfo create(long address, Pointer ptr) {
-        return ptr == null ? new b2RecPlayerInfo(address) : new b2RecPlayerInfo(ptr);
+    protected b2ReplayInfo create(long address, Pointer ptr) {
+        return ptr == null ? new b2ReplayInfo(address) : new b2ReplayInfo(ptr);
     }
 
     // -----------------------------------
@@ -219,8 +219,8 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      *
      * @return b2JointDef
      */
-    private static b2RecPlayerInfo factory() {
-        return new b2RecPlayerInfo(-1L, true);
+    private static b2ReplayInfo factory() {
+        return new b2ReplayInfo(-1L, true);
     }
 
     /**
@@ -229,55 +229,55 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
      * @param ptr A reference pointer.
      * @return b2JointDef
      */
-    public static b2RecPlayerInfo createSafe(Pointer ptr) {
+    public static b2ReplayInfo createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2RecPlayerInfo(ptr);
+        return new b2ReplayInfo(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecPlayerInfo}.
+     * Reserve memory for the new object {@code b2ReplayInfo}.
      *
      * @param alloc Custom memory manager
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public static b2RecPlayerInfo alloc(AllocFunc alloc) {
+    public static b2ReplayInfo alloc(AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
-        return address == NULL ? null : new b2RecPlayerInfo(() -> address);
+        return address == NULL ? null : new b2ReplayInfo(() -> address);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecPlayerInfo}.
+     * Reserve memory for the new object {@code b2ReplayInfo}.
      *
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public static b2RecPlayerInfo calloc() {
-        return new b2RecPlayerInfo(ncalloc(1, SIZEOF));
+    public static b2ReplayInfo calloc() {
+        return new b2ReplayInfo(ncalloc(1, SIZEOF));
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecPlayerInfo}.
+     * Reserve memory for the new object {@code b2ReplayInfo}.
      *
      * @param arean arena
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public static b2RecPlayerInfo calloc(ArenaAlloc arean) {
+    public static b2ReplayInfo calloc(ArenaAlloc arean) {
         long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
-        return new b2RecPlayerInfo(() -> ptr);
+        return new b2ReplayInfo(() -> ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2RecPlayerInfo}.
+     * Reserve memory for the new object {@code b2ReplayInfo}.
      *
-     * @return b2RecPlayerInfo
+     * @return b2ReplayInfo
      */
-    public static b2RecPlayerInfo malloc() {
-        return new b2RecPlayerInfo(nmalloc(SIZEOF));
+    public static b2ReplayInfo malloc() {
+        return new b2ReplayInfo(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2RecPlayerInfo}.
+     * Reserve an amount n of memory for the object {@code b2ReplayInfo}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -287,7 +287,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2RecPlayerInfo}.
+     * Reserve an amount n of memory for the object {@code b2ReplayInfo}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -299,7 +299,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2RecPlayerInfo}.
+     * Reserve an amount n of memory for the object {@code b2ReplayInfo}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -309,7 +309,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2RecPlayerInfo}.
+     * Reserve an amount n of memory for the object {@code b2ReplayInfo}.
      *
      * @param capacity Number of elements
      * @param arena Arean
@@ -338,11 +338,11 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
 
     // -----------------------------------
 
-    /** An array of {@code b2RecPlayerInfo} structs. */
-    public static class Buffer extends StructBuffer<b2RecPlayerInfo, Buffer> implements JNINative {
+    /** *  An array of {@code b2ReplayInfo} structs. */
+    public static class Buffer extends StructBuffer<b2ReplayInfo, Buffer> implements JNINative {
 
         /** An element that provides information about the structure. */
-        private static final b2RecPlayerInfo ELEMENT_FACTORY = b2RecPlayerInfo.factory();
+        private static final b2ReplayInfo ELEMENT_FACTORY = b2ReplayInfo.factory();
 
         /**
          * Create a new buffer.
@@ -370,7 +370,7 @@ public class b2RecPlayerInfo extends Struct<b2RecPlayerInfo> {
         /*(non-Javadoc)
          */
         @Override
-        protected b2RecPlayerInfo getElementFactory() {
+        protected b2ReplayInfo getElementFactory() {
             return ELEMENT_FACTORY;
         }
 
