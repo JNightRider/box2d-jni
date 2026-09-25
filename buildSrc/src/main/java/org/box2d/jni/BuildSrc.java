@@ -199,8 +199,9 @@ public final class BuildSrc {
      * before compiling and packaging it.
      *
      * @param version Generate a file containing its version within the project
-     * resources before compiling and packaging it.
+     *                  resources before compiling and packaging it.
      * @param projectDir File
+     *
      * @return String
      */
     public static String makeVersionFile(Object version, File projectDir) {
@@ -214,8 +215,6 @@ public final class BuildSrc {
             if (!file.exists() && !file.createNewFile()) {
                 throw new FileNotFoundException("touch " + file.getAbsolutePath());
             }
-
-            System.out.println(file + " << " + value);
             Files.writeString(file.toPath(), value);
         } catch (IOException e) {
             throw new GradleException("Make version file", e);
