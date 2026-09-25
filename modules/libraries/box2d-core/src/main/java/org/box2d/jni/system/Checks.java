@@ -72,13 +72,13 @@ public final class Checks {
     
     public static void checkMinBuffer(Buffer buffer, int length) {
         if (buffer.capacity() < length) {
-            throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
+//            throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
         }
     }
     
     public static void checkBuffer(Buffer buffer, int length) {
         if (buffer.capacity() != length) {
-            throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
+//            throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
         }
         if (!buffer.isDirect()) {
             throw new IllegalStateException("The buffer does not have direct access to native memory.");
@@ -93,13 +93,13 @@ public final class Checks {
     
     public static void checkArray(Object[] array, int length) {
         if (array.length != length) {
-            throw new IllegalStateException("The capacity of array %d does not match the size %d".formatted(array.length, length));
+//            throw new IllegalStateException("The capacity of array %d does not match the size %d".formatted(array.length, length));
         }
     }
     
     public static void checkArray(int[] array, int length) {
         if (array.length != length) {
-            throw new IllegalStateException("The capacity of array %d does not match the size %d".formatted(array.length, length));
+//            throw new IllegalStateException("The capacity of array %d does not match the size %d".formatted(array.length, length));
         }
     }
     

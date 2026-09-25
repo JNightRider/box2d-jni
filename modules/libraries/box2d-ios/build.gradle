@@ -1,0 +1,114 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        // Plugin de RoboVM (MobiVM) for Gradle
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.26'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'iOS'
+}
+
+apply plugin: 'robovm'
+
+description = 'box2d-jni ios'
+
+ext {
+    baseName = "${artifact}" // for artifacts
+    libraryVersion = "${jjVersion}"
+    groupID = 'io.github.jnightrider'
+}
+
+ios {
+    miVersion = '15.0'
+
+    def target = findProject('box2d.jni.ios.target')
+    if (!target) {
+        devices 'device-arm64', 'arm64', 'x86_64'
+    } else if (target == 'Device_ARM64') {
+        devices 'device-arm64'
+    } else if (target == 'Simulator_ARM64') {
+        devices 'arm64'
+    } else if (target == 'Simulator_x86_64') {
+        devices 'x86_64'
+    }
+
+    cmake {
+        workingDir = "${rootDir}/modules/libraries/box2d-bindings/c"
+        outputDir = "${layout.buildDirectory.asFile.get()}/cxx"
+    }
+
+    buildTypes {
+        def bt = findProperty('box2d.jni.bt')
+        if (!bt || bt == 'Debug') {
+            debug {
+                arguments '-DTYPE_DEBUG=ON'
+            }
+        }
+        if (!bt || bt == 'Release') {
+            release {
+                arguments '-DTYPE_DEBUG=OFF'
+            }
+        }
+    }
+
+    productFlavors {
+        def flavor = findProperty('box2d.jni.flavor')
+        if (!flavor || flavor == 'Dp') {
+            dp {
+                arguments '-DBOX2D_DOUBLE_PRECISION=ON'
+            }
+        }
+        if (!flavor || flavor == 'Sp') {
+            sp {
+                arguments '-DBOX2D_DOUBLE_PRECISION=OFF'
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                    'src/main/java',
+                    'src/iosTest/java'
+            ]
+        }
+        resources {
+            srcDirs = [
+                    'src/main/resources',
+                    'src/iosTest/resources'
+            ]
+        }
+    }
+}
+
+// Register JVM-execution tasks:
+
+application {
+    // default settings for the 'run' task:
+    mainClass = 'org.box2d.jni.test.Main'
+}
+
+dependencies {
+    // Box2d-JNI
+    implementation project(':modules:libraries:box2d-core')
+    runtimeOnly fileTree(dir: "${rootDir}/lib", include: ['*.jar'])
+
+    // RoboVM runtime base libraries
+    implementation 'com.mobidevelop.robovm:robovm-rt:2.3.26'
+    implementation 'com.mobidevelop.robovm:robovm-cocoatouch:2.3.26'
+}
+
+// RoboVM Ahead-Of-Time (AOT) Compiler Configuration
+robovm {
+    // It points to the application configuration properties file for iOS.
+    configFile = file("${projectDir}/robovm.xml")
+}
