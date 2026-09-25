@@ -57,7 +57,7 @@ import org.box2d.jni.system.Library;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public enum b2ShapeType {
@@ -149,20 +149,12 @@ public enum b2ShapeType {
      * @return body type
      */
     public static b2ShapeType valueOf(int type) {
-        if (type == b2_circleShape.value()) {
-            return b2_circleShape;
-        } else if (type == b2_capsuleShape.value()) {
-            return b2_capsuleShape;
-        } else if (type == b2_segmentShape.value()) {
-            return b2_segmentShape;
-        } else if (type == b2_polygonShape.value()) {
-            return b2_polygonShape;
-        } else if (type == b2_chainSegmentShape.value()) {
-            return b2_chainSegmentShape;
-        } else if (type == b2_shapeTypeCount.value()) {
-            return b2_shapeTypeCount;
+        for (b2ShapeType shapeType : b2ShapeType.values()) {
+            if (shapeType.value() == type) {
+                return shapeType;
+            }
         }
-        throw new UnsupportedOperationException("enum: " + type);
+        throw new UnsupportedOperationException("enum b2ShapeType: " + type);
     }
 
     /* (non-Javadoc)

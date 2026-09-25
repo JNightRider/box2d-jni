@@ -51,7 +51,7 @@ import org.box2d.jni.system.Library;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public enum b2BodyType {
@@ -102,13 +102,13 @@ public enum b2BodyType {
     /**
      * An integer value that identifies the body type natively, that is, it is the native body type.
      */
-    private final Integer b2Type;
+    private final int b2Type;
 
     /**
      * Generate a new <code>BodyType</code>.
      * @param b2Type type
      */
-    private b2BodyType(Integer b2Type) {
+    private b2BodyType(int b2Type) {
         this.b2Type = b2Type;
     }
 
@@ -116,7 +116,7 @@ public enum b2BodyType {
      * Returns the native type
      * @return int
      */
-    public Integer value() {
+    public int value() {
         return b2Type;
     }
     
@@ -126,16 +126,12 @@ public enum b2BodyType {
      * @return body type
      */
     public static b2BodyType valueOf(int type) {
-        if (type == b2_staticBody.value()) {
-            return b2_staticBody;
-        }  else if (type == b2_kinematicBody.value()) {
-            return b2_kinematicBody;
-        } else if (type == b2_dynamicBody.value()) {
-            return b2_dynamicBody;
-        } else if (type == b2_bodyTypeCount.value()) {
-            return b2_bodyTypeCount;
+        for (b2BodyType bodyType : b2BodyType.values()) {
+            if (bodyType.value() == type) {
+                return bodyType;
+            }
         }
-        throw new UnsupportedOperationException("enum: " + type);
+        throw new UnsupportedOperationException("enum b2BodyType: " + type);
     }
 
     /* (non-Javadoc)

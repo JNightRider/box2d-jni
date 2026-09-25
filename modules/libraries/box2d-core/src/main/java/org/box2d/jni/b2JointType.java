@@ -49,7 +49,7 @@ import org.box2d.jni.system.*;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public enum b2JointType {
@@ -142,14 +142,14 @@ public enum b2JointType {
     /**
      * An integer value that identifies the body type natively, that is, it is the native body type.
      */
-    private final Integer b2Type;
+    private final int b2Type;
 
     /**
      * Generate a new <code>b2JointType</code>.
      *
      * @param b2Type type
      */
-    private b2JointType(Integer b2Type) {
+    private b2JointType(int b2Type) {
         this.b2Type = b2Type;
     }
 
@@ -158,7 +158,7 @@ public enum b2JointType {
      *
      * @return int
      */
-    protected Integer value() {
+    protected int value() {
         return b2Type;
     }
 
@@ -169,34 +169,12 @@ public enum b2JointType {
      * @return body type
      */
     public static b2JointType valueOf(int type) {
-        if (type == b2_distanceJoint.value()) {
-            return b2_distanceJoint;
+        for (b2JointType jointType : b2JointType.values()) {
+            if (jointType.value() == type) {
+                return jointType;
+            }
         }
-        if (type == b2_filterJoint.value()) {
-            return b2_filterJoint;
-        }
-        if (type == b2_motorJoint.value()) {
-            return b2_motorJoint;
-        }
-        if (type == b2_prismaticJoint.value()) {
-            return b2_prismaticJoint;
-        }
-        if (type == b2_revoluteJoint.value()) {
-            return b2_revoluteJoint;
-        }
-        if (type == b2_weldJoint.value()) {
-            return b2_weldJoint;
-        }
-        if (type == b2_wheelJoint.value()) {
-            return b2_wheelJoint;
-        }
-        if (type == b2_moverJoint.value()) {
-            return b2_moverJoint;
-        }
-        if (type == b2_pogoJoint.value()) {
-            return b2_pogoJoint;
-        }
-        throw new UnsupportedOperationException("enum: " + type);
+        throw new UnsupportedOperationException("enum b2JointType: " + type);
     }
 
     /* (non-Javadoc)

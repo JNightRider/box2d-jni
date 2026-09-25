@@ -45,7 +45,7 @@ import org.box2d.jni.system.Library;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public enum b2TOIState {
@@ -102,13 +102,13 @@ public enum b2TOIState {
     /**
      * An integer value that identifies the body type natively, that is, it is the native body type.
      */
-    private final Integer b2Type;
+    private final int b2Type;
 
     /**
      * Generate a new <code>b2TOIState</code>.
      * @param b2Type type
      */
-    private b2TOIState(Integer b2Type) {
+    private b2TOIState(int b2Type) {
         this.b2Type = b2Type;
     }
 
@@ -116,7 +116,7 @@ public enum b2TOIState {
      * Returns the native type
      * @return int
      */
-    protected Integer value() {
+    protected int value() {
         return b2Type;
     }
 
@@ -126,18 +126,12 @@ public enum b2TOIState {
      * @return TOI state
      */
     public static b2TOIState valueOf(int type) {
-        if (type == b2_toiStateUnknown.value()) {
-            return b2_toiStateUnknown;
-        } else if (type == b2_toiStateFailed.value()) {
-            return b2_toiStateFailed;
-        } else if (type == b2_toiStateOverlapped.value()) {
-            return b2_toiStateOverlapped;
-        } else if (type == b2_toiStateHit.value()) {
-            return b2_toiStateHit;
-        } else if (type == b2_toiStateSeparated.value()) {
-            return b2_toiStateSeparated;
+        for (b2TOIState state : b2TOIState.values()) {
+            if (state.value() == type) {
+                return state;
+            }
         }
-        throw new UnsupportedOperationException("enum: " + type);
+        throw new UnsupportedOperationException("enum b2TOIState: " + type);
     }
 
     /* (non-Javadoc)
