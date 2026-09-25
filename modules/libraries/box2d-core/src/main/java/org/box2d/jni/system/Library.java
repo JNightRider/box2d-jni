@@ -47,7 +47,7 @@ import static org.box2d.jni.system.Sys.*;
  * shared libraries.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public final class Library {
@@ -58,7 +58,7 @@ public final class Library {
         String libpath = Sys.B2JNI_LIB_PATH.get(null),
                libname = Sys.B2JNI_LIB_NAME.get(null);
 
-        apiLog("Initializing box2d-jni v1.0.0");
+        apiLog("Initializing box2d-jni " +  Version.getVersion());
         
         if (libpath == null && libname == null) {
             loadSystem("org/box2d/jni/natives", "box2d-bindings");

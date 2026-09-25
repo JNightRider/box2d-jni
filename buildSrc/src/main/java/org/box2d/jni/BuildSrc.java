@@ -30,13 +30,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.box2d.jni;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Base64;
+
+import org.gradle.api.GradleException;
 
 /**
  * Utility methods used in Gradle builds.
  *
  * @author wil
- * @version 1.2.0
+ * @version 1.3.0
  * @since 1.0.0
  */
 public final class BuildSrc {
@@ -186,6 +192,35 @@ public final class BuildSrc {
                 .append('/')
                 .append(arch.getName());
         return String.valueOf(buffer);
+    }
+
+    /**
+     * Generate a file containing its version within the project resources
+     * before compiling and packaging it.
+     *
+     * @param version Generate a file containing its version within the project
+     * resources before compiling and packaging it.
+     * @param projectDir File
+     * @return String
+     */
+    public static String makeVersionFile(Object version, File projectDir) {
+        File file = new File(projectDir, "src/main/resources/META-INF/VERSION");
+        String value = String.valueOf(version);
+        try {
+            File dir = file.getParentFile();
+            if (!dir.exists() && !dir.mkdirs()) {
+                throw new FileNotFoundException("mkdir -p " + dir.getAbsolutePath());
+            }
+            if (!file.exists() && !file.createNewFile()) {
+                throw new FileNotFoundException("touch " + file.getAbsolutePath());
+            }
+
+            System.out.println(file + " << " + value);
+            Files.writeString(file.toPath(), value);
+        } catch (IOException e) {
+            throw new GradleException("Make version file", e);
+        }
+        return file.getAbsolutePath();
     }
 
     /**
