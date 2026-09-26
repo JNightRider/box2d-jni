@@ -132,8 +132,11 @@ public final class Version {
     public static String getVersion() { return VERSION; }
     private static String getJarVersion() {
         InputStream in = Version.class.getResourceAsStream("/META-INF/VERSION");
+        if (in == null) {
+            return "";
+        }
+
         StringBuilder builder = new StringBuilder();
-        
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             String line;
             while ((line = reader.readLine()) != null) {
