@@ -49,7 +49,7 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <id.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public final class Id {
@@ -323,4 +323,6 @@ public final class Id {
 
     /* {@code B2_ID_INLINE b2ContactId b2LoadContactId( uint32_t values[3] ) } */
     public static native void nb2LoadContactId(IntBuffer values, long __result);
+    /** private constructor */
+    private Id() {}
 }

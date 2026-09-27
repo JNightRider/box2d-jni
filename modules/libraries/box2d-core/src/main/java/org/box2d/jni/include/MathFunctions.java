@@ -51,7 +51,7 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <math_functions.h>} header of box2d.
  *
  * @author wil
- * @version 1.2.0
+ * @version 1.2.1
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
@@ -1738,4 +1738,7 @@ public final class MathFunctions {
 
     /* {@code B2_API float b2GetLengthUnitsPerMeter( void ); } */
     public static native float nb2GetLengthUnitsPerMeter();
+
+    /** private constructor */
+    private MathFunctions() {}
 }

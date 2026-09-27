@@ -57,7 +57,7 @@ import static org.box2d.jni.libc.LibCStdint.*;
  * Class that represents the {@code <types.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public final class Types {
@@ -410,4 +410,7 @@ public final class Types {
 
     /* {@code B2_API b2DebugDraw b2DefaultDebugDraw( void ); } */
     public static native void nb2DefaultDebugDraw(long __result);
+
+    /** private constructor */
+    private Types() {}
 }
