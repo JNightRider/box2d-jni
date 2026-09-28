@@ -33,8 +33,10 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -42,7 +44,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef bool b2TreeQueryCallbackFcn( int proxyId, uint64_t userData, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -52,14 +54,16 @@ public interface b2TreeQueryCallbackFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(3);
-        targs.put(ffi_type_sint32)
-             .put(ffi_type_uint64)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_uint8;
-        
-        return njniCallbackCreate(instance, rtype, targs, 3);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(3);
+            targs.put(ffi_type_sint32)
+                 .put(ffi_type_uint64)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_uint8;
+
+            return njniCallbackCreate(instance, rtype, targs, 3);
+        }
     };
 
     /**
