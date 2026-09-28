@@ -31,8 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.system;
 
 import java.nio.ByteBuffer;
+import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.nio.LongBuffer;
 import java.util.Arrays;
 
 import static org.box2d.jni.libc.LibCString.*;
@@ -372,6 +374,52 @@ public final class ArenaAlloc extends Uintptr implements AutoCloseable {
         long address0 = nmalloc(4, bytes);
         nmemset(address0, 0, bytes);
         return MemoryUtil.memIntBuffer(address0, size);
+    }
+
+    /**
+     * Int version of {@link #malloc(int)}.
+     *
+     * @param size the size of each element
+     * @return DoubleBuffer
+     */
+    public DoubleBuffer mallocDouble(int size) {
+        return MemoryUtil.memDoubleBuffer(nmalloc(8, size << 3), size);
+    }
+
+    /**
+     * Int version of {@link #malloc(int)}.
+     *
+     * @param size the size of each element
+     * @return DoubleBuffer
+     */
+    public DoubleBuffer callocDouble(int size) {
+        int bytes = size * 8;
+        long address0 = nmalloc(8, bytes);
+        nmemset(address0, 0, bytes);
+        return MemoryUtil.memDoubleBuffer(address0, size);
+    }
+
+    /**
+     * Int version of {@link #malloc(int)}.
+     *
+     * @param size the size of each element
+     * @return LongBuffer
+     */
+    public LongBuffer mallocLong(int size) {
+        return MemoryUtil.memLongBuffer(nmalloc(8, size << 3), size);
+    }
+
+    /**
+     * Int version of {@link #calloc(int)}.
+     *
+     * @param size the size of each element
+     * @return LongBuffer
+     */
+    public LongBuffer callocLong(int size) {
+        int bytes = size * 8;
+        long address0 = nmalloc(8, bytes);
+        nmemset(address0, 0, bytes);
+        return MemoryUtil.memLongBuffer(address0, size);
     }
 
     public long nUTF(String text) {
