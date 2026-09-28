@@ -48,7 +48,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef void b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ); }
  *
  * @author wil
- * @version 1.2.0
+ * @version 1.3.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -58,15 +58,17 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(4);
-        targs.put(ffi_type_b2ShapeId)
-             .put(ffi_type_b2ShapeId)
-             .put(ffi_type_b2Manifold)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_void;
-        
-        return njniCallbackCreate(instance, rtype, targs, 4);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(4);
+            targs.put(ffi_type_b2ShapeId)
+                 .put(ffi_type_b2ShapeId)
+                 .put(ffi_type_b2Manifold)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_void;
+
+            return njniCallbackCreate(instance, rtype, targs, 4);
+        }
     };
 
     /**
