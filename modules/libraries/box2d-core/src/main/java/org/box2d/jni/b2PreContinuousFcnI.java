@@ -47,7 +47,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef bool b2PreContinuousFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.0
  */
 @FunctionalInterface
@@ -57,16 +57,18 @@ public interface b2PreContinuousFcnI extends CallbackI, CPreContinuousFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(5);
-        targs.put(ffi_type_b2ShapeId)
-             .put(ffi_type_b2ShapeId)
-             .put(ffi_type_b2Pos)
-             .put(ffi_type_b2Vec2)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_sint8;
-        
-        return njniCallbackCreate(instance, rtype, targs, 5);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(5);
+            targs.put(ffi_type_b2ShapeId)
+                 .put(ffi_type_b2ShapeId)
+                 .put(ffi_type_b2Pos)
+                 .put(ffi_type_b2Vec2)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_sint8;
+
+            return njniCallbackCreate(instance, rtype, targs, 5);
+        }
     };
 
     /**
