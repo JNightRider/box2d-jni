@@ -34,8 +34,11 @@ import java.nio.LongBuffer;
 import java.util.function.Function;
 
 import org.box2d.jni.readonly.ConstB2BoxCastInput;
+
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -43,7 +46,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef float b2TreeBoxCastCallbackFcn( const b2BoxCastInput* input, int proxyId, uint64_t userData, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.1
  */
 @FunctionalInterface
@@ -53,15 +56,17 @@ public interface b2TreeBoxCastCallbackFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(4);
-        targs.put(ffi_type_pointer)
-             .put(ffi_type_sint32)
-             .put(ffi_type_uint64)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_float;
-        
-        return njniCallbackCreate(instance, rtype, targs, 4);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(4);
+            targs.put(ffi_type_pointer)
+                 .put(ffi_type_sint32)
+                 .put(ffi_type_uint64)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_float;
+
+            return njniCallbackCreate(instance, rtype, targs, 4);
+        }
     };
 
     /**
