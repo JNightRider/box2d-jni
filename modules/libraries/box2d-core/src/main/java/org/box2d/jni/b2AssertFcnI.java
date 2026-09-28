@@ -33,9 +33,11 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.MemoryUtil.*;
 import static org.box2d.jni.system.Upcalls.*;
@@ -44,7 +46,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef int b2AssertFcn( const char* condition, const char* fileName, int lineNumber ); }
  * 
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -54,14 +56,16 @@ public interface b2AssertFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(3);
-        targs.put(ffi_type_pointer)
-             .put(ffi_type_pointer)
-             .put(ffi_type_sint32);
-        targs.flip();
-        long rtype = ffi_type_uint32;
-        
-        return njniCallbackCreate(instance, rtype, targs, 3);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(3);
+            targs.put(ffi_type_pointer)
+                 .put(ffi_type_pointer)
+                 .put(ffi_type_sint32);
+            targs.flip();
+            long rtype = ffi_type_uint32;
+
+            return njniCallbackCreate(instance, rtype, targs, 3);
+        }
     };
 
     /*(non-Javadoc)*/
