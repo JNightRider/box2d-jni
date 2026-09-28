@@ -33,8 +33,11 @@ package org.box2d.jni.system;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
 
 import org.box2d.jni.libc.LibCStdlib;
 
@@ -46,14 +49,14 @@ import static org.box2d.jni.system.Pointer.*;
  * representation of pointers in C and the JVM.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class MemoryUtil {
     static {
         Library.initialize();
     }
-    
+
     public static ByteBuffer memByteBuffer(long ptr, int capacity) {
         if (ptr == NULL) {
             return null;
@@ -62,39 +65,53 @@ public final class MemoryUtil {
         nbuffer.order(ByteOrder.nativeOrder());
         return nbuffer;
     }
-    
+
     public static native ByteBuffer nmemByteBuffer(long ptr, int capacity);
-    
+
+    public static ShortBuffer memShortBuffer(long ptr, int capacity) {
+        return memByteBuffer(ptr, capacity * Short.BYTES).asShortBuffer();
+    }
+
     public static FloatBuffer memFloatBuffer(long ptr, int capacity) {
-        return nmemFloatBuffer(ptr, capacity * Float.BYTES);
+        return memByteBuffer(ptr, capacity * Float.BYTES).asFloatBuffer();
     }
-    
-    public static FloatBuffer nmemFloatBuffer(long ptr, int capacity) {
-        ByteBuffer buffer = memByteBuffer(ptr, capacity);
-        return buffer.asFloatBuffer();
-    }
-    
+
     public static IntBuffer memIntBuffer(long ptr, int capacity) {
-        return nmemIntBuffer(ptr, capacity * Integer.BYTES);
+        return memByteBuffer(ptr, capacity * Integer.BYTES).asIntBuffer();
     }
-    
-    public static IntBuffer nmemIntBuffer(long ptr, int capacity) {
-        ByteBuffer buffer = memByteBuffer(ptr, capacity);
-        return buffer.asIntBuffer();
+
+    public static DoubleBuffer memDoubleBuffer(long ptr, int capacity) {
+        return memByteBuffer(ptr, capacity * Double.BYTES).asDoubleBuffer();
+    }
+
+    public static LongBuffer memLongBuffer(long ptr, int capacity) {
+        return memByteBuffer(ptr, capacity * Long.BYTES).asLongBuffer();
     }
 
     public static void memFree(ByteBuffer buffer) {
         nmemFree(buffer);
     }
-    
+
+    public static void memFree(ShortBuffer buffer) {
+        nmemFree(buffer);
+    }
+
     public static void memFree(FloatBuffer buffer) {
         nmemFree(buffer);
     }
-    
+
     public static void memFree(IntBuffer buffer) {
         nmemFree(buffer);
     }
-    
+
+    public static void memFree(DoubleBuffer buffer) {
+        nmemFree(buffer);
+    }
+
+    public static void memFree(LongBuffer buffer) {
+        nmemFree(buffer);
+    }
+
     public static native void nmemFree(Buffer ptr);
     
     public static long memMallocUTF(String value) {
