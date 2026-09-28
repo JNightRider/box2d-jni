@@ -58,8 +58,8 @@ public interface b2AllocFcnI extends CallbackI {
         try (ArenaAlloc arena = allocPush()) {
             LongBuffer targs = arena.mallocLong(2);
             targs.put(ffi_type_size_t)
-                    .put(ffi_type_sint32);
-            targs.flip();
+                 .put(ffi_type_sint32)
+                 .flip();
 
             long rtype = ffi_type_pointer;
             return njniCallbackCreate(instance, rtype, targs, 2);
