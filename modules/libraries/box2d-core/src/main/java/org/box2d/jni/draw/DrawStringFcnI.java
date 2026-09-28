@@ -48,7 +48,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code void ( *DrawStringFcn )( b2Pos p, const char* s, b2HexColor color, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -58,15 +58,17 @@ public interface DrawStringFcnI extends CallbackI, CDrawStringFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(4);
-        targs.put(ffi_type_b2Pos)
-             .put(ffi_type_pointer)
-             .put(ffi_type_uint32)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_void;
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(4);
+            targs.put(ffi_type_b2Pos)
+                 .put(ffi_type_pointer)
+                 .put(ffi_type_uint32)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_void;
 
-        return njniCallbackCreate(instance, rtype, targs, 4);
+            return njniCallbackCreate(instance, rtype, targs, 4);
+        }
     };
 
     /**

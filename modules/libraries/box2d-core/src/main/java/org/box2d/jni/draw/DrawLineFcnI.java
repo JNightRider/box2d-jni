@@ -59,15 +59,17 @@ public interface DrawLineFcnI extends CallbackI, CDrawLineFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(4);
-        targs.put(ffi_type_b2Pos)
-             .put(ffi_type_b2Pos)
-             .put(ffi_type_sint32)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_void;
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(4);
+            targs.put(ffi_type_b2Pos)
+                 .put(ffi_type_b2Pos)
+                 .put(ffi_type_sint32)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_void;
 
-        return njniCallbackCreate(instance, rtype, targs, 4);
+            return njniCallbackCreate(instance, rtype, targs, 4);
+        }
     };
 
     /**

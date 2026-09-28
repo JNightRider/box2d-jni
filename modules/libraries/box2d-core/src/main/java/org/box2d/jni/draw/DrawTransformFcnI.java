@@ -50,7 +50,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code void ( *DrawTransformFcn )( b2WorldTransform transform, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -60,13 +60,15 @@ public interface DrawTransformFcnI extends CallbackI, CDrawTransformFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(2);
-        targs.put(ffi_type_b2WorldTransform)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_void;
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(2);
+            targs.put(ffi_type_b2WorldTransform)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_void;
 
-        return njniCallbackCreate(instance, rtype, targs, 2);
+            return njniCallbackCreate(instance, rtype, targs, 2);
+        }
     };
 
     /**

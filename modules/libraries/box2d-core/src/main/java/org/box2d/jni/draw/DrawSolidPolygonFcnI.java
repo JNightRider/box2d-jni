@@ -49,10 +49,10 @@ import static org.box2d.jni.system.Upcalls.*;
 
 /**
  * Callback function: {@code void ( *DrawSolidPolygonFcn )( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color,
-								void* context ); }
+ *								void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -62,17 +62,19 @@ public interface DrawSolidPolygonFcnI extends CallbackI, CDrawSolidPolygonFcn {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(6);
-        targs.put(ffi_type_b2Transform)
-             .put(ffi_type_pointer)
-             .put(ffi_type_sint32)
-             .put(ffi_type_float)
-             .put(ffi_type_sint32)
-             .put(ffi_type_pointer);
-        targs.flip();
-        long rtype = ffi_type_void;
-        
-        return njniCallbackCreate(instance, rtype, targs, 6);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(6);
+            targs.put(ffi_type_b2Transform)
+                 .put(ffi_type_pointer)
+                 .put(ffi_type_sint32)
+                 .put(ffi_type_float)
+                 .put(ffi_type_sint32)
+                 .put(ffi_type_pointer);
+            targs.flip();
+            long rtype = ffi_type_void;
+
+            return njniCallbackCreate(instance, rtype, targs, 6);
+        }
     };
 
     /**
