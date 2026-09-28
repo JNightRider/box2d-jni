@@ -33,9 +33,11 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
+import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
+import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
@@ -43,7 +45,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef void* b2AllocFcn( unsigned int size, int alignment );}
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -53,13 +55,15 @@ public interface b2AllocFcnI extends CallbackI {
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
-        LongBuffer targs = memCreateLongBuffer(2);
-        targs.put(ffi_type_size_t)
-             .put(ffi_type_sint32);
-        targs.flip();
-        long rtype = ffi_type_pointer;
-        
-        return njniCallbackCreate(instance, rtype, targs, 2);
+        try (ArenaAlloc arena = allocPush()) {
+            LongBuffer targs = arena.mallocLong(2);
+            targs.put(ffi_type_size_t)
+                    .put(ffi_type_sint32);
+            targs.flip();
+
+            long rtype = ffi_type_pointer;
+            return njniCallbackCreate(instance, rtype, targs, 2);
+        }
     };
 
     /**
