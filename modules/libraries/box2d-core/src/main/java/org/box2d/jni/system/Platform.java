@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  * The platforms supported by Box2d-JNI.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.1
  */
 public enum Platform {
@@ -46,7 +46,8 @@ public enum Platform {
     LINUX("Linux", "linux"),
     MACOSX("macOS", "osx"),
     WINDOWS("Windows", "windows"),
-    Android("Android", "android");
+    Android("Android", "android"),
+    iOS("iOS", "ios");
 
     /** The architectures supported by Box2d-JNI. */
     public enum Architecture {
@@ -103,13 +104,23 @@ public enum Platform {
 
     private static final int JAVA_VERSION;
     private static final String JAVA_NAME;
+    private static final String JAVA_RUNTIME;
 
     private static final Platform current;
 
     static {
+        String osName = System.getProperty("os.name");
+
         JAVA_NAME = System.getProperty("java.vm.name");
-        if (JAVA_NAME.contains("Dalvik")) {
+        JAVA_RUNTIME = System.getProperty("java.runtime.name");
+
+        if (JAVA_RUNTIME.toLowerCase().contains("android")
+                || JAVA_NAME.toLowerCase().contains("dalvik")){
             current = Android;
+            JAVA_VERSION = 0;
+        } else if (osName.toLowerCase().contains("ios")
+                || JAVA_NAME.toLowerCase().contains("substrate vm") && osName.toLowerCase().contains("darwin")) {
+            current = iOS;
             JAVA_VERSION = 0;
         } else {
             String javaVersion = System.getProperty("java.version");
@@ -127,8 +138,6 @@ public enum Platform {
             }
 
             JAVA_VERSION = Math.max(8, Integer.parseInt(matcher.group(1)));
-
-            String osName = System.getProperty("os.name");
 
             if (osName.startsWith("Windows")) {
                 current = WINDOWS;
@@ -152,6 +161,9 @@ public enum Platform {
         return JAVA_NAME;
     }
 
+    public static String getJavaRuntime() {
+        return JAVA_RUNTIME;
+    }
     
     private final String name;
     private final String nativePath;

@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
+import org.gradle.api.Project;
 import org.gradle.api.GradleException;
 
 /**
@@ -46,6 +47,36 @@ import org.gradle.api.GradleException;
  * @since 1.0.0
  */
 public final class BuildSrc {
+
+    /**
+     * Check if the project is a module for desktop platforms.
+     *
+     * @param project Project
+     * @return boolean
+     */
+    public static boolean isDesktopProject(Project project) {
+        String name = project.getName();
+        if (name == null) {
+            return false;
+        }
+        return !(name.endsWith("android") || name.endsWith("ios"));
+    }
+
+    /**
+     * Check if the project is a module for iOS platforms.
+     *
+     * @param project Project
+     * @return boolean
+     */
+    public static boolean isIOSProject(Project project) {
+        String name = project.getName();
+        if (name == null) {
+            return false;
+        }
+        return name.endsWith("ios") || checkBool(
+                project.findProperty("box2d.jni.ios")
+        );
+    }
 
     /**
      * Check if the object is a {@code boolean}; otherwise, try to convert it
