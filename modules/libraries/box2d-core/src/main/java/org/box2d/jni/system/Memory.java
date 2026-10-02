@@ -38,7 +38,7 @@ import static org.box2d.jni.system.Checks.*;
  * between the JVM and C/C++
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public final class Memory {
@@ -55,7 +55,7 @@ public final class Memory {
     }
 
     public static ByteBuffer memCreateByteBuffer(int size) {
-        return memCreateByteBuffer(1, size);
+        return memCreateByteBuffer(size, Byte.BYTES);
     }
 
     public static DoubleBuffer memCreateDoubleBuffer(int size) {
