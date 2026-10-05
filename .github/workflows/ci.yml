@@ -36,6 +36,12 @@ jobs:
             -Probovm.arch=x86_64 \
             --stacktrace \
             -x test
+      - name: Upload jars        
+        uses: actions/upload-artifact@v7
+        with:
+          name: box2d-jni-ios
+          path: |
+            lib/*.jar
 
 #  Android:
 #    if: contains(toJson(github.event.commits), '[ci skip] ') == false
