@@ -433,6 +433,7 @@ jobs:
         run: |
           ./gradlew publish --console=plain
           ./gradlew jreleaserFullRelease --console=plain
+
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
