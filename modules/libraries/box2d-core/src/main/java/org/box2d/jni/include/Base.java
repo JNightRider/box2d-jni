@@ -82,7 +82,6 @@ public final class Base {
     /* {@code B2_API void b2SetAllocator( b2AllocFcn* allocFcn, b2FreeFcn* freeFcn ); } */
     public static native void nb2SetAllocator(long allocFcn, long freeFcn);
 
-
     // --- [ b2GetByteCount ] ---
 
     /**
@@ -95,7 +94,6 @@ public final class Base {
     }
     /* {@code B2_API int64_t b2GetByteCount( void ); } */
     public static native long nb2GetByteCount();
-
 
     // --- [ b2SetAssertFcn ] ---
 
@@ -112,7 +110,6 @@ public final class Base {
     }
     /* {@code B2_API void b2SetAssertFcn( b2AssertFcn* assertFcn ); } */
     public static native void nb2SetAssertFcn(long assertFcn);
-
 
     // --- [ b2SetLogFcn ] ---
 
