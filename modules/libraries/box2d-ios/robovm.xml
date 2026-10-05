@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <executableName>Box2dJNI</executableName>
+    <mainClass>org.box2d.jni.test.Main</mainClass>
+    <os>ios</os>
+    <target>ios</target>
+</config>

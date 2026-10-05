@@ -24,12 +24,21 @@ def androidEnabled =
                 .orElse(false)
                 .get()
 
+def iosEnabled =
+        providers.gradleProperty("box2d.jni.ios")
+                .map { it.toBoolean() }
+                .orElse(false)
+                .get()
+
 include ':modules:libraries:box2d-core'
 include ':modules:libraries:box2d-bindings'
 
-// Skip android
+// Check which platforms need to be skipped.
 if (androidEnabled) {
     include ':modules:libraries:box2d-android'
+}
+if (iosEnabled) {
+    include ':modules:libraries:box2d-ios'
 }
 
 include ':modules:samples'
