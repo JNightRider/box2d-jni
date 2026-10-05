@@ -114,6 +114,18 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Base_nb2IsDoublePrecision
 
 /*
  * Class:     org_box2d_jni_include_Base
+ * Method:    nb2IsAVX2Available
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Base_nb2IsAVX2Available
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean) b2IsAVX2Available();
+}
+
+/*
+ * Class:     org_box2d_jni_include_Base
  * Method:    nb2GetTicks
  * Signature: ()J
  */
