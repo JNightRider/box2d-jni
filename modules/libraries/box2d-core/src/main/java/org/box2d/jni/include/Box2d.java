@@ -119,7 +119,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * Class that represents the {@code <box2d.h>} header of box2d.
  *
  * @author wil
- * @version 1.3.0
+ * @version 1.4.0
  * @since 1.0.0
  */
 public final class Box2d {
@@ -865,6 +865,22 @@ public final class Box2d {
 
     /* {@code B2_API bool b2World_IsWarmStartingEnabled( b2WorldId worldId ); } */
     public static native boolean nb2World_IsWarmStartingEnabled(long worldId);
+
+    // --- [ b2World_EnableSSE2Fallback ] ---
+
+    /**
+     * {@code B2_API void b2World_EnableSSE2Fallback( b2WorldId worldId, bool flag ); }
+     *
+     * @param worldId
+     * @param flag
+     */
+    public static void b2World_EnableSSE2Fallback(b2WorldId worldId, boolean flag) {
+        checkPointers(worldId);
+        nb2World_EnableSSE2Fallback(worldId.address(), flag);
+    }
+
+    /* {@code B2_API void b2World_EnableSSE2Fallback( b2WorldId worldId, bool flag ); } */
+    public static native void nb2World_EnableSSE2Fallback(long worldId, boolean flag);
 
     // --- [ b2World_GetAwakeBodyCount ] ---
 
