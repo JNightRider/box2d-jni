@@ -438,5 +438,6 @@ jobs:
         with:
           name: publish-report
           path: |
-            modules/libraries/box2d-core/build/jreleaser/trace.log
+            modules/libraries/box2d-core/build/jreleaser/**/*.log
+            build/reports/problems/
           if-no-files-found: ignore
