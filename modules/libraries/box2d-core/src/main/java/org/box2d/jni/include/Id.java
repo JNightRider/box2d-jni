@@ -54,7 +54,7 @@ import static org.box2d.jni.system.Checks.*;
  */
 public final class Id {
     static { Library.initialize(); }
-    
+
     // --- [ B2_IS_NULL ] ---
 
     /**
@@ -63,10 +63,9 @@ public final class Id {
      * @return boolean
      */
     public static boolean B2_IS_NULL(ConstB2Id id) {
-        checkPointers(id);
-        return nB2_IS_NULL(id);
+        return id == null || nB2_IS_NULL(id);
     }
-    
+
     /* {@code #define B2_IS_NULL( id ) ( (id).index1 == 0 ) } */
     public static boolean nB2_IS_NULL(ConstB2Id id) {
         return id.index1().intValue() == 0;
@@ -80,10 +79,9 @@ public final class Id {
      * @return boolean
      */
     public static boolean B2_IS_NON_NULL(ConstB2Id id) {
-        checkPointers(id);
-        return nB2_IS_NON_NULL(id);
+        return id != null && nB2_IS_NON_NULL(id);
     }
-    
+
     /* @code #define B2_IS_NON_NULL( id ) ( (id).index1 != 0 ) } */
     public static boolean nB2_IS_NON_NULL(ConstB2Id id) {
         return id.index1().intValue() != 0;
@@ -123,7 +121,6 @@ public final class Id {
     /* {@code B2_ID_INLINE uint32_t b2StoreWorldId( b2WorldId id ) } */
     public static native int nb2StoreWorldId(long id);
 
-
     // --- [ b2LoadWorldId ] ---
 
     /**
@@ -142,7 +139,6 @@ public final class Id {
     /* {@code B2_ID_INLINE b2WorldId b2LoadWorldId( uint32_t x ) } */
     public static native void nb2LoadWorldId(int x, long __result);
 
-
     // --- [ b2StoreBodyId ] ---
 
     /**
@@ -158,7 +154,6 @@ public final class Id {
 
     /* {@code B2_ID_INLINE uint64_t b2StoreBodyId( b2BodyId id ) } */
     public static native long nb2StoreBodyId(long id);
-
 
     // --- [ b2LoadBodyId ] ---
 
@@ -178,7 +173,6 @@ public final class Id {
     /* {@code B2_ID_INLINE b2BodyId b2LoadBodyId( uint64_t x ) } */
     public static native void nb2LoadBodyId(long x, long __result);
 
-
     // --- [ b2StoreShapeId ] ---
 
     /**
@@ -194,7 +188,6 @@ public final class Id {
 
     /* {@code B2_ID_INLINE uint64_t b2StoreShapeId( b2ShapeId id ) } */
     public static native long nb2StoreShapeId(long id);
-
 
     // --- [ b2LoadShapeId ] ---
 
@@ -214,7 +207,6 @@ public final class Id {
     /* {@code B2_ID_INLINE b2ShapeId b2LoadShapeId( uint64_t x ) } */
     public static native void nb2LoadShapeId(long x, long __result);
 
-
     // --- [ b2StoreChainId ] ---
 
     /**
@@ -230,7 +222,6 @@ public final class Id {
 
     /* {@code B2_ID_INLINE uint64_t b2StoreChainId( b2ChainId id ) } */
     public static native long nb2StoreChainId(long id);
-
 
     // --- [ b2LoadChainId ] ---
 
@@ -250,7 +241,6 @@ public final class Id {
     /* {@code B2_ID_INLINE b2ChainId b2LoadChainId( uint64_t x ) } */
     public static native void nb2LoadChainId(long x, long __result);
 
-
     // --- [ b2StoreJointId ] ---
 
     /**
@@ -266,7 +256,6 @@ public final class Id {
 
     /* {@code B2_ID_INLINE uint64_t b2StoreJointId( b2JointId id ) } */
     public static native long nb2StoreJointId(long id);
-
 
     // --- [ b2LoadJointId ] ---
 
@@ -286,7 +275,6 @@ public final class Id {
     /* {@code B2_ID_INLINE b2JointId b2LoadJointId( uint64_t x ) } */
     public static native void nb2LoadJointId(long x, long __result);
 
-
     // --- [ b2StoreContactId ] ---
 
     /**
@@ -303,7 +291,6 @@ public final class Id {
 
     /* {@code B2_ID_INLINE void b2StoreContactId( b2ContactId id, uint32_t values[3] ) } */
     public static native void nb2StoreContactId(long id, IntBuffer values);
-
 
     // --- [ b2LoadContactId ] ---
 
