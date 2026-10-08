@@ -273,3 +273,15 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1SHAPEID_
     UNUSED_PARAMS(__env, clazz)
     ((void (*) (b2ShapeId, b2ShapeId, b2Manifold, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2ShapeId*)param1, *(b2Manifold*)param2, (uintptr_t)param3);
 }
+
+/*
+ * Class:     org_box2d_jni_system_JNIB2
+ * Method:    invoke_SHAPEID_SHAPEID_PPV
+ * Signature: (JJJJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_system_JNIB2_invoke_1SHAPEID_1SHAPEID_1PPV
+    (JNIEnv *__env, jclass clazz, jlong param0, jlong param1, jlong param2, jlong param3, jlong __functionAddress)
+{
+    UNUSED_PARAMS(__env, clazz)
+    ((void (*) (b2ShapeId, b2ShapeId, uintptr_t, uintptr_t)) (uintptr_t)__functionAddress) (*(b2ShapeId*)param0, *(b2ShapeId*)param1, (uintptr_t)param2, (uintptr_t)param3);
+}

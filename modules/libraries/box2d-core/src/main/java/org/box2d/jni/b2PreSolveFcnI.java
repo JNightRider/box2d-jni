@@ -37,7 +37,6 @@ import org.box2d.jni.function.CPreSolveFcn;
 
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.ArenaAlloc.*;
@@ -48,7 +47,7 @@ import static org.box2d.jni.system.Upcalls.*;
  * Callback function: {@code typedef void b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ); }
  *
  * @author wil
- * @version 1.3.0
+ * @version 1.3.1
  * @since 1.0.0
  */
 @FunctionalInterface
@@ -62,7 +61,7 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
             LongBuffer targs = arena.mallocLong(4);
             targs.put(ffi_type_b2ShapeId)
                  .put(ffi_type_b2ShapeId)
-                 .put(ffi_type_b2Manifold)
+                 .put(ffi_type_pointer)
                  .put(ffi_type_pointer);
             targs.flip();
             long rtype = ffi_type_void;
@@ -87,9 +86,9 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
         try (ArenaAlloc arena = allocPush()) {
             invoke(
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
-                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
-                    memcpy(b2Manifold.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Manifold.SIZEOF),
-                    memGetAddress(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + POINTER_SIZE), b2ShapeId.SIZEOF),
+                    b2Manifold.createSafe(() -> memGetAddress(memGetAddress(args + 2 * POINTER_SIZE))),
+                    memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))
             );
         }
     }

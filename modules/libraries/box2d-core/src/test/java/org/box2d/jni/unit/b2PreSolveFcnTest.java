@@ -51,7 +51,7 @@ import org.junit.Test;
  * A class to manage the unit tests of the {@link b2PreSolveFcn} class.
  *
  * @author wil
- * @version 2.0.0
+ * @version 2.0.1
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
@@ -104,8 +104,10 @@ public class b2PreSolveFcnTest {
                 Assert.assertEquals(10.5f, ptr.get(0).baseSeparation(), 0.0f);
 
                 Assert.assertEquals(0X04CCFL, context);
+                manifold.pointCount(-10);
             };
-            JNIB2.invoke_SHAPEID_SHAPEID_MANIFOLD_PV(a.address(), b.address(), m.address(), 0X04CCFL, func.address());
+            JNIB2.invoke_SHAPEID_SHAPEID_PPV(a.address(), b.address(), m.address(), 0X04CCFL, func.address());
+            Assert.assertEquals(-10, m.pointCount());
         }
         try (ArenaAlloc arena = allocPush()) {
             b2ShapeId a = b2ShapeId.calloc(arena)
@@ -149,7 +151,7 @@ public class b2PreSolveFcnTest {
 
                 Assert.assertEquals(0X04CCFL, context);
             });
-            JNIB2.invoke_SHAPEID_SHAPEID_MANIFOLD_PV(a.address(), b.address(), m.address(), 0X04CCFL, func.address());
+            JNIB2.invoke_SHAPEID_SHAPEID_PPV(a.address(), b.address(), m.address(), 0X04CCFL, func.address());
         }
         Callbacks.b2FreeCallbacks();
     }
