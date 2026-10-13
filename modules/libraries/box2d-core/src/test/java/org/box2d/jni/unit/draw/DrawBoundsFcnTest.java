@@ -36,7 +36,6 @@ import org.box2d.jni.draw.DrawBoundsFcn;
 import org.box2d.jni.draw.DrawBoundsFcnI;
 import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.JNIB2;
-import org.box2d.jni.system.Library;
 import org.box2d.jni.system.Sys;
 
 import static org.box2d.jni.system.Pointer.*;
