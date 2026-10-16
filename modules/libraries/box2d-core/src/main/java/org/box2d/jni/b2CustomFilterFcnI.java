@@ -88,7 +88,7 @@ public interface b2CustomFilterFcnI extends CallbackI, CCustomFilterFcn {
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
                     memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
             );
-            apiClosureRet(resp, (byte) (__result ? 1 : 0));
+            apiClosureRet(resp, __result);
         }
     }
 }

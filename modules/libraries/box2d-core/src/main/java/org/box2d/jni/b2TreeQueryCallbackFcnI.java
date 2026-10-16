@@ -84,7 +84,7 @@ public interface b2TreeQueryCallbackFcnI extends CallbackI {
                 memGetLong(memGetAddress(args + POINTER_SIZE)),
                 memGetAddress(memGetAddress(args + 2 * POINTER_SIZE))
         );
-        apiClosureRet(resp, (byte) (__result ? 1 : 0));
+        apiClosureRet(resp, __result);
     }
 
     /**

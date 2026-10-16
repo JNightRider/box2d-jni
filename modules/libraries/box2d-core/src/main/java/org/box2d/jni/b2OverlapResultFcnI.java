@@ -87,7 +87,7 @@ public interface b2OverlapResultFcnI extends CallbackI, COverlapResultFcn {
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
                     memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))
             );
-            apiClosureRet(resp, (byte) (__result ? 1 : 0));
+            apiClosureRet(resp, __result);
         }
     }
 }

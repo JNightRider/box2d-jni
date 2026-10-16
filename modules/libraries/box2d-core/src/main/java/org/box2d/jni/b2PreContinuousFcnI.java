@@ -92,7 +92,7 @@ public interface b2PreContinuousFcnI extends CallbackI, CPreContinuousFcn {
                     memcpy(b2Vec2.calloc(arena), memGetAddress(args + 3 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF),
                     memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
             );
-            apiClosureRet(resp, (byte) (__result ? 1 : 0));
+            apiClosureRet(resp, __result);
         }
     }
 }

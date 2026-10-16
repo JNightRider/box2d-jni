@@ -89,7 +89,7 @@ public interface b2PlaneResultFcnI extends CallbackI, CPlaneResultFcn {
                     memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
             );
 
-            apiClosureRet(resp, (byte) (__result ? 1 : 0));
+            apiClosureRet(resp, __result);
         }
     }
 }
