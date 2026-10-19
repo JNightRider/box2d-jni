@@ -59,7 +59,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * </code></pre>
  *
  * @author wil
- * @since 1.0.0
+ * @since 1.0.1
  * @version 1.0.0
  */
 public class b2Counters extends Struct<b2Counters> {
