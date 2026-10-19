@@ -33,7 +33,7 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CFrictionCallback;
+import org.box2d.jni.function.CRestitutionCallback;
 
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
@@ -44,14 +44,14 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef float b2FrictionCallback( float frictionA, uint64_t userMaterialIdA, float frictionB, uint64_t userMaterialIdB ); }
+ * Callback function: {@code typedef float b2RestitutionCallbackFcn( float restitutionA, uint64_t userMaterialIdA, float restitutionB, uint64_t userMaterialIdB );}
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2FrictionCallbackI extends CallbackI, CFrictionCallback {
+public interface b2RestitutionCallbackFcnI extends CallbackI, CRestitutionCallback {
 
     /**
      * Native callback constructor.
@@ -90,5 +90,5 @@ public interface b2FrictionCallbackI extends CallbackI, CFrictionCallback {
                 memGetLong(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
         );
         apiClosureRet(resp, __result);
-    }    
+    }
 }

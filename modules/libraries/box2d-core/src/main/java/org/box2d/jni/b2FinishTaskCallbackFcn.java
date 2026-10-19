@@ -32,39 +32,38 @@ package org.box2d.jni;
 
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
-import org.box2d.jni.function.CTaskCallback;
 
 /**
- * Callback function: {@code typedef void* b2EnqueueTaskCallback( b2TaskCallback* task, void* taskContext, void* userContext );}
+ * Callback function: {@code typedef void b2FinishTaskCallbackFcn( void* userTask, void* userContext );}
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2EnqueueTaskCallback extends Callback implements b2EnqueueTaskCallbackI {
+public abstract class b2FinishTaskCallbackFcn extends Callback implements b2FinishTaskCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2EnqueueTaskCallback(long address) {
+    public b2FinishTaskCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2EnqueueTaskCallback}.
+     * Create a new empty object of type {@code b2FinishTaskCallbackFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2EnqueueTaskCallback
+     * @return b2FinishTaskCallbackFcn
      */
-    public static b2EnqueueTaskCallback create(b2EnqueueTaskCallbackI delegate) {
+    public static b2FinishTaskCallbackFcn create(b2FinishTaskCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2EnqueueTaskCallback) {
-            return (b2EnqueueTaskCallback) delegate;
+        if (delegate instanceof b2FinishTaskCallbackFcn) {
+            return (b2FinishTaskCallbackFcn) delegate;
         }
 
         long address = delegate.address();
@@ -77,17 +76,17 @@ public abstract class b2EnqueueTaskCallback extends Callback implements b2Enqueu
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2EnqueueTaskCallback {
+    private static final class Container extends b2FinishTaskCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2EnqueueTaskCallbackI delegate;
+        private final b2FinishTaskCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2EnqueueTaskCallback</code> function.
+         * Create a new container to handle the <code>b2FinishTaskCallbackFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2EnqueueTaskCallbackI|function
+         * @param delegate b2FinishTaskCallbackFcnI|function
          */
-        public Container(long address, b2EnqueueTaskCallbackI delegate) {
+        public Container(long address, b2FinishTaskCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -96,8 +95,8 @@ public abstract class b2EnqueueTaskCallback extends Callback implements b2Enqueu
          */
 
         @Override
-        public long invoke(CTaskCallback task, long taskContext, long userContext) {
-            return delegate.invoke(task, taskContext, userContext);
+        public void invoke(long userTask, long userContext) {
+            delegate.invoke(userTask, userContext);
         }
     }
 }

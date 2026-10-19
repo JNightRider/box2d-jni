@@ -358,10 +358,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /**
      * Set the value of property {@code gravity}
      *
-     * @param value b2FrictionCallbackI
+     * @param value b2FrictionCallbackFcnI
      * @return b2WorldDef
      */
-    public b2WorldDef frictionCallback(b2FrictionCallbackI value) {
+    public b2WorldDef frictionCallback(b2FrictionCallbackFcnI value) {
         nfrictionCallback(address(), value);
         return this;
     }
@@ -369,10 +369,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /**
      * Set the value of property {@code gravity}
      *
-     * @param value b2RestitutionCallbackI
+     * @param value b2RestitutionCallbackFcnI
      * @return b2WorldDef
      */
-    public b2WorldDef restitutionCallback(b2RestitutionCallbackI value) {
+    public b2WorldDef restitutionCallback(b2RestitutionCallbackFcnI value) {
         nrestitutionCallback(address(), value);
         return this;
     }
@@ -413,10 +413,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /**
      * Set the value of property {@code gravity}
      *
-     * @param value b2EnqueueTaskCallbackI
+     * @param value b2EnqueueTaskCallbackFcnI
      * @return b2WorldDef
      */
-    public b2WorldDef enqueueTask(b2EnqueueTaskCallbackI value) {
+    public b2WorldDef enqueueTask(b2EnqueueTaskCallbackFcnI value) {
         nenqueueTask(address(), value);
         return this;
     }
@@ -424,10 +424,10 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     /**
      * Set the value of property {@code gravity}
      *
-     * @param value b2FinishTaskCallbackI
+     * @param value b2FinishTaskCallbackFcnI
      * @return b2WorldDef
      */
-    public b2WorldDef finishTask(b2FinishTaskCallbackI value) {
+    public b2WorldDef finishTask(b2FinishTaskCallbackFcnI value) {
         nfinishTask(address(), value);
         return this;
     }
@@ -630,13 +630,13 @@ public class b2WorldDef extends Struct<b2WorldDef> implements ConstB2WorldDef {
     public static void ncontactDampingRatio(long address, float value)      { memPutFloat(address + CONTACT_DAMPING_RATIO, value);                      }
     public static void ncontactSpeed(long address, float value)             { memPutFloat(address + CONTACT_SPEED, value);                              }
     public static void nmaximumLinearSpeed(long address, float value)       { memPutFloat(address + MAXIMUM_LINEAR_SPEED, value);                       }
-    public static void nfrictionCallback(long address, b2FrictionCallbackI value)       { memPutAddress(address + FRICTION_CALLBACK, value.address());    } 
-    public static void nrestitutionCallback(long address, b2RestitutionCallbackI value) { memPutAddress(address + RESTITUTION_CALLBACK, value.address()); }
+    public static void nfrictionCallback(long address, b2FrictionCallbackFcnI value)       { memPutAddress(address + FRICTION_CALLBACK, value.address());    } 
+    public static void nrestitutionCallback(long address, b2RestitutionCallbackFcnI value) { memPutAddress(address + RESTITUTION_CALLBACK, value.address()); }
     public static void nenableSleep(long address, boolean value)            { memPutByte(address + ENABLE_SLEEP, (byte) (value ? 1 : 0));               }
     public static void nenableContinuous(long address, boolean value)       { memPutByte(address + ENABLE_CONTINUOUS, (byte) (value ? 1 : 0));          }
     public static void nworkerCount(long address, int value)                { memPutInt(address + WORKER_COUNT, value);                                 }
-    public static void nenqueueTask(long address, b2EnqueueTaskCallbackI value) { memPutAddress(address + ENQUEUE_TASK, value.address());         }
-    public static void nfinishTask(long address, b2FinishTaskCallbackI value)   { memPutAddress(address + FINISH_TASK, value.address());          }
+    public static void nenqueueTask(long address, b2EnqueueTaskCallbackFcnI value) { memPutAddress(address + ENQUEUE_TASK, value.address());         }
+    public static void nfinishTask(long address, b2FinishTaskCallbackFcnI value)   { memPutAddress(address + FINISH_TASK, value.address());          }
     public static void nuserTaskContext(long address, long value)           { memPutAddress(address + USER_TASK_CONTEXT, value);                        }
     public static void nuserData(long address, long value)                  { memPutAddress(address + USER_DATA, value);                                }
     public static void ncapacity(long address, b2Capacity value)            { nmemcpy(address + CAPACITY, value.address(), b2Capacity.SIZEOF);    }

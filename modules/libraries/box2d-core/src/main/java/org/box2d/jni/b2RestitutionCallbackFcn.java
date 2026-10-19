@@ -34,36 +34,36 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef float b2FrictionCallback( float frictionA, uint64_t userMaterialIdA, float frictionB, uint64_t userMaterialIdB ); }
+ * Callback function: {@code typedef float b2RestitutionCallbackFcn( float restitutionA, uint64_t userMaterialIdA, float restitutionB, uint64_t userMaterialIdB );}
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2FrictionCallback extends Callback implements b2FrictionCallbackI {
+public abstract class b2RestitutionCallbackFcn extends Callback implements b2RestitutionCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2FrictionCallback(long address) {
+    public b2RestitutionCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2FrictionCallback}.
+     * Create a new empty object of type {@code b2RestitutionCallbackFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2FrictionCallback
+     * @return b2RestitutionCallbackFcn
      */
-    public static b2FrictionCallback create(b2FrictionCallbackI delegate) {
+    public static b2RestitutionCallbackFcn create(b2RestitutionCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2FrictionCallback) {
-            return (b2FrictionCallback) delegate;
+        if (delegate instanceof b2RestitutionCallbackFcn) {
+            return (b2RestitutionCallbackFcn) delegate;
         }
 
         long address = delegate.address();
@@ -76,17 +76,17 @@ public abstract class b2FrictionCallback extends Callback implements b2FrictionC
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2FrictionCallback {
+    private static final class Container extends b2RestitutionCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2FrictionCallbackI delegate;
+        private final b2RestitutionCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2FrictionCallback</code> function.
+         * Create a new container to handle the <code>b2RestitutionCallbackFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2FrictionCallbackI|function
+         * @param delegate b2RestitutionCallbackFcnI|function
          */
-        public Container(long address, b2FrictionCallbackI delegate) {
+        public Container(long address, b2RestitutionCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -94,8 +94,8 @@ public abstract class b2FrictionCallback extends Callback implements b2FrictionC
         /*(non-Javadoc)
          */
         @Override
-        public float invoke(float frictionA, long userMaterialIdA, float frictionB, long userMaterialIdB) {
-            return delegate.invoke(frictionA, userMaterialIdA, frictionB, userMaterialIdB);
+        public float invoke(float restitutionA, long userMaterialIdA, float restitutionB, long userMaterialIdB) {
+            return delegate.invoke(restitutionA, userMaterialIdA, restitutionB, userMaterialIdB);
         }
     }
 }

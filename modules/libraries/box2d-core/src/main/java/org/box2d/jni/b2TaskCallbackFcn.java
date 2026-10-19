@@ -34,36 +34,36 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef float b2RestitutionCallback( float restitutionA, uint64_t userMaterialIdA, float restitutionB, uint64_t userMaterialIdB );}
+ * Callback function: {@code typedef void b2TaskCallbackFcn( void* taskContext ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2RestitutionCallback extends Callback implements b2RestitutionCallbackI {
+public abstract class b2TaskCallbackFcn extends Callback implements b2TaskCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2RestitutionCallback(long address) {
+    public b2TaskCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2RestitutionCallback}.
+     * Create a new empty object of type {@code b2TaskCallbackFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2RestitutionCallback
+     * @return b2TaskCallbackFcn
      */
-    public static b2RestitutionCallback create(b2RestitutionCallbackI delegate) {
+    public static b2TaskCallbackFcn create(b2TaskCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2RestitutionCallback) {
-            return (b2RestitutionCallback) delegate;
+        if (delegate instanceof b2TaskCallbackFcn) {
+            return (b2TaskCallbackFcn) delegate;
         }
 
         long address = delegate.address();
@@ -76,17 +76,17 @@ public abstract class b2RestitutionCallback extends Callback implements b2Restit
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2RestitutionCallback {
+    private static final class Container extends b2TaskCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2RestitutionCallbackI delegate;
+        private final b2TaskCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2RestitutionCallback</code> function.
+         * Create a new container to handle the <code>b2TaskCallbackFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2RestitutionCallbackI|function
+         * @param delegate b2TaskCallbackFcnI|function
          */
-        public Container(long address, b2RestitutionCallbackI delegate) {
+        public Container(long address, b2TaskCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -94,8 +94,9 @@ public abstract class b2RestitutionCallback extends Callback implements b2Restit
         /*(non-Javadoc)
          */
         @Override
-        public float invoke(float restitutionA, long userMaterialIdA, float restitutionB, long userMaterialIdB) {
-            return delegate.invoke(restitutionA, userMaterialIdA, restitutionB, userMaterialIdB);
-        }
+        public void invoke(long taskContext) {
+            delegate.invoke(taskContext);
+        }    
     }
 }
+

@@ -34,36 +34,36 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef void b2FinishTaskCallback( void* userTask, void* userContext );}
+ * Callback function: {@code typedef float b2FrictionCallbackFcn( float frictionA, uint64_t userMaterialIdA, float frictionB, uint64_t userMaterialIdB ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2FinishTaskCallback extends Callback implements b2FinishTaskCallbackI {
+public abstract class b2FrictionCallbackFcn extends Callback implements b2FrictionCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2FinishTaskCallback(long address) {
+    public b2FrictionCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2FinishTaskCallback}.
+     * Create a new empty object of type {@code b2FrictionCallbackFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2FinishTaskCallback
+     * @return b2FrictionCallbackFcn
      */
-    public static b2FinishTaskCallback create(b2FinishTaskCallbackI delegate) {
+    public static b2FrictionCallbackFcn create(b2FrictionCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2FinishTaskCallback) {
-            return (b2FinishTaskCallback) delegate;
+        if (delegate instanceof b2FrictionCallbackFcn) {
+            return (b2FrictionCallbackFcn) delegate;
         }
 
         long address = delegate.address();
@@ -76,28 +76,26 @@ public abstract class b2FinishTaskCallback extends Callback implements b2FinishT
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2FinishTaskCallback {
+    private static final class Container extends b2FrictionCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2FinishTaskCallbackI delegate;
+        private final b2FrictionCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2FinishTaskCallback</code> function.
+         * Create a new container to handle the <code>b2FrictionCallbackFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2FinishTaskCallbackI|function
+         * @param delegate b2FrictionCallbackFcnI|function
          */
-        public Container(long address, b2FinishTaskCallbackI delegate) {
+        public Container(long address, b2FrictionCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
 
         /*(non-Javadoc)
          */
-
         @Override
-        public void invoke(long userTask, long userContext) {
-            delegate.invoke(userTask, userContext);
+        public float invoke(float frictionA, long userMaterialIdA, float frictionB, long userMaterialIdB) {
+            return delegate.invoke(frictionA, userMaterialIdA, frictionB, userMaterialIdB);
         }
     }
 }
-

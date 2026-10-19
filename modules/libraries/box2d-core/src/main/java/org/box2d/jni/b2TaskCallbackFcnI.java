@@ -33,40 +33,36 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CRestitutionCallback;
+import org.box2d.jni.function.CTaskCallback;
 
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef float b2RestitutionCallback( float restitutionA, uint64_t userMaterialIdA, float restitutionB, uint64_t userMaterialIdB );}
+ * Callback function: {@code typedef void b2TaskCallbackFcn( void* taskContext );}
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2RestitutionCallbackI extends CallbackI, CRestitutionCallback {
+public interface b2TaskCallbackFcnI extends CallbackI, CTaskCallback {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(4);
-            targs.put(ffi_type_float)
-                 .put(ffi_type_uint64)
-                 .put(ffi_type_float)
-                 .put(ffi_type_uint64);
+            LongBuffer targs = arena.mallocLong(1);
+            targs.put(ffi_type_pointer);
             targs.flip();
-            long rtype = ffi_type_float;
+            long rtype = ffi_type_void;
 
-            return njniCallbackCreate(instance, rtype, targs, 4);
+            return njniCallbackCreate(instance, rtype, targs, 1);
         }
     };
 
@@ -83,12 +79,8 @@ public interface b2RestitutionCallbackI extends CallbackI, CRestitutionCallback 
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        float __result = invoke(
-                memGetFloat(memGetAddress(args)),
-                memGetLong(memGetAddress(args + VarType.Uintptrt.sizeof())),
-                memGetFloat(memGetAddress(args + 2 * VarType.Uintptrt.sizeof())),
-                memGetLong(memGetAddress(args + 3 * VarType.Uintptrt.sizeof()))
+        invoke(
+                memGetAddress(memGetAddress(args))
         );
-        apiClosureRet(resp, __result);
     }
 }

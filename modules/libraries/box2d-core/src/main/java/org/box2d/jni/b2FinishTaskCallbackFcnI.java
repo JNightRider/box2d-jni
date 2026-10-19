@@ -33,41 +33,38 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CEnqueueTaskCallback;
+import org.box2d.jni.function.CFinishTaskCallback;
 
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.JNI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.system.ArenaAlloc.*;
-
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void* b2EnqueueTaskCallback( b2TaskCallback* task, void* taskContext, void* userContext );}
+ * Callback function: {@code typedef void b2FinishTaskCallbackFcn( void* userTask, void* userContext );}
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2EnqueueTaskCallbackI extends CallbackI, CEnqueueTaskCallback {
+public interface b2FinishTaskCallbackFcnI extends CallbackI, CFinishTaskCallback {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(3);
+            LongBuffer targs = arena.mallocLong(2);
             targs.put(ffi_type_pointer)
-                 .put(ffi_type_pointer)
                  .put(ffi_type_pointer);
             targs.flip();
-            long rtype = ffi_type_pointer;
+            long rtype = ffi_type_void;
 
-            return njniCallbackCreate(instance, rtype, targs, 3);
+            return njniCallbackCreate(instance, rtype, targs, 2);
         }
     };
 
@@ -84,17 +81,9 @@ public interface b2EnqueueTaskCallbackI extends CallbackI, CEnqueueTaskCallback 
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        try (b2TaskCallback callback = new b2TaskCallback(memGetAddress(memGetAddress(args))) {
-            @Override public void invoke(long taskContext) {
-                JNI.invokePV(taskContext, address());
-            }
-        }) {
-            long __result = invoke(
-                    callback,
-                    memGetAddress(memGetAddress(args + VarType.Pointer.sizeof())),
-                    memGetAddress(memGetAddress(args + 2 * VarType.Pointer.sizeof()))
-            );
-            apiClosureRetP(resp, __result);
-        }
+        invoke(
+                memGetAddress(memGetAddress(args)),
+                memGetAddress(memGetAddress(args + VarType.Pointer.sizeof()))
+        );
     }
 }

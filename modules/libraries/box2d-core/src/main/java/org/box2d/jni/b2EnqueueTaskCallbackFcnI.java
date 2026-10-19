@@ -33,38 +33,41 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CFinishTaskCallback;
+import org.box2d.jni.function.CEnqueueTaskCallback;
 
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
+import org.box2d.jni.system.JNI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.system.ArenaAlloc.*;
+
 import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void b2FinishTaskCallback( void* userTask, void* userContext );}
+ * Callback function: {@code typedef void* b2EnqueueTaskCallbackFcn( b2TaskCallbackFcn* task, void* taskContext, void* userContext );}
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2FinishTaskCallbackI extends CallbackI, CFinishTaskCallback {
+public interface b2EnqueueTaskCallbackFcnI extends CallbackI, CEnqueueTaskCallback {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(2);
+            LongBuffer targs = arena.mallocLong(3);
             targs.put(ffi_type_pointer)
+                 .put(ffi_type_pointer)
                  .put(ffi_type_pointer);
             targs.flip();
-            long rtype = ffi_type_void;
+            long rtype = ffi_type_pointer;
 
-            return njniCallbackCreate(instance, rtype, targs, 2);
+            return njniCallbackCreate(instance, rtype, targs, 3);
         }
     };
 
@@ -81,9 +84,17 @@ public interface b2FinishTaskCallbackI extends CallbackI, CFinishTaskCallback {
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        invoke(
-                memGetAddress(memGetAddress(args)),
-                memGetAddress(memGetAddress(args + VarType.Pointer.sizeof()))
-        );
+        try (b2TaskCallbackFcn callback = new b2TaskCallbackFcn(memGetAddress(memGetAddress(args))) {
+            @Override public void invoke(long taskContext) {
+                JNI.invokePV(taskContext, address());
+            }
+        }) {
+            long __result = invoke(
+                    callback,
+                    memGetAddress(memGetAddress(args + VarType.Pointer.sizeof())),
+                    memGetAddress(memGetAddress(args + 2 * VarType.Pointer.sizeof()))
+            );
+            apiClosureRetP(resp, __result);
+        }
     }
 }
