@@ -42,14 +42,14 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void* b2AllocFcn( unsigned int size, int alignment );}
+ * Callback function: {@code typedef void* b2AllocCallbackFcn( unsigned int size, int alignment );}
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2AllocFcnI extends CallbackI {
+public interface b2AllocCallbackFcnI extends CallbackI {
 
     /**
      * Native callback constructor.
