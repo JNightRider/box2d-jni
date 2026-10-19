@@ -67,15 +67,15 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidVe
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions
- * Method:    nb2IsValidRotation
+ * Method:    nb2IsValidRot
  * Signature: (J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidRotation
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidRot
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
     b2Rot* ptr = (b2Rot*)(uintptr_t) address;
-    return (jboolean) b2IsValidRotation( *ptr );
+    return (jboolean) b2IsValidRot( *ptr );
 }
 
 /*
@@ -119,14 +119,14 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_n2IsValidPla
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions
- * Method:    nb2IsValidPosition
+ * Method:    nb2IsValidPos
  * Signature: (J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidPosition
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidPos
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2IsValidPosition( *(b2Pos*)address );
+    return (jboolean)b2IsValidPos( *(b2Pos*)address );
 }
 
 /*
@@ -1022,14 +1022,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2OffsetPos
 
 /*
  * Class:     org_box2d_jni_include_MathFunctions
- * Method:    nb2LerpPosition
+ * Method:    nb2LerpPos
  * Signature: (JJFJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2LerpPosition
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2LerpPos
     (JNIEnv *__env, jclass clazz, jlong a, jlong b, jfloat t, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2Pos*)__result = b2LerpPosition( *(b2Pos*) a, *(b2Pos*) b, t );
+    *(b2Pos*)__result = b2LerpPos( *(b2Pos*) a, *(b2Pos*) b, t );
 }
 
 /*
