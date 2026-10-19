@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2TaskCallbackI;
+import org.box2d.jni.b2TaskCallbackFcnI;
 import org.box2d.jni.b2WorldDef;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.JNI;
@@ -174,7 +174,7 @@ public class b2WorldDefTest {
             );
             Assert.assertEquals(10.5f, r1, 0.0f);
 
-            b2TaskCallbackI tci = (ctx) -> {
+            b2TaskCallbackFcnI tci = (ctx) -> {
                 Assert.assertEquals(0x0044FCL, ctx);
             };
 

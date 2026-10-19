@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2FinishTaskCallback;
-import org.box2d.jni.b2FinishTaskCallbackI;
+import org.box2d.jni.b2FinishTaskCallbackFcn;
+import org.box2d.jni.b2FinishTaskCallbackFcnI;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNI;
@@ -41,13 +41,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2FinishTaskCallback} class.
+ * A class to manage the unit tests of the {@link b2FinishTaskCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2FinishTaskCallbackTest {
+public class b2FinishTaskCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -56,7 +56,7 @@ public class b2FinishTaskCallbackTest {
     @Test
     public void callback() {
         {
-            b2FinishTaskCallbackI func = (userTask, userContext) -> {
+            b2FinishTaskCallbackFcnI func = (userTask, userContext) -> {
                 Debug.apiPrint("invoke: b2TaskCallbackI(userTask=" + userTask + ", userContext=" + userContext + ")");
                 Assert.assertEquals(10l, userTask);
                 Assert.assertEquals(20l, userContext);
@@ -64,12 +64,12 @@ public class b2FinishTaskCallbackTest {
             JNI.invokePPV(10, 20, func.address());
         }
         {
-            b2FinishTaskCallback func = b2FinishTaskCallback.create((userTask, userContext) -> {
+            b2FinishTaskCallbackFcn func = b2FinishTaskCallbackFcn.create((userTask, userContext) -> {
                 Debug.apiPrint("invoke: b2TaskCallback(userTask=" + userTask + ", userContext=" + userContext + ")");
                 Assert.assertEquals(10l, userTask);
                 Assert.assertEquals(20l, userContext);
             });
-            Assert.assertEquals(b2FinishTaskCallback.create(func), func);
+            Assert.assertEquals(b2FinishTaskCallbackFcn.create(func), func);
             JNI.invokePPV(10, 20, func.address());
         }
         Callbacks.b2FreeCallbacks();

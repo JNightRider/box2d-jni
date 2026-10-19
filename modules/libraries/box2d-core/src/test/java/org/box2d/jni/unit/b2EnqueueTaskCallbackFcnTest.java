@@ -30,10 +30,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2EnqueueTaskCallback;
-import org.box2d.jni.b2EnqueueTaskCallbackI;
-import org.box2d.jni.b2TaskCallback;
-import org.box2d.jni.b2TaskCallbackI;
+import org.box2d.jni.b2EnqueueTaskCallbackFcn;
+import org.box2d.jni.b2EnqueueTaskCallbackFcnI;
+import org.box2d.jni.b2TaskCallbackFcn;
+import org.box2d.jni.b2TaskCallbackFcnI;
 
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
@@ -45,13 +45,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2EnqueueTaskCallback} class.
+ * A class to manage the unit tests of the {@link b2EnqueueTaskCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2EnqueueTaskCallbackTest {
+public class b2EnqueueTaskCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -60,12 +60,12 @@ public class b2EnqueueTaskCallbackTest {
     @Test
     public void callback() {
         {
-            b2TaskCallbackI tci = (cxt) -> {
+            b2TaskCallbackFcnI tci = (cxt) -> {
                 Debug.apiPrint("invoke: b2TaskCallbackI(" + cxt + ")");
                 Assert.assertEquals(0x0044FCL, cxt);
             };
 
-            b2EnqueueTaskCallbackI func = (task, taskContext, userContext) -> {
+            b2EnqueueTaskCallbackFcnI func = (task, taskContext, userContext) -> {
                 Debug.apiPrint("task=" + task + ", taskContext=" + taskContext + ", userContext=" + userContext);
 
                 Assert.assertNotEquals(NULL, task.address());
@@ -81,12 +81,12 @@ public class b2EnqueueTaskCallbackTest {
             Assert.assertEquals(0x0034fl, __result);
         }
         {
-            b2TaskCallback tc = b2TaskCallback.create((taskContext) -> {
+            b2TaskCallbackFcn tc = b2TaskCallbackFcn.create((taskContext) -> {
                 Debug.apiPrint("invoke: b2TaskCallback(" + taskContext + ")");
                 Assert.assertEquals(0x0044FCL, taskContext);
             });
 
-            b2EnqueueTaskCallback func = b2EnqueueTaskCallback.create((task, taskContext, userContext) -> {
+            b2EnqueueTaskCallbackFcn func = b2EnqueueTaskCallbackFcn.create((task, taskContext, userContext) -> {
                 Debug.apiPrint("task=" + task + ", taskContext=" + taskContext + ", userContext=" + userContext);
 
                 Assert.assertNotEquals(NULL, task.address());
@@ -97,7 +97,7 @@ public class b2EnqueueTaskCallbackTest {
 
                 return 0x0034fl;
             });
-            Assert.assertEquals(b2EnqueueTaskCallback.create(func), func);
+            Assert.assertEquals(b2EnqueueTaskCallbackFcn.create(func), func);
 
             long __result = JNI.invokePPPP(tc.address(), 2, 3, func.address());
             Assert.assertEquals(0x0034fl, __result);

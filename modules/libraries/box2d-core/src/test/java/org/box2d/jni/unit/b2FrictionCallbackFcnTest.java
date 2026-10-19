@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2TaskCallback;
-import org.box2d.jni.b2TaskCallbackI;
+import org.box2d.jni.b2FrictionCallbackFcn;
+import org.box2d.jni.b2FrictionCallbackFcnI;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNI;
@@ -41,13 +41,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2TaskCallback} class.
+ * A class to manage the unit tests of the {@link b2FrictionCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2TaskCallbackTest {
+public class b2FrictionCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -56,19 +56,36 @@ public class b2TaskCallbackTest {
     @Test
     public void callback() {
         {
-            b2TaskCallbackI func = (taskContext) -> {
-                Debug.apiPrint("invoke: b2TaskCallbackI(" + taskContext + ")");
-                Assert.assertEquals(0x045ffl, taskContext);
-            };            
-            JNI.invokePV(0x045ffl, func.address());
+            b2FrictionCallbackFcnI func = (frictionA, userMaterialIdA, frictionB, userMaterialIdB) -> {
+                Debug.apiPrint("invoke: b2FrictionCallbackI(frictionA=" + frictionA
+                        + ", userMaterialIdA=" + userMaterialIdA
+                        + ", frictionB=" + frictionB
+                        + ", userMaterialIdB=" + userMaterialIdB + ")");
+                Assert.assertEquals(1.5f, frictionA, 0.0f);
+                Assert.assertEquals(0X5FCl, userMaterialIdA);
+                Assert.assertEquals(5.34f, frictionB, 0.0f);
+                Assert.assertEquals(0X003FFL, userMaterialIdB);
+                return 10.5f;
+            };
+            float __result = JNI.invokeFJFJF(1.5f, 0X5FCl, 5.34f, 0X003FFL, func.address());
+            Assert.assertEquals(10.5f, __result, 0.0f);
         }
         {
-            b2TaskCallback func = b2TaskCallback.create((taskContext) -> {
-                Debug.apiPrint("invoke: b2TaskCallbackI(" + taskContext + ")");
-                Assert.assertEquals(0x045ffl, taskContext);
+            b2FrictionCallbackFcn func = b2FrictionCallbackFcn.create((frictionA, userMaterialIdA, frictionB, userMaterialIdB) -> {
+                Debug.apiPrint("invoke: b2FrictionCallback(frictionA=" + frictionA
+                        + ", userMaterialIdA=" + userMaterialIdA
+                        + ", frictionB=" + frictionB
+                        + ", userMaterialIdB=" + userMaterialIdB + ")");
+                Assert.assertEquals(1.5f, frictionA, 0.0f);
+                Assert.assertEquals(0X5FCl, userMaterialIdA);
+                Assert.assertEquals(5.34f, frictionB, 0.0f);
+                Assert.assertEquals(0X003FFL, userMaterialIdB);
+                return 10.5f;
             });
-            Assert.assertEquals(b2TaskCallback.create(func), func);
-            JNI.invokePV(0x045ffl, func.address());
+            Assert.assertEquals(b2FrictionCallbackFcn.create(func), func);
+
+            float __result = JNI.invokeFJFJF(1.5f, 0X5FCl, 5.34f, 0X003FFL, func.address());
+            Assert.assertEquals(10.5f, __result, 0.0f);
         }
         Callbacks.b2FreeCallbacks();
     }
