@@ -40,14 +40,14 @@ import static org.box2d.jni.system.MemoryUtil.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void b2LogFcn( const char* message ); }
+ * Callback function: {@code typedef void b2LogCallbackFcn( const char* message ); }
  * 
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2LogFcnI extends CallbackI {
+public interface b2LogCallbackFcnI extends CallbackI {
     
     /**
      * Native callback constructor.

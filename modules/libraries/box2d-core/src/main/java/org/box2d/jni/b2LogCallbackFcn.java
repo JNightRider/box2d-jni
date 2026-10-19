@@ -34,36 +34,36 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef void b2LogFcn( const char* message ); }
+ * Callback function: {@code typedef void b2LogCallbackFcn( const char* message ); }
  * 
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2LogFcn extends Callback implements b2LogFcnI {
+public abstract class b2LogCallbackFcn extends Callback implements b2LogCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      * 
      * @param address A virtual memory address
      */
-    public b2LogFcn(long address) {
+    public b2LogCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2LogFcn}.
+     * Create a new empty object of type {@code b2LogCallbackFcn}.
      * 
      * @param delegate the dynamic function handler.
      * @return b2AllocFcn
      */
-    public static b2LogFcn create(b2LogFcnI delegate) {
+    public static b2LogCallbackFcn create(b2LogCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
         
-        if (delegate instanceof b2LogFcn) {
-            return (b2LogFcn) delegate;
+        if (delegate instanceof b2LogCallbackFcn) {
+            return (b2LogCallbackFcn) delegate;
         }
         
         long address = delegate.address();
@@ -76,17 +76,17 @@ public abstract class b2LogFcn extends Callback implements b2LogFcnI {
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2LogFcn {
+    private static final class Container extends b2LogCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2LogFcnI delegate;
+        private final b2LogCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2LogFcn</code> function.
+         * Create a new container to handle the <code>b2LogCallbackFcn</code> function.
          * 
          * @param address long
          * @param delegate b2AssertFcn|function
          */
-        public Container(long address, b2LogFcnI delegate) {
+        public Container(long address, b2LogCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
