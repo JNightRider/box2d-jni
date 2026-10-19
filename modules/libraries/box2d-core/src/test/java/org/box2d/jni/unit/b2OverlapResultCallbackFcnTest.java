@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2CustomFilterFcn;
-import org.box2d.jni.b2CustomFilterFcnI;
+import org.box2d.jni.b2OverlapResultCallbackFcn;
+import org.box2d.jni.b2OverlapResultCallbackFcnI;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
@@ -42,13 +42,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2CustomFilterFcn} class.
+ * A class to manage the unit tests of the {@link b2OverlapResultCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2CustomFilterFcnTest {
+public class b2OverlapResultCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -57,50 +57,35 @@ public class b2CustomFilterFcnTest {
     @Test
     public void callback() {
         try (
-                b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
-                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35)
+                b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20)
             ) {
 
-            b2CustomFilterFcnI func = (shapeIdA, shapeIdB, context) -> {
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
+            b2OverlapResultCallbackFcnI func = (shapeId, context) -> {
+                Debug.apiPrint("b2OverlapResultFcnI: index1=" + shapeId.index1() + ", generation=" + shapeId.generation());
+                Assert.assertEquals(10, (int) shapeId.index1());
+                Assert.assertEquals(20, (short) shapeId.generation());
 
-                Assert.assertEquals(10, (int) shapeIdA.index1());
-                Assert.assertEquals(20, (short) shapeIdA.generation());
-
-                Assert.assertEquals(89, (int) shapeIdB.index1());
-                Assert.assertEquals(35, (short) shapeIdB.generation());
-
-                Assert.assertEquals(0x00373ADCl, context);
+                Assert.assertEquals(0x00ECCFFl, context);
                 return true;
             };
 
-            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_PB(id0.address(), id1.address(), 0x00373ADCl, func.address());
+            boolean __result = JNIB2.invoke_SHAPEID_PB(id0.address(), 0x00ECCFFl, func.address());
             Assert.assertTrue(__result);
         }
-        
         try (
-                b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
-                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35)
+                b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20)
             ) {
 
-            b2CustomFilterFcn func = b2CustomFilterFcn.create((shapeIdA, shapeIdB, context) -> {
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
+            b2OverlapResultCallbackFcn func = b2OverlapResultCallbackFcn.create((shapeId, context) -> {
+                Debug.apiPrint("b2OverlapResultFcn: index1=" + shapeId.index1() + ", generation=" + shapeId.generation());
+                Assert.assertEquals(10, (int) shapeId.index1());
+                Assert.assertEquals(20, (short) shapeId.generation());
 
-                Assert.assertEquals(10, (int) shapeIdA.index1());
-                Assert.assertEquals(20, (short) shapeIdA.generation());
-
-                Assert.assertEquals(89, (int) shapeIdB.index1());
-                Assert.assertEquals(35, (short) shapeIdB.generation());
-
-                Assert.assertEquals(0x00373ADCl, context);
+                Assert.assertEquals(0x00ECCFFl, context);
                 return false;
             });
-
-            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_PB(id0.address(), id1.address(), 0x00373ADCl, func.address());
+            boolean __result = JNIB2.invoke_SHAPEID_PB(id0.address(), 0x00ECCFFl, func.address());
             Assert.assertFalse(__result);
-
         }
         Callbacks.b2FreeCallbacks();
     }

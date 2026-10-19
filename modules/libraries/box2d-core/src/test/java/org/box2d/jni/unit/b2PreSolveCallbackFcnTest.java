@@ -32,8 +32,8 @@ package org.box2d.jni.unit;
 
 import org.box2d.jni.b2Manifold;
 import org.box2d.jni.b2ManifoldPoint;
-import org.box2d.jni.b2PreSolveFcn;
-import org.box2d.jni.b2PreSolveFcnI;
+import org.box2d.jni.b2PreSolveCallbackFcn;
+import org.box2d.jni.b2PreSolveCallbackFcnI;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.ArenaAlloc;
@@ -48,14 +48,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2PreSolveFcn} class.
+ * A class to manage the unit tests of the {@link b2PreSolveCallbackFcn} class.
  *
  * @author wil
  * @version 2.0.1
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class b2PreSolveFcnTest {
+public class b2PreSolveCallbackFcnTest {
      static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -84,7 +84,7 @@ public class b2PreSolveFcnTest {
                     .points(points)
                     .rollingImpulse(-15.678f);
 
-            b2PreSolveFcnI func = (shapeIdA, shapeIdB, manifold, context) -> {
+            b2PreSolveCallbackFcnI func = (shapeIdA, shapeIdB, manifold, context) -> {
                 Debug.apiPrint("b2PreSolveFcnI<>");
 
                 Assert.assertNotEquals(NULL, a.address());
@@ -130,7 +130,7 @@ public class b2PreSolveFcnTest {
                     .points(points)
                     .rollingImpulse(-15.678f);
 
-            b2PreSolveFcn func = b2PreSolveFcn.create((shapeIdA, shapeIdB, manifold, context) -> {
+            b2PreSolveCallbackFcn func = b2PreSolveCallbackFcn.create((shapeIdA, shapeIdB, manifold, context) -> {
                 Debug.apiPrint("b2PreSolveFcn<>");
 
                 Assert.assertNotEquals(NULL, a.address());

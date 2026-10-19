@@ -30,11 +30,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2Pos;
-import org.box2d.jni.b2PreContinuousFcn;
-import org.box2d.jni.b2PreContinuousFcnI;
+import org.box2d.jni.b2CustomFilterCallbackFcn;
+import org.box2d.jni.b2CustomFilterCallbackFcnI;
 import org.box2d.jni.b2ShapeId;
-import org.box2d.jni.b2Vec2;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
 import org.box2d.jni.system.JNIB2;
@@ -44,15 +42,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2PreContinuousFcn} class.
+ * A class to manage the unit tests of the {@link b2CustomFilterCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
- * @since 1.3.0
+ * @since 1.0.0
  */
-@SuppressWarnings("unchecked")
-public class b2PreContinuousFcnTest {
-     static { Sys.BOX2D_NDEBUG.set(true); }
+public class b2CustomFilterCallbackFcnTest {
+    static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
      * Initialize all tests.
@@ -61,69 +58,50 @@ public class b2PreContinuousFcnTest {
     public void callback() {
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
-                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-                b2Pos v0 = b2Pos.malloc().set(1.05f, 0.5f);
-                b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
+                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35)
             ) {
 
-            b2PreContinuousFcnI func = (shapeIdA, shapeIdB, point, normal, context) -> {
-                Debug.apiPrint("b2PreSolveFcnTestI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-                Debug.apiPrint("b2PreSolveFcnTestI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
-                Debug.apiPrint("b2PreSolveFcnTestI: x=" + point.x() + ", y=" + point.y());
-                Debug.apiPrint("b2PreSolveFcnTestI: x=" + normal.x() + ", y=" + normal.y());
+            b2CustomFilterCallbackFcnI func = (shapeIdA, shapeIdB, context) -> {
+                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
+                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
 
                 Assert.assertEquals(10, (int) shapeIdA.index1());
                 Assert.assertEquals(20, (short) shapeIdA.generation());
 
                 Assert.assertEquals(89, (int) shapeIdB.index1());
                 Assert.assertEquals(35, (short) shapeIdB.generation());
-                
-                Assert.assertEquals(1.05f, point.x().floatValue(), 0.0f);
-                Assert.assertEquals(0.5f, point.y().floatValue(), 0.0f);
-                
-                Assert.assertEquals(4.6f, normal.x(), 0.0f);
-                Assert.assertEquals(0.004f, normal.y(), 0.0f);
 
-                Assert.assertEquals(0x0045CBFFL, context);
+                Assert.assertEquals(0x00373ADCl, context);
                 return true;
             };
-            
-            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
+
+            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_PB(id0.address(), id1.address(), 0x00373ADCl, func.address());
             Assert.assertTrue(__result);
         }
+        
         try (
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20); 
-                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35);
-                b2Pos v0 = b2Pos.malloc().set(1.05f, 0.5f);
-                b2Vec2 v1 = b2Vec2.malloc().set(4.6f, 0.004f)
+                b2ShapeId id1 = b2ShapeId.malloc().index1(89).generation((short) 35)
             ) {
 
-            b2PreContinuousFcn func = b2PreContinuousFcn.create((shapeIdA, shapeIdB, point, normal, context) -> {
-                Debug.apiPrint("b2PreSolveFcnTest: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
-                Debug.apiPrint("b2PreSolveFcnTest: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
-                Debug.apiPrint("b2PreSolveFcnTest: x=" + point.x() + ", y=" + point.y());
-                Debug.apiPrint("b2PreSolveFcnTest: x=" + normal.x() + ", y=" + normal.y());
+            b2CustomFilterCallbackFcn func = b2CustomFilterCallbackFcn.create((shapeIdA, shapeIdB, context) -> {
+                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdA.index1() + ", generation=" + shapeIdA.generation());
+                Debug.apiPrint("b2CustomFilterFcnI: index1=" + shapeIdB.index1() + ", generation=" + shapeIdB.generation());
 
                 Assert.assertEquals(10, (int) shapeIdA.index1());
                 Assert.assertEquals(20, (short) shapeIdA.generation());
 
                 Assert.assertEquals(89, (int) shapeIdB.index1());
                 Assert.assertEquals(35, (short) shapeIdB.generation());
-                
-                Assert.assertEquals(1.05f, point.x().floatValue(), 0.0f);
-                Assert.assertEquals(0.5f, point.y().floatValue(), 0.0f);
-                
-                Assert.assertEquals(4.6f, normal.x(), 0.0f);
-                Assert.assertEquals(0.004f, normal.y(), 0.0f);
 
-                Assert.assertEquals(0x0045CBFFL, context);
+                Assert.assertEquals(0x00373ADCl, context);
                 return false;
             });
-            
-            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_POS_VEC2_PB(id0.address(), id1.address(), v0.address(), v1.address(), 0x0045CBFFL, func.address());
+
+            boolean __result = JNIB2.invoke_SHAPEID_SHAPEID_PB(id0.address(), id1.address(), 0x00373ADCl, func.address());
             Assert.assertFalse(__result);
+
         }
         Callbacks.b2FreeCallbacks();
     }
 }
-

@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2CastResultFcn;
-import org.box2d.jni.b2CastResultFcnI;
+import org.box2d.jni.b2CastResultCallbackFcn;
+import org.box2d.jni.b2CastResultCallbackFcnI;
 import org.box2d.jni.b2Pos;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.b2Vec2;
@@ -44,14 +44,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2CastResultFcn} class.
+ * A class to manage the unit tests of the {@link b2CastResultCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
-public class b2CastResultFcnTest {
+public class b2CastResultCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -65,7 +65,7 @@ public class b2CastResultFcnTest {
                 b2Vec2 v1 = b2Vec2.malloc().set(4f, 6f)
             ) {
 
-            b2CastResultFcnI func = (shapeId, point, normal, fraction, context) -> {
+            b2CastResultCallbackFcnI func = (shapeId, point, normal, fraction, context) -> {
                 Debug.apiPrint("b2CastResultFcnI: index1=" + shapeId.index1() + ", generation=" + shapeId.generation());
                 Debug.apiPrint("b2CastResultFcnI: x=" + point.x() + ", y=" + point.y());
                 Debug.apiPrint("b2CastResultFcnI: x=" + normal.x() + ", y=" + normal.y());
@@ -94,7 +94,7 @@ public class b2CastResultFcnTest {
                 b2Vec2 v1 = b2Vec2.malloc().set(4f, 6f)
             ) {
 
-            b2CastResultFcn func = b2CastResultFcn.create((shapeId, point, normal, fraction, context) -> {
+            b2CastResultCallbackFcn func = b2CastResultCallbackFcn.create((shapeId, point, normal, fraction, context) -> {
                 Debug.apiPrint("b2CastResultFcn: index1=" + shapeId.index1() + ", generation=" + shapeId.generation());
                 Debug.apiPrint("b2CastResultFcn: x=" + point.x() + ", y=" + point.y());
                 Debug.apiPrint("b2CastResultFcn: x=" + normal.x() + ", y=" + normal.y());

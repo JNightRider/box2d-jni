@@ -295,13 +295,13 @@ public class TestWorld {
         return 0;
     }
 
-    private final b2CustomFilterFcnI CustomFilter = (shapeIdA, shapeIdB, context) -> 
+    private final b2CustomFilterCallbackFcnI CustomFilter = (shapeIdA, shapeIdB, context) -> 
     {
         ENSURE( context == NULL );
         return true;
     };
 
-    private final b2PreSolveFcnI PreSolveStatic = (shapeIdA, shapeIdB, manifold, context) -> {
+    private final b2PreSolveCallbackFcnI PreSolveStatic = (shapeIdA, shapeIdB, manifold, context) -> {
         
     };
 

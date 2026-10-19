@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2PlaneResultFcn;
-import org.box2d.jni.b2PlaneResultFcnI;
+import org.box2d.jni.b2PlaneResultCallbackFcn;
+import org.box2d.jni.b2PlaneResultCallbackFcnI;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.Debug;
@@ -42,13 +42,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2PlaneResultFcn} class.
+ * A class to manage the unit tests of the {@link b2PlaneResultCallbackFcn} class.
  *
  * @author wil
  * @version 1.0.0
  * @since 1.0.0
  */
-public class b2PlaneResultFcnTest {
+public class b2PlaneResultCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -60,7 +60,7 @@ public class b2PlaneResultFcnTest {
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20)
             ) {
 
-            b2PlaneResultFcnI func = (shapeId, plane, context) -> {
+            b2PlaneResultCallbackFcnI func = (shapeId, plane, context) -> {
                 Debug.apiPrint("b2OverlapResultFcnI: index1=" + shapeId.index1() + ", generation=" + shapeId.generation());
                 Assert.assertEquals(10, (int) shapeId.index1());
                 Assert.assertEquals(20, (short) shapeId.generation());
@@ -77,7 +77,7 @@ public class b2PlaneResultFcnTest {
                 b2ShapeId id0 = b2ShapeId.malloc().index1(10).generation((short) 20)
             ) {
 
-            b2PlaneResultFcn func = b2PlaneResultFcn.create((shapeId, plane, context) -> {
+            b2PlaneResultCallbackFcn func = b2PlaneResultCallbackFcn.create((shapeId, plane, context) -> {
                 Debug.apiPrint("b2OverlapResultFcn: index1=" + shapeId.index1() + ", generation=" + shapeId.generation());
                 Assert.assertEquals(10, (int) shapeId.index1());
                 Assert.assertEquals(20, (short) shapeId.generation());
