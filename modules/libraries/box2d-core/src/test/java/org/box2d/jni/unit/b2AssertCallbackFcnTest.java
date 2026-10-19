@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2LogFcn;
-import org.box2d.jni.b2LogFcnI;
+import org.box2d.jni.b2AssertCallbackFcn;
+import org.box2d.jni.b2AssertCallbackFcnI;
 import org.box2d.jni.libc.LibCStdlib;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.JNI;
@@ -42,13 +42,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2LogFcn} class.
+ * A class to manage the unit tests of the {@link b2AssertCallbackFcn} class.
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public class b2LogFcnTest {
+public class b2AssertCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
 
     /**
@@ -56,23 +56,31 @@ public class b2LogFcnTest {
      */
     @Test
     public void callback() {
-        String str = "Box2d-JNI";
-        long buffer = LibCStdlib.nmalloc(20);
-        MemoryUtil.memMallocUTF(str, buffer);
+        long buffer0 = MemoryUtil.memMallocUTF("1/0", LibCStdlib.nmalloc(20));
+        long buffer1 = MemoryUtil.memMallocUTF("box2d.jni.log", LibCStdlib.nmalloc(20));
 
         {
-            b2LogFcnI func = (message) -> {
-                Assert.assertEquals("Box2d-JNI", message);
+            b2AssertCallbackFcnI func = (condition, fileName, lineNumber) -> {
+                Assert.assertEquals("1/0", condition);
+                Assert.assertEquals("box2d.jni.log", fileName);
+                Assert.assertEquals(4, lineNumber);
+                return 1;
             };
-            JNI.invokePV(buffer, func.address());
+            int __result = JNI.invokePPII(buffer0, buffer1, 4, func.address());
+            Assert.assertEquals(1, __result);
         }
         {
-            b2LogFcn func = b2LogFcn.create((message) -> {
-                Assert.assertEquals("Box2d-JNI", message);
+            b2AssertCallbackFcn func = b2AssertCallbackFcn.create((condition, fileName, lineNumber) -> {
+                Assert.assertEquals("1/0", condition);
+                Assert.assertEquals("box2d.jni.log", fileName);
+                Assert.assertEquals(4, lineNumber);
+                return 1;
             });
-            JNI.invokePV(buffer, func.address());
+            int __result = JNI.invokePPII(buffer0, buffer1, 4, func.address());
+            Assert.assertEquals(1, __result);
         }
-        LibCStdlib.nfree(buffer);
+        LibCStdlib.nfree(buffer0);
+        LibCStdlib.nfree(buffer1);
         Callbacks.b2FreeCallbacks();
     }
 }

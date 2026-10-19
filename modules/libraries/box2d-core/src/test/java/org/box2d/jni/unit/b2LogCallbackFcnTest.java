@@ -30,47 +30,49 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2AllocFcn;
-import org.box2d.jni.b2AllocFcnI;
+import org.box2d.jni.b2LogCallbackFcn;
+import org.box2d.jni.b2LogCallbackFcnI;
+import org.box2d.jni.libc.LibCStdlib;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.JNI;
+import org.box2d.jni.system.MemoryUtil;
 import org.box2d.jni.system.Sys;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2AllocFcnTest} class.
+ * A class to manage the unit tests of the {@link b2LogCallbackFcn} class.
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public class b2AllocFcnTest {
+public class b2LogCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
+
     /**
      * Initialize all tests.
      */
     @Test
     public void callback() {
+        String str = "Box2d-JNI";
+        long buffer = LibCStdlib.nmalloc(20);
+        MemoryUtil.memMallocUTF(str, buffer);
+
         {
-            b2AllocFcnI alloc = (size, alignment) ->  {
-                Assert.assertEquals(10L, size);
-                Assert.assertEquals(2, alignment);
-                return 1024L;
+            b2LogCallbackFcnI func = (message) -> {
+                Assert.assertEquals("Box2d-JNI", message);
             };
-            long mem = JNI.invokeJIP(10L, 2, alloc.address());
-            Assert.assertEquals(1024L, mem);
+            JNI.invokePV(buffer, func.address());
         }
         {
-            b2AllocFcn alloc = b2AllocFcn.create((size, alignment) -> {
-                Assert.assertEquals(10L, size);
-                Assert.assertEquals(2, alignment);
-                return 500L;
+            b2LogCallbackFcn func = b2LogCallbackFcn.create((message) -> {
+                Assert.assertEquals("Box2d-JNI", message);
             });
-            long mem = JNI.invokeJIP(10L, 2, alloc.address());
-            Assert.assertEquals(500L, mem);
+            JNI.invokePV(buffer, func.address());
         }
+        LibCStdlib.nfree(buffer);
         Callbacks.b2FreeCallbacks();
     }
 }

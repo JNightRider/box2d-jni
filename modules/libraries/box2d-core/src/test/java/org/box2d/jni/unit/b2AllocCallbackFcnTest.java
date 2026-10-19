@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.unit;
 
-import org.box2d.jni.b2FreeFcn;
-import org.box2d.jni.b2FreeFcnI;
+import org.box2d.jni.b2AllocCallbackFcn;
+import org.box2d.jni.b2AllocCallbackFcnI;
 import org.box2d.jni.system.Callbacks;
 import org.box2d.jni.system.JNI;
 import org.box2d.jni.system.Sys;
@@ -40,33 +40,36 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * A class to manage the unit tests of the {@link b2FreeFcn} class.
+ * A class to manage the unit tests of the {@link b2AllocCallbackFcnTest} class.
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public class b2FreeFcnTest {
+public class b2AllocCallbackFcnTest {
     static { Sys.BOX2D_NDEBUG.set(true); }
-
     /**
      * Initialize all tests.
      */
     @Test
     public void callback() {
         {
-            b2FreeFcnI func = (mem, size) -> {
-                Assert.assertEquals(1024L, mem);
-                Assert.assertEquals(6L, size);
+            b2AllocCallbackFcnI alloc = (size, alignment) ->  {
+                Assert.assertEquals(10L, size);
+                Assert.assertEquals(2, alignment);
+                return 1024L;
             };
-            JNI.invokeJJV(1024L, 6L, func.address());
+            long mem = JNI.invokeJIP(10L, 2, alloc.address());
+            Assert.assertEquals(1024L, mem);
         }
         {
-            b2FreeFcn func = b2FreeFcn.create((mem, size) -> {
-                Assert.assertEquals(1024L, mem);
-                Assert.assertEquals(6L, size);
+            b2AllocCallbackFcn alloc = b2AllocCallbackFcn.create((size, alignment) -> {
+                Assert.assertEquals(10L, size);
+                Assert.assertEquals(2, alignment);
+                return 500L;
             });
-            JNI.invokeJJV(1024L, 6L, func.address());
+            long mem = JNI.invokeJIP(10L, 2, alloc.address());
+            Assert.assertEquals(500L, mem);
         }
         Callbacks.b2FreeCallbacks();
     }
