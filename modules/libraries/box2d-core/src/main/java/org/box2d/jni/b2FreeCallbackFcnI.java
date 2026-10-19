@@ -34,49 +34,46 @@ import java.nio.LongBuffer;
 import java.util.function.Function;
 
 import org.box2d.jni.system.ArenaAlloc;
+
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.system.ArenaAlloc.*;
 import static org.box2d.jni.system.Memory.*;
-import static org.box2d.jni.system.MemoryUtil.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef int b2AssertFcn( const char* condition, const char* fileName, int lineNumber ); }
+ * Callback function: {@code typedef void b2FreeCallbackFcn( void* mem, size_t size ); }
  * 
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2AssertFcnI extends CallbackI {
-    
+public interface b2FreeCallbackFcnI extends CallbackI {
+
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(3);
+            LongBuffer targs = arena.mallocLong(2);
             targs.put(ffi_type_pointer)
-                 .put(ffi_type_pointer)
-                 .put(ffi_type_sint32);
+                 .put(ffi_type_size_t);
             targs.flip();
-            long rtype = ffi_type_uint32;
+            long rtype = ffi_type_void;
 
-            return njniCallbackCreate(instance, rtype, targs, 3);
+            return njniCallbackCreate(instance, rtype, targs, 2);
         }
     };
 
     /*(non-Javadoc)*/
     @Override
     public default void callback(long resp, long args) {
-        int __result = invoke(
-                memUTF(memGetAddress(memGetAddress(args))),
-                memUTF(memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))),
-                memGetInt(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
+        invoke(
+                memGetAddress(memGetAddress(args)),
+                memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))
         );
-        apiClosureRet(resp, __result);
     }
 
     /**
@@ -88,15 +85,12 @@ public interface b2AssertFcnI extends CallbackI {
     public default Function<CallbackI, Long> __constructor() {
         return CONSTRUCTOR;
     }
-    
+
     /**
      * The function of the callback.
-     * 
-     * @param condition string
-     * @param fileName string
-     * @param lineNumber iny
      *
-     * @return int
+     * @param mem long
+     * @param size int
      */
-    int invoke( String condition, String fileName, int lineNumber );
+    void invoke( long mem, long size );
 }
