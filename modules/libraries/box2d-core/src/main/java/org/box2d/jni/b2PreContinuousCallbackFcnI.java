@@ -33,7 +33,7 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CCastResultFcn;
+import org.box2d.jni.function.CPreContinuousFcn;
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
@@ -44,14 +44,14 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef float b2CastResultFcn( b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, void* context ); }
+ * Callback function: {@code typedef bool b2PreContinuousCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ); }
  *
  * @author wil
- * @version 1.1.0
- * @since 1.0.0
+ * @version 2.0.0
+ * @since 1.3.0
  */
 @FunctionalInterface
-public interface b2CastResultFcnI extends CallbackI, CCastResultFcn {
+public interface b2PreContinuousCallbackFcnI extends CallbackI, CPreContinuousFcn {
 
     /**
      * Native callback constructor.
@@ -60,12 +60,12 @@ public interface b2CastResultFcnI extends CallbackI, CCastResultFcn {
         try (ArenaAlloc arena = allocPush()) {
             LongBuffer targs = arena.mallocLong(5);
             targs.put(ffi_type_b2ShapeId)
+                 .put(ffi_type_b2ShapeId)
                  .put(ffi_type_b2Pos)
                  .put(ffi_type_b2Vec2)
-                 .put(ffi_type_float)
                  .put(ffi_type_pointer);
             targs.flip();
-            long rtype = ffi_type_float;
+            long rtype = ffi_type_sint8;
 
             return njniCallbackCreate(instance, rtype, targs, 5);
         }
@@ -85,14 +85,15 @@ public interface b2CastResultFcnI extends CallbackI, CCastResultFcn {
     @Override
     public default void callback(long resp, long args) {
         try (ArenaAlloc arena = allocPush()) {
-            float __result = invoke(
+            boolean __result = invoke(
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
-                    memcpy(b2Pos.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF),
-                    memcpy(b2Vec2.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF),
-                    memGetFloat(memGetAddress(args + 3 * VarType.Uintptrt.sizeof())),
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
+                    memcpy(b2Pos.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF),
+                    memcpy(b2Vec2.calloc(arena), memGetAddress(args + 3 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF),
                     memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
             );
             apiClosureRet(resp, __result);
         }
     }
 }
+

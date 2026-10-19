@@ -45,13 +45,13 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef bool b2PlaneResultFcn( b2ShapeId shapeId, const b2PlaneResult* plane, void* context ); }
+ * Callback function: {@code typedef bool b2PlaneResultCallbackFcn( b2ShapeId shapeId, const b2PlaneResult* plane, void* context ); }
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public interface b2PlaneResultFcnI extends CallbackI, CPlaneResultFcn {
+public interface b2PlaneResultCallbackFcnI extends CallbackI, CPlaneResultFcn {
 
     /**
      * Native callback constructor.

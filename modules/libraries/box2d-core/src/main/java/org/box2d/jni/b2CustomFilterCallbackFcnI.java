@@ -33,8 +33,7 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.COverlapResultFcn;
-
+import org.box2d.jni.function.CCustomFilterFcn;
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
 import org.box2d.jni.system.VarType;
@@ -45,27 +44,28 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef bool b2OverlapResultFcn( b2ShapeId shapeId, void* context ); }
+ * Callback function: {@code typedef bool b2CustomFilterCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, void* context ); }
  *
  * @author wil
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2OverlapResultFcnI extends CallbackI, COverlapResultFcn {
+public interface b2CustomFilterCallbackFcnI extends CallbackI, CCustomFilterFcn {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(2);
+            LongBuffer targs = arena.mallocLong(3);
             targs.put(ffi_type_b2ShapeId)
+                 .put(ffi_type_b2ShapeId)
                  .put(ffi_type_pointer);
             targs.flip();
             long rtype = ffi_type_sint8;
 
-            return njniCallbackCreate(instance, rtype, targs, 2);
+            return njniCallbackCreate(instance, rtype, targs, 3);
         }
     };
 
@@ -85,7 +85,8 @@ public interface b2OverlapResultFcnI extends CallbackI, COverlapResultFcn {
         try (ArenaAlloc arena = allocPush()) {
             boolean __result = invoke(
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
-                    memGetAddress(memGetAddress(args + VarType.Uintptrt.sizeof()))
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
+                    memGetAddress(memGetAddress(args + 2 * VarType.Uintptrt.sizeof()))
             );
             apiClosureRet(resp, __result);
         }

@@ -33,10 +33,10 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CPreSolveFcn;
-
+import org.box2d.jni.function.CCastResultFcn;
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
+import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.ArenaAlloc.*;
@@ -44,29 +44,30 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef void b2PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ); }
+ * Callback function: {@code typedef float b2CastResultCallbackFcn( b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, void* context ); }
  *
  * @author wil
- * @version 1.3.1
+ * @version 2.0.0
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
+public interface b2CastResultCallbackFcnI extends CallbackI, CCastResultFcn {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(4);
+            LongBuffer targs = arena.mallocLong(5);
             targs.put(ffi_type_b2ShapeId)
-                 .put(ffi_type_b2ShapeId)
-                 .put(ffi_type_pointer)
+                 .put(ffi_type_b2Pos)
+                 .put(ffi_type_b2Vec2)
+                 .put(ffi_type_float)
                  .put(ffi_type_pointer);
             targs.flip();
-            long rtype = ffi_type_void;
+            long rtype = ffi_type_float;
 
-            return njniCallbackCreate(instance, rtype, targs, 4);
+            return njniCallbackCreate(instance, rtype, targs, 5);
         }
     };
 
@@ -84,12 +85,14 @@ public interface b2PreSolveFcnI extends CallbackI, CPreSolveFcn {
     @Override
     public default void callback(long resp, long args) {
         try (ArenaAlloc arena = allocPush()) {
-            invoke(
+            float __result = invoke(
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
-                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + POINTER_SIZE), b2ShapeId.SIZEOF),
-                    b2Manifold.createSafe(() -> memGetAddress(memGetAddress(args + 2 * POINTER_SIZE))),
-                    memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))
+                    memcpy(b2Pos.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF),
+                    memcpy(b2Vec2.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF),
+                    memGetFloat(memGetAddress(args + 3 * VarType.Uintptrt.sizeof())),
+                    memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
             );
+            apiClosureRet(resp, __result);
         }
     }
 }

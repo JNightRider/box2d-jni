@@ -34,36 +34,36 @@ import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef bool b2OverlapResultFcn( b2ShapeId shapeId, void* context );}
+ * Callback function: {@code typedef bool b2CustomFilterCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2OverlapResultFcn extends Callback implements b2OverlapResultFcnI {
+public abstract class b2CustomFilterCallbackFcn extends Callback implements b2CustomFilterCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2OverlapResultFcn(long address) {
+    public b2CustomFilterCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2OverlapResultFcn}.
+     * Create a new empty object of type {@code b2CustomFilterCallbackFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2OverlapResultFcn
+     * @return b2CustomFilterCallbackFcn
      */
-    public static b2OverlapResultFcn create(b2OverlapResultFcnI delegate) {
+    public static b2CustomFilterCallbackFcn create(b2CustomFilterCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2OverlapResultFcn) {
-            return (b2OverlapResultFcn) delegate;
+        if (delegate instanceof b2CustomFilterCallbackFcn) {
+            return (b2CustomFilterCallbackFcn) delegate;
         }
 
         long address = delegate.address();
@@ -76,17 +76,17 @@ public abstract class b2OverlapResultFcn extends Callback implements b2OverlapRe
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2OverlapResultFcn {
+    private static final class Container extends b2CustomFilterCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2OverlapResultFcnI delegate;
+        private final b2CustomFilterCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2OverlapResultFcn</code> function.
+         * Create a new container to handle the <code>b2CustomFilterCallbackFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2OverlapResultFcnI|function
+         * @param delegate b2CustomFilterCallbackFcnI|function
          */
-        public Container(long address, b2OverlapResultFcnI delegate) {
+        public Container(long address, b2CustomFilterCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -94,8 +94,8 @@ public abstract class b2OverlapResultFcn extends Callback implements b2OverlapRe
         /*(non-Javadoc)
          */
         @Override
-        public boolean invoke(b2ShapeId shapeId, long context) {
-            return delegate.invoke(shapeId, context);
+        public boolean invoke(b2ShapeId shapeIdA, b2ShapeId shapeIdB, long context) {
+            return delegate.invoke(shapeIdA, shapeIdB, context);
         }
     }
 }

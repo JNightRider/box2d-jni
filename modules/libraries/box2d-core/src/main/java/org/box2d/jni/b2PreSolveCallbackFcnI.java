@@ -33,10 +33,10 @@ package org.box2d.jni;
 import java.nio.LongBuffer;
 import java.util.function.Function;
 
-import org.box2d.jni.function.CPreContinuousFcn;
+import org.box2d.jni.function.CPreSolveFcn;
+
 import org.box2d.jni.system.ArenaAlloc;
 import org.box2d.jni.system.CallbackI;
-import org.box2d.jni.system.VarType;
 
 import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.ArenaAlloc.*;
@@ -44,30 +44,29 @@ import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.Upcalls.*;
 
 /**
- * Callback function: {@code typedef bool b2PreContinuousFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ); }
+ * Callback function: {@code typedef void b2PreSolveCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ); }
  *
  * @author wil
- * @version 1.1.0
- * @since 1.3.0
+ * @version 2.0.0
+ * @since 1.0.0
  */
 @FunctionalInterface
-public interface b2PreContinuousFcnI extends CallbackI, CPreContinuousFcn {
+public interface b2PreSolveCallbackFcnI extends CallbackI, CPreSolveFcn {
 
     /**
      * Native callback constructor.
      */
     Function<CallbackI, Long> CONSTRUCTOR = (instance) -> {
         try (ArenaAlloc arena = allocPush()) {
-            LongBuffer targs = arena.mallocLong(5);
+            LongBuffer targs = arena.mallocLong(4);
             targs.put(ffi_type_b2ShapeId)
                  .put(ffi_type_b2ShapeId)
-                 .put(ffi_type_b2Pos)
-                 .put(ffi_type_b2Vec2)
+                 .put(ffi_type_pointer)
                  .put(ffi_type_pointer);
             targs.flip();
-            long rtype = ffi_type_sint8;
+            long rtype = ffi_type_void;
 
-            return njniCallbackCreate(instance, rtype, targs, 5);
+            return njniCallbackCreate(instance, rtype, targs, 4);
         }
     };
 
@@ -85,15 +84,12 @@ public interface b2PreContinuousFcnI extends CallbackI, CPreContinuousFcn {
     @Override
     public default void callback(long resp, long args) {
         try (ArenaAlloc arena = allocPush()) {
-            boolean __result = invoke(
+            invoke(
                     memcpy(b2ShapeId.calloc(arena), memGetAddress(args), b2ShapeId.SIZEOF),
-                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + VarType.Uintptrt.sizeof()), b2ShapeId.SIZEOF),
-                    memcpy(b2Pos.calloc(arena), memGetAddress(args + 2 * VarType.Uintptrt.sizeof()), b2Pos.DSIZEOF),
-                    memcpy(b2Vec2.calloc(arena), memGetAddress(args + 3 * VarType.Uintptrt.sizeof()), b2Vec2.SIZEOF),
-                    memGetAddress(memGetAddress(args + 4 * VarType.Uintptrt.sizeof()))
+                    memcpy(b2ShapeId.calloc(arena), memGetAddress(args + POINTER_SIZE), b2ShapeId.SIZEOF),
+                    b2Manifold.createSafe(() -> memGetAddress(memGetAddress(args + 2 * POINTER_SIZE))),
+                    memGetAddress(memGetAddress(args + 3 * POINTER_SIZE))
             );
-            apiClosureRet(resp, __result);
         }
     }
 }
-

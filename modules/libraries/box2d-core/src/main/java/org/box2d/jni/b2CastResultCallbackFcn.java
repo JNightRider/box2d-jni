@@ -30,41 +30,40 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni;
 
-import org.box2d.jni.readonly.ConstB2PlaneResult;
 import org.box2d.jni.system.Callback;
 import org.box2d.jni.system.Checks;
 
 /**
- * Callback function: {@code typedef bool b2PlaneResultFcn( b2ShapeId shapeId, const b2PlaneResult* plane, void* context ); }
+ * Callback function: {@code typedef float b2CastResultCallbackFcn( b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, void* context ); }
  *
  * @author wil
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class b2PlaneResultFcn extends Callback implements b2PlaneResultFcnI {
+public abstract class b2CastResultCallbackFcn extends Callback implements b2CastResultCallbackFcnI {
 
     /**
      * Create a callback instance using libffi.
      *
      * @param address A virtual memory address
      */
-    public b2PlaneResultFcn(long address) {
+    public b2CastResultCallbackFcn(long address) {
         super(address);
     }
 
     /**
-     * Create a new empty object of type {@code b2PlaneResultFcn}.
+     * Create a new empty object of type {@code b2CastResultCallbackFcn}.
      *
      * @param delegate the dynamic function handler.
-     * @return b2PlaneResultFcn
+     * @return b2CastResultCallbackFcn
      */
-    public static b2PlaneResultFcn create(b2PlaneResultFcnI delegate) {
+    public static b2CastResultCallbackFcn create(b2CastResultCallbackFcnI delegate) {
         if (delegate == null) {
             return null;
         }
 
-        if (delegate instanceof b2PlaneResultFcn) {
-            return (b2PlaneResultFcn) delegate;
+        if (delegate instanceof b2CastResultCallbackFcn) {
+            return (b2CastResultCallbackFcn) delegate;
         }
 
         long address = delegate.address();
@@ -77,17 +76,17 @@ public abstract class b2PlaneResultFcn extends Callback implements b2PlaneResult
     /**
      * Container that handles the dynamic function.
      */
-    private static final class Container extends b2PlaneResultFcn {
+    private static final class Container extends b2CastResultCallbackFcn {
         /**The dynamic or lambda function. */
-        private final b2PlaneResultFcnI delegate;
+        private final b2CastResultCallbackFcnI delegate;
 
         /**
-         * Create a new container to handle the <code>b2PlaneResultFcn</code> function.
+         * Create a new container to handle the <code>b2CastResultCallbackFcn</code> function.
          * 
          * @param address long
-         * @param delegate b2PlaneResultFcnI|function
+         * @param delegate b2CastResultCallbackFcnI|function
          */
-        public Container(long address, b2PlaneResultFcnI delegate) {
+        public Container(long address, b2CastResultCallbackFcnI delegate) {
             super(address);
             this.delegate = delegate;
         }
@@ -95,8 +94,8 @@ public abstract class b2PlaneResultFcn extends Callback implements b2PlaneResult
         /*(non-Javadoc)
          */
         @Override
-        public boolean invoke(b2ShapeId shapeId, ConstB2PlaneResult plane, long context) {
-            return delegate.invoke(shapeId, plane, context);
+        public float invoke(b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, long context) {
+            return delegate.invoke(shapeId, point, normal, fraction, context);
         }
     }
 }
