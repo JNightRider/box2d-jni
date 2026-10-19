@@ -87,7 +87,7 @@ public class Main {
             (mem, size) -> naligned_free(mem)
         );
         
-        b2SetAssertFcn((condition, fileName, lineNumber) -> {
+        b2SetAssertCallback((condition, fileName, lineNumber) -> {
             out.printf( "SAMPLE ASSERTION: %s, %s, line %d\n", condition, fileName, lineNumber );
             return 1;
         });

@@ -49,7 +49,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetAllocator
     (JNIEnv *__env, jclass clazz, jlong func0, jlong func1)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2SetAllocator( (b2AllocFcn*)(uintptr_t)func0, (b2FreeFcn*)(uintptr_t)func1 );
+    b2SetAllocator( (b2AllocCallbackFcn*)(uintptr_t)func0, (b2FreeCallbackFcn*)(uintptr_t)func1 );
 }
 
 /*
@@ -66,26 +66,26 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Base_nb2GetByteCount
 
 /*
  * Class:     org_box2d_jni_include_Base
- * Method:    nb2SetAssertFcn
+ * Method:    nb2SetAssertCallback
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetAssertFcn
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetAssertCallback
     (JNIEnv *__env, jclass clazz, jlong func0)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2SetAssertFcn( (b2AssertFcn*)(uintptr_t)func0 );
+    b2SetAssertCallback( (b2AssertCallbackFcn*)(uintptr_t)func0 );
 }
 
 /*
  * Class:     org_box2d_jni_include_Base
- * Method:    nb2SetLogFcn
+ * Method:    nb2SetLogCallback
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetLogFcn
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2SetLogCallback
     (JNIEnv *__env, jclass clazz, jlong func0)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2SetLogFcn( (b2LogFcn*)(uintptr_t)func0 );
+    b2SetLogCallback( (b2LogCallbackFcn*)(uintptr_t)func0 );
 }
 
 /*

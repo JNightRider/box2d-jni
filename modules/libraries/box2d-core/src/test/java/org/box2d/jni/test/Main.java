@@ -30,9 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.box2d.jni.test;
 
-import org.box2d.jni.b2AssertFcnI;
-import org.box2d.jni.b2LogFcnI;
-
+import org.box2d.jni.b2AssertCallbackFcnI;
+import org.box2d.jni.b2LogCallbackFcnI;
 import org.box2d.jni.test.internal.*;
 
 import static java.lang.System.out;
@@ -60,19 +59,19 @@ public class Main {
     static IVFunction ShapeTest = new TestShape()::ShapeTest;
     static IVFunction WorldTest = new TestWorld()::WorldTest;
 
-    private static final b2AssertFcnI TestAssertFcn = (condition, fileName, lineNumber) -> {
+    private static final b2AssertCallbackFcnI TestAssertFcn = (condition, fileName, lineNumber) -> {
         err.printf("BOX2D ASSERTION: %s, %s, line %d\n", condition, fileName, lineNumber);
         err.flush();
         return 1;
     };
 
-    private static final b2LogFcnI TestLogFcn = (message) -> {
+    private static final b2LogCallbackFcnI TestLogFcn = (message) -> {
         out.printf( "Box2D: %s\n", message );
     };
 
     public static void main(String[] args) {
-        b2SetAssertFcn( TestAssertFcn );
-	b2SetLogFcn( TestLogFcn );
+        b2SetAssertCallback( TestAssertFcn );
+	b2SetLogCallback( TestLogFcn );
 
         /*const char* */ filter = null;
         if (args.length > 0)
