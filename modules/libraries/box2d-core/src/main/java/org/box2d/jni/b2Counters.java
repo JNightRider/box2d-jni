@@ -42,7 +42,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * <pre><code>
  * typedef struct b2Counters
  * {
- *     int bodyCount;
+ *     size_t bodyCount;
  *     int shapeCount;
  *     int contactCount;
  *     int jointCount;
@@ -150,7 +150,7 @@ public class b2Counters extends Struct<b2Counters> {
     }
 
     /** @return Returns the property {@code bodyCount} */
-    public int bodyCount() { return nbodyCount(address()); }
+    public long bodyCount() { return nbodyCount(address()); }
     /** @return Returns the property {@code shapeCount} */
     public int shapeCount() { return nshapeCount(address()); }
     /** @return Returns the property {@code contactCount} */
@@ -179,10 +179,10 @@ public class b2Counters extends Struct<b2Counters> {
     /**
      * Set the value of property {@code bodyCount}
      *
-     * @param value int
+     * @param value long
      * @return b2Counters
      */
-    public b2Counters bodyCount(int value) {
+    public b2Counters bodyCount(long value) {
         nbodyCount(address(), value);
         return this;
     }
@@ -443,7 +443,7 @@ public class b2Counters extends Struct<b2Counters> {
 
     // -----------------------------------
 
-    public static int nbodyCount(long address)            { return memGetInt(address + BODY_COUNT); }
+    public static long nbodyCount(long address)           { return memGetLong(address + BODY_COUNT); }
     public static int nshapeCount(long address)           { return memGetInt(address + SHAPE_COUNT); }
     public static int ncontactCount(long address)         { return memGetInt(address + CONTACT_COUNT); }
     public static int njointCount(long address)           { return memGetInt(address + JOINT_COUNT); }
@@ -457,7 +457,7 @@ public class b2Counters extends Struct<b2Counters> {
     public static int nawakeContactCount(long address)    { return memGetInt(address + AWAKE_CONTACT_COUNT); }
     public static int nrecycledContactCount(long address) { return memGetInt(address + RECYCLED_CONTACT_COUNT); }
 
-    public static void nbodyCount(long address, int value) { memPutInt(address + BODY_COUNT, value); }
+    public static void nbodyCount(long address, long value) { memPutLong(address + BODY_COUNT, value); }
     public static void nshapeCount(long address, int value) {  memPutInt(address + SHAPE_COUNT, value); }
     public static void ncontactCount(long address, int value) { memPutInt(address + CONTACT_COUNT, value); }
     public static void njointCount(long address, int value) { memPutInt(address + JOINT_COUNT, value); }
