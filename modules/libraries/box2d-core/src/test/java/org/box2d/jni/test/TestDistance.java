@@ -61,7 +61,7 @@ public class TestDistance {
         b2Vec2 p2 = b2Vec2.malloc().set( 2.0f, 0.0f );
         b2Vec2 q2 = b2Vec2.malloc().set( 1.0f, 0.0f );
 
-        b2SegmentDistanceResult result = b2SegmentDistance( p1, q1, p2, q2, b2SegmentDistanceResult.malloc() );
+        b2SegmentDistanceResult result = b2ComputeSegmentDistance(p1, q1, p2, q2, b2SegmentDistanceResult.malloc() );
 
         ENSURE_SMALL( result.fraction1() - 0.5f, FLT_EPSILON );
         ENSURE_SMALL( result.fraction2() - 1.0f, FLT_EPSILON );
@@ -90,7 +90,7 @@ public class TestDistance {
         input.useRadii(false);
 
         b2SimplexCache cache = b2SimplexCache.malloc();cache.clear();
-        b2DistanceOutput output = b2DistanceOutput.malloc();nb2ShapeDistance(input.address(), cache.address(), NULL, 0, output.address() );
+        b2DistanceOutput output = b2DistanceOutput.malloc();nb2ComputeSegmentDistance(input.address(), cache.address(), NULL, 0, output.address() );
 
         ENSURE_SMALL( output.distance() - 1.0f, FLT_EPSILON );
 
@@ -114,7 +114,7 @@ public class TestDistance {
         input.maxFraction(1.0f);
         input.canEncroach(false);
 
-        b2CastOutput output = b2ShapeCast( input, b2CastOutput.malloc() );
+        b2CastOutput output = b2CastShape(input, b2CastOutput.malloc() );
 
         ENSURE( output.hit() );
         ENSURE_SMALL( output.fraction() - 0.5f, 0.005f );
@@ -156,7 +156,7 @@ public class TestDistance {
         input.useRadii(false);
 
         b2SimplexCache cache = b2SimplexCache.calloc();
-        b2DistanceOutput output = b2ShapeDistance( input, cache, null, 0, b2DistanceOutput.malloc() );
+        b2DistanceOutput output = b2ComputeShapeDistance(input, cache, null, 0, b2DistanceOutput.malloc() );
 
         ENSURE( output.distance() > 0.0f );
         ENSURE( b2IsNormalized( output.normal() ) );
@@ -201,7 +201,7 @@ public class TestDistance {
         input.maxFraction(1.0f);
         input.canEncroach(false);
 
-        b2CastOutput output = b2ShapeCast( input, b2CastOutput.malloc() );
+        b2CastOutput output = b2CastShape(input, b2CastOutput.malloc() );
 
         ENSURE( output.hit() == false || b2IsNormalized( output.normal() ) );
 
@@ -224,7 +224,7 @@ public class TestDistance {
         input.sweepB( b2Sweep.malloc().set( b2Vec2_zero, b2Vec2_zero, b2Vec2.malloc().set( -2.0f, 0.0f ), b2Rot_identity, b2Rot_identity ));
         input.maxFraction(1.0f);
 
-        b2TOIOutput output = b2TimeOfImpact( input, b2TOIOutput.malloc() );
+        b2TOIOutput output = b2ComputeTimeOfImpact(input, b2TOIOutput.malloc() );
 
         ENSURE( output.state() == b2_toiStateHit );
         ENSURE_SMALL( output.fraction() - 0.5f, 0.005f );

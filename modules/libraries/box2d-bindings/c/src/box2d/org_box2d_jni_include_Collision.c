@@ -305,106 +305,98 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Collision_nb2PointInPolygo
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2RayCastCircle
+ * Method:    nb2CastRayCircle
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2RayCastCircle
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastRayCircle
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2RayCastCircle( (const b2Circle*) shape, (const b2RayCastInput*) input );
+    *(b2CastOutput*)__result = b2CastRayCircle( (const b2Circle*) shape, (const b2RayCastInput*) input );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2RayCastCapsule
+ * Method:    nb2CastRayCapsule
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2RayCastCapsule
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastRayCapsule
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2RayCastCapsule( (const b2Capsule*) shape, (const b2RayCastInput*) input );
+    *(b2CastOutput*)__result = b2CastRayCapsule( (const b2Capsule*) shape, (const b2RayCastInput*) input );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2RayCastSegment
+ * Method:    nb2CastRaySegment
  * Signature: (JJZJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2RayCastSegment
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastRaySegment
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jboolean oneSided, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2RayCastSegment( (const b2Segment*) shape, (const b2RayCastInput*) input, (bool)oneSided );
+    *(b2CastOutput*)__result = b2CastRaySegment( (const b2Segment*) shape, (const b2RayCastInput*) input, (bool)oneSided );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2RayCastPolygon
+ * Method:    nb2CastRayPolygon
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2RayCastPolygon
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastRayPolygon
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2RayCastPolygon( (const b2Polygon*) shape, (const b2RayCastInput*) input );
+    *(b2CastOutput*)__result = b2CastRayPolygon( (const b2Polygon*) shape, (const b2RayCastInput*) input );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2ShapeCastCircle
+ * Method:    nb2CastShapeCircle
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeCastCircle
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastShapeCircle
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ShapeCastCircle((const b2Circle*) shape,  (const b2ShapeCastInput*) input );
+    *(b2CastOutput*)__result = b2CastShapeCircle((const b2Circle*) shape,  (const b2ShapeCastInput*) input );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2ShapeCastCapsule
+ * Method:    nb2CastShapeCapsule
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeCastCapsule
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastShapeCapsule
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ShapeCastCapsule( (const b2Capsule*) shape, (const b2ShapeCastInput*) input);
+    *(b2CastOutput*)__result = b2CastShapeCapsule( (const b2Capsule*) shape, (const b2ShapeCastInput*) input);
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2ShapeCastSegment
+ * Method:    nb2CastShapeSegment
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeCastSegment
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastShapeSegment
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ShapeCastSegment( (const b2Segment*) shape, (const b2ShapeCastInput*) input );
+    *(b2CastOutput*)__result = b2CastShapeSegment( (const b2Segment*) shape, (const b2ShapeCastInput*) input );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2ShapeCastPolygon
+ * Method:    nb2CastShapePolygon
  * Signature: (JJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeCastPolygon
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastShapePolygon
     (JNIEnv *__env, jclass clazz, jlong shape, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ShapeCastPolygon( (const b2Polygon*) shape, (const b2ShapeCastInput*) input );
+    *(b2CastOutput*)(uintptr_t)__result = b2CastShapePolygon( (const b2Polygon*) shape, (const b2ShapeCastInput*) input );
 }
 
 /*
@@ -415,9 +407,8 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeCastPolygon
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeHull
     (JNIEnv *__env, jclass clazz, jlong points, jint count, jlong __result)
 {
-    b2Hull* ptr = (b2Hull*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ComputeHull( (const b2Vec2*) points, count );
+    *(b2Hull*)__result = b2ComputeHull( (const b2Vec2*) points, count );
 }
 
 /*
@@ -434,44 +425,38 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Collision_nb2ValidateHull
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2SegmentDistance
+ * Method:    nb2ComputeSegmentDistance
  * Signature: (JJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2SegmentDistance
-    (JNIEnv *__env, jclass clazz, jlong p1Add, jlong q1Add, jlong p2Add, jlong q2Add, jlong __result)
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeSegmentDistance
+    (JNIEnv *__env, jclass clazz, jlong p1, jlong q1, jlong p2, jlong q2, jlong __result)
 {
-    b2SegmentDistanceResult* ptr = (b2SegmentDistanceResult*)(uintptr_t)__result;
-    b2Vec2* p1 = (b2Vec2*)(uintptr_t)p1Add;
-    b2Vec2* q1 = (b2Vec2*)(uintptr_t)q1Add;
-    b2Vec2* p2 = (b2Vec2*)(uintptr_t)p2Add;
-    b2Vec2* q2 = (b2Vec2*)(uintptr_t)q2Add;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2SegmentDistance( *p1, *q1, *p2, *q2 );
+    *(b2SegmentDistanceResult*)__result = b2ComputeSegmentDistance( *(b2Vec2*)p1 , *(b2Vec2*)q1, *(b2Vec2*)p2, *(b2Vec2*)q2);
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2ShapeDistance
+ * Method:    nb2ComputeShapeDistance
  * Signature: (JJJIJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeDistance
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeShapeDistance
     (JNIEnv *__env, jclass clazz, jlong input, jlong cache, jlong simplexes, jint simplexCapacity, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2DistanceOutput*)__result = b2ShapeDistance((const b2DistanceInput*) input, (b2SimplexCache*) cache, (b2Simplex*) simplexes, simplexCapacity );
+    *(b2DistanceOutput*)__result = b2ComputeShapeDistance((const b2DistanceInput*) input, (b2SimplexCache*) cache, (b2Simplex*) simplexes, simplexCapacity );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2ShapeCast
+ * Method:    nb2CastShape
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ShapeCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2CastShape
     (JNIEnv *__env, jclass clazz, jlong input, jlong __result)
 {
-    b2CastOutput* ptr = (b2CastOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2ShapeCast( (const b2ShapeCastPairInput*) input );
+    *(b2CastOutput*)__result = b2CastShape( (const b2ShapeCastPairInput*) input );
 }
 
 /*
@@ -517,15 +502,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2GetSweepTransform
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2TimeOfImpact
+ * Method:    nb2ComputeTimeOfImpact
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2TimeOfImpact
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeTimeOfImpact
     (JNIEnv *__env, jclass clazz, jlong input, jlong __result)
 {
-    b2TOIOutput* ptr = (b2TOIOutput*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2TimeOfImpact( (const b2TOIInput*) input );
+    *(b2TOIOutput*)__result = b2ComputeTimeOfImpact( (const b2TOIInput*) input );
 }
 
 /*
@@ -760,30 +744,26 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Get
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_Query
+ * Method:    nb2DynamicTree_OverlapAABB
  * Signature: (JJJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Query
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1OverlapAABB
     (JNIEnv *__env, jclass clazz, jlong tree, jlong aabbAdd, jlong maskBits, jlong callback, jlong context, jlong __result)
 {
-    b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
-    b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_Query( (const b2DynamicTree*) tree, *aabb, (uint64_t) maskBits, (b2TreeQueryCallbackFcn*) callback, (void*) context );
+    *(b2TreeStats*)__result = b2DynamicTree_OverlapAABB( (const b2DynamicTree*)tree, *(b2AABB*)aabbAdd, (uint64_t)maskBits, (b2TreeQueryCallbackFcn*)callback, (void*)context );
 }
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_QueryAll
+ * Method:    nb2DynamicTree_OverlapAABBAll
  * Signature: (JJJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1QueryAll
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1OverlapAABBAll
     (JNIEnv *__env, jclass clazz, jlong tree, jlong aabbAdd, jlong callback, jlong context, jlong __result)
 {
-    b2TreeStats* ptr = (b2TreeStats*)(uintptr_t)__result;
-    b2AABB* aabb = (b2AABB*)(uintptr_t)aabbAdd;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_QueryAll( (const b2DynamicTree*) tree, *aabb, (b2TreeQueryCallbackFcn*) callback, (void*) context );
+    *(b2TreeStats*)__result = b2DynamicTree_OverlapAABBAll( (const b2DynamicTree*)tree, *(b2AABB*)aabbAdd, (b2TreeQueryCallbackFcn*)callback, (void*)context );
 }
 
 /*
@@ -862,13 +842,13 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetP
 /*
  * Class:     org_box2d_jni_include_Collision
  * Method:    nb2DynamicTree_GetByteCount
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetByteCount
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetByteCount
     (JNIEnv *__env, jclass clazz, jlong tree)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jint)b2DynamicTree_GetByteCount( (const b2DynamicTree*) tree );
+    return (jlong)b2DynamicTree_GetByteCount( (const b2DynamicTree*) tree );
 }
 
 /*
@@ -885,15 +865,14 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1Get
 
 /*
  * Class:     org_box2d_jni_include_Collision
- * Method:    nb2DynamicTree_GetAABB
+ * Method:    nb2DynamicTree_GetProxyBounds
  * Signature: (JIJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetAABB
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2DynamicTree_1GetProxyBounds
     (JNIEnv *__env, jclass clazz, jlong tree, jint proxyId, jlong __result)
 {
-    b2AABB* ptr = (b2AABB*)(uintptr_t)__result;
     UNUSED_PARAMS(__env, clazz)
-    *ptr = b2DynamicTree_GetAABB( (const b2DynamicTree*) tree, proxyId );
+    *(b2AABB*)__result = b2DynamicTree_GetProxyBounds( (const b2DynamicTree*) tree, proxyId );
 }
 
 /*

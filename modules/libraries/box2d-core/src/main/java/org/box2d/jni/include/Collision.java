@@ -77,7 +77,7 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <collision.h>} header of box2d.
  *
  * @author wil
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public final class Collision {
@@ -460,10 +460,10 @@ public final class Collision {
     /* {@code B2_API bool b2PointInPolygon( const b2Polygon* shape, b2Vec2 point ); } */
     public static native boolean nb2PointInPolygon(long shape, long point);
 
-    // --- [ b2RayCastCircle ] ---
+    // --- [ b2CastRayCircle ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2RayCastCircle( const b2Circle* shape, const b2RayCastInput* input ); }
+     * {@code B2_API b2CastOutput b2CastRayCircle( const b2Circle* shape, const b2RayCastInput* input ); }
      *
      * @param shape b2Circle
      * @param input b2RayCastInput
@@ -471,18 +471,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2RayCastCircle(ConstB2Circle shape, ConstB2RayCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastRayCircle(ConstB2Circle shape, ConstB2RayCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2RayCastCircle(shape.address(), input.address(), __result.address());
+        nb2CastRayCircle(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2RayCastCircle( const b2Circle* shape, const b2RayCastInput* input ); } */
-    public static native void nb2RayCastCircle(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastRayCircle( const b2Circle* shape, const b2RayCastInput* input ); } */
+    public static native void nb2CastRayCircle(long shape, long input, long __result);
 
-    // --- [ b2RayCastCapsule ] ---
+    // --- [ b2CastRayCapsule ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2RayCastCapsule( const b2Capsule* shape, const b2RayCastInput* input ); }
+     * {@code B2_API b2CastOutput b2CastRayCapsule( const b2Capsule* shape, const b2RayCastInput* input ); }
      *
      * @param shape b2Capsule
      * @param input b2RayCastInput
@@ -490,18 +490,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2RayCastCapsule(ConstB2Capsule shape, ConstB2RayCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastRayCapsule(ConstB2Capsule shape, ConstB2RayCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2RayCastCapsule(shape.address(), input.address(), __result.address());
+        nb2CastRayCapsule(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2RayCastCapsule( const b2Capsule* shape, const b2RayCastInput* input ); } */
-    public static native void nb2RayCastCapsule(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastRayCapsule( const b2Capsule* shape, const b2RayCastInput* input ); } */
+    public static native void nb2CastRayCapsule(long shape, long input, long __result);
 
-    // --- [ b2RayCastSegment ] ---
+    // --- [ b2CastRaySegment ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2RayCastSegment( const b2Segment* shape, const b2RayCastInput* input, bool oneSided ); }
+     * {@code B2_API b2CastOutput b2CastRaySegment( const b2Segment* shape, const b2RayCastInput* input, bool oneSided ); }
      *
      * @param shape b2Segment
      * @param input b2RayCastInput
@@ -510,18 +510,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2RayCastSegment(ConstB2Segment shape, ConstB2RayCastInput input, boolean oneSided, b2CastOutput __result) {
+    public static b2CastOutput b2CastRaySegment(ConstB2Segment shape, ConstB2RayCastInput input, boolean oneSided, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2RayCastSegment(shape.address(), input.address(), oneSided, __result.address());
+        nb2CastRaySegment(shape.address(), input.address(), oneSided, __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2RayCastSegment( const b2Segment* shape, const b2RayCastInput* input, bool oneSided ); } */
-    public static native void nb2RayCastSegment(long shape, long input, boolean oneSided, long __result);
+    /* {@code B2_API b2CastOutput b2CastRaySegment( const b2Segment* shape, const b2RayCastInput* input, bool oneSided ); } */
+    public static native void nb2CastRaySegment(long shape, long input, boolean oneSided, long __result);
 
-    // --- [ b2RayCastPolygon ] ---
+    // --- [ b2CastRayPolygon ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2RayCastPolygon( const b2Polygon* shape, const b2RayCastInput* input ); }
+     * {@code B2_API b2CastOutput b2CastRayPolygon( const b2Polygon* shape, const b2RayCastInput* input ); }
      *
      * @param shape b2Polygon
      * @param input b2RayCastInput
@@ -529,18 +529,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2RayCastPolygon(ConstB2Polygon shape, ConstB2RayCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastRayPolygon(ConstB2Polygon shape, ConstB2RayCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2RayCastPolygon(shape.address(), input.address(), __result.address());
+        nb2CastRayPolygon(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2RayCastPolygon( const b2Polygon* shape, const b2RayCastInput* input ); } */
-    public static native void nb2RayCastPolygon(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastRayPolygon( const b2Polygon* shape, const b2RayCastInput* input ); } */
+    public static native void nb2CastRayPolygon(long shape, long input, long __result);
 
-    // --- [ b2ShapeCastCircle ] ---
+    // --- [ b2CastShapeCircle ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2ShapeCastCircle(const b2Circle* shape,  const b2ShapeCastInput* input ); }
+     * {@code B2_API b2CastOutput b2CastShapeCircle(const b2Circle* shape,  const b2ShapeCastInput* input ); }
      *
      * @param shape b2Circle
      * @param input b2ShapeCastInput
@@ -548,18 +548,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2ShapeCastCircle(ConstB2Circle shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastShapeCircle(ConstB2Circle shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2ShapeCastCircle(shape.address(), input.address(), __result.address());
+        nb2CastShapeCircle(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2ShapeCastCircle(const b2Circle* shape,  const b2ShapeCastInput* input ); } */
-    public static native void nb2ShapeCastCircle(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastShapeCircle(const b2Circle* shape,  const b2ShapeCastInput* input ); } */
+    public static native void nb2CastShapeCircle(long shape, long input, long __result);
 
-    // --- [ b2ShapeCastCapsule ] ---
+    // --- [ b2CastShapeCapsule ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2ShapeCastCapsule( const b2Capsule* shape, const b2ShapeCastInput* input); }
+     * {@code B2_API b2CastOutput b2CastShapeCapsule( const b2Capsule* shape, const b2ShapeCastInput* input); }
      *
      * @param shape b2Capsule
      * @param input b2ShapeCastInput
@@ -567,18 +567,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2ShapeCastCapsule(ConstB2Capsule shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastShapeCapsule(ConstB2Capsule shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2ShapeCastCapsule(shape.address(), input.address(), __result.address());
+        nb2CastShapeCapsule(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2ShapeCastCapsule( const b2Capsule* shape, const b2ShapeCastInput* input); } */
-    public static native void nb2ShapeCastCapsule(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastShapeCapsule( const b2Capsule* shape, const b2ShapeCastInput* input); } */
+    public static native void nb2CastShapeCapsule(long shape, long input, long __result);
 
-    // --- [ b2ShapeCastSegment ] ---
+    // --- [ b2CastShapeSegment ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2ShapeCastSegment( const b2Segment* shape, const b2ShapeCastInput* input ); }
+     * {@code B2_API b2CastOutput b2CastShapeSegment( const b2Segment* shape, const b2ShapeCastInput* input ); }
      *
      * @param shape b2Segment
      * @param input b2ShapeCastInput
@@ -586,18 +586,18 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2ShapeCastSegment(ConstB2Segment shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastShapeSegment(ConstB2Segment shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2ShapeCastSegment(shape.address(), input.address(), __result.address());
+        nb2CastShapeSegment(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2ShapeCastSegment( const b2Segment* shape, const b2ShapeCastInput* input ); } */
-    public static native void nb2ShapeCastSegment(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastShapeSegment( const b2Segment* shape, const b2ShapeCastInput* input ); } */
+    public static native void nb2CastShapeSegment(long shape, long input, long __result);
 
-    // --- [ b2ShapeCastPolygon ] ---
+    // --- [ b2CastShapePolygon ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2ShapeCastPolygon( const b2Polygon* shape, const b2ShapeCastInput* input ); }
+     * {@code B2_API b2CastOutput b2CastShapePolygon( const b2Polygon* shape, const b2ShapeCastInput* input ); }
      *
      * @param shape b2Polygon
      * @param input b2ShapeCastInput
@@ -605,13 +605,13 @@ public final class Collision {
      * 
      * @return b2CastOutput
      */
-    public static b2CastOutput b2ShapeCastPolygon(ConstB2Polygon shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastShapePolygon(ConstB2Polygon shape, ConstB2ShapeCastInput input, b2CastOutput __result) {
         checkPointers(shape, input, __result);
-        nb2ShapeCastPolygon(shape.address(), input.address(), __result.address());
+        nb2CastShapePolygon(shape.address(), input.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2CastOutput b2ShapeCastPolygon( const b2Polygon* shape, const b2ShapeCastInput* input ); } */
-    public static native void nb2ShapeCastPolygon(long shape, long input, long __result);
+    /* {@code B2_API b2CastOutput b2CastShapePolygon( const b2Polygon* shape, const b2ShapeCastInput* input ); } */
+    public static native void nb2CastShapePolygon(long shape, long input, long __result);
     
     // --- [ b2ComputeHull ] ---
 
@@ -647,10 +647,10 @@ public final class Collision {
     /* {@code B2_API bool b2ValidateHull( const b2Hull* hull ); } */
     public static native boolean nb2ValidateHull(long hull);
 
-    // --- [ b2SegmentDistance ] ---
+    // --- [ b2ComputeSegmentDistance ] ---
 
     /**
-     * {@code B2_API b2SegmentDistanceResult b2SegmentDistance( b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2 ); }
+     * {@code B2_API b2SegmentDistanceResult b2ComputeSegmentDistance( b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2 ); }
      *
      * @param p1 b2Vec2
      * @param q1 b2Vec2
@@ -660,18 +660,18 @@ public final class Collision {
      * 
      * @return b2SegmentDistanceResult
      */
-    public static b2SegmentDistanceResult b2SegmentDistance(b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2, b2SegmentDistanceResult __result) {
+    public static b2SegmentDistanceResult b2ComputeSegmentDistance(b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2, b2SegmentDistanceResult __result) {
         checkPointers(p1, q1, p2, q2, __result);
-        nb2SegmentDistance(p1.address(), q1.address(), p2.address(), q2.address(), __result.address());
+        nb2ComputeSegmentDistance(p1.address(), q1.address(), p2.address(), q2.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2SegmentDistanceResult b2SegmentDistance( b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2 ); } */
-    public static native void nb2SegmentDistance(long p1, long q1, long p2, long q2, long __result);
+    /* {@code B2_API b2SegmentDistanceResult b2ComputeSegmentDistance( b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2 ); } */
+    public static native void nb2ComputeSegmentDistance(long p1, long q1, long p2, long q2, long __result);
 
-    // --- [ b2ShapeDistance ] ---
+    // --- [ b2ComputeShapeDistance ] ---
 
     /**
-     * {@code B2_API b2DistanceOutput b2ShapeDistance( const b2DistanceInput* input, b2SimplexCache* cache, b2Simplex* simplexes, int simplexCapacity ); }
+     * {@code B2_API b2DistanceOutput b2ComputeShapeDistance( const b2DistanceInput* input, b2SimplexCache* cache, b2Simplex* simplexes, int simplexCapacity ); }
      *
      * @param input ConstB2DistanceInput
      * @param cache b2SimplexCache
@@ -681,34 +681,33 @@ public final class Collision {
      *
      * @return b2DistanceOutput
      */
-    public static b2DistanceOutput b2ShapeDistance(ConstB2DistanceInput input, b2SimplexCache cache, b2Simplex simplexes, int simplexCapacity, b2DistanceOutput __result) {
+    public static b2DistanceOutput b2ComputeShapeDistance(ConstB2DistanceInput input, b2SimplexCache cache, b2Simplex simplexes, int simplexCapacity, b2DistanceOutput __result) {
         checkPointers(input, cache, __result);
-        nb2ShapeDistance(input.address(), cache.address(), checkOut(simplexes), simplexCapacity, __result.address());
+        nb2ComputeShapeDistance(input.address(), cache.address(), checkOut(simplexes), simplexCapacity, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2DistanceOutput b2ShapeDistance( const b2DistanceInput* input, b2SimplexCache* cache, b2Simplex* simplexes,  int simplexCapacity ); } */
-    public static native void nb2ShapeDistance(long input, long cache, long simplexes, int simplexCapacity, long __result);
+    /* {@code B2_API b2DistanceOutput b2ComputeShapeDistance( const b2DistanceInput* input, b2SimplexCache* cache, b2Simplex* simplexes,  int simplexCapacity ); } */
+    public static native void nb2ComputeShapeDistance(long input, long cache, long simplexes, int simplexCapacity, long __result);
 
-    // --- [ b2ShapeCast ] ---
+    // --- [ b2CastShape ] ---
 
     /**
-     * {@code B2_API b2CastOutput b2ShapeCast( const b2ShapeCastPairInput* input ); }
+     * {@code B2_API b2CastOutput b2CastShape( const b2ShapeCastPairInput* input ); }
      *
      * @param input ConstB2ShapeCastPairInput
      * @param __result store
      *
      * @return b2CastOutput
      */
-    public static b2CastOutput b2ShapeCast(ConstB2ShapeCastPairInput input, b2CastOutput __result) {
+    public static b2CastOutput b2CastShape(ConstB2ShapeCastPairInput input, b2CastOutput __result) {
         checkPointers(input, __result);
-        nb2ShapeCast(input.address(), __result.address());
+        nb2CastShape(input.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2CastOutput b2ShapeCast( const b2ShapeCastPairInput* input ); } */
-    public static native void nb2ShapeCast(long input, long __result);
-
+    /* {@code B2_API b2CastOutput b2CastShape( const b2ShapeCastPairInput* input ); } */
+    public static native void nb2CastShape(long input, long __result);
 
     // --- [ b2MakeProxy ] ---
 
@@ -730,7 +729,6 @@ public final class Collision {
 
     /* {@code B2_API b2ShapeProxy b2MakeProxy( const b2Vec2* points, int count, float radius ); } */
     public static native void nb2MakeProxy(long points, int count, float radius, long __result);
-
 
     // --- [ b2MakeOffsetProxy ] ---
 
@@ -775,24 +773,24 @@ public final class Collision {
     /* {@code B2_API b2Transform b2GetSweepTransform( const b2Sweep* sweep, float time ); } */
     public static native void nb2GetSweepTransform(long sweep, float time, long __result);
 
-    // --- [ b2TimeOfImpact ] ---
+    // --- [ b2ComputeTimeOfImpact ] ---
 
     /**
-     * {@code B2_API b2TOIOutput b2TimeOfImpact( const b2TOIInput* input ); }
+     * {@code B2_API b2TOIOutput b2ComputeTimeOfImpact( const b2TOIInput* input ); }
      *
      * @param input ConstB2TOIInput
      * @param __result store
      *
      * @return b2TOIOutput
      */
-    public static b2TOIOutput b2TimeOfImpact(ConstB2TOIInput input, b2TOIOutput __result) {
+    public static b2TOIOutput b2ComputeTimeOfImpact(ConstB2TOIInput input, b2TOIOutput __result) {
         checkPointers(input, __result);
-        nb2TimeOfImpact(input.address(), __result.address());
+        nb2ComputeTimeOfImpact(input.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TOIOutput b2TimeOfImpact( const b2TOIInput* input ); } */
-    public static native void nb2TimeOfImpact(long input, long __result);
+    /* {@code B2_API b2TOIOutput b2ComputeTimeOfImpact( const b2TOIInput* input ); } */
+    public static native void nb2ComputeTimeOfImpact(long input, long __result);
 
     // --- [ b2CollideCircles ] ---
 
@@ -814,7 +812,6 @@ public final class Collision {
 
     /* {@code B2_API b2LocalManifold b2CollideCircles( const b2Circle* circleA, const b2Circle* circleB, b2Transform xf );} */
     public static native void nb2CollideCircles(long circleA, long circleB, long xf, long __result);
-
 
     // --- [ b2CollideCapsuleAndCircle ] ---
 
@@ -858,7 +855,6 @@ public final class Collision {
     /* {@code B2_API b2LocalManifold b2CollideSegmentAndCircle( const b2Segment* segmentA, const b2Circle* circleB, b2Transform xf ); } } */
     public static native void nb2CollideSegmentAndCircle(long segmentA, long circleB, long xf, long __result);
 
-
     // --- [ b2CollidePolygonAndCircle ] ---
 
     /**
@@ -880,7 +876,6 @@ public final class Collision {
     /* {@code B2_API b2LocalManifold b2CollidePolygonAndCircle( const b2Polygon* polygonA, const b2Circle* circleB, b2Transform xf ); } */
     public static native void nb2CollidePolygonAndCircle(long polygonA, long circleB, long xf, long __result);
 
-
     // --- [ b2CollideCapsules ] ---
 
     /**
@@ -901,7 +896,6 @@ public final class Collision {
 
     /* {@code B2_API b2LocalManifold b2CollideCapsules( const b2Capsule* capsuleA, const b2Capsule* capsuleB, b2Transform xf ); } */
     public static native void nb2CollideCapsules(long capsuleA, long capsuleB, long xf, long __result);
-
 
     // --- [ b2CollideSegmentAndCapsule ] ---
 
@@ -945,7 +939,6 @@ public final class Collision {
     /* {@code B2_API b2LocalManifold b2CollidePolygonAndCapsule( const b2Polygon* polygonA, const b2Capsule* capsuleB, b2Transform xf ); }  */
     public static native void nb2CollidePolygonAndCapsule(long polygonA, long capsuleB, long xf, long __result);
 
-
     // --- [ b2CollidePolygons ] ---
 
     /**
@@ -966,7 +959,6 @@ public final class Collision {
 
     /* {@code B2_API b2LocalManifold b2CollidePolygons( const b2Polygon* polygonA, const b2Polygon* polygonB, b2Transform xf ); } */
     public static native void nb2CollidePolygons(long polygonA, long polygonB, long xf, long __result);
-
 
     // --- [ b2CollideSegmentAndPolygon ] ---
 
@@ -989,7 +981,6 @@ public final class Collision {
     /* {@code B2_API b2LocalManifold b2CollideSegmentAndPolygon( const b2Segment* segmentA, const b2Polygon* polygonB, b2Transform xf ); } */
     public static native void nb2CollideSegmentAndPolygon(long segmentA, long polygonB, long xf, long __result);
 
-
     // --- [ b2CollideChainSegmentAndCircle ] ---
 
     /**
@@ -1010,7 +1001,6 @@ public final class Collision {
 
     /* {@code B2_API b2LocalManifold b2CollideChainSegmentAndCircle( const b2ChainSegment* segmentA, const b2Circle* circleB, b2Transform xf ); } */
     public static native void nb2CollideChainSegmentAndCircle(long segmentA, long circleB, long xf, long __result);
-
 
     // --- [ b2CollideChainSegmentAndCapsule ] ---
 
@@ -1033,7 +1023,6 @@ public final class Collision {
 
     /* {@code B2_API b2LocalManifold b2CollideChainSegmentAndCapsule( const b2ChainSegment* segmentA, const b2Capsule* capsuleB, b2Transform xf, b2SimplexCache* cache ); } */
     public static native void nb2CollideChainSegmentAndCapsule(long segmentA, long capsuleB, long xf, long cache, long __result);
-
 
     // --- [ b2CollideChainSegmentAndPolygon ] ---
 
@@ -1076,7 +1065,6 @@ public final class Collision {
     /* {@code B2_API b2DynamicTree b2CreateDynamicTree( int proxyCapacity ); } */
     public static native void nb2CreateDynamicTree(int proxyCapacity, long __result);
 
-
     // --- [ b2DestroyDynamicTree ] ---
 
     /**
@@ -1091,7 +1079,6 @@ public final class Collision {
 
     /* {@code B2_API void b2DestroyDynamicTree( b2DynamicTree* tree ); } */
     public static native void nb2DestroyDynamicTree(long tree);
-
 
     // --- [ b2CreateTreeProxy ] ---
 
@@ -1112,7 +1099,6 @@ public final class Collision {
 
     /* {@code B2_API int b2CreateTreeProxy( b2DynamicTree* tree, b2AABB aabb, uint64_t categoryBits, uint64_t userData ); } */
     public static native int nb2CreateTreeProxy(long tree, long aabb, long categoryBits, long userData);
-
 
     // --- [ b2DestroyTreeProxy ] ---
 
@@ -1164,7 +1150,6 @@ public final class Collision {
     /* {@code B2_API void b2DynamicTree_SetCategoryBits( b2DynamicTree* tree, int proxyId, uint64_t categoryBits ); } */
     public static native void nb2DynamicTree_SetCategoryBits(long tree, int proxyId, long categoryBits);
 
-
     // --- [ b2DynamicTree_GetCategoryBits ] ---
 
     /**
@@ -1183,10 +1168,10 @@ public final class Collision {
     /* {@code B2_API uint64_t b2DynamicTree_GetCategoryBits( b2DynamicTree* tree, int proxyId ); } */
     public static native long nb2DynamicTree_GetCategoryBits(long tree, int proxyId);
 
-    // --- [ b2DynamicTree_Query ] ---
+    // --- [ b2DynamicTree_OverlapAABB ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2DynamicTree_Query( const b2DynamicTree* tree, b2AABB aabb, uint64_t maskBits, b2TreeQueryCallbackFcn* callback, void* context ); }
+     * {@code B2_API b2TreeStats b2DynamicTree_OverlapAABB( const b2DynamicTree* tree, b2AABB aabb, uint64_t maskBits, b2TreeQueryCallbackFcn* callback, void* context ); }
      *
      * @param tree ConstB2DynamicTree
      * @param aabb b2AABB
@@ -1197,20 +1182,19 @@ public final class Collision {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2DynamicTree_Query(ConstB2DynamicTree tree, b2AABB aabb, long maskBits, b2TreeQueryCallbackFcnI callback, long context, b2TreeStats __result) {
+    public static b2TreeStats b2DynamicTree_OverlapAABB(ConstB2DynamicTree tree, b2AABB aabb, long maskBits, b2TreeQueryCallbackFcnI callback, long context, b2TreeStats __result) {
         checkPointers(tree, aabb, callback, __result);
-        nb2DynamicTree_Query(tree.address(), aabb.address(), maskBits, callback.address(), context, __result.address());
+        nb2DynamicTree_OverlapAABB(tree.address(), aabb.address(), maskBits, callback.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2DynamicTree_Query( const b2DynamicTree* tree, b2AABB aabb, uint64_t maskBits, b2TreeQueryCallbackFcn* callback, void* context ); } */
-    public static native void nb2DynamicTree_Query(long tree, long aabb, long maskBits, long callback, long context, long __result);
+    /* {@code B2_API b2TreeStats b2DynamicTree_OverlapAABB( const b2DynamicTree* tree, b2AABB aabb, uint64_t maskBits, b2TreeQueryCallbackFcn* callback, void* context ); } */
+    public static native void nb2DynamicTree_OverlapAABB(long tree, long aabb, long maskBits, long callback, long context, long __result);
 
-
-    // --- [ b2DynamicTree_QueryAll ] ---
+    // --- [ b2DynamicTree_OverlapAABBAll ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2DynamicTree_QueryAll( const b2DynamicTree* tree, b2AABB aabb, b2TreeQueryCallbackFcn* callback, void* context ); }
+     * {@code B2_API b2TreeStats b2DynamicTree_OverlapAABBAll( const b2DynamicTree* tree, b2AABB aabb, b2TreeQueryCallbackFcn* callback, void* context ); }
      *
      * @param tree ConstB2DynamicTree
      * @param aabb b2AABB
@@ -1220,15 +1204,15 @@ public final class Collision {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2DynamicTree_QueryAll(ConstB2DynamicTree tree, b2AABB aabb, b2TreeQueryCallbackFcnI callback, long context, b2TreeStats __result) {
+    public static b2TreeStats b2DynamicTree_OverlapAABBAll(ConstB2DynamicTree tree, b2AABB aabb, b2TreeQueryCallbackFcnI callback, long context, b2TreeStats __result) {
         checkPointers(tree, aabb, callback, __result);
-        nb2DynamicTree_QueryAll(tree.address(), aabb.address(), callback.address(), context, __result.address());
+        nb2DynamicTree_OverlapAABBAll(tree.address(), aabb.address(), callback.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2DynamicTree_QueryAll( const b2DynamicTree* tree, b2AABB aabb, b2TreeQueryCallbackFcn* callback,
+    /* {@code B2_API b2TreeStats b2DynamicTree_OverlapAABBAll( const b2DynamicTree* tree, b2AABB aabb, b2TreeQueryCallbackFcn* callback,
      *                                                   void* context ); } */
-    public static native void nb2DynamicTree_QueryAll(long tree, long aabb, long callback, long context, long __result);
+    public static native void nb2DynamicTree_OverlapAABBAll(long tree, long aabb, long callback, long context, long __result);
 
     // --- [ b2DynamicTree_CastRay ] ---
 
@@ -1276,7 +1260,6 @@ public final class Collision {
     /* {@code B2_API b2TreeStats b2DynamicTree_CastBox( const b2DynamicTree* tree, const b2BoxCastInput* input, uint64_t maskBits, b2TreeBoxCastCallbackFcn* callback, void* context ); } */
     public static native void nb2DynamicTree_CastBox(long tree, long input, long maskBits, long callback, long context, long __result);
 
-
     // --- [ b2DynamicTree_GetHeight ] ---
 
     /**
@@ -1294,7 +1277,6 @@ public final class Collision {
     /* {@code B2_API int b2DynamicTree_GetHeight( const b2DynamicTree* tree ); } */
     public static native int nb2DynamicTree_GetHeight(long tree);
 
-
     // --- [ b2DynamicTree_GetAreaRatio ] ---
 
     /**
@@ -1311,7 +1293,6 @@ public final class Collision {
 
     /* {@code B2_API float b2DynamicTree_GetAreaRatio( const b2DynamicTree* tree ); } */
     public static native float nb2DynamicTree_GetAreaRatio(long tree);
-
 
     // --- [ b2DynamicTree_GetRootBounds ] ---
 
@@ -1331,7 +1312,6 @@ public final class Collision {
 
     /* {@code B2_API b2AABB b2DynamicTree_GetRootBounds( const b2DynamicTree* tree ); } */
     public static native void nb2DynamicTree_GetRootBounds(long tree, long __result);
-
 
     // --- [ b2DynamicTree_GetProxyCount ] ---
 
@@ -1353,20 +1333,19 @@ public final class Collision {
     // --- [ b2DynamicTree_GetByteCount ] ---
 
     /**
-     * {@code B2_API int b2DynamicTree_GetByteCount( const b2DynamicTree* tree ); }
+     * {@code B2_API size_t b2DynamicTree_GetByteCount( const b2DynamicTree* tree ); }
      *
      * @param tree ConstB2DynamicTree
      *
-     * @return int
+     * @return long
      */
-    public static int b2DynamicTree_GetByteCount(ConstB2DynamicTree tree) {
+    public static long b2DynamicTree_GetByteCount(ConstB2DynamicTree tree) {
         checkPointers(tree);
         return nb2DynamicTree_GetByteCount(tree.address());
     }
 
-    /* {@code B2_API int b2DynamicTree_GetByteCount( const b2DynamicTree* tree ); } */
-    public static native int nb2DynamicTree_GetByteCount(long tree);
-
+    /* {@code B2_API size_t b2DynamicTree_GetByteCount( const b2DynamicTree* tree ); } */
+    public static native long nb2DynamicTree_GetByteCount(long tree);
 
     // --- [ b2DynamicTree_GetUserData ] ---
 
@@ -1386,11 +1365,10 @@ public final class Collision {
     /* {@code B2_API uint64_t b2DynamicTree_GetUserData( const b2DynamicTree* tree, int proxyId ); } */
     public static native long nb2DynamicTree_GetUserData(long tree, int proxyId);
 
-
-    // --- [ b2DynamicTree_GetAABB ] ---
+    // --- [ b2DynamicTree_GetProxyBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2DynamicTree_GetAABB( const b2DynamicTree* tree, int proxyId ); }
+     * {@code B2_API b2AABB b2DynamicTree_GetProxyBounds( const b2DynamicTree* tree, int proxyId ); }
      *
      * @param tree ConstB2DynamicTree
      * @param proxyId int
@@ -1398,15 +1376,14 @@ public final class Collision {
      *
      * @return b2AABB
      */
-    public static b2AABB b2DynamicTree_GetAABB(ConstB2DynamicTree tree, int proxyId, b2AABB __result) {
+    public static b2AABB b2DynamicTree_GetProxyBounds(ConstB2DynamicTree tree, int proxyId, b2AABB __result) {
         checkPointers(tree, __result);
-        nb2DynamicTree_GetAABB(tree.address(), proxyId, __result.address());
+        nb2DynamicTree_GetProxyBounds(tree.address(), proxyId, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2AABB b2DynamicTree_GetAABB( const b2DynamicTree* tree, int proxyId ); } */
-    public static native void nb2DynamicTree_GetAABB(long tree, int proxyId, long __result);
-
+    /* {@code B2_API b2AABB b2DynamicTree_GetProxyBounds( const b2DynamicTree* tree, int proxyId ); } */
+    public static native void nb2DynamicTree_GetProxyBounds(long tree, int proxyId, long __result);
 
     // --- [ b2DynamicTree_Validate ] ---
 
@@ -1443,7 +1420,6 @@ public final class Collision {
 
     /* {@code B2_API b2PlaneSolverResult b2SolvePlanes( b2Vec2 targetDelta, b2CollisionPlane* planes, int count ); } */
     public static native void nb2SolvePlanes(long targetDelta, long planes, int count, long __result);
-
 
     // --- [ b2ClipVector ] ---
 

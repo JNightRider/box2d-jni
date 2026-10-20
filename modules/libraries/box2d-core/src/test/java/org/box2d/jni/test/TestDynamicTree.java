@@ -343,7 +343,7 @@ public class TestDynamicTree {
         b2AABB queryA = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -2.0f, -2.0f )).upperBound(b2Vec2.malloc().set( 2.0f, 2.0f ));
 
         IntBuffer foundFlags = memCreateIntBuffer(32);
-        b2TreeStats stats = b2DynamicTree_Query( tree, queryA, 0xFFFFFFFFl, QueryCollectCallback, memGetNativeAddress(foundFlags), b2TreeStats.malloc());
+        b2TreeStats stats = b2DynamicTree_OverlapAABB( tree, queryA, 0xFFFFFFFFl, QueryCollectCallback, memGetNativeAddress(foundFlags), b2TreeStats.malloc());
 
         // We expect at least the middle proxy to be visited.
         ENSURE( foundFlags.get(id2) == 1 );
@@ -351,7 +351,7 @@ public class TestDynamicTree {
 
         // Test QueryAll using list collector
         IntBuffer list = memCreateIntBuffer(16); // list[0] holds count, following entries are ids
-        b2TreeStats allStats = b2DynamicTree_QueryAll( tree, queryA, QueryCollectListCallback, memGetNativeAddress(list), b2TreeStats.malloc() );
+        b2TreeStats allStats = b2DynamicTree_OverlapAABBAll( tree, queryA, QueryCollectListCallback, memGetNativeAddress(list), b2TreeStats.malloc() );
         ENSURE( list.get(0) >= 1 ); // at least one proxy should be collected
         ENSURE( allStats.leafVisits() >= 1 );
 
@@ -370,7 +370,7 @@ public class TestDynamicTree {
         b2AABB moved = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 10.0f, 10.0f )).upperBound(b2Vec2.malloc().set( 11.0f, 11.0f ));
         b2DynamicTree_MoveProxy( tree, id, moved );
 
-        b2AABB got = b2DynamicTree_GetAABB( tree, id, b2AABB.malloc() );
+        b2AABB got = b2DynamicTree_GetProxyBounds( tree, id, b2AABB.malloc() );
         ENSURE(Objects.equals(got.lowerBound().x(), moved.lowerBound().x()));
         ENSURE(Objects.equals(got.lowerBound().y(), moved.lowerBound().y()));
         ENSURE(Objects.equals(got.upperBound().x(), moved.upperBound().x()));
@@ -488,7 +488,7 @@ public class TestDynamicTree {
         {
             for (int j = 0; j < GRID_COUNT; ++j)
             {
-                b2AABB a = b2DynamicTree_GetAABB( tree, proxyIds[index], b2AABB.malloc() );
+                b2AABB a = b2DynamicTree_GetProxyBounds( tree, proxyIds[index], b2AABB.malloc() );
                 a.lowerBound(b2Add( a.lowerBound(), offset, b2Vec2.malloc() ));
                 a.upperBound(b2Add( a.upperBound(), offset, b2Vec2.malloc() ));
                 b2DynamicTree_MoveProxy( tree, proxyIds[index], a );
