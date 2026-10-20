@@ -40,7 +40,7 @@ import static org.box2d.jni.system.Pointer.*;
  * Class that represents the {@code <constants.h>} header of box2d.
  *
  * @author wil
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public final class Constants {
