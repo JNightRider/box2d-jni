@@ -61,8 +61,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidVe
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Vec2* ptr = (b2Vec2*)(uintptr_t) address;
-    return (jboolean) b2IsValidVec2( *ptr );
+    return (jboolean) b2IsValidVec2( *(b2Vec2*)address );
 }
 
 /*
@@ -74,8 +73,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidRo
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Rot* ptr = (b2Rot*)(uintptr_t) address;
-    return (jboolean) b2IsValidRot( *ptr );
+    return (jboolean) b2IsValidRot( *(b2Rot*)address );
 }
 
 /*
@@ -87,8 +85,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidTr
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Transform* t = (b2Transform*)(uintptr_t) address;
-    return (jboolean) b2IsValidTransform( *t );
+    return (jboolean) b2IsValidTransform( *(b2Transform*)address );
 }
 
 /*
@@ -100,8 +97,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsValidAA
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2AABB* aabb = (b2AABB*)(uintptr_t) address;
-    return (jboolean) b2IsValidAABB( *aabb );
+    return (jboolean) b2IsValidAABB( *(b2AABB*)address );
 }
 
 /*
@@ -113,8 +109,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_n2IsValidPla
     (JNIEnv *__env, jclass clazz, jlong address)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Plane* a = (b2Plane*)(uintptr_t) address;
-    return (jboolean) b2IsValidPlane( *a );
+    return (jboolean) b2IsValidPlane( *(b2Plane*)address );
 }
 
 /*
@@ -270,8 +265,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2ComputeCosSin
     (JNIEnv *__env, jclass clazz, jfloat radians, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2CosSin* ptr = (b2CosSin*)(uintptr_t)__result;
-    *ptr = b2ComputeCosSin( radians );
+    *(b2CosSin*)__result = b2ComputeCosSin( radians );
 }
 
 /*
@@ -280,12 +274,10 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2ComputeCosSin
  * Signature: (JJ)F
  */
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_MathFunctions_nb2Dot
-    (JNIEnv *__env, jclass clazz, jlong aAddress, jlong bAddress)
+    (JNIEnv *__env, jclass clazz, jlong a, jlong b)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Vec2* a = (b2Vec2*)(uintptr_t)aAddress;
-    b2Vec2* b = (b2Vec2*)(uintptr_t)bAddress;
-    return (jfloat) b2Dot( *a, *b );
+    return (jfloat) b2Dot( *(b2Vec2*)a, *(b2Vec2*)b );
 }
 
 /*
@@ -297,9 +289,7 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_MathFunctions_nb2Cross
     (JNIEnv *__env, jclass clazz, jlong aAddress, jlong bAddress)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Vec2* a = (b2Vec2*)(uintptr_t)aAddress;
-    b2Vec2* b = (b2Vec2*)(uintptr_t)bAddress;
-    return (jfloat)  b2Cross( *a, *b );
+    return (jfloat) b2Cross( *(b2Vec2*)aAddress, *(b2Vec2*)bAddress );
 }
 
 /*
@@ -311,9 +301,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2CrossVS
     (JNIEnv *__env, jclass clazz, jlong vAddress, jfloat s, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Vec2* ptr = (b2Vec2*)(uintptr_t)__result;
-    b2Vec2* v = (b2Vec2*)(uintptr_t)vAddress;
-    *ptr = b2CrossVS(  *v, s );
+    *(b2Vec2*)__result = b2CrossVS( *(b2Vec2*)vAddress, s );
 }
 
 /*
