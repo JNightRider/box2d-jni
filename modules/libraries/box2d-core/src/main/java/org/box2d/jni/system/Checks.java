@@ -37,7 +37,7 @@ import static org.box2d.jni.system.Pointer.*;
  * An internal-use class for verifying objects used by Box2dJNI.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Checks {
