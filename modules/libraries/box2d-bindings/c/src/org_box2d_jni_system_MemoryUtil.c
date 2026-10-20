@@ -67,6 +67,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_system_MemoryUtil_nmemFree
 
 /*
  * Class:     org_box2d_jni_system_MemoryUtil
+ * Method:    nmemAddress0
+ * Signature: (Ljava/nio/Buffer;)J
+ */
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_system_MemoryUtil_nmemAddress0
+    (JNIEnv * __env, jclass clazz, jobject buffer)
+{
+    void* ptr = (*__env)->GetDirectBufferAddress(__env, buffer);
+    return (jlong)(uintptr_t)ptr;
+}
+
+/*
+ * Class:     org_box2d_jni_system_MemoryUtil
  * Method:    nGetStringUTFChars
  * Signature: (Ljava/lang/String;Z)J
  */

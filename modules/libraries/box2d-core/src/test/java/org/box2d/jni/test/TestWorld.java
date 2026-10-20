@@ -347,8 +347,8 @@ public class TestWorld {
 
         b2World_SetContactTuning( worldId, 10.0f, 2.0f, 4.0f );
 
-        b2World_SetMaximumLinearSpeed( worldId, 10.0f );
-        value = b2World_GetMaximumLinearSpeed( worldId );
+        b2World_SetMaxLinearSpeed( worldId, 10.0f );
+        value = b2World_GetMaxLinearSpeed( worldId );
         ENSURE( value == 10.0f );
 
         b2World_EnableWarmStarting( worldId, true );
@@ -612,10 +612,10 @@ public class TestWorld {
         bodyDef.enableSleep(false);
         b2BodyId bodyId = b2CreateBody( worldId, bodyDef, b2BodyId.malloc() );
 
-        ENSURE( b2Body_IsSleepEnabled( bodyId ) == false );
+        ENSURE( b2Body_IsSleepingEnabled( bodyId ) == false );
 
-        b2Body_EnableSleep( bodyId, true );
-        ENSURE( b2Body_IsSleepEnabled( bodyId ) == true );
+        b2Body_EnableSleeping( bodyId, true );
+        ENSURE( b2Body_IsSleepingEnabled( bodyId ) == true );
 
         b2World_Step( worldId, 1.0f / 60.0f, 4 );
 

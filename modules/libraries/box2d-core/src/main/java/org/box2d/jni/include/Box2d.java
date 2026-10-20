@@ -39,7 +39,7 @@ import org.box2d.jni.b2BodyId;
 import org.box2d.jni.b2BodyType;
 import org.box2d.jni.b2Capacity;
 import org.box2d.jni.b2Capsule;
-import org.box2d.jni.b2CastResultFcnI;
+import org.box2d.jni.b2CastResultCallbackFcnI;
 import org.box2d.jni.b2ChainId;
 import org.box2d.jni.b2ChainSegment;
 import org.box2d.jni.b2Circle;
@@ -47,21 +47,21 @@ import org.box2d.jni.b2ContactData;
 import org.box2d.jni.b2ContactEvents;
 import org.box2d.jni.b2ContactId;
 import org.box2d.jni.b2Counters;
-import org.box2d.jni.b2CustomFilterFcnI;
+import org.box2d.jni.b2CustomFilterCallbackFcnI;
 import org.box2d.jni.b2DebugDraw;
 import org.box2d.jni.b2Filter;
-import org.box2d.jni.b2FrictionCallbackI;
+import org.box2d.jni.b2FrictionCallbackFcnI;
 import org.box2d.jni.b2JointEvents;
 import org.box2d.jni.b2JointId;
 import org.box2d.jni.b2JointType;
 import org.box2d.jni.b2MassData;
 import org.box2d.jni.b2MotionLocks;
-import org.box2d.jni.b2OverlapResultFcnI;
-import org.box2d.jni.b2PlaneResultFcnI;
+import org.box2d.jni.b2OverlapResultCallbackFcnI;
+import org.box2d.jni.b2PlaneResultCallbackFcnI;
 import org.box2d.jni.b2Polygon;
 import org.box2d.jni.b2Pos;
-import org.box2d.jni.b2PreContinuousFcnI;
-import org.box2d.jni.b2PreSolveFcnI;
+import org.box2d.jni.b2PreContinuousCallbackFcnI;
+import org.box2d.jni.b2PreSolveCallbackFcnI;
 import org.box2d.jni.b2Profile;
 import org.box2d.jni.b2QueryFilter;
 import org.box2d.jni.b2RayResult;
@@ -70,7 +70,7 @@ import org.box2d.jni.b2ReplayInfo;
 import org.box2d.jni.b2ReplayQueryHit;
 import org.box2d.jni.b2ReplayQueryInfo;
 import org.box2d.jni.b2Recording;
-import org.box2d.jni.b2RestitutionCallbackI;
+import org.box2d.jni.b2RestitutionCallbackFcnI;
 import org.box2d.jni.b2Rot;
 import org.box2d.jni.b2Segment;
 import org.box2d.jni.b2SensorEvents;
@@ -119,7 +119,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * Class that represents the {@code <box2d.h>} header of box2d.
  *
  * @author wil
- * @version 1.4.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public final class Box2d {
@@ -307,7 +307,7 @@ public final class Box2d {
     // --- [ b2World_OverlapAABB ] ---
 
     /**
-     * {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); }
+     * {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultCallbackFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
      * @param origin b2Pos
@@ -319,19 +319,19 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_OverlapAABB(b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcnI fcn, long context, b2TreeStats __result) {
+    public static b2TreeStats b2World_OverlapAABB(b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultCallbackFcnI fcn, long context, b2TreeStats __result) {
         checkPointers(worldId, origin,  aabb, filter, fcn, __result);
         nb2World_OverlapAABB(worldId.address(), origin.address(), aabb.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); } } */
+    /* {@code b2TreeStats b2World_OverlapAABB( b2WorldId worldId, b2Pos origin, b2AABB aabb, b2QueryFilter filter, b2OverlapResultCallbackFcn* fcn, void* context ); } } */
     public static native void nb2World_OverlapAABB(long worldId, long origin, long aabb, long filter, long fcn, long context, long __result);
 
     // --- [ b2World_OverlapShape ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context ); }
+     * {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultCallbackFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
      * @param origin b2Pos
@@ -343,19 +343,19 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_OverlapShape(b2WorldId worldId, b2Pos origin, ConstB2ShapeProxy proxy, b2QueryFilter filter, b2OverlapResultFcnI fcn, long context, b2TreeStats __result) {
+    public static b2TreeStats b2World_OverlapShape(b2WorldId worldId, b2Pos origin, ConstB2ShapeProxy proxy, b2QueryFilter filter, b2OverlapResultCallbackFcnI fcn, long context, b2TreeStats __result) {
         checkPointers(worldId, origin, proxy, filter, fcn, __result);
         nb2World_OverlapShape(worldId.address(), origin.address(), proxy.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultFcn* fcn, void* context );} */
+    /* {@code B2_API b2TreeStats b2World_OverlapShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2QueryFilter filter, b2OverlapResultCallbackFcnI* fcn, void* context );} */
     public static native void nb2World_OverlapShape(long worldId, long origin, long proxy, long filter, long fcn, long context, long __result);
 
     // --- [ b2World_CastRay ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); }
+     * {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultCallbackFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
      * @param origin b2Pos
@@ -367,13 +367,13 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_CastRay(b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcnI fcn, long context, b2TreeStats __result) {
+    public static b2TreeStats b2World_CastRay(b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultCallbackFcnI fcn, long context, b2TreeStats __result) {
         checkPointers(worldId, origin, translation, filter, fcn, __result);
         nb2World_CastRay(worldId.address(), origin.address(), translation.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } */
+    /* {@code B2_API b2TreeStats b2World_CastRay( b2WorldId worldId, b2Pos origin, b2Vec2 translation, b2QueryFilter filter, b2CastResultCallbackFcn* fcn, void* context ); } */
     public static native void nb2World_CastRay(long worldId, long origin, long translation, long filter, long fcn, long context, long __result);
 
     // --- [ b2World_CastRayClosest ] ---
@@ -401,7 +401,7 @@ public final class Box2d {
     // --- [ b2World_CastShape ] ---
 
     /**
-     * {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); }
+     * {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultCallbackFcn* fcn, void* context ); }
      * 
      * 
      * @param worldId b2WorldId
@@ -415,13 +415,13 @@ public final class Box2d {
      *
      * @return b2TreeStats
      */
-    public static b2TreeStats b2World_CastShape(b2WorldId worldId, b2Pos origin, ConstB2ShapeProxy proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcnI fcn, long context, b2TreeStats __result) {
+    public static b2TreeStats b2World_CastShape(b2WorldId worldId, b2Pos origin, ConstB2ShapeProxy proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultCallbackFcnI fcn, long context, b2TreeStats __result) {
         checkPointers(worldId, origin, proxy, translation, filter, fcn, __result);
         nb2World_CastShape(worldId.address(), origin.address(), proxy.address(), translation.address(), filter.address(), fcn.address(), context, __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultFcn* fcn, void* context ); } } */
+    /* {@code B2_API b2TreeStats b2World_CastShape( b2WorldId worldId, b2Pos origin, const b2ShapeProxy* proxy, b2Vec2 translation, b2QueryFilter filter, b2CastResultCallbackFcn* fcn, void* context ); } } */
     public static native void nb2World_CastShape(long worldId, long origin, long proxy, long translation, long filter, long fcn, long context, long __result);
 
     // --- [ b2World_CastMover ] ---
@@ -448,7 +448,7 @@ public final class Box2d {
     // --- [ b2World_CollideMover ] ---
 
     /**
-     * {@code B2_API void b2World_CollideMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultFcn* fcn, void* context ); }
+     * {@code B2_API void b2World_CollideMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultCallbackFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
      * @param origin b2Pos
@@ -457,12 +457,12 @@ public final class Box2d {
      * @param fcn long
      * @param context long
      */
-    public static void b2World_CollideMover(b2WorldId worldId, b2Pos origin, ConstB2Capsule mover, b2QueryFilter filter, b2PlaneResultFcnI fcn, long context) {
+    public static void b2World_CollideMover(b2WorldId worldId, b2Pos origin, ConstB2Capsule mover, b2QueryFilter filter, b2PlaneResultCallbackFcnI fcn, long context) {
         checkPointers(worldId, origin, mover, filter, fcn);
         nb2World_CollideMover(worldId.address(), origin.address(), mover.address(), filter.address(), fcn.address(), context);
     }
 
-    /* {@code B2_API void b2World_CollideMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultFcn* fcn, void* context ); } */
+    /* {@code B2_API void b2World_CollideMover( b2WorldId worldId, b2Pos origin, const b2Capsule* mover, b2QueryFilter filter, b2PlaneResultCallbackFcn* fcn, void* context ); } */
     public static native void nb2World_CollideMover(long worldId, long origin, long mover, long filter, long fcn, long context);
 
     // --- [ b2World_EnableSleeping ] ---
@@ -666,36 +666,36 @@ public final class Box2d {
     // --- [ b2World_SetCustomFilterCallback ] ---
 
     /**
-     * {@code B2_API void b2World_SetCustomFilterCallback( b2WorldId worldId, b2CustomFilterFcn* fcn, void* context ); }
+     * {@code B2_API void b2World_SetCustomFilterCallback( b2WorldId worldId, b2CustomFilterCallbackFcn* fcn, void* context ); }
      *
      * @param worldId b2WorldId
      * @param fcn long
      * @param context long
      */
-    public static void b2World_SetCustomFilterCallback(b2WorldId worldId, b2CustomFilterFcnI fcn, long context) {
+    public static void b2World_SetCustomFilterCallback(b2WorldId worldId, b2CustomFilterCallbackFcnI fcn, long context) {
         checkPointers(worldId, fcn);
         nb2World_SetCustomFilterCallback(worldId.address(), fcn.address(), context);
     }
 
-    /* {@code B2_API void b2World_SetCustomFilterCallback( b2WorldId worldId, b2CustomFilterFcn* fcn, void* context ); } */
+    /* {@code B2_API void b2World_SetCustomFilterCallback( b2WorldId worldId, b2CustomFilterCallbackFcn* fcn, void* context ); } */
     public static native void nb2World_SetCustomFilterCallback(long worldId, long fcn, long context);
 
     // --- [ b2World_SetPreSolveCallback ] ---
 
     /**
-     * {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* preSolveFcn, b2PreContinuousFcn* preContinuousFcn, void* context ); }
+     * {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveCallbackFcn* preSolveFcn, b2PreContinuousCallbackFcn* preContinuousFcn, void* context ); }
      *
      * @param worldId b2WorldId
-     * @param preSolveFcn b2PreSolveFcnI
-     * @param preContinuousFcn b2PreContinuousFcnI
+     * @param preSolveFcn b2PreSolveCallbackFcnI
+     * @param preContinuousFcn b2PreContinuousCallbackFcnI
      * @param context long
      */
-    public static void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcnI preSolveFcn, b2PreContinuousFcnI preContinuousFcn, long context ) {
+    public static void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveCallbackFcnI preSolveFcn, b2PreContinuousCallbackFcnI preContinuousFcn, long context ) {
         checkPointers(worldId, preSolveFcn);
         nb2World_SetPreSolveCallback(worldId.address(), preSolveFcn.address(), checkOut(preContinuousFcn), context);
     }
 
-    /* {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveFcn* preSolveFcn, b2PreContinuousFcn* preContinuousFcn, void* context ); } */
+    /* {@code B2_API void b2World_SetPreSolveCallback( b2WorldId worldId, b2PreSolveCallbackFcn* preSolveFcn, b2PreContinuousCallbackFcn* preContinuousFcn, void* context ); } */
     public static native void nb2World_SetPreSolveCallback( long worldId, long preSolveFcn, long preContinuousFcn, long context );
 
     // --- [ b2World_SetGravity ] ---
@@ -767,6 +767,24 @@ public final class Box2d {
     /* {@code B2_API void b2World_SetContactTuning( b2WorldId worldId, float hertz, float dampingRatio, float pushSpeed ); } */
     public static native void nb2World_SetContactTuning(long worldId, float hertz, float dampingRatio, float pushSpeed);
 
+    // --- [ b2World_GetContactTuning ] ---
+
+    /**
+     * {@code B2_API void b2World_GetContactTuning( b2WorldId worldId, float* hertz, float* dampingRatio, float* pushSpeed ); }
+     *
+     * @param worldId b2WorldId
+     * @param hertz FloatBuffer
+     * @param dampingRatio FloatBuffer
+     * @param pushSpeed FloatBuffer
+     */
+    public static void b2World_GetContactTuning(b2WorldId worldId, FloatBuffer hertz, FloatBuffer dampingRatio, FloatBuffer pushSpeed) {
+        checkPointers(worldId);
+        checkBuffers(hertz, dampingRatio, pushSpeed);
+        nb2World_GetContactTuning(worldId.address(), memAddress(hertz), memAddress(dampingRatio), memAddress(pushSpeed));
+    }
+    /* {@code B2_API void b2World_GetContactTuning( b2WorldId worldId, float* hertz, float* dampingRatio, float* pushSpeed ); } */
+    public static native void nb2World_GetContactTuning(long worldId, long hertz, long dampingRatio, long pushSpeed);
+
     // --- [ b2World_SetContactRecycleDistance ] ---
 
     /**
@@ -800,38 +818,38 @@ public final class Box2d {
     /* {@code B2_API float b2World_GetContactRecycleDistance( b2WorldId worldId ); } */
     public static native float nb2World_GetContactRecycleDistance(long worldId);
 
-    // --- [ b2World_SetMaximumLinearSpeed ] ---
+    // --- [ b2World_SetMaxLinearSpeed ] ---
 
     /**
-     * {@code B2_API void b2World_SetMaximumLinearSpeed( b2WorldId worldId, float maximumLinearSpeed ); }
+     * {@code B2_API void b2World_SetMaxLinearSpeed( b2WorldId worldId, float maximumLinearSpeed ); }
      *
      * @param worldId b2WorldId
      * @param maximumLinearSpeed float
      */
-    public static void b2World_SetMaximumLinearSpeed(b2WorldId worldId, float maximumLinearSpeed) {
+    public static void b2World_SetMaxLinearSpeed(b2WorldId worldId, float maximumLinearSpeed) {
         checkPointers(worldId);
-        nb2World_SetMaximumLinearSpeed(worldId.address(), maximumLinearSpeed);
+        nb2World_SetMaxLinearSpeed(worldId.address(), maximumLinearSpeed);
     }
 
-    /* {@code B2_API void b2World_SetMaximumLinearSpeed( b2WorldId worldId, float maximumLinearSpeed ); } */
-    public static native void nb2World_SetMaximumLinearSpeed(long worldId, float maximumLinearSpeed);
+    /* {@code B2_API void b2World_SetMaxLinearSpeed( b2WorldId worldId, float maximumLinearSpeed ); } */
+    public static native void nb2World_SetMaxLinearSpeed(long worldId, float maximumLinearSpeed);
 
-    // --- [ b2World_GetMaximumLinearSpeed ] ---
+    // --- [ b2World_GetMaxLinearSpeed ] ---
 
     /**
-     * {@code B2_API float b2World_GetMaximumLinearSpeed( b2WorldId worldId ); }
+     * {@code B2_API float b2World_GetMaxLinearSpeed( b2WorldId worldId ); }
      *
      * @param worldId b2WorldId
      *
      * @return float
      */
-    public static float b2World_GetMaximumLinearSpeed(b2WorldId worldId) {
+    public static float b2World_GetMaxLinearSpeed(b2WorldId worldId) {
         checkPointers(worldId);
-        return nb2World_GetMaximumLinearSpeed(worldId.address());
+        return nb2World_GetMaxLinearSpeed(worldId.address());
     }
 
-    /* {@code B2_API float b2World_GetMaximumLinearSpeed( b2WorldId worldId ); } */
-    public static native float nb2World_GetMaximumLinearSpeed(long worldId);
+    /* {@code B2_API float b2World_GetMaxLinearSpeed( b2WorldId worldId ); } */
+    public static native float nb2World_GetMaxLinearSpeed(long worldId);
 
     // --- [ b2World_EnableWarmStarting ] ---
 
@@ -992,33 +1010,33 @@ public final class Box2d {
     // --- [ b2World_SetFrictionCallback ] ---
 
     /**
-     * {@code B2_API void b2World_SetFrictionCallback( b2WorldId worldId, b2FrictionCallback* callback ); }
+     * {@code B2_API void b2World_SetFrictionCallback( b2WorldId worldId, b2FrictionCallbackFcn* callback ); }
      *
      * @param worldId b2WorldId
      * @param callback long
      */
-    public static void b2World_SetFrictionCallback(b2WorldId worldId, b2FrictionCallbackI callback) {
+    public static void b2World_SetFrictionCallback(b2WorldId worldId, b2FrictionCallbackFcnI callback) {
         checkPointers(worldId, callback);
         nb2World_SetFrictionCallback(worldId.address(), callback.address());
     }
 
-    /* {@code B2_API void b2World_SetFrictionCallback( b2WorldId worldId, b2FrictionCallback* callback ); } */
+    /* {@code B2_API void b2World_SetFrictionCallback( b2WorldId worldId, b2FrictionCallbackFcn* callback ); } */
     public static native void nb2World_SetFrictionCallback(long worldId, long callback);
 
     // --- [ b2World_SetRestitutionCallback ] ---
 
     /**
-     * {@code B2_API void b2World_SetRestitutionCallback( b2WorldId worldId, b2RestitutionCallback* callback ); }
+     * {@code B2_API void b2World_SetRestitutionCallback( b2WorldId worldId, b2RestitutionCallbackFcn* callback ); }
      *
      * @param worldId b2WorldId
      * @param callback long
      */
-    public static void b2World_SetRestitutionCallback(b2WorldId worldId, b2RestitutionCallbackI callback) {
+    public static void b2World_SetRestitutionCallback(b2WorldId worldId, b2RestitutionCallbackFcnI callback) {
         checkPointers(worldId, callback);
         nb2World_SetRestitutionCallback(worldId.address(), callback.address());
     }
 
-    /* {@code B2_API void b2World_SetRestitutionCallback( b2WorldId worldId, b2RestitutionCallback* callback ); } */
+    /* {@code B2_API void b2World_SetRestitutionCallback( b2WorldId worldId, b2RestitutionCallbackFcn* callback ); } */
     public static native void nb2World_SetRestitutionCallback(long worldId, long callback);
 
     // --- [ b2World_SetWorkerCount ] ---
@@ -1197,77 +1215,77 @@ public final class Box2d {
     /* {@code B2_API void b2World_StopRecording( b2WorldId worldId ); } */
     public static native void nb2World_StopRecording(long worldId);
 
-    // --- [ b2SaveRecordingToFile ] ---
+    // --- [ b2Recording_SaveToFile ] ---
 
     /**
-     * {@code B2_API bool b2SaveRecordingToFile( const b2Recording* recording, const char* path ); }
+     * {@code B2_API bool b2Recording_SaveToFile( const b2Recording* recording, const char* path ); }
      *
      * @param recording ConstB2Recording
      * @param path String
      *
      * @return boolean
      */
-    public static boolean b2SaveRecordingToFile(ConstB2Recording recording, String path) {
+    public static boolean b2Recording_SaveToFile(ConstB2Recording recording, String path) {
         ArenaAlloc stack = allocGet(); int stackPointer = stack.getPointer();
         try {
             stack.nUTF(path);
             long cpath = stack.getPointerAddress();
-            return nb2SaveRecordingToFile(recording.address(), cpath);
+            return nb2Recording_SaveToFile(recording.address(), cpath);
         } finally {
             stack.setPointer(stackPointer);
         }
     }
 
     /**
-     * {@code B2_API bool b2SaveRecordingToFile( const b2Recording* recording, const char* path ); }
+     * {@code B2_API bool b2Recording_SaveToFile( const b2Recording* recording, const char* path ); }
      *
      * @param recording ConstB2Recording
      * @param path long
      *
      * @return boolean
      */
-    public static boolean b2SaveRecordingToFile(ConstB2Recording recording, long path) {
+    public static boolean b2Recording_SaveToFile(ConstB2Recording recording, long path) {
         checkPointers(recording);
-        return nb2SaveRecordingToFile(recording.address(), path);
+        return nb2Recording_SaveToFile(recording.address(), path);
     }
 
-    /* {@code B2_API bool b2SaveRecordingToFile( const b2Recording* recording, const char* path ); } */
-    public static native boolean nb2SaveRecordingToFile(long recording, long path);
+    /* {@code B2_API bool b2Recording_SaveToFile( const b2Recording* recording, const char* path ); } */
+    public static native boolean nb2Recording_SaveToFile(long recording, long path);
 
-    // --- [ b2LoadRecordingFromFile ] ---
+    // --- [ b2CreateRecordingFromFile ] ---
 
     /**
-     * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
+     * {@code B2_API b2Recording* b2CreateRecordingFromFile( const char* path ); }
      *
      * @param path String
      *
      * @return b2Recording
      */
-    public static b2Recording b2LoadRecordingFromFile(String path) {
+    public static b2Recording b2CreateRecordingFromFile(String path) {
         ArenaAlloc stack = allocGet(); int stackPointer = stack.getPointer();
         try {
             stack.nUTF(path);
             long cpath = stack.getPointerAddress();
-            return b2LoadRecordingFromFile(cpath);
+            return b2CreateRecordingFromFile(cpath);
         } finally {
             stack.setPointer(stackPointer);
         }
     }
 
     /**
-     * {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); }
+     * {@code B2_API b2Recording* b2CreateRecordingFromFile( const char* path ); }
      *
      * @param path long
      *
      * @return b2Recording
      */
-    public static b2Recording b2LoadRecordingFromFile(long path) {
-        long __result = nb2LoadRecordingFromFile(path);
+    public static b2Recording b2CreateRecordingFromFile(long path) {
+        long __result = nb2CreateRecordingFromFile(path);
         return b2Recording.createSafe(() -> __result);
     }
 
-    /* {@code B2_API b2Recording* b2LoadRecordingFromFile( const char* path ); } */
-    public static native long nb2LoadRecordingFromFile(long path);
+    /* {@code B2_API b2Recording* b2CreateRecordingFromFile( const char* path ); } */
+    public static native long nb2CreateRecordingFromFile(long path);
 
     // --- [ b2World_GetSnapshot ] ---
 
@@ -1282,16 +1300,16 @@ public final class Box2d {
      */
     public static int b2World_GetSnapshot(b2WorldId worldId, ByteBuffer image, int capacity) {
         checkPointers(worldId);
-        return nb2World_GetSnapshot(worldId.address(), image, capacity);
+        return nb2World_GetSnapshot(worldId.address(), memAddress(image), capacity);
     }
 
     /* {@code B2_API int b2World_GetSnapshot( b2WorldId worldId, uint8_t* image, int capacity ); } */
-    public static native int nb2World_GetSnapshot(long worldId, ByteBuffer image, int capacity);
+    public static native int nb2World_GetSnapshot(long worldId, long image, int capacity);
 
-    // --- [ b2World_Restore ] ---
+    // --- [ b2World_RestoreFromSnapshot ] ---
 
     /**
-     * {@code B2_API bool b2World_Restore( b2WorldId worldId, const uint8_t* image, int size ); }
+     * {@code B2_API bool b2World_RestoreFromSnapshot( b2WorldId worldId, const uint8_t* image, int size ); }
      *
      * @param worldId b2WorldId
      * @param image long
@@ -1299,13 +1317,13 @@ public final class Box2d {
      *
      * @return boolean
      */
-    public static boolean b2World_Restore(b2WorldId worldId, ByteBuffer image, int size) {
+    public static boolean b2World_RestoreFromSnapshot(b2WorldId worldId, ByteBuffer image, int size) {
         checkPointers(worldId);
-        return nb2World_Restore(worldId.address(), image, size);
+        return nb2World_RestoreFromSnapshot(worldId.address(), memAddress(image), size);
     }
 
-    /* {@code B2_API bool b2World_Restore( b2WorldId worldId, const uint8_t* image, int size ); } */
-    public static native boolean nb2World_Restore(long worldId, ByteBuffer image, int size);
+    /* {@code B2_API bool b2World_RestoreFromSnapshot( b2WorldId worldId, const uint8_t* image, int size ); } */
+    public static native boolean nb2World_RestoreFromSnapshot(long worldId, long image, int size);
 
     // --- [ b2CreateWorldFromSnapshot ] ---
 
@@ -1321,12 +1339,12 @@ public final class Box2d {
      */
     public static b2WorldId b2CreateWorldFromSnapshot(ByteBuffer image, int size, int workerCount, b2WorldId __result) {
         checkPointers(__result);
-        nb2CreateWorldFromSnapshot(image, size, workerCount, __result.address());
+        nb2CreateWorldFromSnapshot(memAddress(image), size, workerCount, __result.address());
         return __result;
     }
 
     /* {@code B2_API b2WorldId b2CreateWorldFromSnapshot( const uint8_t* image, int size, int workerCount ); } */
-    public static native void nb2CreateWorldFromSnapshot(ByteBuffer image, int size, int workerCount, long __result);
+    public static native void nb2CreateWorldFromSnapshot(long image, int size, int workerCount, long __result);
 
     // --- [ b2CreateBody ] ---
 
@@ -2177,38 +2195,38 @@ public final class Box2d {
     /* {@code B2_API void b2Body_WakeTouching( b2BodyId bodyId ); } */
     public static native void nb2Body_WakeTouching(long bodyId);
 
-    // --- [ b2Body_EnableSleep ] ---
+    // --- [ b2Body_EnableSleeping ] ---
 
     /**
-     * {@code B2_API void b2Body_EnableSleep( b2BodyId bodyId, bool enableSleep ); }
+     * {@code B2_API void b2Body_EnableSleeping( b2BodyId bodyId, bool enableSleep ); }
      *
      * @param bodyId b2BodyId
      * @param enableSleep boolean
      */
-    public static void b2Body_EnableSleep(b2BodyId bodyId, boolean enableSleep) {
+    public static void b2Body_EnableSleeping(b2BodyId bodyId, boolean enableSleep) {
         checkPointers(bodyId);
-        nb2Body_EnableSleep(bodyId.address(), enableSleep);
+        nb2Body_EnableSleeping(bodyId.address(), enableSleep);
     }
 
-    /* {@code B2_API void b2Body_EnableSleep( b2BodyId bodyId, bool enableSleep ); } */
-    public static native void nb2Body_EnableSleep(long bodyId, boolean enableSleep);
+    /* {@code B2_API void b2Body_EnableSleeping( b2BodyId bodyId, bool enableSleep ); } */
+    public static native void nb2Body_EnableSleeping(long bodyId, boolean enableSleep);
 
-    // --- [ b2Body_IsSleepEnabled ] ---
+    // --- [ b2Body_IsSleepingEnabled ] ---
 
     /**
-     * {@code B2_API bool b2Body_IsSleepEnabled( b2BodyId bodyId ); }
+     * {@code B2_API bool b2Body_IsSleepingEnabled( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      *
      * @return boolean
      */
-    public static boolean b2Body_IsSleepEnabled(b2BodyId bodyId) {
+    public static boolean b2Body_IsSleepingEnabled(b2BodyId bodyId) {
         checkPointers(bodyId);
-        return nb2Body_IsSleepEnabled(bodyId.address());
+        return nb2Body_IsSleepingEnabled(bodyId.address());
     }
 
-    /* {@code B2_API bool b2Body_IsSleepEnabled( b2BodyId bodyId ); } */
-    public static native boolean nb2Body_IsSleepEnabled(long bodyId);
+    /* {@code B2_API bool b2Body_IsSleepingEnabled( b2BodyId bodyId ); } */
+    public static native boolean nb2Body_IsSleepingEnabled(long bodyId);
 
     // --- [ b2Body_SetSleepThreshold ] ---
 
@@ -2583,24 +2601,24 @@ public final class Box2d {
     /* {@code B2_API int b2Body_GetContactData( b2BodyId bodyId, b2ContactData* contactData, int capacity ); } */
     public static native int nb2Body_GetContactData(long bodyId, long contactData, int capacity);
 
-    // --- [ b2Body_ComputeAABB ] ---
+    // --- [ b2Body_ComputeBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2Body_ComputeAABB( b2BodyId bodyId ); }
+     * {@code B2_API b2AABB b2Body_ComputeBounds( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      * @param __result store
      *
      * @return b2AABB
      */
-    public static b2AABB b2Body_ComputeAABB(b2BodyId bodyId, b2AABB __result) {
+    public static b2AABB b2Body_ComputeBounds(b2BodyId bodyId, b2AABB __result) {
         checkPointers(bodyId, __result);
-        nb2Body_ComputeAABB(bodyId.address(), __result.address());
+        nb2Body_ComputeBounds(bodyId.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2AABB b2Body_ComputeAABB( b2BodyId bodyId ); } */
-    public static native void nb2Body_ComputeAABB(long bodyId, long __result);
+    /* {@code B2_API b2AABB b2Body_ComputeBounds( b2BodyId bodyId ); } */
+    public static native void nb2Body_ComputeBounds(long bodyId, long __result);
 
     // --- [ b2Body_GetMinExtent ] ---
 
@@ -2636,22 +2654,22 @@ public final class Box2d {
     /* {@code B2_API float b2Body_GetMaxExtent( b2BodyId bodyId ); } */
     public static native float nb2Body_GetMaxExtent(long bodyId);
 
-    // --- [ b2Body_GetMaxExtentOrigin ] ---
+    // --- [ b2Body_GetMaxExtentFromOrigin ] ---
 
     /**
-     * {@code B2_API float b2Body_GetMaxExtentOrigin( b2BodyId bodyId ); }
+     * {@code B2_API float b2Body_GetMaxExtentFromOrigin( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
      *
      * @return float
      */
-    public static float b2Body_GetMaxExtentOrigin(b2BodyId bodyId) {
+    public static float b2Body_GetMaxExtentFromOrigin(b2BodyId bodyId) {
         checkPointers(bodyId);
-        return nb2Body_GetMaxExtentOrigin(bodyId.address());
+        return nb2Body_GetMaxExtentFromOrigin(bodyId.address());
     }
 
-    /* {@code B2_API float b2Body_GetMaxExtentOrigin( b2BodyId bodyId ); } */
-    public static native float nb2Body_GetMaxExtentOrigin(long bodyId);
+    /* {@code B2_API float b2Body_GetMaxExtentFromOrigin( b2BodyId bodyId ); } */
+    public static native float nb2Body_GetMaxExtentFromOrigin(long bodyId);
 
     // --- [ b2CreateCircleShape ] ---
 
@@ -3250,10 +3268,10 @@ public final class Box2d {
     /* {@code B2_API bool b2Shape_TestPoint( b2ShapeId shapeId, b2Vec2 point ); } */
     public static native boolean nb2Shape_TestPoint(long shapeId, long point);
 
-    // --- [ b2Shape_RayCast ] ---
+    // --- [ b2Shape_CastRay ] ---
 
     /**
-     * {@code B2_API b2WorldCastOutput b2Shape_RayCast( b2ShapeId shapeId, b2Pos origin, b2Vec2 translation  ); }
+     * {@code B2_API b2WorldCastOutput b2Shape_CastRay( b2ShapeId shapeId, b2Pos origin, b2Vec2 translation  ); }
      *
      * @param shapeId b2ShapeId
      * @param origin b2Pos
@@ -3262,14 +3280,14 @@ public final class Box2d {
      *
      * @return b2WorldCastOutput
      */
-    public static b2WorldCastOutput b2Shape_RayCast(b2ShapeId shapeId, b2Pos origin, b2Vec2 translation , b2WorldCastOutput __result) {
+    public static b2WorldCastOutput b2Shape_CastRay(b2ShapeId shapeId, b2Pos origin, b2Vec2 translation , b2WorldCastOutput __result) {
         checkPointers(shapeId, origin, translation, __result);
-        nb2Shape_RayCast(shapeId.address(), origin.address(), translation.address(), __result.address());
+        nb2Shape_CastRay(shapeId.address(), origin.address(), translation.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2CastOutput b2Shape_RayCast( b2ShapeId shapeId, b2Pos origin, b2Vec2 translation  ); } */
-    public static native void nb2Shape_RayCast(long shapeId, long origin, long input, long __result);
+    /* {@code B2_API b2CastOutput b2Shape_CastRay( b2ShapeId shapeId, b2Pos origin, b2Vec2 translation  ); } */
+    public static native void nb2Shape_CastRay(long shapeId, long origin, long input, long __result);
 
     // --- [ b2Shape_GetCircle ] ---
 
@@ -3537,24 +3555,24 @@ public final class Box2d {
     /* {@code B2_API int b2Shape_GetSensorData( b2ShapeId shapeId, b2ShapeId* visitorIds, int capacity ); } */
     public static native int nb2Shape_GetSensorData(long shapeId, long visitorIds, int capacity);
 
-    // --- [ b2Shape_GetAABB ] ---
+    // --- [ b2Shape_GetBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2Shape_GetAABB( b2ShapeId shapeId ); }
+     * {@code B2_API b2AABB b2Shape_GetBounds( b2ShapeId shapeId ); }
      *
      * @param shapeId b2ShapeId
      * @param __result store
      *
      * @return b2AABB
      */
-    public static b2AABB b2Shape_GetAABB(b2ShapeId shapeId, b2AABB __result) {
+    public static b2AABB b2Shape_GetBounds(b2ShapeId shapeId, b2AABB __result) {
         checkPointers(shapeId, __result);
-        nb2Shape_GetAABB(shapeId.address(), __result.address());
+        nb2Shape_GetBounds(shapeId.address(), __result.address());
         return __result;
     }
 
-    /* {@code B2_API b2AABB b2Shape_GetAABB( b2ShapeId shapeId ); } */
-    public static native void nb2Shape_GetAABB(long shapeId, long __result);
+    /* {@code B2_API b2AABB b2Shape_GetBounds( b2ShapeId shapeId ); } */
+    public static native void nb2Shape_GetBounds(long shapeId, long __result);
 
     // --- [ b2Shape_ComputeMassData ] ---
 
@@ -4222,38 +4240,38 @@ public final class Box2d {
     /* {@code B2_API b2JointId b2CreateDistanceJoint( b2WorldId worldId, const b2DistanceJointDef* def ); } */
     public static native void nb2CreateDistanceJoint(long worldId, long def, long __result);
 
-    // --- [ b2DistanceJoint_SetLength ] ---
+    // --- [ b2DistanceJoint_SetRestLength ] ---
 
     /**
-     * {@code B2_API void b2DistanceJoint_SetLength( b2JointId jointId, float length ); }
+     * {@code B2_API void b2DistanceJoint_SetRestLength( b2JointId jointId, float length ); }
      *
      * @param jointId b2JointId
      * @param length float
      */
-    public static void b2DistanceJoint_SetLength(b2JointId jointId, float length) {
+    public static void b2DistanceJoint_SetRestLength(b2JointId jointId, float length) {
         checkPointers(jointId);
-        nb2DistanceJoint_SetLength(jointId.address(), length);
+        nb2DistanceJoint_SetRestLength(jointId.address(), length);
     }
 
-    /* {@code B2_API void b2DistanceJoint_SetLength( b2JointId jointId, float length ); } */
-    public static native void nb2DistanceJoint_SetLength(long jointId, float length);
+    /* {@code B2_API void b2DistanceJoint_SetRestLength( b2JointId jointId, float length ); } */
+    public static native void nb2DistanceJoint_SetRestLength(long jointId, float length);
 
-    // --- [ b2DistanceJoint_GetLength ] ---
+    // --- [ b2DistanceJoint_GetRestLength ] ---
 
     /**
-     * {@code B2_API float b2DistanceJoint_GetLength( b2JointId jointId ); }
+     * {@code B2_API float b2DistanceJoint_GetRestLength( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2DistanceJoint_GetLength(b2JointId jointId) {
+    public static float b2DistanceJoint_GetRestLength(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2DistanceJoint_GetLength(jointId.address());
+        return nb2DistanceJoint_GetRestLength(jointId.address());
     }
 
-    /* {@code B2_API float b2DistanceJoint_GetLength( b2JointId jointId ); } */
-    public static native float nb2DistanceJoint_GetLength(long jointId);
+    /* {@code B2_API float b2DistanceJoint_GetRestLength( b2JointId jointId ); } */
+    public static native float nb2DistanceJoint_GetRestLength(long jointId);
 
     // --- [ b2DistanceJoint_EnableSpring ] ---
 
@@ -4421,56 +4439,56 @@ public final class Box2d {
     /* {@code B2_API bool b2DistanceJoint_IsLimitEnabled( b2JointId jointId ); } */
     public static native boolean nb2DistanceJoint_IsLimitEnabled(long jointId);
 
-    // --- [ b2DistanceJoint_SetLengthRange ] ---
+    // --- [ b2DistanceJoint_SetLimits ] ---
 
     /**
-     * {@code B2_API void b2DistanceJoint_SetLengthRange( b2JointId jointId, float minLength, float maxLength ); }
+     * {@code B2_API void b2DistanceJoint_SetLimits( b2JointId jointId, float minLength, float maxLength ); }
      *
      * @param jointId b2JointId
      * @param minLength float
      * @param maxLength float
      */
-    public static void b2DistanceJoint_SetLengthRange(b2JointId jointId, float minLength, float maxLength) {
+    public static void b2DistanceJoint_SetLimits(b2JointId jointId, float minLength, float maxLength) {
         checkPointers(jointId);
-        nb2DistanceJoint_SetLengthRange(jointId.address(), minLength, maxLength);
+        nb2DistanceJoint_SetLimits(jointId.address(), minLength, maxLength);
     }
 
-    /* {@code B2_API void b2DistanceJoint_SetLengthRange( b2JointId jointId, float minLength, float maxLength ); } */
-    public static native void nb2DistanceJoint_SetLengthRange(long jointId, float minLength, float maxLength);
+    /* {@code B2_API void b2DistanceJoint_SetLimits( b2JointId jointId, float minLength, float maxLength ); } */
+    public static native void nb2DistanceJoint_SetLimits(long jointId, float minLength, float maxLength);
 
-    // --- [ b2DistanceJoint_GetMinLength ] ---
+    // --- [ b2DistanceJoint_GetLowerLimit ] ---
 
     /**
-     * {@code B2_API float b2DistanceJoint_GetMinLength( b2JointId jointId ); }
+     * {@code B2_API float b2DistanceJoint_GetLowerLimit( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2DistanceJoint_GetMinLength(b2JointId jointId) {
+    public static float b2DistanceJoint_GetLowerLimit(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2DistanceJoint_GetMinLength(jointId.address());
+        return nb2DistanceJoint_GetLowerLimit(jointId.address());
     }
 
-    /* {@code B2_API float b2DistanceJoint_GetMinLength( b2JointId jointId ); } */
-    public static native float nb2DistanceJoint_GetMinLength(long jointId);
+    /* {@code B2_API float b2DistanceJoint_GetLowerLimit( b2JointId jointId ); } */
+    public static native float nb2DistanceJoint_GetLowerLimit(long jointId);
 
-    // --- [ b2DistanceJoint_GetMaxLength ] ---
+    // --- [ b2DistanceJoint_GetUpperLimit ] ---
 
     /**
-     * {@code B2_API float b2DistanceJoint_GetMaxLength( b2JointId jointId ); }
+     * {@code B2_API float b2DistanceJoint_GetUpperLimit( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2DistanceJoint_GetMaxLength(b2JointId jointId) {
+    public static float b2DistanceJoint_GetUpperLimit(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2DistanceJoint_GetMaxLength(jointId.address());
+        return nb2DistanceJoint_GetUpperLimit(jointId.address());
     }
 
-    /* {@code B2_API float b2DistanceJoint_GetMaxLength( b2JointId jointId ); } */
-    public static native float nb2DistanceJoint_GetMaxLength(long jointId);
+    /* {@code B2_API float b2DistanceJoint_GetUpperLimit( b2JointId jointId ); } */
+    public static native float nb2DistanceJoint_GetUpperLimit(long jointId);
 
     // --- [ b2DistanceJoint_GetCurrentLength ] ---
 
@@ -4522,38 +4540,38 @@ public final class Box2d {
     /* {@code B2_API bool b2DistanceJoint_IsMotorEnabled( b2JointId jointId ); } */
     public static native boolean nb2DistanceJoint_IsMotorEnabled(long jointId);
 
-    // --- [ b2DistanceJoint_SetMotorSpeed ] ---
+    // --- [ b2DistanceJoint_SetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API void b2DistanceJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); }
+     * {@code B2_API void b2DistanceJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); }
      *
      * @param jointId b2JointId
      * @param motorSpeed float
      */
-    public static void b2DistanceJoint_SetMotorSpeed(b2JointId jointId, float motorSpeed) {
+    public static void b2DistanceJoint_SetTargetMotorSpeed(b2JointId jointId, float motorSpeed) {
         checkPointers(jointId);
-        nb2DistanceJoint_SetMotorSpeed(jointId.address(), motorSpeed);
+        nb2DistanceJoint_SetTargetMotorSpeed(jointId.address(), motorSpeed);
     }
 
-    /* {@code B2_API void b2DistanceJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
-    public static native void nb2DistanceJoint_SetMotorSpeed(long jointId, float motorSpeed);
+    /* {@code B2_API void b2DistanceJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
+    public static native void nb2DistanceJoint_SetTargetMotorSpeed(long jointId, float motorSpeed);
 
-    // --- [ b2DistanceJoint_GetMotorSpeed ] ---
+    // --- [ b2DistanceJoint_GetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API float b2DistanceJoint_GetMotorSpeed( b2JointId jointId ); }
+     * {@code B2_API float b2DistanceJoint_GetTargetMotorSpeed( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2DistanceJoint_GetMotorSpeed(b2JointId jointId) {
+    public static float b2DistanceJoint_GetTargetMotorSpeed(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2DistanceJoint_GetMotorSpeed(jointId.address());
+        return nb2DistanceJoint_GetTargetMotorSpeed(jointId.address());
     }
 
-    /* {@code B2_API float b2DistanceJoint_GetMotorSpeed( b2JointId jointId ); } */
-    public static native float nb2DistanceJoint_GetMotorSpeed(long jointId);
+    /* {@code B2_API float b2DistanceJoint_GetTargetMotorSpeed( b2JointId jointId ); } */
+    public static native float nb2DistanceJoint_GetTargetMotorSpeed(long jointId);
 
     // --- [ b2DistanceJoint_SetMaxMotorForce ] ---
 
@@ -4588,22 +4606,22 @@ public final class Box2d {
     /* {@code B2_API float b2DistanceJoint_GetMaxMotorForce( b2JointId jointId ); } */
     public static native float nb2DistanceJoint_GetMaxMotorForce(long jointId);
 
-    // --- [ b2DistanceJoint_GetMotorForce ] ---
+    // --- [ b2DistanceJoint_GetCurrentMotorForce ] ---
 
     /**
-     * {@code B2_API float b2DistanceJoint_GetMotorForce( b2JointId jointId ); }
+     * {@code B2_API float b2DistanceJoint_GetCurrentMotorForce( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2DistanceJoint_GetMotorForce(b2JointId jointId) {
+    public static float b2DistanceJoint_GetCurrentMotorForce(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2DistanceJoint_GetMotorForce(jointId.address());
+        return nb2DistanceJoint_GetCurrentMotorForce(jointId.address());
     }
 
-    /* {@code B2_API float b2DistanceJoint_GetMotorForce( b2JointId jointId ); } */
-    public static native float nb2DistanceJoint_GetMotorForce(long jointId);
+    /* {@code B2_API float b2DistanceJoint_GetCurrentMotorForce( b2JointId jointId ); } */
+    public static native float nb2DistanceJoint_GetCurrentMotorForce(long jointId);
     
     // --- [ b2CreateMotorJoint ] ---
 
@@ -5166,39 +5184,39 @@ public final class Box2d {
     /* {@code B2_API float b2PogoJoint_GetSpringDampingRatio( b2JointId jointId ); } */
     public static native float nb2PogoJoint_GetSpringDampingRatio(long jointId);
 
-    // --- [ b2PogoJoint_GetLength ] ---
+    // --- [ b2PogoJoint_GetCurrentLength ] ---
 
     /**
-     * {@code B2_API float b2PogoJoint_GetLength( b2JointId jointId ); }
+     * {@code B2_API float b2PogoJoint_GetCurrentLength( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2PogoJoint_GetLength(b2JointId jointId) {
+    public static float b2PogoJoint_GetCurrentLength(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2PogoJoint_GetLength(jointId.address());
+        return nb2PogoJoint_GetCurrentLength(jointId.address());
     }
 
-    /* {@code B2_API float b2PogoJoint_GetLength( b2JointId jointId ); } */
-    public static native float nb2PogoJoint_GetLength(long jointId);
+    /* {@code B2_API float b2PogoJoint_GetCurrentLength( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetCurrentLength(long jointId);
 
-    // --- [ b2PogoJoint_GetVelocity ] ---
+    // --- [ b2PogoJoint_GetCurrentSpeed ] ---
 
     /**
-     * {@code B2_API float b2PogoJoint_GetVelocity( b2JointId jointId ); }
+     * {@code B2_API float b2PogoJoint_GetCurrentSpeed( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2PogoJoint_GetVelocity(b2JointId jointId) {
+    public static float b2PogoJoint_GetCurrentSpeed(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2PogoJoint_GetVelocity(jointId.address());
+        return nb2PogoJoint_GetCurrentSpeed(jointId.address());
     }
 
-    /* {@code B2_API float b2PogoJoint_GetVelocity( b2JointId jointId ); } */
-    public static native float nb2PogoJoint_GetVelocity(long jointId);
+    /* {@code B2_API float b2PogoJoint_GetCurrentSpeed( b2JointId jointId ); } */
+    public static native float nb2PogoJoint_GetCurrentSpeed(long jointId);
 
     // --- [ b2PogoJoint_GetImpulse ] ---
 
@@ -5506,38 +5524,38 @@ public final class Box2d {
     /* {@code B2_API bool b2PrismaticJoint_IsMotorEnabled( b2JointId jointId ); } */
     public static native boolean nb2PrismaticJoint_IsMotorEnabled(long jointId);
 
-    // --- [ b2PrismaticJoint_SetMotorSpeed ] ---
+    // --- [ b2PrismaticJoint_SetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API void b2PrismaticJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); }
+     * {@code B2_API void b2PrismaticJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); }
      *
      * @param jointId b2JointId
      * @param motorSpeed float
      */
-    public static void b2PrismaticJoint_SetMotorSpeed(b2JointId jointId, float motorSpeed) {
+    public static void b2PrismaticJoint_SetTargetMotorSpeed(b2JointId jointId, float motorSpeed) {
         checkPointers(jointId);
-        nb2PrismaticJoint_SetMotorSpeed(jointId.address(), motorSpeed);
+        nb2PrismaticJoint_SetTargetMotorSpeed(jointId.address(), motorSpeed);
     }
 
-    /* {@code B2_API void b2PrismaticJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
-    public static native void nb2PrismaticJoint_SetMotorSpeed(long jointId, float motorSpeed);
+    /* {@code B2_API void b2PrismaticJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
+    public static native void nb2PrismaticJoint_SetTargetMotorSpeed(long jointId, float motorSpeed);
 
-    // --- [ b2PrismaticJoint_GetMotorSpeed ] ---
+    // --- [ b2PrismaticJoint_GetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API float b2PrismaticJoint_GetMotorSpeed( b2JointId jointId ); }
+     * {@code B2_API float b2PrismaticJoint_GetTargetMotorSpeed( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2PrismaticJoint_GetMotorSpeed(b2JointId jointId) {
+    public static float b2PrismaticJoint_GetTargetMotorSpeed(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2PrismaticJoint_GetMotorSpeed(jointId.address());
+        return nb2PrismaticJoint_GetTargetMotorSpeed(jointId.address());
     }
 
-    /* {@code B2_API float b2PrismaticJoint_GetMotorSpeed( b2JointId jointId ); } */
-    public static native float nb2PrismaticJoint_GetMotorSpeed(long jointId);
+    /* {@code B2_API float b2PrismaticJoint_GetTargetMotorSpeed( b2JointId jointId ); } */
+    public static native float nb2PrismaticJoint_GetTargetMotorSpeed(long jointId);
 
     // --- [ b2PrismaticJoint_SetMaxMotorForce ] ---
 
@@ -5572,56 +5590,56 @@ public final class Box2d {
     /* {@code B2_API float b2PrismaticJoint_GetMaxMotorForce( b2JointId jointId ); } */
     public static native float nb2PrismaticJoint_GetMaxMotorForce(long jointId);
 
-    // --- [ b2PrismaticJoint_GetMotorForce ] ---
+    // --- [ b2PrismaticJoint_GetCurrentMotorForce ] ---
 
     /**
-     * {@code B2_API float b2PrismaticJoint_GetMotorForce( b2JointId jointId ); }
+     * {@code B2_API float b2PrismaticJoint_GetCurrentMotorForce( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2PrismaticJoint_GetMotorForce(b2JointId jointId) {
+    public static float b2PrismaticJoint_GetCurrentMotorForce(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2PrismaticJoint_GetMotorForce(jointId.address());
+        return nb2PrismaticJoint_GetCurrentMotorForce(jointId.address());
     }
 
-    /* {@code B2_API float b2PrismaticJoint_GetMotorForce( b2JointId jointId ); } */
-    public static native float nb2PrismaticJoint_GetMotorForce(long jointId);
+    /* {@code B2_API float b2PrismaticJoint_GetCurrentMotorForce( b2JointId jointId ); } */
+    public static native float nb2PrismaticJoint_GetCurrentMotorForce(long jointId);
 
-    // --- [ b2PrismaticJoint_GetTranslation ] ---
+    // --- [ b2PrismaticJoint_GetCurrentTranslation ] ---
 
     /**
-     * {@code B2_API float b2PrismaticJoint_GetTranslation( b2JointId jointId ); }
+     * {@code B2_API float b2PrismaticJoint_GetCurrentTranslation( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2PrismaticJoint_GetTranslation(b2JointId jointId) {
+    public static float b2PrismaticJoint_GetCurrentTranslation(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2PrismaticJoint_GetTranslation(jointId.address());
+        return nb2PrismaticJoint_GetCurrentTranslation(jointId.address());
     }
 
-    /* {@code B2_API float b2PrismaticJoint_GetTranslation( b2JointId jointId ); } */
-    public static native float nb2PrismaticJoint_GetTranslation(long jointId);
+    /* {@code B2_API float b2PrismaticJoint_GetCurrentTranslation( b2JointId jointId ); } */
+    public static native float nb2PrismaticJoint_GetCurrentTranslation(long jointId);
 
-    // --- [ b2PrismaticJoint_GetSpeed ] ---
+    // --- [ b2PrismaticJoint_GetCurrentSpeed ] ---
 
     /**
-     * {@code B2_API float b2PrismaticJoint_GetSpeed( b2JointId jointId ); }
+     * {@code B2_API float b2PrismaticJoint_GetCurrentSpeed( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2PrismaticJoint_GetSpeed(b2JointId jointId) {
+    public static float b2PrismaticJoint_GetCurrentSpeed(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2PrismaticJoint_GetSpeed(jointId.address());
+        return nb2PrismaticJoint_GetCurrentSpeed(jointId.address());
     }
 
-    /* {@code B2_API float b2PrismaticJoint_GetSpeed( b2JointId jointId ); } */
-    public static native float nb2PrismaticJoint_GetSpeed(long jointId);
+    /* {@code B2_API float b2PrismaticJoint_GetCurrentSpeed( b2JointId jointId ); } */
+    public static native float nb2PrismaticJoint_GetCurrentSpeed(long jointId);
 
     // --- [ b2CreateRevoluteJoint ] ---
 
@@ -5775,22 +5793,23 @@ public final class Box2d {
     /* {@code B2_API float b2RevoluteJoint_GetTargetAngle( b2JointId jointId ); } */
     public static native float nb2RevoluteJoint_GetTargetAngle(long jointId);
 
-    // --- [ b2RevoluteJoint_GetAngle ] ---
+    // --- [ b2RevoluteJoint_GetCurrentAngle ] ---
 
     /**
-     * {@code B2_API float b2RevoluteJoint_GetAngle( b2JointId jointId ); }
+     * {@code B2_API float b2RevoluteJoint_GetCurrentAngle( b2JointId jointId );
+     * }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2RevoluteJoint_GetAngle(b2JointId jointId) {
+    public static float b2RevoluteJoint_GetCurrentAngle(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2RevoluteJoint_GetAngle(jointId.address());
+        return nb2RevoluteJoint_GetCurrentAngle(jointId.address());
     }
 
-    /* {@code B2_API float b2RevoluteJoint_GetAngle( b2JointId jointId ); } */
-    public static native float nb2RevoluteJoint_GetAngle(long jointId);
+    /* {@code B2_API float b2RevoluteJoint_GetCurrentAngle( b2JointId jointId ); } */
+    public static native float nb2RevoluteJoint_GetCurrentAngle(long jointId);
 
     // --- [ b2RevoluteJoint_EnableLimit ] ---
 
@@ -5909,55 +5928,55 @@ public final class Box2d {
     /* {@code B2_API bool b2RevoluteJoint_IsMotorEnabled( b2JointId jointId ); } */
     public static native boolean nb2RevoluteJoint_IsMotorEnabled(long jointId);
 
-    // --- [ b2RevoluteJoint_SetMotorSpeed ] ---
+    // --- [ b2RevoluteJoint_SetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API void b2RevoluteJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); }
+     * {@code B2_API void b2RevoluteJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); }
      *
      * @param jointId b2JointId
      * @param motorSpeed float
      */
-    public static void b2RevoluteJoint_SetMotorSpeed(b2JointId jointId, float motorSpeed) {
+    public static void b2RevoluteJoint_SetTargetMotorSpeed(b2JointId jointId, float motorSpeed) {
         checkPointers(jointId);
-        nb2RevoluteJoint_SetMotorSpeed(jointId.address(), motorSpeed);
+        nb2RevoluteJoint_SetTargetMotorSpeed(jointId.address(), motorSpeed);
     }
 
-    /* {@code B2_API void b2RevoluteJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
-    public static native void nb2RevoluteJoint_SetMotorSpeed(long jointId, float motorSpeed);
+    /* {@code B2_API void b2RevoluteJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
+    public static native void nb2RevoluteJoint_SetTargetMotorSpeed(long jointId, float motorSpeed);
 
-    // --- [ b2RevoluteJoint_GetMotorSpeed ] ---
+    // --- [ b2RevoluteJoint_GetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API float b2RevoluteJoint_GetMotorSpeed( b2JointId jointId ); }
+     * {@code B2_API float b2RevoluteJoint_GetTargetMotorSpeed( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2RevoluteJoint_GetMotorSpeed(b2JointId jointId) {
+    public static float b2RevoluteJoint_GetTargetMotorSpeed(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2RevoluteJoint_GetMotorSpeed(jointId.address());
+        return nb2RevoluteJoint_GetTargetMotorSpeed(jointId.address());
     }
 
-    /* {@code B2_API float b2RevoluteJoint_GetMotorSpeed( b2JointId jointId ); } */
-    public static native float nb2RevoluteJoint_GetMotorSpeed(long jointId);
+    /* {@code B2_API float b2RevoluteJoint_GetTargetMotorSpeed( b2JointId jointId ); } */
+    public static native float nb2RevoluteJoint_GetTargetMotorSpeed(long jointId);
 
-    // --- [ b2RevoluteJoint_GetMotorTorque ] ---
+    // --- [ b2RevoluteJoint_GetCurrentMotorTorque ] ---
 
     /**
-     * {@code B2_API float b2RevoluteJoint_GetMotorTorque( b2JointId jointId ); }
+     * {@code B2_API float b2RevoluteJoint_GetCurrentMotorTorque( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2RevoluteJoint_GetMotorTorque(b2JointId jointId) {
+    public static float b2RevoluteJoint_GetCurrentMotorTorque(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2RevoluteJoint_GetMotorTorque(jointId.address());
+        return nb2RevoluteJoint_GetCurrentMotorTorque(jointId.address());
     }
 
-    /* {@code B2_API float b2RevoluteJoint_GetMotorTorque( b2JointId jointId ); } */
-    public static native float nb2RevoluteJoint_GetMotorTorque(long jointId);
+    /* {@code B2_API float b2RevoluteJoint_GetCurrentMotorTorque( b2JointId jointId ); } */
+    public static native float nb2RevoluteJoint_GetCurrentMotorTorque(long jointId);
 
     // --- [ b2RevoluteJoint_SetMaxMotorTorque ] ---
 
@@ -5991,7 +6010,25 @@ public final class Box2d {
 
     /* {@code B2_API float b2RevoluteJoint_GetMaxMotorTorque( b2JointId jointId ); } */
     public static native float nb2RevoluteJoint_GetMaxMotorTorque(long jointId);
-    
+
+    // --- [ b2RevoluteJoint_GetCurrentSpeed ] ---
+
+    /**
+     * {@code B2_API float b2RevoluteJoint_GetCurrentSpeed( b2JointId jointId );
+     * }
+     *
+     * @param jointId b2JointId
+     *
+     * @return float
+     */
+    public static float b2RevoluteJoint_GetCurrentSpeed(b2JointId jointId) {
+        checkPointers(jointId);
+        return nb2RevoluteJoint_GetCurrentSpeed(jointId.address());
+    }
+
+    /* {@code B2_API float b2RevoluteJoint_GetCurrentSpeed( b2JointId jointId ); } */
+    public static native float nb2RevoluteJoint_GetCurrentSpeed(long jointId);
+
     // --- [ b2CreateWeldJoint ] ---
 
     /**
@@ -6380,38 +6417,38 @@ public final class Box2d {
     /* {@code B2_API bool b2WheelJoint_IsMotorEnabled( b2JointId jointId ); } */
     public static native boolean nb2WheelJoint_IsMotorEnabled(long jointId);
 
-    // --- [ b2WheelJoint_SetMotorSpeed ] ---
+    // --- [ b2WheelJoint_SetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API void b2WheelJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); }
+     * {@code B2_API void b2WheelJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); }
      *
      * @param jointId b2JointId
      * @param motorSpeed float
      */
-    public static void b2WheelJoint_SetMotorSpeed(b2JointId jointId, float motorSpeed) {
+    public static void b2WheelJoint_SetTargetMotorSpeed(b2JointId jointId, float motorSpeed) {
         checkPointers(jointId);
-        nb2WheelJoint_SetMotorSpeed(jointId.address(), motorSpeed);
+        nb2WheelJoint_SetTargetMotorSpeed(jointId.address(), motorSpeed);
     }
 
-    /* {@code B2_API void b2WheelJoint_SetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
-    public static native void nb2WheelJoint_SetMotorSpeed(long jointId, float motorSpeed);
+    /* {@code B2_API void b2WheelJoint_SetTargetMotorSpeed( b2JointId jointId, float motorSpeed ); } */
+    public static native void nb2WheelJoint_SetTargetMotorSpeed(long jointId, float motorSpeed);
 
-    // --- [ b2WheelJoint_GetMotorSpeed ] ---
+    // --- [ b2WheelJoint_GetTargetMotorSpeed ] ---
 
     /**
-     * {@code B2_API float b2WheelJoint_GetMotorSpeed( b2JointId jointId ); }
+     * {@code B2_API float b2WheelJoint_GetTargetMotorSpeed( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2WheelJoint_GetMotorSpeed(b2JointId jointId) {
+    public static float b2WheelJoint_GetTargetMotorSpeed(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2WheelJoint_GetMotorSpeed(jointId.address());
+        return nb2WheelJoint_GetTargetMotorSpeed(jointId.address());
     }
 
-    /* {@code B2_API float b2WheelJoint_GetMotorSpeed( b2JointId jointId ); } */
-    public static native float nb2WheelJoint_GetMotorSpeed(long jointId);
+    /* {@code B2_API float b2WheelJoint_GetTargetMotorSpeed( b2JointId jointId ); } */
+    public static native float nb2WheelJoint_GetTargetMotorSpeed(long jointId);
 
     // --- [ b2WheelJoint_SetMaxMotorTorque ] ---
 
@@ -6446,22 +6483,22 @@ public final class Box2d {
     /* {@code B2_API float b2WheelJoint_GetMaxMotorTorque( b2JointId jointId ); } */
     public static native float nb2WheelJoint_GetMaxMotorTorque(long jointId);
 
-    // --- [ b2WheelJoint_GetMotorTorque ] ---
+    // --- [ b2WheelJoint_GetCurrentMotorTorque ] ---
 
     /**
-     * {@code B2_API float b2WheelJoint_GetMotorTorque( b2JointId jointId ); }
+     * {@code B2_API float b2WheelJoint_GetCurrentMotorTorque( b2JointId jointId ); }
      *
      * @param jointId b2JointId
      *
      * @return float
      */
-    public static float b2WheelJoint_GetMotorTorque(b2JointId jointId) {
+    public static float b2WheelJoint_GetCurrentMotorTorque(b2JointId jointId) {
         checkPointers(jointId);
-        return nb2WheelJoint_GetMotorTorque(jointId.address());
+        return nb2WheelJoint_GetCurrentMotorTorque(jointId.address());
     }
 
-    /* {@code B2_API float b2WheelJoint_GetMotorTorque( b2JointId jointId ); } */
-    public static native float nb2WheelJoint_GetMotorTorque(long jointId);
+    /* {@code B2_API float b2WheelJoint_GetCurrentMotorTorque( b2JointId jointId ); } */
+    public static native float nb2WheelJoint_GetCurrentMotorTorque(long jointId);
     
     // --- [ b2Contact_IsValid ] ---
 
@@ -6499,10 +6536,10 @@ public final class Box2d {
     /* {@code B2_API b2ContactData b2Contact_GetData( b2ContactId contactId ); } */
     public static native void nb2Contact_GetData(long contactId, long __result);
 
-    // --- [ b2ValidateReplay ] ---
+    // --- [ b2ValidateRecording ] ---
 
     /**
-     * {@code B2_API bool b2ValidateReplay( const void* data, int size, int workerCount ); }
+     * {@code B2_API bool b2ValidateRecording( const void* data, int size, int workerCount ); }
      *
      * @param data long
      * @param size int
@@ -6510,12 +6547,12 @@ public final class Box2d {
      *
      * @return boolean
      */
-    public static boolean b2ValidateReplay(long data, int size, int workerCount) {
-        return nb2ValidateReplay(data, size, workerCount);
+    public static boolean b2ValidateRecording(long data, int size, int workerCount) {
+        return nb2ValidateRecording(data, size, workerCount);
     }
 
-    /* {@code B2_API bool b2ValidateReplay( const void* data, int size, int workerCount ); } */
-    public static native boolean nb2ValidateReplay(long data, int size, int workerCount);
+    /* {@code B2_API bool b2ValidateRecording( const void* data, int size, int workerCount ); } */
+    public static native boolean nb2ValidateRecording(long data, int size, int workerCount);
     
     // --- [ b2CreateReplay ] ---
 
