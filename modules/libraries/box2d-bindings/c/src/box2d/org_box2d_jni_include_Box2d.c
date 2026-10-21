@@ -2754,16 +2754,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Joint_1SetConstraintT
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2Joint_GetConstraintTuning
- * Signature: (JLjava/nio/FloatBuffer;Ljava/nio/FloatBuffer;)V
+ * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Joint_1GetConstraintTuning
-    (JNIEnv *__env, jclass clazz, jlong jointId, jobject bufferHertz, jobject bufferDampingRatio)
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong hertz, jlong dampingRatio)
 {
-    ADDRESS_FLOAT_BUFFER(__env, bufferHertz, hertz, __len0)
-    ADDRESS_FLOAT_BUFFER(__env, bufferDampingRatio, dampingRatio, __len1)
-    UNUSED_PARAM(clazz)
-    UNUSED_PARAMS(__len0, __len1)    
-    b2Joint_GetConstraintTuning(*(b2JointId*)jointId, hertz, dampingRatio);
+    UNUSED_PARAMS(__env, clazz)   
+    b2Joint_GetConstraintTuning(*(b2JointId*)jointId, (float*)hertz, (float*)dampingRatio);
 }
 
 /*
@@ -2889,16 +2886,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetSpr
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2DistanceJoint_GetSpringForceRange
- * Signature: (JLjava/nio/FloatBuffer;Ljava/nio/FloatBuffer;)V
+ * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetSpringForceRange
-    (JNIEnv *__env, jclass clazz, jlong jointId, jobject bufferLowerForce, jobject bufferUpperForce)
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong lowerForce, jlong upperForce)
 {
-    ADDRESS_FLOAT_BUFFER(__env, bufferLowerForce, lowerForce, __len0)
-    ADDRESS_FLOAT_BUFFER(__env, bufferUpperForce, upperForce, __len1)
-    UNUSED_PARAM(clazz)
-    UNUSED_PARAMS(__len0, __len1) 
-    b2DistanceJoint_GetSpringForceRange(*(b2JointId*)jointId, lowerForce, upperForce);
+    UNUSED_PARAMS(__env, clazz) 
+    b2DistanceJoint_GetSpringForceRange(*(b2JointId*)jointId, (float*)lowerForce, (float*)upperForce);
 }
 
 /*

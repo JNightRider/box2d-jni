@@ -83,14 +83,14 @@ public class TestDistance {
                 b2Vec2.malloc().set( 2.0f, 1.0f )
         );
 
-        b2DistanceInput input = b2DistanceInput.malloc();input.clear();
+        b2DistanceInput input = b2DistanceInput.calloc();
         input.proxyA(b2MakeProxy( vas, ARRAY_COUNT( vas ), 0.0f , b2ShapeProxy.malloc() ));
         input.proxyB(b2MakeProxy( vbs, ARRAY_COUNT( vbs ), 0.0f, b2ShapeProxy.malloc() ));
         input.transform(b2Transform_identity);
         input.useRadii(false);
 
-        b2SimplexCache cache = b2SimplexCache.malloc();cache.clear();
-        b2DistanceOutput output = b2DistanceOutput.malloc();nb2ComputeSegmentDistance(input.address(), cache.address(), NULL, 0, output.address() );
+        b2SimplexCache cache = b2SimplexCache.calloc();
+        b2DistanceOutput output = b2ComputeShapeDistance(input, cache, null, 0, b2DistanceOutput.malloc() );
 
         ENSURE_SMALL( output.distance() - 1.0f, FLT_EPSILON );
 

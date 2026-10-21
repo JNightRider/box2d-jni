@@ -174,27 +174,23 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Id_nb2LoadJointId
 /*
  * Class:     org_box2d_jni_include_Id
  * Method:    nb2StoreContactId
- * Signature: (JLjava/nio/IntBuffer;)V
+ * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Id_nb2StoreContactId
-    (JNIEnv *__env, jclass clazz, jlong address, jobject buffer)
+    (JNIEnv *__env, jclass clazz, jlong address, jlong values)
 {
-    b2ContactId* id = (b2ContactId*)(uintptr_t)address;
-    ADDRESS_UINT32_BUFFER(__env, buffer, values, capacity)
-    UNUSED_PARAMS(capacity, clazz)
-    b2StoreContactId( *id, values );
+    UNUSED_PARAMS(__env, clazz)
+    b2StoreContactId( *(b2ContactId*)address, (uint32_t*)values );
 }
 
 /*
  * Class:     org_box2d_jni_include_Id
  * Method:    nb2LoadContactId
- * Signature: (Ljava/nio/IntBuffer;J)V
+ * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Id_nb2LoadContactId
-    (JNIEnv *__env, jclass clazz, jobject buffer, jlong address)
+    (JNIEnv *__env, jclass clazz, jlong values, jlong address)
 {
-    b2ContactId* ptr = (b2ContactId*)(uintptr_t) address;
-    ADDRESS_UINT32_BUFFER(__env, buffer, values, capacity)
-    UNUSED_PARAMS(capacity, clazz)
-    *ptr = b2LoadContactId( values );
+    UNUSED_PARAMS(__env, clazz)
+    *(b2ContactId*)address = b2LoadContactId( (uint32_t*)values );
 }

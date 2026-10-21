@@ -421,7 +421,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Collision_nb2ValidateHull
  * Signature: (JJJJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeSegmentDistance
-    (JNIEnv *__env, jclass clazz, jlong p1, jlong q1, jlong p2, jlong q2, jlong __result)
+    (JNIEnv * __env, jclass clazz, jlong p1, jlong q1, jlong p2, jlong q2, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
     *(b2SegmentDistanceResult*)__result = b2ComputeSegmentDistance( *(b2Vec2*)p1 , *(b2Vec2*)q1, *(b2Vec2*)p2, *(b2Vec2*)q2);

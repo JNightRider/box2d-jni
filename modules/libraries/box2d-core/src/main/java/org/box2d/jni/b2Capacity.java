@@ -40,17 +40,18 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2Capacity
  * {
- *     int staticShapeCount;
- *     int dynamicShapeCount;
- *     int staticBodyCount;
- *     int dynamicBodyCount;
- *     int contactCount;
+ *      int staticShapeCount;
+ * 	int dynamicShapeCount;
+ * 	int staticBodyCount;
+ * 	int dynamicBodyCount;
+ * 	int contactCount;
+ * 	int arenaByteCount;
  * } b2Capacity;
  * </code></pre>
  *
  * @author wil
+ * @version 1.1.0
  * @since 1.0.0
- * @version 1.0.0
  */
 public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
 
@@ -66,10 +67,12 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
             DYNAMIC_SHAPE_COUNT,
             STATIC_BODY_COUNT,
             DYNAMIC_BODY_COUNT,
-            CONTACT_COUNT;
+            CONTACT_COUNT,
+            ARENA_BYTE_COUNT;
 
     static {
         Layout layout = __struct(
+                __member(4),
                 __member(4),
                 __member(4),
                 __member(4),
@@ -82,6 +85,7 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
         STATIC_BODY_COUNT = layout.offsetof(2);
         DYNAMIC_BODY_COUNT = layout.offsetof(3);
         CONTACT_COUNT = layout.offsetof(4);
+        ARENA_BYTE_COUNT = layout.offsetof(5);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -130,6 +134,9 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
     /** @return Returns the property {@code contactCount} */
     @Override
     public int contactCount() { return ncontactCount(address()); }
+    /** @return Returns the property {@code arenaByteCount} */
+    @Override
+    public int arenaByteCount() { return narenaByteCount(address()); }
 
     /**
      * Set the value of property {@code staticShapeCount}
@@ -183,6 +190,17 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
      */
     public b2Capacity contactCount(int value) {
         ncontactCount(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code arenaByteCount}
+     *
+     * @param value The value
+     * @return b2Capacity
+     */
+    public b2Capacity arenaByteCount(int value) {
+        narenaByteCount(address(), value);
         return this;
     }
 
@@ -315,12 +333,14 @@ public class b2Capacity extends Struct<b2Capacity> implements ConstB2Capacity {
     public static int nstaticBodyCount(long address) { return memGetInt(address + STATIC_BODY_COUNT); }
     public static int ndynamicBodyCount(long address) { return memGetInt(address + DYNAMIC_BODY_COUNT); }
     public static int ncontactCount(long address) { return memGetInt(address + CONTACT_COUNT); }
+    public static int narenaByteCount(long address) { return memGetInt(address + ARENA_BYTE_COUNT); }
 
     public static void nstaticShapeCount(long address, int value) { memPutInt(address + STATIC_SHAPE_COUNT, value); }
     public static void ndynamicShapeCount(long address, int value) { memPutInt(address + DYNAMIC_SHAPE_COUNT, value); }
     public static void nstaticBodyCount(long address, int value) { memPutInt(address + STATIC_BODY_COUNT, value); }
     public static void ndynamicBodyCount(long address, int value) { memPutInt(address + DYNAMIC_BODY_COUNT, value); }
     public static void ncontactCount(long address, int value) { memPutInt(address + CONTACT_COUNT, value); }
+    public static void narenaByteCount(long address, int value) { memPutInt(address + ARENA_BYTE_COUNT, value); }
 
     // -----------------------------------
 

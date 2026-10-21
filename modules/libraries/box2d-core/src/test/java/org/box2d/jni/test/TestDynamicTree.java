@@ -63,9 +63,6 @@ public class TestDynamicTree {
         ENSURE( tree.address() != NULL);
 
 	b2DestroyDynamicTree( tree );
-        tree.close();
-
-	ENSURE( tree.address() == NULL );
         return 0;
     }
 

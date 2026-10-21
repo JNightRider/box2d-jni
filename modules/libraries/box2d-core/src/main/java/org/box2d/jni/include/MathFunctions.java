@@ -46,6 +46,7 @@ import org.box2d.jni.readonly.ConstB2Vec2;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Class that represents the {@code <math_functions.h>} header of box2d.
@@ -774,12 +775,12 @@ public final class MathFunctions {
      */
     public static b2Vec2 b2GetLengthAndNormalize(FloatBuffer length, b2Vec2 v, b2Vec2 __result) {
         checkPointers(v, __result);
-        nb2GetLengthAndNormalize(length, v.address(), __result.address());
+        nb2GetLengthAndNormalize(memAddress(length), v.address(), __result.address());
         return __result;
     }
 
     /* {@code B2_INLINE b2Vec2 b2GetLengthAndNormalize( float* length, b2Vec2 v )} */
-    public static native void nb2GetLengthAndNormalize(FloatBuffer length, long v, long __result);
+    public static native void nb2GetLengthAndNormalize(long length, long v, long __result);
 
     // --- [ b2NormalizeRot ] ---
 

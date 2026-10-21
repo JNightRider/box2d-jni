@@ -4148,11 +4148,12 @@ public final class Box2d {
      */
     public static void b2Joint_GetConstraintTuning(b2JointId jointId, FloatBuffer hertz, FloatBuffer dampingRatio) {
         checkPointers(jointId);
-        nb2Joint_GetConstraintTuning(jointId.address(), hertz, dampingRatio);
+        checkBuffers(hertz, dampingRatio);
+        nb2Joint_GetConstraintTuning(jointId.address(), memAddress(hertz), memAddress(dampingRatio));
     }
 
     /* {@code B2_API void b2Joint_GetConstraintTuning( b2JointId jointId, float* hertz, float* dampingRatio ); } */
-    public static native void nb2Joint_GetConstraintTuning(long jointId, FloatBuffer hertz, FloatBuffer dampingRatio);
+    public static native void nb2Joint_GetConstraintTuning(long jointId, long hertz, long dampingRatio);
 
     // --- [ b2Joint_SetForceThreshold ] ---
 
@@ -4334,11 +4335,12 @@ public final class Box2d {
      */
     public static void b2DistanceJoint_GetSpringForceRange(b2JointId jointId, FloatBuffer lowerForce, FloatBuffer upperForce) {
         checkPointers(jointId);
-        nb2DistanceJoint_GetSpringForceRange(jointId.address(), lowerForce, upperForce);
+        checkBuffers(lowerForce, upperForce);
+        nb2DistanceJoint_GetSpringForceRange(jointId.address(), memAddress(lowerForce), memAddress(upperForce));
     }
 
     /* {@code B2_API void b2DistanceJoint_GetSpringForceRange( b2JointId jointId, float* lowerForce, float* upperForce ); } */
-    public static native void nb2DistanceJoint_GetSpringForceRange(long jointId, FloatBuffer lowerForce, FloatBuffer upperForce);
+    public static native void nb2DistanceJoint_GetSpringForceRange(long jointId, long lowerForce, long upperForce);
 
     // --- [ b2DistanceJoint_SetSpringHertz ] ---
 

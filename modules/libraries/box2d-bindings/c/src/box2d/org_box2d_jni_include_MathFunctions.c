@@ -581,18 +581,13 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_MathFunctions_nb2IsNormali
 /*
  * Class:     org_box2d_jni_include_MathFunctions
  * Method:    nb2GetLengthAndNormalize
- * Signature: (Ljava/nio/FloatBuffer;JJ)V
+ * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_MathFunctions_nb2GetLengthAndNormalize
-    (JNIEnv *__env, jclass clazz, jobject __buffer, jlong vAddress, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong length, jlong vAddress, jlong __result)
 {
-    ADDRESS_FLOAT_BUFFER(__env, __buffer, length, __capacity)
-    UNUSED_PARAM(__capacity)
-    UNUSED_PARAM(clazz)
-
-    b2Vec2* ptr = (b2Vec2*)(uintptr_t)__result;
-    b2Vec2* v = (b2Vec2*)(uintptr_t)vAddress;
-    *ptr = b2GetLengthAndNormalize( (float*)length, *v );
+    UNUSED_PARAMS(__env, clazz)
+    *(b2Vec2*)__result = b2GetLengthAndNormalize( (float*)length, *(b2Vec2*)vAddress );
 }
 
 /*
