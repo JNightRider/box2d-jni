@@ -8,6 +8,10 @@ runner       = "1.7.0"
 rules        = "1.7.0"
 kotlin       = "2.3.21"
 
+jreleaser           = "1.26.0"
+android-library     = "9.3.2" # 9.4.1
+undercouch-download = "5.7.0"
+
 [libraries]
 junit4          = { module = "junit:junit",                         version.ref = "junit4" }
 kotlin-reflect  = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
@@ -20,5 +24,6 @@ android-test-rules    = { group = "androidx.test",          name = "rules",     
 [bundles]
 
 [plugins]
-android-library = { id = "com.android.library",    version = "9.4.1" }
-download        = { id = "de.undercouch.download", version = "5.7.0" }
+android-library = { id = "com.android.library",     version.ref = "android-library"     }
+download        = { id = "de.undercouch.download",  version.ref = "undercouch-download" }
+jreleaser       = { id = "org.jreleaser",           version.ref = "jreleaser"           }

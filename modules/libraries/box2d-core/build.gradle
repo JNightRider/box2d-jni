@@ -2,7 +2,7 @@ import org.box2d.jni.BuildSrc
 
 plugins {
     id 'maven-publish'                  // to publish artifacts to Maven repositories
-    id 'org.jreleaser' version '1.24.0' // to uploads artifacts to Maven repositories
+    alias(libs.plugins.jreleaser)       // to uploads artifacts to Maven repositories
 }
 
 description = 'box2d-jni core'
