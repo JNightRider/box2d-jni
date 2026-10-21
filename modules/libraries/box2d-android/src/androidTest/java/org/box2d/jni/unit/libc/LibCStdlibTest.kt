@@ -37,6 +37,7 @@ import org.box2d.jni.system.Sys
 import org.box2d.jni.libc.LibCStdlib.*
 import org.box2d.jni.system.Debug.*
 import org.box2d.jni.system.Memory.*
+import org.box2d.jni.system.MemoryUtil.*
 import org.box2d.jni.system.Pointer.*
 import org.box2d.jni.test.util.LibraryUtils
 import org.junit.*
@@ -105,7 +106,7 @@ class LibCStdlibTest {
             apiLogMore("capacity: " + ptr.capacity())
             apiLogMore("limit: " + ptr.limit())
 
-            assertNotEquals(NULL, memGetNativeAddress(ptr))
+            assertNotEquals(NULL, memAddress(ptr))
             assertEquals(num * size, ptr.capacity().toLong())
             assertEquals(num * size, ptr.limit().toLong())
 
@@ -145,7 +146,7 @@ class LibCStdlibTest {
             apiLogMore("capacity: " + ptr.capacity())
             apiLogMore("limit: " + ptr.limit())
 
-            assertNotEquals(NULL, memGetNativeAddress(ptr))
+            assertNotEquals(NULL, memAddress(ptr))
             assertEquals(num * size, ptr.capacity().toLong())
             assertEquals(num * size, ptr.limit().toLong())
 

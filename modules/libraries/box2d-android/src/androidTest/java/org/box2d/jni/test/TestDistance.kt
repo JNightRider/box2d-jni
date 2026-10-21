@@ -39,7 +39,6 @@ import org.box2d.jni.include.MathFunctions.*
 import org.box2d.jni.include.MathTypes.*
 
 import org.box2d.jni.libc.LibCFloat.*
-import org.box2d.jni.system.Pointer.*
 
 import org.box2d.jni.test.TestMacros.ARRAY_COUNT
 import org.box2d.jni.test.TestMacros.ENSURE
@@ -67,7 +66,7 @@ class TestDistance {
         val p2 = b2Vec2.malloc().set( 2.0f, 0.0f )
         val q2 = b2Vec2.malloc().set( 1.0f, 0.0f )
 
-        val result = b2SegmentDistance( p1, q1, p2, q2, b2SegmentDistanceResult.malloc() )
+        val result = b2ComputeSegmentDistance( p1, q1, p2, q2, b2SegmentDistanceResult.malloc() )
 
         ENSURE_SMALL( result.fraction1() - 0.5f, FLT_EPSILON )
         ENSURE_SMALL( result.fraction2() - 1.0f, FLT_EPSILON )
@@ -95,8 +94,8 @@ class TestDistance {
         input.transform(b2Transform_identity)
         input.useRadii(false)
 
-        val cache = b2SimplexCache.calloc()
-        val output = b2DistanceOutput.malloc();nb2ShapeDistance(input.address(), cache.address(), NULL, 0, output.address() )
+        val cache = b2SimplexCache.calloc();
+        val output = b2ComputeShapeDistance(input, cache, null, 0, b2DistanceOutput.malloc() );
 
         ENSURE_SMALL( output.distance() - 1.0f, FLT_EPSILON );
 
@@ -120,7 +119,7 @@ class TestDistance {
         input.maxFraction(1.0f)
         input.canEncroach(false)
 
-        val output = b2ShapeCast( input, b2CastOutput.malloc() )
+        val output = b2CastShape( input, b2CastOutput.malloc() )
 
         ENSURE( output.hit() );
         ENSURE_SMALL( output.fraction() - 0.5f, 0.005f );
@@ -162,7 +161,7 @@ class TestDistance {
         input.useRadii(false)
 
         val cache = b2SimplexCache.calloc()
-        val output = b2ShapeDistance( input, cache, null, 0, b2DistanceOutput.malloc() )
+        val output = b2ComputeShapeDistance( input, cache, null, 0, b2DistanceOutput.malloc() )
 
         ENSURE( output.distance() > 0.0f )
         ENSURE( b2IsNormalized( output.normal() ) )
@@ -206,7 +205,7 @@ class TestDistance {
         input.maxFraction(1.0f)
         input.canEncroach(false)
 
-        val output = b2ShapeCast( input, b2CastOutput.malloc() )
+        val output = b2CastShape( input, b2CastOutput.malloc() )
 
         ENSURE( output.hit() == false || b2IsNormalized( output.normal() ) )
 
@@ -229,7 +228,7 @@ class TestDistance {
         input.sweepB( b2Sweep.malloc().set( b2Vec2_zero, b2Vec2_zero, b2Vec2.malloc().set( -2.0f, 0.0f ), b2Rot_identity, b2Rot_identity ))
         input.maxFraction(1.0f);
 
-        val output = b2TimeOfImpact( input, b2TOIOutput.malloc() )
+        val output = b2ComputeTimeOfImpact( input, b2TOIOutput.malloc() )
 
         ENSURE( output.state() == b2_toiStateHit )
         ENSURE_SMALL( output.fraction() - 0.5f, 0.005f )

@@ -70,20 +70,20 @@ class Main {
     private val ShapeTest: KFunction<Int> = TestShape()::ShapeTest
     private val WorldTest: KFunction<Int> = TestWorld()::WorldTest
 
-    val TestAssertFcn: b2AssertFcnI = b2AssertFcnI { condition: String?, fileName: String?, lineNumber: Int ->
+    val TestAssertFcn: b2AssertCallbackFcnI = b2AssertCallbackFcnI { condition: String?, fileName: String?, lineNumber: Int ->
         System.err.printf("BOX2D ASSERTION: %s, %s, line %d\n", condition, fileName, lineNumber)
         System.err.flush()
         1
     }
 
-    val TestLogFcn: b2LogFcnI = b2LogFcnI { message: String? ->
+    val TestLogFcn: b2LogCallbackFcnI = b2LogCallbackFcnI { message: String? ->
         System.out.printf("Box2D: %s\n", message)
     }
 
     @Test fun main() {
         val args = InstrumentationRegistry.getArguments()
-        b2SetAssertFcn( TestAssertFcn );
-        b2SetLogFcn( TestLogFcn );
+        b2SetAssertCallback( TestAssertFcn );
+        b2SetLogCallback( TestLogFcn );
 
         /*const char* */ filter = null;
         if (args.size() > 0)

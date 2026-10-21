@@ -46,6 +46,7 @@ import org.box2d.jni.include.MathFunctions.*
 import org.box2d.jni.include.Types.*
 
 import org.box2d.jni.system.Memory.*
+import org.box2d.jni.system.MemoryUtil.*
 import org.box2d.jni.system.Pointer.*
 
 import org.box2d.jni.test.TestMacros.ENSURE
@@ -215,7 +216,7 @@ class TestWorld {
         }
 
         val counters = b2World_GetCounters(worldId, b2Counters.malloc())
-        ENSURE(counters.bodyCount() == 0)
+        ENSURE(counters.bodyCount() == 0L)
 
         b2DestroyWorld(worldId)
 
@@ -294,12 +295,12 @@ class TestWorld {
         return 0
     }
 
-    private val CustomFilter = b2CustomFilterFcnI { shapeIdA: b2ShapeId?, shapeIdB: b2ShapeId?, context: Long ->
+    private val CustomFilter = b2CustomFilterCallbackFcnI { shapeIdA: b2ShapeId?, shapeIdB: b2ShapeId?, context: Long ->
         ENSURE(context == NULL)
         true
     }
 
-    private val PreSolveStatic = b2PreSolveFcnI { shapeIdA: b2ShapeId?, shapeIdB: b2ShapeId?, manifold: b2Manifold?, context: Long ->
+    private val PreSolveStatic = b2PreSolveCallbackFcnI { shapeIdA: b2ShapeId?, shapeIdB: b2ShapeId?, manifold: b2Manifold?, context: Long ->
 
     }
 
@@ -345,8 +346,8 @@ class TestWorld {
 
         b2World_SetContactTuning(worldId, 10.0f, 2.0f, 4.0f)
 
-        b2World_SetMaximumLinearSpeed(worldId, 10.0f)
-        value = b2World_GetMaximumLinearSpeed(worldId)
+        b2World_SetMaxLinearSpeed(worldId, 10.0f)
+        value = b2World_GetMaxLinearSpeed(worldId)
         ENSURE(value == 10.0f)
 
         b2World_EnableWarmStarting(worldId, true)
@@ -358,9 +359,9 @@ class TestWorld {
 
         val nvalue = memCreateFloatBuffer(1)
         nvalue.put(value)
-        b2World_SetUserData(worldId, memGetNativeAddress(nvalue))
+        b2World_SetUserData(worldId, memAddress(nvalue))
         val userData = b2World_GetUserData(worldId)
-        ENSURE(userData == memGetNativeAddress(nvalue))
+        ENSURE(userData == memAddress(nvalue))
 
         b2World_Step(worldId, 1.0f, 1)
 
@@ -569,10 +570,10 @@ class TestWorld {
         bodyDef.enableSleep(false)
         val bodyId = b2CreateBody(worldId, bodyDef, b2BodyId.malloc())
 
-        ENSURE(b2Body_IsSleepEnabled(bodyId) == false)
+        ENSURE(b2Body_IsSleepingEnabled(bodyId) == false)
 
-        b2Body_EnableSleep(bodyId, true)
-        ENSURE(b2Body_IsSleepEnabled(bodyId) == true)
+        b2Body_EnableSleeping(bodyId, true)
+        ENSURE(b2Body_IsSleepingEnabled(bodyId) == true)
 
         b2World_Step(worldId, 1.0f / 60.0f, 4)
 
