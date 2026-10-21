@@ -9,7 +9,7 @@ rules        = "1.7.0"
 kotlin       = "2.3.21"
 
 jreleaser           = "1.26.0"
-android-library     = "9.3.2" # 9.4.1
+android-library     = "9.4.1"
 undercouch-download = "5.7.0"
 
 [libraries]
