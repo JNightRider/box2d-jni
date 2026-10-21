@@ -20,5 +20,5 @@ android-test-rules    = { group = "androidx.test",          name = "rules",     
 [bundles]
 
 [plugins]
-android-library = { id = "com.android.library",    version = "9.3.2" }
+android-library = { id = "com.android.library",    version = "9.4.1" }
 download        = { id = "de.undercouch.download", version = "5.7.0" }
