@@ -47,6 +47,7 @@ import static org.box2d.jni.include.MathFunctions.*;
 import static org.box2d.jni.include.Types.*;
 
 import static org.box2d.jni.system.Memory.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 import static org.box2d.jni.system.Pointer.*;
 
 import static org.box2d.jni.test.TestMacros.*;
@@ -360,9 +361,9 @@ public class TestWorld {
 
         FloatBuffer nvalue = memCreateFloatBuffer(1);
         nvalue.put(value);
-        b2World_SetUserData( worldId, memGetNativeAddress(nvalue) );
+        b2World_SetUserData( worldId, memAddress(nvalue) );
         long userData = b2World_GetUserData( worldId );
-        ENSURE( userData == memGetNativeAddress(nvalue) );
+        ENSURE( userData == memAddress(nvalue) );
 
         b2World_Step( worldId, 1.0f, 1 );
 

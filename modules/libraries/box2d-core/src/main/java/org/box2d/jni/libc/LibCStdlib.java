@@ -38,15 +38,13 @@ import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 
 import org.box2d.jni.system.Library;
-
-import static org.box2d.jni.system.Memory.*;
 import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Implementation of C libraries: {@code <stdlib.h>}
  *
  * @author wil
- * @version 1.1.0
+ * @version 1.1.1
  * @since 1.0.0
  */
 public final class LibCStdlib {
@@ -95,7 +93,7 @@ public final class LibCStdlib {
      * @param buffer ByteBuffer
      */
     public static void free(ByteBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
+        nfree(nmemAddress0(buffer));
     }
 
     /**
@@ -104,7 +102,7 @@ public final class LibCStdlib {
      * @param buffer ShortBuffer
      */
     public static void free(ShortBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
+        nfree(nmemAddress0(buffer));
     }
 
     /**
@@ -113,7 +111,7 @@ public final class LibCStdlib {
      * @param buffer IntBuffer
      */
     public static void free(IntBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
+        nfree(nmemAddress0(buffer));
     }
 
     /**
@@ -122,7 +120,7 @@ public final class LibCStdlib {
      * @param buffer FloatBuffer
      */
     public static void free(FloatBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
+        nfree(nmemAddress0(buffer));
     }
 
     /**
@@ -131,7 +129,7 @@ public final class LibCStdlib {
      * @param buffer DoubleBuffer
      */
     public static void free(DoubleBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
+        nfree(nmemAddress0(buffer));
     }
 
     /**
@@ -140,7 +138,7 @@ public final class LibCStdlib {
      * @param buffer LongBuffer
      */
     public static void free(LongBuffer buffer) {
-        nfree(memGetNativeAddress(buffer));
+        nfree(nmemAddress0(buffer));
     }
 
     /* {@code void free( void* ptr ); } */
@@ -171,7 +169,7 @@ public final class LibCStdlib {
      * @param ptr ByteBuffer
      */
     public static void aligned_free(ByteBuffer ptr) {
-        naligned_free(memGetNativeAddress(ptr));
+        naligned_free(nmemAddress0(ptr));
     }
 
     /**
@@ -180,7 +178,7 @@ public final class LibCStdlib {
      * @param ptr ShortBuffer
      */
     public static void aligned_free(ShortBuffer ptr) {
-        naligned_free(memGetNativeAddress(ptr));
+        naligned_free(nmemAddress0(ptr));
     }
 
     /**
@@ -189,7 +187,7 @@ public final class LibCStdlib {
      * @param ptr IntBuffer
      */
     public static void aligned_free(IntBuffer ptr) {
-        naligned_free(memGetNativeAddress(ptr));
+        naligned_free(nmemAddress0(ptr));
     }
 
     /**
@@ -198,7 +196,7 @@ public final class LibCStdlib {
      * @param ptr FloatBuffer
      */
     public static void aligned_free(FloatBuffer ptr) {
-        naligned_free(memGetNativeAddress(ptr));
+        naligned_free(nmemAddress0(ptr));
     }
 
     /**
@@ -208,7 +206,7 @@ public final class LibCStdlib {
      */
 
     public static void aligned_free(DoubleBuffer ptr) {
-        naligned_free(memGetNativeAddress(ptr));
+        naligned_free(nmemAddress0(ptr));
     }
 
     /**
@@ -217,7 +215,7 @@ public final class LibCStdlib {
      * @param ptr LongBuffer
      */
     public static void aligned_free(LongBuffer ptr) {
-        naligned_free(memGetNativeAddress(ptr));
+        naligned_free(nmemAddress0(ptr));
     }
 
     /* void aligned_free ( void *memblock ); */

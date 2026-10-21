@@ -131,7 +131,7 @@ public final class ArenaAlloc extends Uintptr implements AutoCloseable {
      * @return ArenaAlloc
      */
     public static ArenaAlloc create(ByteBuffer buffer) {
-        long address = Memory.memGetNativeAddress(buffer);
+        long address = MemoryUtil.memAddress(buffer);
         int size = buffer.remaining();
         return new ArenaAlloc(buffer, address, size);
     }

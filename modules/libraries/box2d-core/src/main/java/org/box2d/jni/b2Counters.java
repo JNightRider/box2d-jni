@@ -467,7 +467,7 @@ public class b2Counters extends Struct<b2Counters> {
     public static void ntreeHeight(long address, int value) { memPutInt(address + TREE_HEIGHT, value); }
     public static void nbyteCount(long address, long value) { memPutLong(address + BYTE_COUNT, value); }
     public static void ntaskCount(long address, int value) { memPutInt(address + TASK_COUNT, value); }
-    public static void ncolorCounts(long address, IntBuffer value) { nmemcpy(address + COLOR_COUNTS, memGetNativeAddress(value), 24 * 4); }
+    public static void ncolorCounts(long address, IntBuffer value) { nmemcpy(address + COLOR_COUNTS, memAddress(value), 24 * 4); }
     public static void nawakeContactCount(long address, int value) { memPutInt(address + AWAKE_CONTACT_COUNT, value); }
     public static void nrecycledContactCount(long address, int value) { memPutInt(address + RECYCLED_CONTACT_COUNT, value); }
 
