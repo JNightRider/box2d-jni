@@ -39,7 +39,6 @@ import static org.box2d.jni.include.MathFunctions.*;
 import static org.box2d.jni.include.MathTypes.*;
 
 import static org.box2d.jni.libc.LibCFloat.*;
-import static org.box2d.jni.system.Pointer.*;
 
 import static org.box2d.jni.test.TestMacros.*;
 
