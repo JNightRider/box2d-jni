@@ -46,12 +46,13 @@ import org.box2d.jni.readonly.ConstB2Vec2;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Class that represents the {@code <math_functions.h>} header of box2d.
  *
  * @author wil
- * @version 1.2.1
+ * @version 2.0.0
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
@@ -88,20 +89,20 @@ public final class MathFunctions {
     /* {@code B2_API bool b2IsValidVec2( b2Vec2 v ); } */
     public static native boolean nb2IsValidVec2( long v );
 
-    // --- [ b2IsValidRotation ] ---
+    // --- [ b2IsValidRot ] ---
     
     /**
-     * {@code b2IsValidRotation( b2Rot q ); }
+     * {@code b2IsValidRot( b2Rot q ); }
      * 
      * @param q b2Rot
      * @return boolean
      */
-    public static boolean b2IsValidRotation( b2Rot q ) {
+    public static boolean b2IsValidRot( b2Rot q ) {
         checkPointers(q);
-        return nb2IsValidRotation(q.address());
+        return nb2IsValidRot(q.address());
     }
-    /* {@code b2IsValidRotation( b2Rot q ); } */
-    public static native boolean nb2IsValidRotation(long q);
+    /* {@code b2IsValidRot( b2Rot q ); } */
+    public static native boolean nb2IsValidRot(long q);
 
     // --- [ b2IsValidTransform ] ---
     /**
@@ -144,19 +145,20 @@ public final class MathFunctions {
     /* {@code b2IsValidPlane( b2Plane a ); } */
     public static native boolean n2IsValidPlane(long a);
 
-    // --- [ b2IsValidPosition ] ---
+    // --- [ b2IsValidPos ] ---
+
     /**
-     * {@code b2IsValidPosition( b2Pos p );}
+     * {@code b2IsValidPos( b2Pos p );}
      *
      * @param p b2Pos
      * @return boolean
      */
-    public static boolean b2IsValidPosition(b2Pos p) {
+    public static boolean b2IsValidPos(b2Pos p) {
         checkPointers(p);
-        return nb2IsValidPosition(p.address());
+        return nb2IsValidPos(p.address());
     }
-    /* {@code b2IsValidPosition( b2Pos p );} */
-    public static native boolean nb2IsValidPosition(long p);
+    /* {@code b2IsValidPos( b2Pos p );} */
+    public static native boolean nb2IsValidPos(long p);
 
     // --- [ b2IsValidWorldTransform ] ---
 
@@ -290,7 +292,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2MaxFloat( float a, float b )} */
     public static native float nb2MaxFloat(float a, float b);
 
-
     // --- [ b2AbsFloat ] ---
 
     /**
@@ -305,7 +306,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2AbsFloat( float a )} */
     public static native float nb2AbsFloat(float a);
-
 
     // --- [ b2ClampFloat ] ---
 
@@ -324,7 +324,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2ClampFloat( float a, float lower, float upper )} */
     public static native float nb2ClampFloat(float a, float lower, float upper);
 
-
     // --- [ b2Atan2 ] ---
 
     /**
@@ -340,7 +339,6 @@ public final class MathFunctions {
 
     /* {@code B2_API float b2Atan2( float y, float x ); } */
     public static native float nb2Atan2(float y, float x);
-
 
     // --- [ b2ComputeCosSin ] ---
 
@@ -359,7 +357,6 @@ public final class MathFunctions {
 
     /* {@code B2_API b2CosSin b2ComputeCosSin( float radians ); } */
     public static native void nb2ComputeCosSin(float radians, long __result);
-
 
     // --- [ b2Dot ] ---
 
@@ -395,7 +392,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2Cross( b2Vec2 a, b2Vec2 b )} */
     public static native float nb2Cross(long a, long b);
 
-
     // --- [ b2CrossVS ] ---
 
     /**
@@ -414,7 +410,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2CrossVS( b2Vec2 v, float s )} */
     public static native void nb2CrossVS(long v, float s, long __result);
-
 
     // --- [ b2CrossSV ] ---
 
@@ -435,7 +430,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2CrossSV( float s, b2Vec2 v )} */
     public static native void nb2CrossSV(float s, long v, long __result);
 
-
     // --- [ b2LeftPerp ] ---
 
     /**
@@ -453,7 +447,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2LeftPerp( b2Vec2 v )} */
     public static native void nb2LeftPerp(long v, long __result);
-
 
     // --- [ b2RightPerp ] ---
 
@@ -473,7 +466,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2RightPerp( b2Vec2 v )} */
     public static native void nb2RightPerp(long v, long __result);
 
-
     // --- [ b2Add ] ---
 
     /**
@@ -492,7 +484,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2Add( b2Vec2 a, b2Vec2 b )} */
     public static native void nb2Add(long a, long b, long __result);
-
 
     // --- [ b2Sub ] ---
 
@@ -531,7 +522,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2Neg( b2Vec2 a )} */
     public static native void nb2Neg(long a, long __result);
 
-
     // --- [ b2Lerp ] ---
 
     /**
@@ -552,7 +542,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2Lerp( b2Vec2 a, b2Vec2 b, float t )} */
     public static native void nb2Lerp(long a, long b, float t, long __result);
 
-
     // --- [ b2Mul ] ---
 
     /**
@@ -572,7 +561,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2Mul( b2Vec2 a, b2Vec2 b )} */
     public static native void nb2Mul(long a, long b, long __result);
 
-
     // --- [ b2MulSV ] ---
 
     /**
@@ -591,7 +579,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2MulSV( float s, b2Vec2 v )} */
     public static native void nb2MulSV(float s, long v, long __result);
-
 
     // --- [ b2MulAdd ] ---
 
@@ -613,7 +600,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2MulAdd( b2Vec2 a, float s, b2Vec2 b )} */
     public static native void nb2MulAdd(long a, float s, long b, long __result);
 
-
     // --- [ b2MulSub ] ---
 
     /**
@@ -634,7 +620,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2MulSub( b2Vec2 a, float s, b2Vec2 b )} */
     public static native void nb2MulSub(long a, float s, long b, long __result);
 
-
     // --- [ b2Abs ] ---
 
     /**
@@ -652,7 +637,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2Abs( b2Vec2 a )} */
     public static native void nb2Abs(long a, long __result);
-
 
     // --- [ b2Min ] ---
 
@@ -672,7 +656,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2Min( b2Vec2 a, b2Vec2 b )} */
     public static native void nb2Min(long a, long b, long __result);
-
 
     // --- [ b2Max ] ---
 
@@ -729,7 +712,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2Length( b2Vec2 v )} */
     public static native float nb2Length(long v);
 
-
     // --- [ b2Distance ] ---
 
     /**
@@ -746,7 +728,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2Distance( b2Vec2 a, b2Vec2 b )} */
     public static native float nb2Distance(long a, long b);
-
 
     // --- [ b2Normalize ] ---
 
@@ -766,7 +747,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2Normalize( b2Vec2 v )} */
     public static native void nb2Normalize(long v, long __result);
 
-
     // --- [ b2IsNormalized ] ---
 
     /**
@@ -783,7 +763,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE bool b2IsNormalized( b2Vec2 a )} */
     public static native boolean nb2IsNormalized(long a);
 
-
     // --- [ b2GetLengthAndNormalize ] ---
 
     /**
@@ -796,13 +775,12 @@ public final class MathFunctions {
      */
     public static b2Vec2 b2GetLengthAndNormalize(FloatBuffer length, b2Vec2 v, b2Vec2 __result) {
         checkPointers(v, __result);
-        nb2GetLengthAndNormalize(length, v.address(), __result.address());
+        nb2GetLengthAndNormalize(memAddress(length), v.address(), __result.address());
         return __result;
     }
 
     /* {@code B2_INLINE b2Vec2 b2GetLengthAndNormalize( float* length, b2Vec2 v )} */
-    public static native void nb2GetLengthAndNormalize(FloatBuffer length, long v, long __result);
-
+    public static native void nb2GetLengthAndNormalize(long length, long v, long __result);
 
     // --- [ b2NormalizeRot ] ---
 
@@ -821,7 +799,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Rot b2NormalizeRot( b2Rot q )} */
     public static native void nb2NormalizeRot(long q, long __result);
-
 
     // --- [ b2IntegrateRotation ] ---
 
@@ -842,7 +819,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Rot b2IntegrateRotation( b2Rot q1, float deltaAngle )} */
     public static native void nb2IntegrateRotation(long q1, float deltaAngle, long __result);
 
-
     // --- [ b2LengthSquared ] ---
 
     /**
@@ -858,7 +834,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2LengthSquared( b2Vec2 v )} */
     public static native float nb2LengthSquared(long v);
-
 
     // --- [ b2DistanceSquared ] ---
 
@@ -876,7 +851,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2DistanceSquared( b2Vec2 a, b2Vec2 b )} */
     public static native float nb2DistanceSquared(long a, long b);
-
 
     // --- [ b2MakeRot ] ---
 
@@ -896,7 +870,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Rot b2MakeRot( float radians )} */
     public static native void nb2MakeRot(float radians, long __result);
 
-
     // --- [ b2MakeRotFromUnitVector ] ---
 
     /**
@@ -914,7 +887,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Rot b2MakeRotFromUnitVector( b2Vec2 unitVector )} */
     public static native void nb2MakeRotFromUnitVector(long unitVector, long __result);
-
 
     // --- [ b2ComputeRotationBetweenUnitVectors ] ---
 
@@ -935,7 +907,6 @@ public final class MathFunctions {
     /* {@code B2_API b2Rot b2ComputeRotationBetweenUnitVectors( b2Vec2 v1, b2Vec2 v2 ); } */
     public static native void nb2ComputeRotationBetweenUnitVectors(long v1, long v2, long __result);
 
-
     // --- [ b2IsNormalizedRot ] ---
 
     /**
@@ -951,7 +922,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE bool b2IsNormalizedRot( b2Rot q )} */
     public static native boolean nb2IsNormalizedRot(long q);
-
 
     // --- [ b2InvertRot ] ---
 
@@ -970,7 +940,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Rot b2InvertRot( b2Rot a )} */
     public static native void nb2InvertRot(long a, long __result);
-
 
     // --- [ b2NLerp ] ---
 
@@ -992,7 +961,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Rot b2NLerp( b2Rot q1, b2Rot q2, float t )} */
     public static native void nb2NLerp(long q1, long q2, float t, long __result);
 
-
     // --- [ b2ComputeAngularVelocity ] ---
 
     /**
@@ -1011,7 +979,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2ComputeAngularVelocity( b2Rot q1, b2Rot q2, float inv_h )} */
     public static native float nb2ComputeAngularVelocity(long q1, long q2, float inv_h);
 
-
     // --- [ b2Rot_GetAngle ] ---
 
     /**
@@ -1027,7 +994,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2Rot_GetAngle( b2Rot q )} */
     public static native float nb2Rot_GetAngle(long q);
-
 
     // --- [ b2Rot_GetXAxis ] ---
 
@@ -1047,7 +1013,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2Rot_GetXAxis( b2Rot q )} */
     public static native void nb2Rot_GetXAxis(long q, long __result);
 
-
     // --- [ b2Rot_GetYAxis ] ---
 
     /**
@@ -1065,7 +1030,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2Rot_GetYAxis( b2Rot q )} */
     public static native void nb2Rot_GetYAxis(long q, long __result);
-
     
     // --- [ b2MulRot ] ---
 
@@ -1086,7 +1050,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Rot b2MulRot( b2Rot q, b2Rot r )} */
     public static native void nb2MulRot(long q, long r, long __result);
 
-
     // --- [ b2InvMulRot ] ---
 
     /**
@@ -1106,7 +1069,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Rot b2InvMulRot( b2Rot a, b2Rot b )} */
     public static native void nb2InvMulRot(long a, long b, long __result);
 
-
     // --- [ b2RelativeAngle ] ---
 
     /**
@@ -1124,7 +1086,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2RelativeAngle( b2Rot a, b2Rot b )} */
     public static native float nb2RelativeAngle(long a, long b);
 
-
     // --- [ b2UnwindAngle ] ---
 
     /**
@@ -1139,7 +1100,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2UnwindAngle( float radians )} */
     public static native float nb2UnwindAngle(float radians);
-
 
     // --- [ b2RotateVector ] ---
 
@@ -1160,7 +1120,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2RotateVector( b2Rot q, b2Vec2 v )} */
     public static native void nb2RotateVector(long q, long v, long __result);
 
-
     // --- [ b2InvRotateVector ] ---
 
     /**
@@ -1179,7 +1138,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2InvRotateVector( b2Rot q, b2Vec2 v )} */
     public static native void nb2InvRotateVector(long q, long v, long __result);
-
 
     // --- [ b2TransformPoint ] ---
 
@@ -1200,7 +1158,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2TransformPoint( b2Transform t, const b2Vec2 p )} */
     public static native void nb2TransformPoint(long t, long p, long __result);
 
-
     // --- [ b2InvTransformPoint ] ---
 
     /**
@@ -1220,7 +1177,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2InvTransformPoint( b2Transform t, const b2Vec2 p )} */
     public static native void nb2InvTransformPoint(long t, long p, long __result);
 
-
     // --- [ b2MulTransforms ] ---
 
     /**
@@ -1239,7 +1195,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Transform b2MulTransforms( b2Transform A, b2Transform B )} */
     public static native void nb2MulTransforms(long A, long B, long __result);
-
 
     // --- [ b2InvMulTransforms ] ---
 
@@ -1364,10 +1319,10 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Pos b2OffsetPos( b2Pos p, b2Vec2 d )} */
     public static native void nb2OffsetPos(long p, long d, long __result);
 
-    // --- [ b2LerpPosition ] ---
+    // --- [ b2LerpPos ] ---
 
     /**
-     * {@code B2_INLINE b2Pos b2LerpPosition( b2Pos a, b2Pos b, float t )}
+     * {@code B2_INLINE b2Pos b2LerpPos( b2Pos a, b2Pos b, float t )}
      *
      * @param a b2Pos
      * @param b b2Pos
@@ -1375,14 +1330,14 @@ public final class MathFunctions {
      * @param __result b2Pos
      * @return b2Pos
      */
-    public static b2Pos b2LerpPosition(b2Pos a, b2Pos b, float t, b2Pos __result) {
+    public static b2Pos b2LerpPos(b2Pos a, b2Pos b, float t, b2Pos __result) {
         checkPointers(a, b, __result);
-        nb2LerpPosition(a.address(), b.address(), t, __result.address());
+        nb2LerpPos(a.address(), b.address(), t, __result.address());
         return __result;
     }
 
-    /* {@code B2_INLINE b2Pos b2LerpPosition( b2Pos a, b2Pos b, float t )} */
-    public static native void nb2LerpPosition(long a, long b, float t, long __result);
+    /* {@code B2_INLINE b2Pos b2LerpPos( b2Pos a, b2Pos b, float t )} */
+    public static native void nb2LerpPos(long a, long b, float t, long __result);
 
     // --- [ b2TransformWorldPoint ] ---
 
@@ -1517,7 +1472,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2MulMV( b2Mat22 A, b2Vec2 v )} */
     public static native void nb2MulMV(long A, long v, long __result);
 
-
     // --- [ b2GetInverse22 ] ---
 
     /**
@@ -1535,7 +1489,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Mat22 b2GetInverse22( b2Mat22 A )} */
     public static native void nb2GetInverse22(long A, long __result);
-
 
     // --- [ b2Solve22 ] ---
 
@@ -1556,7 +1509,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2Solve22( b2Mat22 A, b2Vec2 b )} */
     public static native void nb2Solve22(long A, long b, long __result);
 
-
     // --- [ b2AABB_Contains ] ---
 
     /**
@@ -1573,7 +1525,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE bool b2AABB_Contains( b2AABB a, b2AABB b )} */
     public static native boolean nb2AABB_Contains(long a, long b);
-
 
     // --- [ b2AABB_Center ] ---
 
@@ -1593,7 +1544,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2Vec2 b2AABB_Center( b2AABB a )} */
     public static native void nb2AABB_Center(long a, long __result);
 
-
     // --- [ b2AABB_Extents ] ---
 
     /**
@@ -1611,7 +1561,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2Vec2 b2AABB_Extents( b2AABB a )} */
     public static native void nb2AABB_Extents(long a, long __result);
-
 
     // --- [ b2AABB_Union ] ---
 
@@ -1631,7 +1580,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE b2AABB b2AABB_Union( b2AABB a, b2AABB b )} */
     public static native void nb2AABB_Union(long a, long b, long __result);
-
 
     // --- [ b2AABB_Overlaps ] ---
 
@@ -1671,7 +1619,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE b2AABB b2MakeAABB( const b2Vec2* points, int count, float radius )} */
     public static native void nb2MakeAABB(long points, int count, float radius, long __result);
 
-
     // --- [ b2PlaneSeparation ] ---
 
     /**
@@ -1688,7 +1635,6 @@ public final class MathFunctions {
 
     /* {@code B2_INLINE float b2PlaneSeparation( b2Plane plane, b2Vec2 point )} */
     public static native float nb2PlaneSeparation(long plane, long point);
-
 
     // --- [ b2SpringDamper ] ---
 
@@ -1709,7 +1655,6 @@ public final class MathFunctions {
     /* {@code B2_INLINE float b2SpringDamper( float hertz, float dampingRatio, float position, float velocity, float timeStep )} */
     public static native float nb2SpringDamper(float hertz, float dampingRatio, float position, float velocity, float timeStep);
 
-
     // --- [ b2SetLengthUnitsPerMeter ] ---
 
     /**
@@ -1723,7 +1668,6 @@ public final class MathFunctions {
 
     /* {@code B2_API void b2SetLengthUnitsPerMeter( float lengthUnits ); } */
     public static native void nb2SetLengthUnitsPerMeter(float lengthUnits);
-
 
     // --- [ b2GetLengthUnitsPerMeter ] ---
 

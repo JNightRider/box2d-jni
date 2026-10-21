@@ -47,6 +47,7 @@ import static org.box2d.jni.include.MathFunctions.*;
 import static org.box2d.jni.include.Types.*;
 
 import static org.box2d.jni.system.Memory.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 import static org.box2d.jni.system.Pointer.*;
 
 import static org.box2d.jni.test.TestMacros.*;
@@ -295,13 +296,13 @@ public class TestWorld {
         return 0;
     }
 
-    private final b2CustomFilterFcnI CustomFilter = (shapeIdA, shapeIdB, context) -> 
+    private final b2CustomFilterCallbackFcnI CustomFilter = (shapeIdA, shapeIdB, context) -> 
     {
         ENSURE( context == NULL );
         return true;
     };
 
-    private final b2PreSolveFcnI PreSolveStatic = (shapeIdA, shapeIdB, manifold, context) -> {
+    private final b2PreSolveCallbackFcnI PreSolveStatic = (shapeIdA, shapeIdB, manifold, context) -> {
         
     };
 
@@ -347,8 +348,8 @@ public class TestWorld {
 
         b2World_SetContactTuning( worldId, 10.0f, 2.0f, 4.0f );
 
-        b2World_SetMaximumLinearSpeed( worldId, 10.0f );
-        value = b2World_GetMaximumLinearSpeed( worldId );
+        b2World_SetMaxLinearSpeed( worldId, 10.0f );
+        value = b2World_GetMaxLinearSpeed( worldId );
         ENSURE( value == 10.0f );
 
         b2World_EnableWarmStarting( worldId, true );
@@ -360,9 +361,9 @@ public class TestWorld {
 
         FloatBuffer nvalue = memCreateFloatBuffer(1);
         nvalue.put(value);
-        b2World_SetUserData( worldId, memGetNativeAddress(nvalue) );
+        b2World_SetUserData( worldId, memAddress(nvalue) );
         long userData = b2World_GetUserData( worldId );
-        ENSURE( userData == memGetNativeAddress(nvalue) );
+        ENSURE( userData == memAddress(nvalue) );
 
         b2World_Step( worldId, 1.0f, 1 );
 
@@ -612,10 +613,10 @@ public class TestWorld {
         bodyDef.enableSleep(false);
         b2BodyId bodyId = b2CreateBody( worldId, bodyDef, b2BodyId.malloc() );
 
-        ENSURE( b2Body_IsSleepEnabled( bodyId ) == false );
+        ENSURE( b2Body_IsSleepingEnabled( bodyId ) == false );
 
-        b2Body_EnableSleep( bodyId, true );
-        ENSURE( b2Body_IsSleepEnabled( bodyId ) == true );
+        b2Body_EnableSleeping( bodyId, true );
+        ENSURE( b2Body_IsSleepingEnabled( bodyId ) == true );
 
         b2World_Step( worldId, 1.0f / 60.0f, 4 );
 

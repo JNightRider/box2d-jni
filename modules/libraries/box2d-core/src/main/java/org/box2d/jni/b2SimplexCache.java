@@ -288,8 +288,8 @@ public class b2SimplexCache extends Struct<b2SimplexCache> implements ConstB2Sim
     public static ByteBuffer nindexB(long address) { return memByteBuffer(address + INDEX_B, 3); }
 
     public static void ncount(long address, short value) { memPutShort(address + COUNT, value); }
-    public static void nindexA(long address, ByteBuffer value) { nmemcpy(address + INDEX_A, memGetNativeAddress(value), 3); }
-    public static void nindexB(long address, ByteBuffer value) { nmemcpy(address + INDEX_B, memGetNativeAddress(value), 3); }
+    public static void nindexA(long address, ByteBuffer value) { nmemcpy(address + INDEX_A, memAddress(value), 3); }
+    public static void nindexB(long address, ByteBuffer value) { nmemcpy(address + INDEX_B, memAddress(value), 3); }
     
     // -----------------------------------
 

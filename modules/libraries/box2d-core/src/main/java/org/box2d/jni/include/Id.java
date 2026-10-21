@@ -44,12 +44,13 @@ import org.box2d.jni.readonly.ConstB2Id;
 import org.box2d.jni.system.Library;
 
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Class that represents the {@code <id.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Id {
@@ -286,11 +287,11 @@ public final class Id {
     public static void b2StoreContactId(b2ContactId id, IntBuffer values) {
         checkPointers(id);
         checkMinBuffer(values, 3);
-        nb2StoreContactId(id.address(), values);
+        nb2StoreContactId(id.address(), memAddress(values));
     }
 
     /* {@code B2_ID_INLINE void b2StoreContactId( b2ContactId id, uint32_t values[3] ) } */
-    public static native void nb2StoreContactId(long id, IntBuffer values);
+    public static native void nb2StoreContactId(long id, long values);
 
     // --- [ b2LoadContactId ] ---
 
@@ -304,12 +305,12 @@ public final class Id {
     public static b2ContactId b2LoadContactId(IntBuffer values, b2ContactId __result) {
         checkPointers(__result);
         checkMinBuffer(values, 3);
-        nb2LoadContactId(values, __result.address());
+        nb2LoadContactId(memAddress(values), __result.address());
         return __result;
     }
 
     /* {@code B2_ID_INLINE b2ContactId b2LoadContactId( uint32_t values[3] ) } */
-    public static native void nb2LoadContactId(IntBuffer values, long __result);
+    public static native void nb2LoadContactId(long values, long __result);
     /** private constructor */
     private Id() {}
 }

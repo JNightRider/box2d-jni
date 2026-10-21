@@ -37,7 +37,7 @@ import static org.box2d.jni.system.Pointer.*;
  * An internal-use class for verifying objects used by Box2dJNI.
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Checks {
@@ -70,6 +70,18 @@ public final class Checks {
         }
     }
     
+    public static void checkBuffers(Buffer... buffers) {
+        if (buffers == null) {
+            throw new NullPointerException("Invalid buffers");
+        }
+        for (int i = 0; i < buffers.length; i++) {
+            final Buffer ptr = buffers[i];
+            if (ptr == null) {
+                throw new IllegalStateException("Buffer " +  ptr + " is invalid");
+            }
+        }
+    }
+
     public static void checkMinBuffer(Buffer buffer, int length) {
         if (buffer.capacity() < length) {
             throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
@@ -77,6 +89,9 @@ public final class Checks {
     }
     
     public static void checkBuffer(Buffer buffer, int length) {
+        if (buffer == null) {
+            throw new NullPointerException("Invalid buffer");
+        }
         if (buffer.capacity() != length) {
             throw new IllegalStateException("The capacity of pointer %d does not match the size %d".formatted(buffer.capacity(), length));
         }

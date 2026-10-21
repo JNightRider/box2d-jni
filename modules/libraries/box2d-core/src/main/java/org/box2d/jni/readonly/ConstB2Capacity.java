@@ -35,18 +35,50 @@ package org.box2d.jni.readonly;
  * of type <code>b2Capacity</code>. (native type: const b2Capacity)
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public interface ConstB2Capacity extends ConstStruct {
-    /** @return Returns the property {@code staticShapeCount} */
-    public int staticShapeCount();
-    /** @return Returns the property {@code dynamicShapeCount} */
-    public int dynamicShapeCount();
-    /** @return Returns the property {@code staticBodyCount} */
-    public int staticBodyCount();
-    /** @return Returns the property {@code dynamicBodyCount} */
-    public int dynamicBodyCount();
-    /** @return Returns the property {@code contactCount} */
-    public int contactCount();
+
+    /**
+     * Number of expected static shapes.
+     *
+     * @return int
+     */
+    int staticShapeCount();
+
+    /**
+     * Number of expected dynamic and kinematic shapes.
+     *
+     * @return int
+     */
+    int dynamicShapeCount();
+
+    /**
+     * Number of expected static bodies.
+     *
+     * @return int
+     */
+    int staticBodyCount();
+
+    /**
+     * Number of expected dynamic and kinematic bodies.
+     *
+     * @return int
+     */
+    int dynamicBodyCount();
+
+    /**
+     * Number of expected contacts.
+     *
+     * @return int
+     */
+    int contactCount();
+
+    /**
+     * Reserve arena allocator space, used for temporary allocations.
+     *
+     * @return int
+     */
+    int arenaByteCount();
 }

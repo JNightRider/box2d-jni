@@ -40,7 +40,7 @@ import static org.box2d.jni.system.Pointer.*;
  * Class that represents the {@code <constants.h>} header of box2d.
  *
  * @author wil
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public final class Constants {
@@ -49,26 +49,26 @@ public final class Constants {
     /**
      * {@code
      * #if defined( BOX2D_DOUBLE_PRECISION )
-     * #define B2_HUGE ( 1.0e9f * b2GetLengthUnitsPerMeter() )
+     * #define B2_HUGE ( ( 100000.0f * 1000.0f ) * b2_lengthUnitsPerMeter )
      * #else
-     * #define B2_HUGE ( 1.0e5f * b2GetLengthUnitsPerMeter() )
+     * #define B2_HUGE ( ( 100.0f * 1000.0f ) * b2_lengthUnitsPerMeter )
      * #endif
      * }
      */
     public static final Number B2_HUGE = BOX2D_DOUBLE_PRECISION
-                            ? (1.0e9f * b2GetLengthUnitsPerMeter())
-                            : (1.0e5f * b2GetLengthUnitsPerMeter());
+                            ? ( ( 100000.0f * 1000.0f ) * b2GetLengthUnitsPerMeter() )
+                            : ( ( 100.0f * 1000.0f ) * b2GetLengthUnitsPerMeter() );
 
     /** {@code #define B2_MAX_WORKERS 32 } */
     public static final int  B2_MAX_WORKERS = 32;
 
-    /** {@code } */
+    /** {@code #define B2_MAX_TASKS 256 } */
     public static final int B2_MAX_TASKS = 256;
 
-    /** {@code } */
+    /** {@code #define B2_GRAPH_COLOR_COUNT 24 } */
     public static final int B2_GRAPH_COLOR_COUNT = 24;
 
-    /** {@code } */
+    /** {@code #define B2_LINEAR_SLOP ( 0.005f * b2_lengthUnitsPerMeter ) } */
     public static final float B2_LINEAR_SLOP = ( 0.005f * b2GetLengthUnitsPerMeter() );
 
     /**

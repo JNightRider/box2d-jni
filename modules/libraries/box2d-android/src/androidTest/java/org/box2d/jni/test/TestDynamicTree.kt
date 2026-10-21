@@ -40,6 +40,7 @@ import org.box2d.jni.include.MathFunctions.*
 import org.box2d.jni.libc.LibCMath.*
 import org.box2d.jni.system.Memory.*
 import org.box2d.jni.system.MemoryUtil.*
+import org.box2d.jni.system.Pointer.*
 
 import org.box2d.jni.readonly.ConstB2RayCastInput
 
@@ -62,25 +63,11 @@ class TestDynamicTree {
 
     fun TreeCreateDestroy( ): Int
     {
-        val a = b2AABB.malloc()
-            .lowerBound( b2Vec2.malloc().set( -1.0f, -1.0f ) )
-            .upperBound( b2Vec2.malloc().set( 2.0f, 2.0f ) )
+        val tree = b2CreateDynamicTree(16)
 
+        ENSURE(tree.address() != NULL)
 
-        val tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() )
-        run {
-            tree.nodeEnd(2);
-            tree.proxyCount(1);
-        }
-
-        ENSURE( tree.nodeEnd() == 2 );
-        ENSURE( tree.proxyCount() == 1 );
-
-        b2DestroyDynamicTree( tree )
-
-        ENSURE( tree.nodeEnd() == 0 );
-        ENSURE( tree.proxyCount() == 0 );
-
+        b2DestroyDynamicTree(tree)
         return 0
     }
 
@@ -94,7 +81,7 @@ class TestDynamicTree {
     {
         // Test AABB centered at origin with bounds [-1, -1] to [1, 1]
         val a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ))
-        val tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() )
+        val tree = b2CreateDynamicTree( 16 )
         val proxyId = b2CreateTreeProxy( tree, a, 1, 0 )
 
         val input = b2RayCastInput.calloc()
@@ -110,7 +97,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -124,7 +111,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1);
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -138,7 +125,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -152,7 +139,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -166,7 +153,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == -1 )
         }
@@ -180,7 +167,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == -1 )
         }
@@ -194,7 +181,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -208,7 +195,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -222,7 +209,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == -1 )
         }
@@ -236,7 +223,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -250,7 +237,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == -1 )
         }
@@ -264,7 +251,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -278,7 +265,7 @@ class TestDynamicTree {
 
             val proxyHit = memCreateIntBuffer(1)
             proxyHit.put(0, -1)
-            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memGetNativeAddress(proxyHit), b2TreeStats.malloc() )
+            b2DynamicTree_CastRay( tree, input, 1, RayCastCallbackFcn, memAddress(proxyHit), b2TreeStats.malloc() )
 
             ENSURE( proxyHit.get(0) == proxyId )
         }
@@ -304,7 +291,7 @@ class TestDynamicTree {
 
     fun TreeMultipleProxiesTest( ): Int
     {
-        val tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() )
+        val tree = b2CreateDynamicTree( 16 )
 
         val a1 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -5.0f, -1.0f )).upperBound(b2Vec2.malloc().set( -3.0f, 1.0f ))
         val a2 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ))
@@ -330,7 +317,7 @@ class TestDynamicTree {
 
     fun TreeQueryTest( ): Int
     {
-        val tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() )
+        val tree = b2CreateDynamicTree( 16 )
 
         val a1 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -5.0f, -1.0f )).upperBound(b2Vec2.malloc().set( -3.0f, 1.0f ))
         val a2 = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -1.0f, -1.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ))
@@ -343,7 +330,7 @@ class TestDynamicTree {
         val queryA = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( -2.0f, -2.0f )).upperBound(b2Vec2.malloc().set( 2.0f, 2.0f ))
 
         val foundFlags = memCreateIntBuffer(32)
-        val stats = b2DynamicTree_Query( tree, queryA, 0xFFFFFFFFL, QueryCollectCallback, memGetNativeAddress(foundFlags), b2TreeStats.malloc())
+        val stats = b2DynamicTree_OverlapAABB( tree, queryA, 0xFFFFFFFFL, QueryCollectCallback, memAddress(foundFlags), b2TreeStats.malloc())
 
         // We expect at least the middle proxy to be visited.
         ENSURE( foundFlags.get(id2) == 1 )
@@ -351,7 +338,7 @@ class TestDynamicTree {
 
         // Test QueryAll using list collector
         val list = memCreateIntBuffer(16) // list[0] holds count, following entries are ids
-        val allStats = b2DynamicTree_QueryAll( tree, queryA, QueryCollectListCallback, memGetNativeAddress(list), b2TreeStats.malloc() )
+        val allStats = b2DynamicTree_OverlapAABBAll( tree, queryA, QueryCollectListCallback, memAddress(list), b2TreeStats.malloc() )
         ENSURE( list.get(0) >= 1 ) // at least one proxy should be collected
         ENSURE( allStats.leafVisits() >= 1 )
 
@@ -361,7 +348,7 @@ class TestDynamicTree {
 
     fun TreeMoveAndEnlargeTest( ): Int
     {
-        val tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() )
+        val tree = b2CreateDynamicTree( 16 )
 
         val a = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 0.0f, 0.0f )).upperBound(b2Vec2.malloc().set( 1.0f, 1.0f ))
         val id = b2CreateTreeProxy( tree, a, 0x1L, 100 )
@@ -370,7 +357,7 @@ class TestDynamicTree {
         val moved = b2AABB.malloc().lowerBound(b2Vec2.malloc().set( 10.0f, 10.0f )).upperBound(b2Vec2.malloc().set( 11.0f, 11.0f ))
         b2DynamicTree_MoveProxy( tree, id, moved )
 
-        val got = b2DynamicTree_GetAABB( tree, id, b2AABB.malloc() )
+        val got = b2DynamicTree_GetProxyBounds( tree, id, b2AABB.malloc() )
         ENSURE(Objects.equals(got.lowerBound().x(), moved.lowerBound().x()))
         ENSURE(Objects.equals(got.lowerBound().y(), moved.lowerBound().y()))
         ENSURE(Objects.equals(got.upperBound().x(), moved.upperBound().x()))
@@ -390,7 +377,7 @@ class TestDynamicTree {
 
     fun TreeRebuildAndValidateTest( ): Int
     {
-        val tree = b2CreateDynamicTree( 16, b2DynamicTree.malloc() )
+        val tree = b2CreateDynamicTree( 16 )
 
         // Create a number of proxies to make rebuild meaningful
         for (i in 0..11)
@@ -412,7 +399,7 @@ class TestDynamicTree {
 
     fun TreeRowHeightTest(): Int
     {
-        val tree = b2CreateDynamicTree(16, b2DynamicTree.malloc())
+        val tree = b2CreateDynamicTree(16 )
 
         val columnCount = 200
         for (i in 0..<columnCount) {
@@ -431,7 +418,7 @@ class TestDynamicTree {
 
     fun TreeGridHeightTest(): Int 
     {
-        val tree = b2CreateDynamicTree(16, b2DynamicTree.malloc())
+        val tree = b2CreateDynamicTree(16 )
 
         val columnCount = 20
         val rowCount = 20
@@ -455,7 +442,7 @@ class TestDynamicTree {
     }
 
     fun TreeGridMovementTest(): Int {
-        val tree = b2CreateDynamicTree(16, b2DynamicTree.malloc())
+        val tree = b2CreateDynamicTree(16 )
 
         val proxyIds = IntArray(GRID_COUNT * GRID_COUNT)
         var index = 0
@@ -484,7 +471,7 @@ class TestDynamicTree {
         {
             for (j in 0..<GRID_COUNT)
             {
-                val a = b2DynamicTree_GetAABB(tree, proxyIds[index], b2AABB.malloc())
+                val a = b2DynamicTree_GetProxyBounds(tree, proxyIds[index], b2AABB.malloc())
                 a.lowerBound(b2Add(a.lowerBound(), offset, b2Vec2.malloc()))
                 a.upperBound(b2Add(a.upperBound(), offset, b2Vec2.malloc()))
                 b2DynamicTree_MoveProxy(tree, proxyIds[index], a)

@@ -177,7 +177,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1OverlapAABB
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong aabb, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_OverlapAABB(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2AABB*)aabb, *(b2QueryFilter*)filter, (b2OverlapResultFcn*)fcn, (void*)context );
+    *(b2TreeStats*)__result = b2World_OverlapAABB(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2AABB*)aabb, *(b2QueryFilter*)filter, (b2OverlapResultCallbackFcn*)fcn, (void*)context );
 }
 
 /*
@@ -189,7 +189,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1OverlapShape
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong proxy, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_OverlapShape(*(b2WorldId*)worldId, *(b2Pos*)origin, (const b2ShapeProxy*)proxy, *(b2QueryFilter*)filter, (b2OverlapResultFcn*) fcn, (void*) context );
+    *(b2TreeStats*)__result = b2World_OverlapShape(*(b2WorldId*)worldId, *(b2Pos*)origin, (const b2ShapeProxy*)proxy, *(b2QueryFilter*)filter, (b2OverlapResultCallbackFcn*) fcn, (void*) context );
 }
 
 /*
@@ -201,7 +201,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CastRay
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong translation, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_CastRay(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultFcn*)fcn, (void*)context);
+    *(b2TreeStats*)__result = b2World_CastRay(*(b2WorldId*)worldId, *(b2Pos*)origin, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultCallbackFcn*)fcn, (void*)context);
 }
 
 /*
@@ -225,7 +225,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CastShape
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong proxy, jlong translation, jlong filter, jlong fcn, jlong context, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2TreeStats*)__result = b2World_CastShape(*(b2WorldId*) worldId, *(b2Pos*)origin, (const b2ShapeProxy*)proxy, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultFcn*)fcn, (void*) context );
+    *(b2TreeStats*)__result = b2World_CastShape(*(b2WorldId*) worldId, *(b2Pos*)origin, (const b2ShapeProxy*)proxy, *(b2Vec2*)translation, *(b2QueryFilter*)filter, (b2CastResultCallbackFcn*)fcn, (void*) context );
 }
 
 /*
@@ -249,7 +249,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1CollideMover
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong origin, jlong mover, jlong filter, jlong fcn, jlong context)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_CollideMover(*(b2WorldId*) worldId, *(b2Pos*)origin, (const b2Capsule*)mover, *(b2QueryFilter*) filter, (b2PlaneResultFcn*)fcn, (void*)context );
+    b2World_CollideMover(*(b2WorldId*) worldId, *(b2Pos*)origin, (const b2Capsule*)mover, *(b2QueryFilter*) filter, (b2PlaneResultCallbackFcn*)fcn, (void*)context );
 }
 
 /*
@@ -405,7 +405,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetCustomFilte
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong fcn, jlong context)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_SetCustomFilterCallback( *(b2WorldId*)worldId, (b2CustomFilterFcn*)fcn, (void*)context );
+    b2World_SetCustomFilterCallback( *(b2WorldId*)worldId, (b2CustomFilterCallbackFcn*)fcn, (void*)context );
 }
 
 /*
@@ -417,7 +417,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetPreSolveCal
     (JNIEnv * __env, jclass clazz, jlong worldId, jlong preSolveFcn, jlong preContinuousFcn, jlong context)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_SetPreSolveCallback( *(b2WorldId*)worldId, (b2PreSolveFcn*)preSolveFcn, (b2PreContinuousFcn*)preContinuousFcn, (void*)context );
+    b2World_SetPreSolveCallback( *(b2WorldId*)worldId, (b2PreSolveCallbackFcn*)preSolveFcn, (b2PreContinuousCallbackFcn*)preContinuousFcn, (void*)context );
 }
 
 /*
@@ -470,6 +470,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetContactTuni
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_GetContactTuning
+ * Signature: (JJJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetContactTuning
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong hertz, jlong dampingRatio, jlong pushSpeed)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2World_GetContactTuning(*(b2WorldId*)worldId, (float*)hertz, (float*)dampingRatio, (float*)pushSpeed);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_SetContactRecycleDistance
  * Signature: (JF)V
  */
@@ -494,26 +506,26 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetContactRe
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2World_SetMaximumLinearSpeed
+ * Method:    nb2World_SetMaxLinearSpeed
  * Signature: (JF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetMaximumLinearSpeed
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetMaxLinearSpeed
     (JNIEnv *__env, jclass clazz, jlong worldId, jfloat maximumLinearSpeed)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_SetMaximumLinearSpeed( *(b2WorldId*)worldId, maximumLinearSpeed );
+    b2World_SetMaxLinearSpeed( *(b2WorldId*)worldId, maximumLinearSpeed );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2World_GetMaximumLinearSpeed
+ * Method:    nb2World_GetMaxLinearSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetMaximumLinearSpeed
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetMaxLinearSpeed
     (JNIEnv *__env, jclass clazz, jlong worldId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return b2World_GetMaximumLinearSpeed( *(b2WorldId*)worldId );
+    return b2World_GetMaxLinearSpeed( *(b2WorldId*)worldId );
 }
 
 /*
@@ -633,7 +645,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetFrictionCal
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong callback)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_SetFrictionCallback( *(b2WorldId*)worldId, (b2FrictionCallback*)callback );
+    b2World_SetFrictionCallback( *(b2WorldId*)worldId, (b2FrictionCallbackFcn*)callback );
 }
 
 /*
@@ -645,7 +657,7 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1SetRestitution
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong callback)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2World_SetRestitutionCallback( *(b2WorldId*)worldId, (b2RestitutionCallback*)callback );
+    b2World_SetRestitutionCallback( *(b2WorldId*)worldId, (b2RestitutionCallbackFcn*)callback );
 }
 
 /*
@@ -784,66 +796,63 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1StopRecording
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2SaveRecordingToFile
+ * Method:    nb2Recording_SaveToFile
  * Signature: (JJ)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2SaveRecordingToFile
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Recording_1SaveToFile
     (JNIEnv *__env, jclass clazz, jlong recording, jlong path)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2SaveRecordingToFile( (const b2Recording*)recording, (const char*)path );
+    return (jboolean)b2Recording_SaveToFile( (const b2Recording*)recording, (const char*)path );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2LoadRecordingFromFile
+ * Method:    nb2CreateRecordingFromFile
  * Signature: (J)J
  */
-JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2LoadRecordingFromFile
+JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateRecordingFromFile
     (JNIEnv *__env, jclass clazz, jlong path)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Recording* ptr = b2LoadRecordingFromFile( (const char*)path );
+    b2Recording* ptr = b2CreateRecordingFromFile( (const char*)path );
     return (jlong)(uintptr_t)ptr;
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_GetSnapshot
- * Signature: (JLjava/nio/ByteBuffer;I)I
+ * Signature: (JJI)I
  */
 JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetSnapshot
-    (JNIEnv *__env, jclass clazz, jlong worldId, jobject buffer, jint capacity)
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong image, jint capacity)
 {
-    ADDRESS_UINT8_BUFFER(__env, buffer, image, __len)
-    UNUSED_PARAMS(__len, clazz)
-    return (jint)b2World_GetSnapshot( *(b2WorldId*) worldId, image, capacity );
+    UNUSED_PARAMS(__env, clazz)
+    return (jint)b2World_GetSnapshot( *(b2WorldId*) worldId, (uint8_t*)image, capacity );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2World_Restore
- * Signature: (JLjava/nio/ByteBuffer;I)Z
+ * Method:    nb2World_RestoreFromSnapshot
+ * Signature: (JJI)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1Restore
-    (JNIEnv *__env, jclass clazz, jlong worldId, jobject buffer, jint size)
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1RestoreFromSnapshot
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong image, jint size)
 {
-    ADDRESS_UINT8_BUFFER(__env, buffer, image, __len)
-    UNUSED_PARAMS(__len, clazz)
-    return (jboolean)b2World_Restore( *(b2WorldId*) worldId, image, size );
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean)b2World_RestoreFromSnapshot( *(b2WorldId*) worldId, (const uint8_t*)image, size );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2CreateWorldFromSnapshot
- * Signature: (Ljava/nio/ByteBuffer;IIJ)V
+ * Signature: (JIIJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateWorldFromSnapshot
-    (JNIEnv *__env, jclass clazz, jobject buffer, jint size, jint workerCount, jlong __result)
+    (JNIEnv *__env, jclass clazz, jlong image, jint size, jint workerCount, jlong __result)
 {
-    ADDRESS_UINT8_BUFFER(__env, buffer, image, __len)
-    UNUSED_PARAMS(__len, clazz)
-    *(b2WorldId*)__result = b2CreateWorldFromSnapshot( image, size, workerCount );
+    UNUSED_PARAMS(__env, clazz)
+    *(b2WorldId*)__result = b2CreateWorldFromSnapshot( (const uint8_t*)image, size, workerCount );
 }
 
 /*
@@ -1412,26 +1421,26 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1WakeTouching
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_EnableSleep
+ * Method:    nb2Body_EnableSleeping
  * Signature: (JZ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1EnableSleep
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1EnableSleeping
     (JNIEnv *__env, jclass clazz, jlong bodyId, jboolean enableSleep)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_EnableSleep( *(b2BodyId*)bodyId, (bool)enableSleep );
+    b2Body_EnableSleeping( *(b2BodyId*)bodyId, (bool)enableSleep );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_IsSleepEnabled
+ * Method:    nb2Body_IsSleepingEnabled
  * Signature: (J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1IsSleepEnabled
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1IsSleepingEnabled
     (JNIEnv *__env, jclass clazz, jlong bodyId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean)b2Body_IsSleepEnabled( *(b2BodyId*)bodyId );
+    return (jboolean)b2Body_IsSleepingEnabled( *(b2BodyId*)bodyId );
 }
 
 /*
@@ -1700,14 +1709,14 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetContactData
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_ComputeAABB
+ * Method:    nb2Body_ComputeBounds
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1ComputeAABB
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1ComputeBounds
     (JNIEnv *__env, jclass clazz, jlong bodyId, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2AABB*)__result = b2Body_ComputeAABB( *(b2BodyId*)bodyId );
+    *(b2AABB*)__result = b2Body_ComputeBounds( *(b2BodyId*)bodyId );
 }
 
 /*
@@ -1736,14 +1745,14 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMaxExtent
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_GetMaxExtentOrigin
+ * Method:    nb2Body_GetMaxExtentFromOrigin
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMaxExtentOrigin
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMaxExtentFromOrigin
     (JNIEnv *__env, jclass clazz, jlong bodyId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat) b2Body_GetMaxExtentOrigin( *(b2BodyId*)bodyId );;
+    return (jfloat) b2Body_GetMaxExtentFromOrigin( *(b2BodyId*)bodyId );;
 }
 
 /*
@@ -2156,14 +2165,14 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1TestPoint
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Shape_RayCast
+ * Method:    nb2Shape_CastRay
  * Signature: (JJJJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1RayCast
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1CastRay
     (JNIEnv *__env, jclass clazz, jlong shapeId, jlong origin, jlong translation, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2WorldCastOutput*)__result = b2Shape_RayCast( *(b2ShapeId*) shapeId, *(b2Pos*)origin, *(b2Vec2*) translation );
+    *(b2WorldCastOutput*)__result = b2Shape_CastRay( *(b2ShapeId*) shapeId, *(b2Pos*)origin, *(b2Vec2*) translation );
 }
 
 /*
@@ -2348,14 +2357,14 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1GetSensorData
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Shape_GetAABB
+ * Method:    nb2Shape_GetBounds
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1GetAABB
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Shape_1GetBounds
     (JNIEnv *__env, jclass clazz, jlong shapeId, jlong __result)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2AABB*)__result = b2Shape_GetAABB( *(b2ShapeId*)shapeId );
+    *(b2AABB*)__result = b2Shape_GetBounds( *(b2ShapeId*)shapeId );
 }
 
 /*
@@ -2745,16 +2754,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Joint_1SetConstraintT
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2Joint_GetConstraintTuning
- * Signature: (JLjava/nio/FloatBuffer;Ljava/nio/FloatBuffer;)V
+ * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Joint_1GetConstraintTuning
-    (JNIEnv *__env, jclass clazz, jlong jointId, jobject bufferHertz, jobject bufferDampingRatio)
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong hertz, jlong dampingRatio)
 {
-    ADDRESS_FLOAT_BUFFER(__env, bufferHertz, hertz, __len0)
-    ADDRESS_FLOAT_BUFFER(__env, bufferDampingRatio, dampingRatio, __len1)
-    UNUSED_PARAM(clazz)
-    UNUSED_PARAMS(__len0, __len1)    
-    b2Joint_GetConstraintTuning(*(b2JointId*)jointId, hertz, dampingRatio);
+    UNUSED_PARAMS(__env, clazz)   
+    b2Joint_GetConstraintTuning(*(b2JointId*)jointId, (float*)hertz, (float*)dampingRatio);
 }
 
 /*
@@ -2819,26 +2825,26 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateDistanceJoint
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_SetLength
+ * Method:    nb2DistanceJoint_SetRestLength
  * Signature: (JF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetLength
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetRestLength
     (JNIEnv *__env, jclass clazz, jlong jointId, jfloat length)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DistanceJoint_SetLength(*(b2JointId*)jointId, length);
+    b2DistanceJoint_SetRestLength(*(b2JointId*)jointId, length);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_GetLength
+ * Method:    nb2DistanceJoint_GetRestLength
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetLength
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetRestLength
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2DistanceJoint_GetLength(*(b2JointId*)jointId);
+    return (jfloat)b2DistanceJoint_GetRestLength(*(b2JointId*)jointId);
 }
 
 /*
@@ -2880,16 +2886,13 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetSpr
 /*
  * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2DistanceJoint_GetSpringForceRange
- * Signature: (JLjava/nio/FloatBuffer;Ljava/nio/FloatBuffer;)V
+ * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetSpringForceRange
-    (JNIEnv *__env, jclass clazz, jlong jointId, jobject bufferLowerForce, jobject bufferUpperForce)
+    (JNIEnv *__env, jclass clazz, jlong jointId, jlong lowerForce, jlong upperForce)
 {
-    ADDRESS_FLOAT_BUFFER(__env, bufferLowerForce, lowerForce, __len0)
-    ADDRESS_FLOAT_BUFFER(__env, bufferUpperForce, upperForce, __len1)
-    UNUSED_PARAM(clazz)
-    UNUSED_PARAMS(__len0, __len1) 
-    b2DistanceJoint_GetSpringForceRange(*(b2JointId*)jointId, lowerForce, upperForce);
+    UNUSED_PARAMS(__env, clazz) 
+    b2DistanceJoint_GetSpringForceRange(*(b2JointId*)jointId, (float*)lowerForce, (float*)upperForce);
 }
 
 /*
@@ -2966,38 +2969,38 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1Is
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_SetLengthRange
+ * Method:    nb2DistanceJoint_SetLimits
  * Signature: (JFF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetLengthRange
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetLimits
     (JNIEnv *__env, jclass clazz, jlong jointId, jfloat minLength, jfloat maxLength)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DistanceJoint_SetLengthRange(*(b2JointId*)jointId, minLength, maxLength);
+    b2DistanceJoint_SetLimits(*(b2JointId*)jointId, minLength, maxLength);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_GetMinLength
+ * Method:    nb2DistanceJoint_GetLowerLimit
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetMinLength
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetLowerLimit
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2DistanceJoint_GetMinLength(*(b2JointId*)jointId);
+    return (jfloat)b2DistanceJoint_GetLowerLimit(*(b2JointId*)jointId);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_GetMaxLength
+ * Method:    nb2DistanceJoint_GetUpperLimit
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetMaxLength
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetUpperLimit
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2DistanceJoint_GetMaxLength(*(b2JointId*)jointId);
+    return (jfloat)b2DistanceJoint_GetUpperLimit(*(b2JointId*)jointId);
 }
 
 /*
@@ -3038,26 +3041,26 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1Is
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_SetMotorSpeed
+ * Method:    nb2DistanceJoint_SetTargetMotorSpeed
  * Signature: (JF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetMotorSpeed
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1SetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId, jfloat motorSpeed)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2DistanceJoint_SetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
+    b2DistanceJoint_SetTargetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_GetMotorSpeed
+ * Method:    nb2DistanceJoint_GetTargetMotorSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetMotorSpeed
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2DistanceJoint_GetMotorSpeed(*(b2JointId*)jointId);
+    return (jfloat)b2DistanceJoint_GetTargetMotorSpeed(*(b2JointId*)jointId);
 }
 
 /*
@@ -3086,14 +3089,14 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetM
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2DistanceJoint_GetMotorForce
+ * Method:    nb2DistanceJoint_GetCurrentMotorForce
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetMotorForce
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2DistanceJoint_1GetCurrentMotorForce
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2DistanceJoint_GetMotorForce(*(b2JointId*)jointId);
+    return (jfloat)b2DistanceJoint_GetCurrentMotorForce(*(b2JointId*)jointId);
 }
 
 /*
@@ -3494,26 +3497,26 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetSprin
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PogoJoint_GetLength
+ * Method:    nb2PogoJoint_GetCurrentLength
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetLength
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetCurrentLength
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return b2PogoJoint_GetLength( *(b2JointId*)jointId );
+    return b2PogoJoint_GetCurrentLength( *(b2JointId*)jointId );
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PogoJoint_GetVelocity
+ * Method:    nb2PogoJoint_GetCurrentSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetVelocity
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PogoJoint_1GetCurrentSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return b2PogoJoint_GetVelocity( *(b2JointId*)jointId );
+    return b2PogoJoint_GetCurrentSpeed( *(b2JointId*)jointId );
 }
 
 /*
@@ -3735,26 +3738,26 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1I
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PrismaticJoint_SetMotorSpeed
+ * Method:    nb2PrismaticJoint_SetTargetMotorSpeed
  * Signature: (JF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1SetMotorSpeed
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1SetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId, jfloat motorSpeed)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2PrismaticJoint_SetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
+    b2PrismaticJoint_SetTargetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PrismaticJoint_GetMotorSpeed
+ * Method:    nb2PrismaticJoint_GetTargetMotorSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetMotorSpeed
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2PrismaticJoint_GetMotorSpeed(*(b2JointId*)jointId);
+    return (jfloat)b2PrismaticJoint_GetTargetMotorSpeed(*(b2JointId*)jointId);
 }
 
 /*
@@ -3783,38 +3786,38 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1Get
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PrismaticJoint_GetMotorForce
+ * Method:    nb2PrismaticJoint_GetCurrentMotorForce
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetMotorForce
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetCurrentMotorForce
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2PrismaticJoint_GetMotorForce(*(b2JointId*)jointId);
+    return (jfloat)b2PrismaticJoint_GetCurrentMotorForce(*(b2JointId*)jointId);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PrismaticJoint_GetTranslation
+ * Method:    nb2PrismaticJoint_GetCurrentTranslation
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetTranslation
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetCurrentTranslation
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2PrismaticJoint_GetTranslation(*(b2JointId*)jointId);
+    return (jfloat)b2PrismaticJoint_GetCurrentTranslation(*(b2JointId*)jointId);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2PrismaticJoint_GetSpeed
+ * Method:    nb2PrismaticJoint_GetCurrentSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetSpeed
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2PrismaticJoint_1GetCurrentSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2PrismaticJoint_GetSpeed(*(b2JointId*)jointId);
+    return (jfloat)b2PrismaticJoint_GetCurrentSpeed(*(b2JointId*)jointId);
 }
 
 /*
@@ -3927,14 +3930,14 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetT
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RevoluteJoint_GetAngle
+ * Method:    nb2RevoluteJoint_GetCurrentAngle
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetAngle
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetCurrentAngle
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2RevoluteJoint_GetAngle(*(b2JointId*)jointId);
+    return (jfloat)b2RevoluteJoint_GetCurrentAngle(*(b2JointId*)jointId);
 }
 
 /*
@@ -4023,38 +4026,38 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1Is
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RevoluteJoint_SetMotorSpeed
+ * Method:    nb2RevoluteJoint_SetTargetMotorSpeed
  * Signature: (JF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1SetMotorSpeed
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1SetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId, jfloat motorSpeed)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2RevoluteJoint_SetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
+    b2RevoluteJoint_SetTargetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RevoluteJoint_GetMotorSpeed
+ * Method:    nb2RevoluteJoint_GetTargetMotorSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetMotorSpeed
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2RevoluteJoint_GetMotorSpeed(*(b2JointId*)jointId);
+    return (jfloat)b2RevoluteJoint_GetTargetMotorSpeed(*(b2JointId*)jointId);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2RevoluteJoint_GetMotorTorque
+ * Method:    nb2RevoluteJoint_GetCurrentMotorTorque
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetMotorTorque
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetCurrentMotorTorque
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2RevoluteJoint_GetMotorTorque(*(b2JointId*)jointId);
+    return (jfloat)b2RevoluteJoint_GetCurrentMotorTorque(*(b2JointId*)jointId);
 }
 
 /*
@@ -4187,6 +4190,18 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2WeldJoint_1GetAngul
 {
     UNUSED_PARAMS(__env, clazz)
     return (jfloat)b2WeldJoint_GetAngularDampingRatio(*(b2JointId*)jointId);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2RevoluteJoint_GetCurrentSpeed
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetCurrentSpeed
+    (JNIEnv *__env, jclass clazz, jlong jointId)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat)b2RevoluteJoint_GetCurrentSpeed(*(b2JointId*)jointId);
 }
 
 /*
@@ -4359,26 +4374,26 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1IsMot
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2WheelJoint_SetMotorSpeed
+ * Method:    nb2WheelJoint_SetTargetMotorSpeed
  * Signature: (JF)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1SetMotorSpeed
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1SetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId, jfloat motorSpeed)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2WheelJoint_SetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
+    b2WheelJoint_SetTargetMotorSpeed(*(b2JointId*)jointId, motorSpeed);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2WheelJoint_GetMotorSpeed
+ * Method:    nb2WheelJoint_GetTargetMotorSpeed
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1GetMotorSpeed
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1GetTargetMotorSpeed
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2WheelJoint_GetMotorSpeed(*(b2JointId*)jointId);
+    return (jfloat)b2WheelJoint_GetTargetMotorSpeed(*(b2JointId*)jointId);
 }
 
 /*
@@ -4407,14 +4422,14 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1GetMaxM
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2WheelJoint_GetMotorTorque
+ * Method:    nb2WheelJoint_GetCurrentMotorTorque
  * Signature: (J)F
  */
-JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1GetMotorTorque
+JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2WheelJoint_1GetCurrentMotorTorque
     (JNIEnv *__env, jclass clazz, jlong jointId)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jfloat)b2WheelJoint_GetMotorTorque(*(b2JointId*)jointId);
+    return (jfloat)b2WheelJoint_GetCurrentMotorTorque(*(b2JointId*)jointId);
 }
 
 /*
@@ -4443,14 +4458,14 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Contact_1GetData
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2ValidateReplay
+ * Method:    nb2ValidateRecording
  * Signature: (JII)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2ValidateReplay
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2ValidateRecording
     (JNIEnv *__env, jclass clazz, jlong data, jint size, jint workerCount)
 {
     UNUSED_PARAMS(__env, clazz)
-    return (jboolean) b2ValidateReplay( (const void*)data, size, workerCount );
+    return (jboolean) b2ValidateRecording( (const void*)data, size, workerCount );
 }
 
 /*

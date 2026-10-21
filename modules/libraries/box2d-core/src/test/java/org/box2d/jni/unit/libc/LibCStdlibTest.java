@@ -38,6 +38,7 @@ import org.box2d.jni.system.Sys;
 import static org.box2d.jni.libc.LibCStdlib.*;
 import static org.box2d.jni.system.Debug.*;
 import static org.box2d.jni.system.Memory.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 import static org.box2d.jni.system.Pointer.*;
 
 import org.junit.BeforeClass;
@@ -48,7 +49,7 @@ import static org.junit.Assert.*;
  * A class to manage the unit tests of the {@code LibCStdlib} class.
  *
  * @author wil
- * @version 2.0.0
+ * @version 2.0.1
  * @since 1.0.5
  */
 public class LibCStdlibTest {
@@ -102,7 +103,7 @@ public class LibCStdlibTest {
             apiLogMore("capacity: " + ptr.capacity());
             apiLogMore("limit: " + ptr.limit());
 
-            assertNotEquals(NULL, memGetNativeAddress(ptr));
+            assertNotEquals(NULL, memAddress(ptr));
             assertEquals(num, ptr.capacity());
             assertEquals(num, ptr.limit());
 
@@ -143,7 +144,7 @@ public class LibCStdlibTest {
             apiLogMore("capacity: " + ptr.capacity());
             apiLogMore("limit: " + ptr.limit());
 
-            assertNotEquals(NULL, memGetNativeAddress(ptr));
+            assertNotEquals(NULL, memAddress(ptr));
             assertEquals(num, ptr.capacity());
             assertEquals(num, ptr.limit());
 

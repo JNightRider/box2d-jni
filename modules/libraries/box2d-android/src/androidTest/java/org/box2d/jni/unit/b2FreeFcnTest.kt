@@ -32,8 +32,8 @@ package org.box2d.jni.unit
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
-import org.box2d.jni.b2FreeFcn
-import org.box2d.jni.b2FreeFcnI
+import org.box2d.jni.b2FreeCallbackFcn
+import org.box2d.jni.b2FreeCallbackFcnI
 import org.box2d.jni.system.Callbacks
 import org.box2d.jni.system.JNI
 
@@ -65,7 +65,7 @@ class b2FreeFcnTest {
      * Run tests {@sample funFuncI}
      */
     @Test fun funFuncI() {
-        val func = b2FreeFcnI { mem: Long, size: Long ->
+        val func = b2FreeCallbackFcnI{ mem: Long, size: Long ->
             Assert.assertEquals(1024L, mem)
             Assert.assertEquals(6L, size)
         }
@@ -77,7 +77,7 @@ class b2FreeFcnTest {
      * Run tests {@sample funFunc}
      */
     @Test fun funFunc() {
-        val func = b2FreeFcn.create(b2FreeFcnI { mem: Long, size: Long ->
+        val func = b2FreeCallbackFcn.create(b2FreeCallbackFcnI { mem: Long, size: Long ->
             Assert.assertEquals(1024L, mem)
             Assert.assertEquals(6L, size)
         })

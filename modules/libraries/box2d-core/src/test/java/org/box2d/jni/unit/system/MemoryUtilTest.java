@@ -27,9 +27,11 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 package org.box2d.jni.unit.system;
 
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.box2d.jni.libc.LibCStdlib;
@@ -57,6 +59,14 @@ public class MemoryUtilTest {
      */
     @Test
     public void memUtilTest() {
+        simpleTest();
+        memAddressTest();
+    }
+
+    /**
+     * Verify simple memory manipulation
+     */
+    private void simpleTest() {
         {
             long ptr = LibCStdlib.nmalloc(4 * 10);
             LibCString.nmemset(ptr, 0, 4 * 10);
@@ -97,6 +107,68 @@ public class MemoryUtilTest {
             String recSimple = MemoryUtil.memUTF(chars);
             Assert.assertEquals(txtSimple, recSimple);
             LibCStdlib.nfree(chars);
+        }
+    }
+
+    /**
+     * Verify an interaction between native memory and wrappers.
+     */
+    private void memAddressTest() {
+        {
+            int count = 3;
+            byte[] source = {
+                (byte) 1, (byte) 5, (byte) 25
+            };
+
+            ByteBuffer mem = Memory.memCreateByteBuffer(count);
+            long address = MemoryUtil.memAddress(mem);
+
+            Assert.assertEquals(MemoryUtil.nmemAddress0(mem), address);
+            Assert.assertEquals(count, mem.limit());
+
+            // check pointer
+            for (int i = 0; i < count; i++) {
+                Memory.memPutByte(address + i, source[i]);
+            }
+            for (int i = 0; i < count; i++) {
+                Assert.assertEquals(source[i], mem.get(i));
+            }
+
+            // check buffer
+            for (int i = count - 1, index = 0; i >= 0; i--, index++) {
+                mem.put(index, source[i]);
+            }
+            for (int i = count - 1, index = 0; i >= 0; i--, index++) {
+                Assert.assertEquals(source[i], Memory.memGetByte(address + index));
+            }
+        }
+        {
+            int count = 3;
+            float[] source = {
+                1.5f, -0.5650895f, 25f
+            };
+
+            FloatBuffer mem = Memory.memCreateFloatBuffer(count);
+            long address = MemoryUtil.memAddress(mem);
+
+            Assert.assertEquals(MemoryUtil.nmemAddress0(mem), address);
+            Assert.assertEquals(count, mem.limit());
+
+            // check pointer
+            for (int i = 0; i < count; i++) {
+                Memory.memPutFloat(address + i * Float.BYTES, source[i]);
+            }
+            for (int i = 0; i < count; i++) {
+                Assert.assertEquals(source[i], mem.get(i), 0.0f);
+            }
+
+            // check buffer
+            for (int i = count - 1, index = 0; i >= 0; i--, index++) {
+                mem.put(index, source[i]);
+            }
+            for (int i = count - 1, index = 0; i >= 0; i--, index++) {
+                Assert.assertEquals(source[i], Memory.memGetFloat(address + index * Float.BYTES), 0.0f);
+            }
         }
     }
 }

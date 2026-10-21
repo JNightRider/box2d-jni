@@ -14,6 +14,16 @@ This project is written in Java and C11 (C17), and uses CMake and Gradle for com
 
 Make sure you have the necessary tools installed on your system before compiling: JVM 17, C11 (MinGW), CMake
 
+## How to use Box2D-JNI in projects
+
+- [Go to the test example](https://github.com/JNightRider/box2d-jni/blob/master/modules/samples/src/main/java/org/box2d/jni/HelloBox2D.java)
+
+## External links
+
+[Official Box2D documentation](https://box2d.org/documentation/)
+
+[Official Box2D repository on GitHub](https://github.com/erincatto/box2d)
+
 ## Supported Platforms
 
 Box2d-JNI has been ported to many different platforms.
@@ -34,10 +44,3 @@ tested:
 | aarch64           | Windows/MinGW               | Clang    | `:windows_aarch64(Dp/Sp)`  |
 | X86-64            | Mac OSX                     | Clang    | `:osx_x64(Dp/Sp)`          |
 | aarch64           | Mac OSX                     | Clang    | `:osx_aarch64(Dp/Sp)`      |
-
-## Starting Box2d-JNI
-
-Box2d-JNI is a mirror of **box2d**, so the official documentation is valid for those who wish to use this library.
-
-- [Go to the documentation](https://box2d.org/documentation/)
-- [Sample (Hello Box2D)](https://github.com/JNightRider/box2d-jni/blob/master/modules/samples/src/main/java/org/box2d/jni/HelloBox2D.java) 

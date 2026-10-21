@@ -42,14 +42,12 @@ import org.box2d.jni.system.Library;
  * 	b2_replayQueryCastShape,
  * 	b2_replayQueryCollideMover,
  * 	b2_replayQueryCastRayClosest,
- * 	b2_replayQueryCastMover,
- * 	b2_replayQueryShapeTestPoint,
- * 	b2_replayQueryShapeRayCast,
+ * 	b2_replayQueryCastMover
  * } b2ReplayQueryType;
  * </code></pre>
  *
  * @author wil
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.0.0
  */
 public enum b2ReplayQueryType {
@@ -114,24 +112,6 @@ public enum b2ReplayQueryType {
      */
     b2_replayQueryCastMover(
         nb2_replayQueryCastMover()
-    ),
-    
-    /** 
-     * <pre><code>
-     * b2_recQueryShapeTestPoint -&#62; box2d
-     * </code></pre>
-     */
-    b2_replayQueryShapeTestPoint(
-        nb2_replayQueryShapeTestPoint()
-    ),
-    
-    /** 
-     * <pre><code>
-     * b2_recQueryShapeRayCast -&#62; box2d
-     * </code></pre>
-     */
-    b2_replayQueryShapeRayCast(
-        nb2_replayQueryShapeRayCast()
     );
 
     static {
@@ -195,8 +175,4 @@ public enum b2ReplayQueryType {
     public static native int nb2_replayQueryCastRayClosest();
     /* Binding JNI to property 'b2_replayQueryCastMover' of structure 'b2ReplayQueryType' */
     public static native int nb2_replayQueryCastMover();
-    /* Binding JNI to property 'b2_replayQueryShapeTestPoint' of structure 'b2ReplayQueryType' */
-    public static native int nb2_replayQueryShapeTestPoint();
-    /* Binding JNI to property 'b2_replayQueryShapeRayCast' of structure 'b2ReplayQueryType' */
-    public static native int nb2_replayQueryShapeRayCast(); 
 }

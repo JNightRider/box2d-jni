@@ -56,7 +56,7 @@ public abstract class UintptrBuffer<SELF extends UintptrBuffer<SELF>> extends Ui
             capacity;
 
     protected UintptrBuffer(ByteBuffer container, int mark, int position, int limit, int capacity) {
-        this(Memory.memGetNativeAddress(container), mark, position, limit, capacity);
+        this(MemoryUtil.memAddress(container), mark, position, limit, capacity);
         this.container = container;
     }
     

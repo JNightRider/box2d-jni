@@ -33,22 +33,23 @@ package org.box2d.jni.include;
 import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
 
-import org.box2d.jni.b2AllocFcnI;
-import org.box2d.jni.b2AssertFcn;
-import org.box2d.jni.b2AssertFcnI;
-import org.box2d.jni.b2FreeFcnI;
-import org.box2d.jni.b2LogFcn;
-import org.box2d.jni.b2LogFcnI;
+import org.box2d.jni.b2AllocCallbackFcnI;
+import org.box2d.jni.b2AssertCallbackFcn;
+import org.box2d.jni.b2AssertCallbackFcnI;
+import org.box2d.jni.b2FreeCallbackFcnI;
+import org.box2d.jni.b2LogCallbackFcnI;
+import org.box2d.jni.b2LogCallbackFcn;
 import org.box2d.jni.b2Version;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Class that represents the {@code <base.h>} header of box2d.
  *
  * @author wil
- * @version 1.2.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public final class Base {
@@ -70,16 +71,16 @@ public final class Base {
     // --- [ b2SetAllocator ] ---
 
     /**
-     * {@code B2_API void b2SetAllocator( b2AllocFcn* allocFcn, b2FreeFcn* freeFcn ); }
+     * {@code B2_API void b2SetAllocator( b2AllocCallbackFcnI* allocFcn, b2FreeCallbackFcnI* freeFcn ); }
      *
-     * @param allocFcn b2AllocFcnI
-     * @param freeFcn b2FreeFcnI
+     * @param allocFcn b2AllocCallbackFcnI
+     * @param freeFcn b2FreeCallbackFcnI
      */
-    public static void b2SetAllocator(b2AllocFcnI allocFcn, b2FreeFcnI freeFcn) {
+    public static void b2SetAllocator(b2AllocCallbackFcnI allocFcn, b2FreeCallbackFcnI freeFcn) {
         checkPointers(allocFcn, freeFcn);
         nb2SetAllocator(allocFcn.address(), freeFcn.address());
     }
-    /* {@code B2_API void b2SetAllocator( b2AllocFcn* allocFcn, b2FreeFcn* freeFcn ); } */
+    /* {@code B2_API void b2SetAllocator( b2AllocCallbackFcnI* allocFcn, b2FreeCallbackFcnI* freeFcn ); } */
     public static native void nb2SetAllocator(long allocFcn, long freeFcn);
 
     // --- [ b2GetByteCount ] ---
@@ -95,37 +96,37 @@ public final class Base {
     /* {@code B2_API int64_t b2GetByteCount( void ); } */
     public static native long nb2GetByteCount();
 
-    // --- [ b2SetAssertFcn ] ---
+    // --- [ b2SetAssertCallback ] ---
 
     /**
-     * {@code B2_API void b2SetAssertFcn( b2AssertFcn* assertFcn ); }
+     * {@code B2_API void b2SetAssertCallback( b2AssertCallbackFcn* assertFcn ); }
      *
-     * @param assertFcn b2AssertFcnI
-     * @return b2AssertFcn
+     * @param assertFcn b2AssertCallbackFcnI
+     * @return b2AssertCallbackFcn
      */
-    public static b2AssertFcn b2SetAssertFcn(b2AssertFcnI assertFcn) {
+    public static b2AssertCallbackFcn b2SetAssertCallback(b2AssertCallbackFcnI assertFcn) {
         checkPointers(assertFcn);
-        nb2SetAssertFcn(assertFcn.address());
-        return b2AssertFcn.create(assertFcn);
+        nb2SetAssertCallback(assertFcn.address());
+        return b2AssertCallbackFcn.create(assertFcn);
     }
-    /* {@code B2_API void b2SetAssertFcn( b2AssertFcn* assertFcn ); } */
-    public static native void nb2SetAssertFcn(long assertFcn);
+    /* {@code B2_API void b2SetAssertFcn( b2AssertCallbackFcn* assertFcn ); } */
+    public static native void nb2SetAssertCallback(long assertFcn);
 
-    // --- [ b2SetLogFcn ] ---
+    // --- [ b2SetLogCallback ] ---
 
     /**
-     * {@code B2_API void b2SetLogFcn( b2LogFcn* logFcn ); }
+     * {@code B2_API void b2SetLogCallback( b2LogCallbackFcn* logFcn ); }
      *
-     * @param logFcn b2LogFcnI
-     * @return b2LogFcn
+     * @param logFcn b2LogCallbackFcnI
+     * @return b2LogCallbackFcn
      */
-    public static b2LogFcn b2SetLogFcn(b2LogFcnI logFcn) {
+    public static b2LogCallbackFcn b2SetLogCallback(b2LogCallbackFcnI logFcn) {
         checkPointers(logFcn);
-        nb2SetLogFcn(logFcn.address());
-        return b2LogFcn.create(logFcn);
+        nb2SetLogCallback(logFcn.address());
+        return b2LogCallbackFcn.create(logFcn);
     }
-    /* {@code B2_API void b2SetLogFcn( b2LogFcn* logFcn ); } */
-    public static native void nb2SetLogFcn(long logFcn);
+    /* {@code B2_API void b2SetLogFcn( b2LogCallbackFcn* logFcn ); } */
+    public static native void nb2SetLogCallback(long logFcn);
 
     // --- [ b2GetVersion ] ---
 
@@ -207,10 +208,11 @@ public final class Base {
      * @return float
      */
     public static float b2GetMillisecondsAndReset(LongBuffer ticks) {
-        return nb2GetMillisecondsAndReset(ticks);
+        checkBuffers(ticks);
+        return nb2GetMillisecondsAndReset(memAddress(ticks));
     }
     /* {@code B2_API float b2GetMillisecondsAndReset( uint64_t* ticks ); } */
-    public static native float nb2GetMillisecondsAndReset(LongBuffer ticks);
+    public static native float nb2GetMillisecondsAndReset(long ticks);
 
     // --- [ b2Yield ] ---
 
@@ -234,10 +236,11 @@ public final class Base {
      * @return int
      */
     public static int b2Hash(int hash, ByteBuffer data, int count) {
-        return nb2Hash(hash, data, count);
+        checkBuffers(data);
+        return nb2Hash(hash, memAddress(data), count);
     }
     /* {@code B2_API uint32_t b2Hash( uint32_t hash, const uint8_t* data, int count ); } */
-    public static native int nb2Hash(int hash, ByteBuffer data, int count);
+    public static native int nb2Hash(int hash, long data, int count);
     /** private constructor. */
     private Base() {}
 }
