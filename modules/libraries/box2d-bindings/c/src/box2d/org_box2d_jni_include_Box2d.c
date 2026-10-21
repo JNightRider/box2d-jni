@@ -827,7 +827,7 @@ JNIEXPORT jlong JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateRecordingFromF
 JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetSnapshot
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong image, jint capacity)
 {
-    UNUSED_PARAMS(__len, clazz)
+    UNUSED_PARAMS(__env, clazz)
     return (jint)b2World_GetSnapshot( *(b2WorldId*) worldId, (uint8_t*)image, capacity );
 }
 
@@ -839,7 +839,7 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1GetSnapshot
 JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1RestoreFromSnapshot
     (JNIEnv *__env, jclass clazz, jlong worldId, jlong image, jint size)
 {
-    UNUSED_PARAMS(__len, clazz)
+    UNUSED_PARAMS(__env, clazz)
     return (jboolean)b2World_RestoreFromSnapshot( *(b2WorldId*) worldId, (const uint8_t*)image, size );
 }
 
@@ -851,7 +851,7 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1RestoreFro
 JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateWorldFromSnapshot
     (JNIEnv *__env, jclass clazz, jlong image, jint size, jint workerCount, jlong __result)
 {
-    UNUSED_PARAMS(__len, clazz)
+    UNUSED_PARAMS(__env, clazz)
     *(b2WorldId*)__result = b2CreateWorldFromSnapshot( (const uint8_t*)image, size, workerCount );
 }
 

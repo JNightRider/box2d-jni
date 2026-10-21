@@ -133,7 +133,7 @@ public class TestShape {
     private int ShapeAABBTest( )
     {
         {
-            b2AABB b = b2ComputeCircleAABB( circle, b2WorldTransform_identity, b2AABB.malloc() );
+            b2AABB b = b2ComputeCircleBounds(circle, b2WorldTransform_identity, b2AABB.malloc() );
             ENSURE_SMALL( b.lowerBound().x(), FLT_EPSILON );
             ENSURE_SMALL( b.lowerBound().y() + 1.0f, FLT_EPSILON );
             ENSURE_SMALL( b.upperBound().x() - 2.0f, FLT_EPSILON );
@@ -141,7 +141,7 @@ public class TestShape {
         }
 
         {
-            b2AABB b = b2ComputePolygonAABB( box, b2WorldTransform_identity, b2AABB.malloc() );
+            b2AABB b = b2ComputePolygonBounds(box, b2WorldTransform_identity, b2AABB.malloc() );
             ENSURE_SMALL( b.lowerBound().x() + 1.0f, FLT_EPSILON );
             ENSURE_SMALL( b.lowerBound().y() + 1.0f, FLT_EPSILON );
             ENSURE_SMALL( b.upperBound().x() - 1.0f, FLT_EPSILON );
@@ -149,7 +149,7 @@ public class TestShape {
         }
 
         {
-            b2AABB b = b2ComputeSegmentAABB( segment, b2WorldTransform_identity, b2AABB.malloc() );
+            b2AABB b = b2ComputeSegmentBounds(segment, b2WorldTransform_identity, b2AABB.malloc() );
             ENSURE_SMALL( b.lowerBound().x(), FLT_EPSILON );
             ENSURE_SMALL( b.lowerBound().y() + 1.0f, FLT_EPSILON );
             ENSURE_SMALL( b.upperBound().x(), FLT_EPSILON );

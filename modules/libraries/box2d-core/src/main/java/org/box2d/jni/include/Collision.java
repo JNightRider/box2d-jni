@@ -77,7 +77,7 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <collision.h>} header of box2d.
  *
  * @author wil
- * @version 1.2.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public final class Collision {
@@ -336,10 +336,10 @@ public final class Collision {
     /* {@code B2_API b2MassData b2ComputePolygonMass( const b2Polygon* shape, float density ); } */
     public static native void nb2ComputePolygonMass(long shape, float density, long __result);
 
-    // --- [ b2ComputeCircleAABB ] ---
+    // --- [ b2ComputeCircleBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputeCircleAABB( const b2Circle* shape, b2WorldTransform transform ); }
+     * {@code B2_API b2AABB b2ComputeCircleBounds( const b2Circle* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Circle
      * @param transform b2Transform
@@ -347,18 +347,18 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputeCircleAABB(ConstB2Circle shape, b2WorldTransform transform, b2AABB __result) {
+    public static b2AABB b2ComputeCircleBounds(ConstB2Circle shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
-        nb2ComputeCircleAABB(shape.address(), transform.address(), __result.address());
+        nb2ComputeCircleBounds(shape.address(), transform.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2AABB b2ComputeCircleAABB( const b2Circle* shape, b2Transform transform ); } */
-    public static native void nb2ComputeCircleAABB(long shape, long transform, long __result);
+    /* {@code B2_API b2AABB b2ComputeCircleBounds( const b2Circle* shape, b2Transform transform ); } */
+    public static native void nb2ComputeCircleBounds(long shape, long transform, long __result);
 
-    // --- [ b2ComputeCapsuleAABB ] ---
+    // --- [ b2ComputeCapsuleBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputeCapsuleAABB( const b2Capsule* shape, b2WorldTransform transform ); }
+     * {@code B2_API b2AABB b2ComputeCapsuleBounds( const b2Capsule* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Capsule
      * @param transform b2Transform
@@ -366,18 +366,18 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputeCapsuleAABB(ConstB2Capsule shape, b2WorldTransform transform, b2AABB __result) {
+    public static b2AABB b2ComputeCapsuleBounds(ConstB2Capsule shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
-        nb2ComputeCapsuleAABB(shape.address(), transform.address(), __result.address());
+        nb2ComputeCapsuleBounds(shape.address(), transform.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2AABB b2ComputeCapsuleAABB( const b2Capsule* shape, b2Transform transform ); } */
-    public static native void nb2ComputeCapsuleAABB(long shape, long transform, long __result);
+    /* {@code B2_API b2AABB b2ComputeCapsuleBounds( const b2Capsule* shape, b2Transform transform ); } */
+    public static native void nb2ComputeCapsuleBounds(long shape, long transform, long __result);
 
-    // --- [ b2ComputePolygonAABB ] ---
+    // --- [ b2ComputePolygonBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputePolygonAABB( const b2Polygon* shape, b2WorldTransform transform ); }
+     * {@code B2_API b2AABB b2ComputePolygonBounds( const b2Polygon* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Polygon
      * @param transform b2Transform
@@ -385,18 +385,18 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputePolygonAABB(ConstB2Polygon shape, b2WorldTransform transform, b2AABB __result) {
+    public static b2AABB b2ComputePolygonBounds(ConstB2Polygon shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
-        nb2ComputePolygonAABB(shape.address(), transform.address(), __result.address());
+        nb2ComputePolygonBounds(shape.address(), transform.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2AABB b2ComputePolygonAABB( const b2Polygon* shape, b2Transform transform ); } */
-    public static native void nb2ComputePolygonAABB(long shape, long transform, long __result);
+    /* {@code B2_API b2AABB b2ComputePolygonBounds( const b2Polygon* shape, b2Transform transform ); } */
+    public static native void nb2ComputePolygonBounds(long shape, long transform, long __result);
 
-    // --- [ b2ComputeSegmentAABB ] ---
+    // --- [ b2ComputeSegmentBounds ] ---
 
     /**
-     * {@code B2_API b2AABB b2ComputeSegmentAABB( const b2Segment* shape, b2WorldTransform transform ); }
+     * {@code B2_API b2AABB b2ComputeSegmentBounds( const b2Segment* shape, b2WorldTransform transform ); }
      *
      * @param shape b2Segment
      * @param transform b2Transform
@@ -404,13 +404,13 @@ public final class Collision {
      * 
      * @return b2AABB
      */
-    public static b2AABB b2ComputeSegmentAABB(ConstB2Segment shape, b2WorldTransform transform, b2AABB __result) {
+    public static b2AABB b2ComputeSegmentBounds(ConstB2Segment shape, b2WorldTransform transform, b2AABB __result) {
         checkPointers(shape, transform, __result);
-        nb2ComputeSegmentAABB(shape.address(), transform.address(), __result.address());
+        nb2ComputeSegmentBounds(shape.address(), transform.address(), __result.address());
         return __result;
     }
-    /* {@code B2_API b2AABB b2ComputeSegmentAABB( const b2Segment* shape, b2Transform transform ); } */
-    public static native void nb2ComputeSegmentAABB(long shape, long transform, long __result);
+    /* {@code B2_API b2AABB b2ComputeSegmentBounds( const b2Segment* shape, b2Transform transform ); } */
+    public static native void nb2ComputeSegmentBounds(long shape, long transform, long __result);
 
     // --- [ b2PointInCircle ] ---
 
@@ -1049,21 +1049,19 @@ public final class Collision {
     // --- [ b2CreateDynamicTree ] ---
 
     /**
-     * {@code B2_API b2DynamicTree b2CreateDynamicTree( int proxyCapacity ); }
+     * {@code B2_API b2DynamicTree* b2CreateDynamicTree( int proxyCapacity ); }
      *
      * @param proxyCapacity int
-     * @param __result store
      *
      * @return b2DynamicTree
      */
-    public static b2DynamicTree b2CreateDynamicTree(int proxyCapacity, b2DynamicTree __result) {
-        checkPointers(__result);
-        nb2CreateDynamicTree(proxyCapacity, __result.address());
-        return __result;
+    public static b2DynamicTree b2CreateDynamicTree(int proxyCapacity) {
+        long __result = nb2CreateDynamicTree(proxyCapacity);
+        return b2DynamicTree.createSafe(() -> __result);
     }
 
-    /* {@code B2_API b2DynamicTree b2CreateDynamicTree( int proxyCapacity ); } */
-    public static native void nb2CreateDynamicTree(int proxyCapacity, long __result);
+    /* {@code B2_API b2DynamicTree* b2CreateDynamicTree( int proxyCapacity ); } */
+    public static native long nb2CreateDynamicTree(int proxyCapacity);
 
     // --- [ b2DestroyDynamicTree ] ---
 

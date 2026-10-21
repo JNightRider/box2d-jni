@@ -40,18 +40,17 @@ import static org.box2d.jni.system.Memory.*;
  * <pre><code>
  * typedef struct b2ReplayQueryInfo
  * {
- * 	b2ReplayQueryType type;
- * 	b2QueryFilter filter; // zeroed for the shape local query types
- * 	b2AABB aabb;          // overlap AABB, relative to origin
- * 	b2Pos origin;         // query origin
- * 	b2Vec2 translation;   // ray and cast translation
- * 	b2ShapeId shape;      // target shape for the shape local query types
- * 	int hitCount;         // number of recorded results
+ * 	b2ReplayQueryType type; /// the query type
+ * 	b2QueryFilter filter;	/// the query filter
+ * 	b2AABB aabb;		/// overlap AABB, relative to origin
+ * 	b2Pos origin;		/// query origin
+ * 	b2Vec2 translation;	/// ray and cast translation
+ * 	int hitCount;		/// number of recorded results
  * } b2ReplayQueryInfo;
 </code></pre>
  * 
  * @author wil
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.0.0
  */
 public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
@@ -69,7 +68,6 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
             AABB,
             ORIGIN,
             TRANSLATION,
-            SHAPE,
             HIT_COUNT;
 
     static {
@@ -79,7 +77,6 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
                 __member(b2AABB.SIZEOF, b2AABB.ALIGNOF),
                 __member(b2Pos.DSIZEOF, b2Pos.DALIGNOF),
                 __member(b2Vec2.SIZEOF, b2Vec2.ALIGNOF),
-                __member(b2ShapeId.SIZEOF, b2ShapeId.ALIGNOF),
                 __member(4)
         );
 
@@ -88,8 +85,7 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
         AABB = layout.offsetof(2);
         ORIGIN = layout.offsetof(3);
         TRANSLATION = layout.offsetof(4);
-        SHAPE = layout.offsetof(5);
-        HIT_COUNT = layout.offsetof(6);
+        HIT_COUNT = layout.offsetof(5);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -133,8 +129,6 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
     public b2Pos origin() { return norigin(address()); }
     /** @return Returns the property {@code translation} */
     public b2Vec2 translation() { return ntranslation(address()); }
-    /** @return Returns the property {@code shape} */
-    public b2ShapeId shape() { return nshape(address()); }
     /** @return Returns the property {@code hitCount} */
     public int hitCount() { return nhitCount(address()); }
 
@@ -190,17 +184,6 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
      */
     public b2ReplayQueryInfo translation(b2Vec2 value) {
         ntranslation(address(), value);
-        return this;
-    }
-
-    /**
-     * Set the value of property {@code shape}
-     * 
-     * @param value b2ShapeId
-     * @return b2ReplayQueryInfo
-     */
-    public b2ReplayQueryInfo shape(b2ShapeId value) {
-        nshape(address(), value);
         return this;
     }
 
@@ -289,7 +272,6 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
     public static b2AABB naabb(long address) { return b2AABB.createSafe(() -> address + AABB); }
     public static b2Pos norigin(long address) { return b2Pos.createSafe(() -> address + ORIGIN); }
     public static b2Vec2 ntranslation(long address) { return b2Vec2.createSafe(() -> address + TRANSLATION); }
-    public static b2ShapeId nshape(long address) { return b2ShapeId.createSafe(() -> address + SHAPE); }
     public static int nhitCount(long address) { return memGetInt(address + HIT_COUNT); }
 
     public static void ntype(long address, b2ReplayQueryType value) { memPutInt(address + TYPE, value.value()); }
@@ -297,7 +279,6 @@ public class b2ReplayQueryInfo extends Struct<b2ReplayQueryInfo> {
     public static void naabb(long address, b2AABB value) { nmemcpy(address + AABB, value.address(), b2AABB.SIZEOF); }
     public static void norigin(long address, b2Pos value) { nmemcpy(address + ORIGIN, value.address(), b2Pos.DSIZEOF); }
     public static void ntranslation(long address, b2Vec2 value) { nmemcpy(address + TRANSLATION, value.address(), b2Vec2.SIZEOF); }
-    public static void nshape(long address, b2ShapeId value) { nmemcpy(address + SHAPE, value.address(), b2ShapeId.SIZEOF); }
     public static void nhitCount(long address, int value) { memPutInt(address + HIT_COUNT, value); }
     
     // -----------------------------------
