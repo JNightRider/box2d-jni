@@ -43,6 +43,7 @@ import org.box2d.jni.b2Version;
 
 import org.box2d.jni.system.Library;
 import static org.box2d.jni.system.Checks.*;
+import static org.box2d.jni.system.MemoryUtil.*;
 
 /**
  * Class that represents the {@code <base.h>} header of box2d.
@@ -207,10 +208,11 @@ public final class Base {
      * @return float
      */
     public static float b2GetMillisecondsAndReset(LongBuffer ticks) {
-        return nb2GetMillisecondsAndReset(ticks);
+        checkBuffers(ticks);
+        return nb2GetMillisecondsAndReset(memAddress(ticks));
     }
     /* {@code B2_API float b2GetMillisecondsAndReset( uint64_t* ticks ); } */
-    public static native float nb2GetMillisecondsAndReset(LongBuffer ticks);
+    public static native float nb2GetMillisecondsAndReset(long ticks);
 
     // --- [ b2Yield ] ---
 
@@ -234,10 +236,11 @@ public final class Base {
      * @return int
      */
     public static int b2Hash(int hash, ByteBuffer data, int count) {
-        return nb2Hash(hash, data, count);
+        checkBuffers(data);
+        return nb2Hash(hash, memAddress(data), count);
     }
     /* {@code B2_API uint32_t b2Hash( uint32_t hash, const uint8_t* data, int count ); } */
-    public static native int nb2Hash(int hash, ByteBuffer data, int count);
+    public static native int nb2Hash(int hash, long data, int count);
     /** private constructor. */
     private Base() {}
 }

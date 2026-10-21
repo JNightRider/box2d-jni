@@ -151,14 +151,13 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Base_nb2GetMilliseconds
 /*
  * Class:     org_box2d_jni_include_Base
  * Method:    nb2GetMillisecondsAndReset
- * Signature: (Ljava/nio/LongBuffer;)F
+ * Signature: (J)F
  */
 JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Base_nb2GetMillisecondsAndReset
-    (JNIEnv *__env, jclass clazz, jobject buffer)
+    (JNIEnv *__env, jclass clazz, jlong ticks)
 {
-    ADDRESS_UINT64_BUFFER(__env, buffer, ticks, capacity)
-    UNUSED_PARAMS(capacity, clazz)
-    return (jfloat)b2GetMillisecondsAndReset( ticks );
+    UNUSED_PARAMS(__env, clazz)
+    return (jfloat)b2GetMillisecondsAndReset((uint64_t*)ticks);
 }
 
 /*
@@ -176,13 +175,12 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Base_nb2Yield
 /*
  * Class:     org_box2d_jni_include_Base
  * Method:    nb2Hash
- * Signature: (ILjava/nio/ByteBuffer;I)I
+ * Signature: (IJI)I
  */
 JNIEXPORT jint JNICALL Java_org_box2d_jni_include_Base_nb2Hash
-    (JNIEnv *__env, jclass clazz, jint hash, jobject buffer, jint count)
+    (JNIEnv *__env, jclass clazz, jint hash, jlong data, jint count)
 {
-    ADDRESS_UINT8_BUFFER(__env, buffer, data, capacity)
-    UNUSED_PARAMS(capacity, clazz)
+    UNUSED_PARAMS(__env, clazz)
 
-    return (jint)b2Hash((uint32_t)hash, data, (int)count );
+    return (jint)b2Hash((uint32_t)hash, (const uint8_t*)data, (int)count );
 }
