@@ -16,7 +16,7 @@ Make sure you have the necessary tools installed on your system before compiling
 
 ## How to use Box2D-JNI in projects
 
-- [Go to the test example](https://github.com/JNightRider/box2d-jni/blob/master/modules/samples/src/main/java/org/box2d/jni/HelloBox2D.java)
+[Go to the test example](https://github.com/JNightRider/box2d-jni/blob/master/modules/samples/src/main/java/org/box2d/jni/HelloBox2D.java)
 
 ## External links
 
