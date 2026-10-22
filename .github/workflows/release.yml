@@ -362,7 +362,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # include: lib | Android
+      # include: Android
       - name: Download Android artifacts       
         uses: actions/download-artifact@v8
         with:
@@ -374,7 +374,7 @@ jobs:
           name: box2d-jni-android
           path: lib
 
-      # include: lib | Linux
+      # include: Linux
       - name: Download Linux x64 | Android artifacts       
         uses: actions/download-artifact@v8
         with:
@@ -386,7 +386,7 @@ jobs:
           name: box2d-jni-linux_arm64
           path: lib
 
-      # include: lib | Windows
+      # include: Windows
       - name: Download Windows x64 artifacts
         uses: actions/download-artifact@v8
         with:
@@ -398,7 +398,7 @@ jobs:
           name: box2d-jni-windows_arm64
           path: lib
 
-      # include: lib | Macos
+      # include: Macos
       - name: Download macOS x64 artifacts
         uses: actions/download-artifact@v8
         with:
