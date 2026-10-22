@@ -364,48 +364,48 @@ jobs:
 
       # include: lib | Android
       - name: Download Android artifacts       
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-android
           path: lib
       - name: Download Android
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-android
           path: lib
 
       # include: lib | Linux
       - name: Download Linux x64 | Android artifacts       
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-linux_x64
           path: lib
       - name: Download Linux arm64
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-linux_arm64
           path: lib
 
       # include: lib | Windows
       - name: Download Windows x64 artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-windows64
           path: lib
       - name: Download Windows arm64 artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-windows_arm64
           path: lib
 
       # include: lib | Macos
       - name: Download macOS x64 artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-macos_64
           path: lib
       - name: Download macOS arm64 artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: box2d-jni-macos_arm64
           path: lib
