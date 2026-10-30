@@ -240,11 +240,19 @@ jobs:
             -Dorg.box2d.jni.system.Debug.Color=true
         run: |
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
+          
+      - name: Test build
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: msys2 {0}
+        run: |
+            ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
+            -x test --console=plain
       - name: Upload jars        
         uses: actions/upload-artifact@v7
         with:
           name: box2d-jni-windows64
           path: lib/*.jar
+
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
