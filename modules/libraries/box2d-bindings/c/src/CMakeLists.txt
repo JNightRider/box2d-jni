@@ -43,6 +43,13 @@ target_link_libraries(box2d-bindings
         ffi
 )
 
+if(MINGW)
+    target_link_options(box2d-bindings PRIVATE
+        -static
+        -static-libgcc
+    )
+endif()
+
 if(BOX2D_DOUBLE_PRECISION)
     target_compile_definitions(box2d-bindings
         PRIVATE BOX2D_DOUBLE_PRECISION
