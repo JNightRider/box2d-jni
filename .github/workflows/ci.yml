@@ -242,7 +242,6 @@ jobs:
           ./gradlew -Pbox2d.jni.bt=Debug -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true -Pbox2d.jni.flavor=Sp clean test
           
       - name: Test build
-        if: startsWith(github.ref, 'refs/tags/')
         shell: msys2 {0}
         run: |
             ./gradlew -Pbox2d.jni.bt=Release -Pbox2d.jni.android=false -Pbox2d.jni.desktop=true build \
