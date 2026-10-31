@@ -32,6 +32,7 @@ package org.box2d.jni.include;
 
 import org.box2d.jni.b2AABB;
 import org.box2d.jni.b2CastOutput;
+import org.box2d.jni.b2ChainResult;
 import org.box2d.jni.b2CollisionPlane;
 import org.box2d.jni.b2DistanceOutput;
 import org.box2d.jni.b2DynamicTree;
@@ -77,7 +78,7 @@ import static org.box2d.jni.system.Checks.*;
  * Class that represents the {@code <collision.h>} header of box2d.
  *
  * @author wil
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.0.0
  */
 public final class Collision {
@@ -646,6 +647,42 @@ public final class Collision {
     }
     /* {@code B2_API bool b2ValidateHull( const b2Hull* hull ); } */
     public static native boolean nb2ValidateHull(long hull);
+
+    // --- [ b2ComputeChains ] ---
+
+    /**
+     * {@code B2_API b2ChainResult b2ComputeChains( const b2Polygon* polygons, int polygonCount, float weldTolerance ); }
+     *
+     * @param polygons ConstB2Polygon
+     * @param polygonCount int
+     * @param weldTolerance float
+     * @param __result store
+     *
+     * @return b2ChainResult
+     */
+    public static b2ChainResult b2ComputeChains(ConstB2Polygon.ConstBuffer polygons, int polygonCount, float weldTolerance, b2ChainResult __result) {
+        checkPointers(polygons, __result);
+        nb2ComputeChains(polygons.address(), polygonCount, weldTolerance, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2ChainResult b2ComputeChains( const b2Polygon* polygons, int polygonCount, float weldTolerance ); } */
+    public static native void nb2ComputeChains(long polygons, int polygonCount, float weldTolerance, long __result);
+
+    // --- [ b2FreeChains ] ---
+
+    /**
+     * {@code B2_API void b2FreeChains( b2ChainResult* result ); }
+     *
+     * @param result b2ChainResult
+     */
+    public static void b2FreeChains(b2ChainResult result) {
+        checkPointers(result);
+        nb2FreeChains(result.address());
+    }
+
+    /* {@code B2_API void b2FreeChains( b2ChainResult* result ); } */
+    public static native void nb2FreeChains(long result);
 
     // --- [ b2ComputeSegmentDistance ] ---
 

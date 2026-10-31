@@ -51,8 +51,8 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  * 
  * @author wil
+ * @version 1.1.0
  * @since 1.0.0
- * @version 1.0.0
  */
 public class b2Polygon extends Struct<b2Polygon> implements ConstB2Polygon {
 
@@ -310,6 +310,17 @@ public class b2Polygon extends Struct<b2Polygon> implements ConstB2Polygon {
         return new Buffer(ptr, capacity);
     }
 
+    /**
+     * Reserve an amount n of memory for the object {@code b2Polygon}.
+     *
+     * @param address Buffer address
+     * @param capacity Number of elements
+     * @return Buffer
+     */
+    public static Buffer createSafe(long address, int capacity) {
+        return address == NULL ? null : new Buffer(address, capacity);
+    }
+
     // -----------------------------------
 
     public static b2Vec2.Buffer nvertices(long address) { return b2Vec2.createSafe(address + VERTICES, B2_MAX_POLYGON_VERTICES); }
@@ -327,7 +338,7 @@ public class b2Polygon extends Struct<b2Polygon> implements ConstB2Polygon {
     // -----------------------------------
 
     /** An array of {@code b2Polygon} structs. */
-    public static class Buffer extends StructBuffer<b2Polygon, Buffer> implements JNINative {
+    public static class Buffer extends StructBuffer<b2Polygon, Buffer> implements ConstB2Polygon.ConstBuffer<b2Polygon, Buffer>, JNINative {
 
         /** An element that provides information about the structure. */
         private static final b2Polygon ELEMENT_FACTORY = b2Polygon.factory();

@@ -74,4 +74,15 @@ public interface ConstB2Polygon extends ConstStruct {
      * @return int
      */
     int count();
+
+    /**
+     * A template that handles the representation of a constant pointer (buffer)
+     * of constant structures such as {@code ConstB2Polygon}
+     *
+     * @param <T> The type of object stored in this buffer
+     * @param <SELF> The type of this buffer
+     */
+    interface ConstBuffer<T extends ConstB2Polygon, SELF extends ConstBuffer<T, SELF>> extends ConstStructBuffer<T, SELF> {
+        /* nothing */
+    }
 }

@@ -417,6 +417,30 @@ JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Collision_nb2ValidateHull
 
 /*
  * Class:     org_box2d_jni_include_Collision
+ * Method:    nb2ComputeChains
+ * Signature: (JIFJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2ComputeChains
+    (JNIEnv *__env, jclass clazz, jlong polygons, jint polygonCount, jfloat weldTolerance, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2ChainResult*)__result = b2ComputeChains((const b2Polygon*)polygons, polygonCount, weldTolerance);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Collision
+ * Method:    nb2FreeChains
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Collision_nb2FreeChains
+    (JNIEnv *__env, jclass clazz, jlong result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2FreeChains((b2ChainResult*) result);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Collision
  * Method:    nb2ComputeSegmentDistance
  * Signature: (JJJJJ)V
  */
