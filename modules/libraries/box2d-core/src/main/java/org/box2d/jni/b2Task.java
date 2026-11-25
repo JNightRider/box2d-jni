@@ -48,8 +48,8 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  *
  * @author wil
- * @since 1.0.0
  * @version 1.0.0
+ * @since 2.3.0
  */
 public class b2Task extends Struct<b2Task> implements ConstB2Task {
 
