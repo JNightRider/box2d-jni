@@ -59,8 +59,8 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * </code></pre>
  *
  * @author wil
+ * @version 1.1.0
  * @since 1.0.1
- * @version 1.0.0
  */
 public class b2Counters extends Struct<b2Counters> {
 
@@ -72,23 +72,25 @@ public class b2Counters extends Struct<b2Counters> {
 
     /** The struct member offsets. */
     private static final int
-                BYTE_COUNT,
-                BODY_COUNT,
-                SHAPE_COUNT,
-                CONTACT_COUNT,
-                JOINT_COUNT,
-                ISLAND_COUNT,
-                STACK_USED,
-                STATIC_TREE_HEIGHT,
-                TREE_HEIGHT,
-                TASK_COUNT,
-                COLOR_COUNTS,
-                AWAKE_CONTACT_COUNT,
-                RECYCLED_CONTACT_COUNT;
+            BYTE_COUNT,
+            BODY_COUNT,
+            SHAPE_COUNT,
+            CONTACT_COUNT,
+            JOINT_COUNT,
+            ISLAND_COUNT,
+            STACK_USED,
+            STATIC_TREE_HEIGHT,
+            TREE_HEIGHT,
+            TASK_COUNT,
+            ENQUEUE_COUNT,
+            COLOR_COUNTS,
+            AWAKE_CONTACT_COUNT,
+            RECYCLED_CONTACT_COUNT;
 
     static {
         Layout layout = __struct(
                 __member(8),
+                __member(4),
                 __member(4),
                 __member(4),
                 __member(4),
@@ -113,9 +115,10 @@ public class b2Counters extends Struct<b2Counters> {
         STATIC_TREE_HEIGHT = layout.offsetof(7);
         TREE_HEIGHT = layout.offsetof(8);
         TASK_COUNT = layout.offsetof(9);
-        COLOR_COUNTS = layout.offsetof(10);
-        AWAKE_CONTACT_COUNT = layout.offsetof(11);
-        RECYCLED_CONTACT_COUNT = layout.offsetof(12);
+        ENQUEUE_COUNT = layout.offsetof(10);
+        COLOR_COUNTS = layout.offsetof(11);
+        AWAKE_CONTACT_COUNT = layout.offsetof(12);
+        RECYCLED_CONTACT_COUNT = layout.offsetof(13);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -175,6 +178,8 @@ public class b2Counters extends Struct<b2Counters> {
     public int awakeContactCount() { return nawakeContactCount(address()); }
     /** @return Returns the property {@code recycledContactCount} */
     public int recycledContactCount() { return nrecycledContactCount(address()); }
+    /** @return Returns the property {@code enqueueCount} */
+    public int enqueueCount() { return nenqueueCount(address()); }
 
     /**
      * Set the value of property {@code bodyCount}
@@ -283,6 +288,17 @@ public class b2Counters extends Struct<b2Counters> {
      */
     public b2Counters taskCount(int value) {
         ntaskCount(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code enqueueCount}
+     *
+     * @param value int
+     * @return b2Counters
+     */
+    public b2Counters enqueueCount(int value) {
+        nenqueueCount(address(), value);
         return this;
     }
 
@@ -456,6 +472,7 @@ public class b2Counters extends Struct<b2Counters> {
     public static IntBuffer ncolorCounts(long address)    { return memIntBuffer(address + COLOR_COUNTS, 24); }
     public static int nawakeContactCount(long address)    { return memGetInt(address + AWAKE_CONTACT_COUNT); }
     public static int nrecycledContactCount(long address) { return memGetInt(address + RECYCLED_CONTACT_COUNT); }
+    public static int nenqueueCount(long address)         { return memGetInt(address + ENQUEUE_COUNT); }
 
     public static void nbodyCount(long address, long value) { memPutLong(address + BODY_COUNT, value); }
     public static void nshapeCount(long address, int value) {  memPutInt(address + SHAPE_COUNT, value); }
@@ -470,6 +487,7 @@ public class b2Counters extends Struct<b2Counters> {
     public static void ncolorCounts(long address, IntBuffer value) { nmemcpy(address + COLOR_COUNTS, memAddress(value), 24 * 4); }
     public static void nawakeContactCount(long address, int value) { memPutInt(address + AWAKE_CONTACT_COUNT, value); }
     public static void nrecycledContactCount(long address, int value) { memPutInt(address + RECYCLED_CONTACT_COUNT, value); }
+    public static void nenqueueCount(long address, int value) { memPutInt(address + ENQUEUE_COUNT, value); }
 
     // -----------------------------------
 
