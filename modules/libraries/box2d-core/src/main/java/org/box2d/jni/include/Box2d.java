@@ -77,6 +77,7 @@ import org.box2d.jni.b2SensorEvents;
 import org.box2d.jni.b2ShapeId;
 import org.box2d.jni.b2ShapeType;
 import org.box2d.jni.b2SurfaceMaterial;
+import org.box2d.jni.b2TaskBatch;
 import org.box2d.jni.b2Transform;
 import org.box2d.jni.b2TreeStats;
 import org.box2d.jni.b2Vec2;
@@ -119,7 +120,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * Class that represents the {@code <box2d.h>} header of box2d.
  *
  * @author wil
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.0.0
  */
 public final class Box2d {
@@ -192,6 +193,46 @@ public final class Box2d {
 
     /* {@code B2_API void b2World_Step( b2WorldId worldId, float timeStep, int subStepCount ); } */
     public static native void nb2World_Step(long worldId, float timeStep, int subStepCount);
+
+    // --- [ b2World_BeginStep ] ---
+
+    /**
+     * {@code B2_API b2TaskBatch b2World_BeginStep( b2WorldId worldId, float timeStep, int subStepCount ); }
+     *
+     * @param worldId b2WorldId
+     * @param timeStep float
+     * @param subStepCount int
+     * @param __result store
+     *
+     * @return b2TaskBatch
+     */
+    public static b2TaskBatch b2World_BeginStep(b2WorldId worldId, float timeStep, int subStepCount, b2TaskBatch __result) {
+        checkPointers(worldId, __result);
+        nb2World_BeginStep(worldId.address(), timeStep, subStepCount, __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2TaskBatch b2World_BeginStep( b2WorldId worldId, float timeStep, int subStepCount ); } */
+    public static native void nb2World_BeginStep(long worldId, float timeStep, int subStepCount, long __result);
+
+    // --- [ b2World_ContinueStep ] ---
+
+    /**
+     * {@code B2_API b2TaskBatch b2World_ContinueStep( b2WorldId worldId ); }
+     *
+     * @param worldId b2WorldId
+     * @param __result store
+     *
+     * @return b2TaskBatch
+     */
+    public static b2TaskBatch b2World_ContinueStep(b2WorldId worldId, b2TaskBatch __result) {
+        checkPointers(worldId, __result);
+        nb2World_ContinueStep(worldId.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2TaskBatch b2World_ContinueStep( b2WorldId worldId ); } */
+    public static native void nb2World_ContinueStep(long worldId, long __result);
 
     // --- [ b2World_Draw ] ---
 
