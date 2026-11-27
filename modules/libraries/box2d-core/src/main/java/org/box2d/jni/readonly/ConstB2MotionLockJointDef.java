@@ -31,34 +31,40 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni.readonly;
 
 /**
- * Interface that is responsible for representing a native object that is a
- * constant of type <code>b2MotionLocks</code>. (native type: const
- * b2MotionLocks)
+ * Interface that is responsible for representing a native object that is a constant
+ * of type <code>b2MotionLockJointDef</code>. (native type: const b2MotionLockJointDef)
  *
  * @author wil
  * @version 1.0.0
- * @since 1.0.0
+ * @since 2.3.0
  */
-public interface ConstB2MotionLocks extends ConstStruct {
+public interface ConstB2MotionLockJointDef extends ConstStruct {
 
     /**
-     * Prevent translation along the x-axis
+     * Base joint definition
+     *
+     * @return ConstB2JointDef
+     */
+    ConstB2JointDef base();
+
+    /**
+     * Lock movement along the x axis.
      *
      * @return boolean
      */
-    boolean linearX();
+    boolean lockLinearX();
 
     /**
-     * revent translation along the y-axis
+     * Lock movement along the y axis.
      *
      * @return boolean
      */
-    boolean linearY();
+    boolean lockLinearY();
 
     /**
-     * Prevent rotation around the z-axis
+     * Used internally to detect a valid definition. DO NOT SET.
      *
-     * @return boolean
+     * @return int
      */
-    boolean angularZ();
+    int internalValue();
 }

@@ -53,7 +53,7 @@ import static org.box2d.jni.system.Memory.*;
  *     float safetyFactor;
  *     const char* name;
  *     void* userData;
- *     b2MotionLocks motionLocks;
+ *     bool fixedRotation;
  *     bool enableSleep;
  *     bool isAwake;
  *     bool isBullet;
@@ -65,7 +65,7 @@ import static org.box2d.jni.system.Memory.*;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
@@ -78,26 +78,26 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
 
     /** The struct member offsets. */
     private static final int
-            TYPE,
-            POSITION,
-            ROTATION,
-            LINEAR_VELOCITY,
-            ANGULAR_VELOCITY,
-            LINEAR_DAMPING,
-            ANGULAR_DAMPING,
-            GRAVITY_SCALE,
-            SLEEP_THRESHOLD,
-            SAFETY_FACTOR,
-            NAME,
-            USER_DATA,
-            MOTION_LOCKS,
-            ENABLE_SLEEP,
-            IS_AWAKE,
-            IS_BULLET,
-            IS_ENABLED,
-            ALLOW_FAST_ROTATION,
-            ENABLE_CONTACT_RECYCLING,
-            INTERNAL_VALUE;
+        TYPE,
+        POSITION,
+        ROTATION,
+        LINEAR_VELOCITY,
+        ANGULAR_VELOCITY,
+        LINEAR_DAMPING,
+        ANGULAR_DAMPING,
+        GRAVITY_SCALE,
+        SLEEP_THRESHOLD,
+        SAFETY_FACTOR,
+        NAME,
+        USER_DATA,
+        FIXED_ROTATION,
+        ENABLE_SLEEP,
+        IS_AWAKE,
+        IS_BULLET,
+        IS_ENABLED,
+        ALLOW_FAST_ROTATION,
+        ENABLE_CONTACT_RECYCLING,
+        INTERNAL_VALUE;
 
     static {
         Layout layout = __struct(
@@ -113,7 +113,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
                 __member(4),
                 __member(POINTER_SIZE),
                 __member(POINTER_SIZE),
-                __member(b2MotionLocks.SIZEOF, b2MotionLocks.ALIGNOF),
+                __member(1),
                 __member(1),
                 __member(1),
                 __member(1),
@@ -135,7 +135,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
         SAFETY_FACTOR = layout.offsetof(9);
         NAME = layout.offsetof(10);
         USER_DATA = layout.offsetof(11);
-        MOTION_LOCKS = layout.offsetof(12);
+        FIXED_ROTATION = layout.offsetof(12);
         ENABLE_SLEEP = layout.offsetof(13);
         IS_AWAKE = layout.offsetof(14);
         IS_BULLET = layout.offsetof(15);
@@ -147,7 +147,6 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
     }
-
     /**
      * Generates a reference to the given pointer.
      *
@@ -214,9 +213,6 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     /** @return Returns the property {@code userData} */
     @Override
     public long userData() { return nuserData(address()); }
-    /** @return Returns the property {@code motionLocks} */
-    @Override
-    public b2MotionLocks motionLocks() { return nmotionLocks(address()); }
     /** @return Returns the property {@code enableSleep} */
     @Override
     public boolean enableSleep() { return nenableSleep(address()); }
@@ -238,6 +234,9 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     /** @return Returns the property {@code internalValue} */
     @Override
     public int internalValue() { return ninternalValue(address()); }
+    /** @return Returns the property {@code fixedRotation} */
+    @Override
+    public boolean fixedRotation() { return nfixedRotation(address()); }
 
     /**
      * Set the value of property {@code type}
@@ -245,140 +244,219 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef type(b2BodyType value) { ntype(address(), value); return this; }
+    public b2BodyDef type(b2BodyType value) {
+        ntype(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code position}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef position(b2Pos value) { nposition(address(), value); return this; }
+    public b2BodyDef position(b2Pos value) {
+        nposition(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code rotation}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef rotation(b2Rot value) { nrotation(address(), value); return this; }
+    public b2BodyDef rotation(b2Rot value) {
+        nrotation(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code linearVelocity}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef linearVelocity(b2Vec2 value) { linearVelocity(address(), value); return this; }
+    public b2BodyDef linearVelocity(b2Vec2 value) {
+        linearVelocity(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code angularVelocity}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef angularVelocity(float value) { nangularVelocity(address(), value); return this; }
+    public b2BodyDef angularVelocity(float value) {
+        nangularVelocity(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code linearDamping}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef linearDamping(float value) { nlinearDamping(address(), value); return this; }
+    public b2BodyDef linearDamping(float value) {
+        nlinearDamping(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code angularDamping}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef angularDamping(float value) { nangularDamping(address(), value); return this; }
+    public b2BodyDef angularDamping(float value) {
+        nangularDamping(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code gravityScale}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef gravityScale(float value) { ngravityScale(address(), value); return this; }
+    public b2BodyDef gravityScale(float value) {
+        ngravityScale(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code sleepThreshold}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef sleepThreshold(float value) { nsleepThreshold(address(), value); return this; }
+    public b2BodyDef sleepThreshold(float value) {
+        nsleepThreshold(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code safetyFactor}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef safetyFactor(float value) { nsafetyFactor(address(), value); return this; }
+    public b2BodyDef safetyFactor(float value) {
+        nsafetyFactor(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code name}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef name(long value) { nname(address(), value); return this; }
+    public b2BodyDef name(long value) {
+        nname(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code userData}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef userData(long value) { nuserData(address(), value); return this; }
+    public b2BodyDef userData(long value) {
+        nuserData(address(), value);
+        return this;
+    }
+
     /**
-     * Set the value of property {@code motionLocks}
+     * Set the value of property {@code fixedRotation}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef motionLocks(b2MotionLocks value) { nmotionLocks(address(), value); return this; }
+    public b2BodyDef fixedRotation(boolean value) {
+        nfixedRotation(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code enableSleep}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef enableSleep(boolean value) { nenableSleep(address(), value); return this; }
+    public b2BodyDef enableSleep(boolean value) {
+        nenableSleep(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code isAwake}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef isAwake(boolean value) { nisAwake(address(), value); return this; }
+    public b2BodyDef isAwake(boolean value) {
+        nisAwake(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code isBullet}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef isBullet(boolean value) { nisBullet(address(), value); return this; }
+    public b2BodyDef isBullet(boolean value) {
+        nisBullet(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code isEnabled}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef isEnabled(boolean value) { nisEnabled(address(), value); return this; }
+    public b2BodyDef isEnabled(boolean value) {
+        nisEnabled(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code allowFastRotation}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef allowFastRotation(boolean value) { nallowFastRotation(address(), value); return this; }
+    public b2BodyDef allowFastRotation(boolean value) {
+        nallowFastRotation(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code enableContactRecycling}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef enableContactRecycling(boolean value) { nenableContactRecycling(address(), value); return this; }
+    public b2BodyDef enableContactRecycling(boolean value) {
+        nenableContactRecycling(address(), value);
+        return this;
+    }
+
     /**
      * Set the value of property {@code internalValue}
      *
      * @param value The value
      * @return b2BodyDef
      */
-    public b2BodyDef internalValue(int value) { ninternalValue(address(), value); return this; }
+    public b2BodyDef internalValue(int value) {
+        ninternalValue(address(), value);
+        return this;
+    }
 
     /*(non-Javadoc)
      */
@@ -516,7 +594,6 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static float nsafetyFactor(long address)             { return memGetFloat(address + SAFETY_FACTOR);                      }
     public static long nname(long address)                      { return memGetAddress(address + NAME);                             }
     public static long nuserData(long address)                  { return memGetAddress(address + USER_DATA);                        }
-    public static b2MotionLocks nmotionLocks(long address)      { return b2MotionLocks.createSafe(() -> address + MOTION_LOCKS);    }
     public static boolean nenableSleep(long address)            { return memGetByte(address + ENABLE_SLEEP) != 0;                   }
     public static boolean nisAwake(long address)                { return memGetByte(address + IS_AWAKE) != 0;                       }
     public static boolean nisBullet(long address)               { return memGetByte(address + IS_BULLET) != 0;                      }
@@ -524,6 +601,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static boolean nallowFastRotation(long address)      { return memGetByte(address + ALLOW_FAST_ROTATION) != 0;            }
     public static boolean nenableContactRecycling(long address) { return memGetByte(address + ENABLE_CONTACT_RECYCLING) != 0;       }
     public static int ninternalValue(long address)              { return memGetInt(address + INTERNAL_VALUE);                       }
+    public static boolean nfixedRotation(long address)          { return memGetByte(address + FIXED_ROTATION) != 0;                 }
 
     public static void ntype(long address, b2BodyType value)                { memPutInt(address + TYPE, value.value());                               }
     public static void nposition(long address, b2Pos value)                 { nmemcpy(address + POSITION, value.address(), b2Pos.DSIZEOF);            }
@@ -537,7 +615,6 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static void nsafetyFactor(long address, float value)             { memPutFloat(address + SAFETY_FACTOR, value);                                  }
     public static void nname(long address, long value)                      { memPutAddress(address + NAME, value);                                         }
     public static void nuserData(long address, long value)                  { memPutAddress(address + USER_DATA, value);                                    }
-    public static void nmotionLocks(long address, b2MotionLocks value)      { nmemcpy(address + MOTION_LOCKS, value.address(), b2MotionLocks.SIZEOF); }
     public static void nenableSleep(long address, boolean value)            { memPutByte(address + ENABLE_SLEEP, (byte) (value ? 1 : 0));                   }
     public static void nisAwake(long address, boolean value)                { memPutByte(address + IS_AWAKE, (byte) (value ? 1 : 0));                       }
     public static void nisBullet(long address, boolean value)               { memPutByte(address + IS_BULLET, (byte) (value ? 1 : 0));                      }
@@ -545,6 +622,7 @@ public class b2BodyDef extends Struct<b2BodyDef> implements ConstB2BodyDef {
     public static void nallowFastRotation(long address, boolean value)      { memPutByte(address + ALLOW_FAST_ROTATION, (byte) (value ? 1 : 0));            }
     public static void nenableContactRecycling(long address, boolean value) { memPutByte(address + ENABLE_CONTACT_RECYCLING, (byte) (value ? 1 : 0));       }
     public static void ninternalValue(long address, int value)              { memPutInt(address + INTERNAL_VALUE, value);                                   }
+    public static void nfixedRotation(long address, boolean value)          { memPutByte(address + FIXED_ROTATION, (byte)(value ? 1 : 0));                  }
 
     // -----------------------------------
 

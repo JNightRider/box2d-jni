@@ -98,6 +98,30 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1Step
 
 /*
  * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_BeginStep
+ * Signature: (JFIJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1BeginStep
+    (JNIEnv *__env, jclass clazz, jlong worldId, jfloat timeStep, jint subStepCount, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2TaskBatch*)__result = b2World_BeginStep(*(b2WorldId*)worldId, timeStep, subStepCount );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2World_ContinueStep
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2World_1ContinueStep
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2TaskBatch*)__result = b2World_ContinueStep(*(b2WorldId*)worldId);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
  * Method:    nb2World_Draw
  * Signature: (JJ)V
  */
@@ -1529,26 +1553,26 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1Enable
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_SetMotionLocks
- * Signature: (JJ)V
+ * Method:    nb2Body_SetFixedRotation
+ * Signature: (JZ)V
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1SetMotionLocks
-    (JNIEnv *__env, jclass clazz, jlong bodyId, jlong locks)
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1SetFixedRotation
+    (JNIEnv *__env, jclass clazz, jlong bodyId, jboolean flag)
 {
     UNUSED_PARAMS(__env, clazz)
-    b2Body_SetMotionLocks( *(b2BodyId*)bodyId, *(b2MotionLocks*)locks );
+    b2Body_SetFixedRotation(*(b2BodyId*)bodyId, (bool)flag);
 }
 
 /*
  * Class:     org_box2d_jni_include_Box2d
- * Method:    nb2Body_GetMotionLocks
- * Signature: (JJ)V
+ * Method:    nb2Body_IsFixedRotation
+ * Signature: (J)Z
  */
-JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1GetMotionLocks
-    (JNIEnv *__env, jclass clazz, jlong bodyId, jlong __result)
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2Body_1IsFixedRotation
+    (JNIEnv *__env, jclass clazz, jlong bodyId)
 {
     UNUSED_PARAMS(__env, clazz)
-    *(b2MotionLocks*)__result = b2Body_GetMotionLocks( *(b2BodyId*)bodyId );
+    return b2Body_IsFixedRotation(*(b2BodyId*)bodyId);
 }
 
 /*
@@ -4202,6 +4226,42 @@ JNIEXPORT jfloat JNICALL Java_org_box2d_jni_include_Box2d_nb2RevoluteJoint_1GetC
 {
     UNUSED_PARAMS(__env, clazz)
     return (jfloat)b2RevoluteJoint_GetCurrentSpeed(*(b2JointId*)jointId);
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2CreateMotionLockJoint
+ * Signature: (JJJ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2CreateMotionLockJoint
+    (JNIEnv *__env, jclass clazz, jlong worldId, jlong def, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2JointId*)__result = b2CreateMotionLockJoint(*(b2WorldId*)worldId, (const b2MotionLockJointDef*)def );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2MotionLockJoint_EnableLinearLock
+ * Signature: (JIZ)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Box2d_nb2MotionLockJoint_1EnableLinearLock
+    (JNIEnv *__env, jclass clazz, jlong jointId, jint axis, jboolean flag)
+{
+    UNUSED_PARAMS(__env, clazz)
+    b2MotionLockJoint_EnableLinearLock(*(b2JointId*)jointId, axis, flag );
+}
+
+/*
+ * Class:     org_box2d_jni_include_Box2d
+ * Method:    nb2MotionLockJoint_IsLinearLockEnabled
+ * Signature: (JI)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_box2d_jni_include_Box2d_nb2MotionLockJoint_1IsLinearLockEnabled
+    (JNIEnv *__env, jclass clazz, jlong jointId, jint axis)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jboolean)b2MotionLockJoint_IsLinearLockEnabled(*(b2JointId*)jointId, axis );
 }
 
 /*

@@ -55,7 +55,6 @@ import org.box2d.jni.b2JointEvents;
 import org.box2d.jni.b2JointId;
 import org.box2d.jni.b2JointType;
 import org.box2d.jni.b2MassData;
-import org.box2d.jni.b2MotionLocks;
 import org.box2d.jni.b2OverlapResultCallbackFcnI;
 import org.box2d.jni.b2PlaneResultCallbackFcnI;
 import org.box2d.jni.b2Polygon;
@@ -93,6 +92,7 @@ import org.box2d.jni.readonly.ConstB2Circle;
 import org.box2d.jni.readonly.ConstB2DistanceJointDef;
 import org.box2d.jni.readonly.ConstB2ExplosionDef;
 import org.box2d.jni.readonly.ConstB2FilterJointDef;
+import org.box2d.jni.readonly.ConstB2MotionLockJointDef;
 import org.box2d.jni.readonly.ConstB2MotorJointDef;
 import org.box2d.jni.readonly.ConstB2MoverJointDef;
 import org.box2d.jni.readonly.ConstB2PogoJointDef;
@@ -120,7 +120,7 @@ import static org.box2d.jni.system.MemoryUtil.*;
  * Class that represents the {@code <box2d.h>} header of box2d.
  *
  * @author wil
- * @version 2.1.0
+ * @version 2.2.0
  * @since 1.0.0
  */
 public final class Box2d {
@@ -2382,40 +2382,38 @@ public final class Box2d {
     /* {@code B2_API void b2Body_Enable( b2BodyId bodyId ); } */
     public static native void nb2Body_Enable(long bodyId);
 
-    // --- [ b2Body_SetMotionLocks ] ---
+    // --- [ b2Body_SetFixedRotation ] ---
 
     /**
-     * {@code B2_API void b2Body_SetMotionLocks( b2BodyId bodyId, b2MotionLocks locks ); }
+     * {@code B2_API void b2Body_SetFixedRotation( b2BodyId bodyId, bool flag ); }
      *
      * @param bodyId b2BodyId
-     * @param locks b2MotionLocks
+     * @param flag boolean
      */
-    public static void b2Body_SetMotionLocks(b2BodyId bodyId, b2MotionLocks locks) {
-        checkPointers(bodyId, locks);
-        nb2Body_SetMotionLocks(bodyId.address(), locks.address());
+    public static void b2Body_SetFixedRotation(b2BodyId bodyId, boolean flag) {
+        checkPointers(bodyId);
+        nb2Body_SetFixedRotation(bodyId.address(), flag);
     }
 
-    /* {@code B2_API void b2Body_SetMotionLocks( b2BodyId bodyId, b2MotionLocks locks ); } */
-    public static native void nb2Body_SetMotionLocks(long bodyId, long locks);
+    /* {@code B2_API void b2Body_SetFixedRotation( b2BodyId bodyId, bool flag ); } */
+    public static native void nb2Body_SetFixedRotation(long bodyId, boolean flag);
 
-    // --- [ b2Body_GetMotionLocks ] ---
+    // --- [ b2Body_IsFixedRotation ] ---
 
     /**
-     * {@code B2_API b2MotionLocks b2Body_GetMotionLocks( b2BodyId bodyId ); }
+     * {@code B2_API bool b2Body_IsFixedRotation( b2BodyId bodyId ); }
      *
      * @param bodyId b2BodyId
-     * @param __result store
      *
-     * @return b2MotionLocks
+     * @return boolean
      */
-    public static b2MotionLocks b2Body_GetMotionLocks(b2BodyId bodyId, b2MotionLocks __result) {
-        checkPointers(bodyId, __result);
-        nb2Body_GetMotionLocks(bodyId.address(), __result.address());
-        return __result;
+    public static boolean b2Body_IsFixedRotation(b2BodyId bodyId) {
+        checkPointers(bodyId);
+        return nb2Body_IsFixedRotation(bodyId.address());
     }
 
-    /* {@code B2_API b2MotionLocks b2Body_GetMotionLocks( b2BodyId bodyId ); } */
-    public static native void nb2Body_GetMotionLocks(long bodyId, long __result);
+    /* {@code B2_API bool b2Body_IsFixedRotation( b2BodyId bodyId ); } */
+    public static native boolean nb2Body_IsFixedRotation(long bodyId);
 
     // --- [ b2Body_SetBullet ] ---
 
@@ -6223,6 +6221,61 @@ public final class Box2d {
 
     /* {@code B2_API float b2WeldJoint_GetAngularDampingRatio( b2JointId jointId ); } */
     public static native float nb2WeldJoint_GetAngularDampingRatio(long jointId);
+
+    //--- [ b2CreateMotionLockJoint ] ---
+
+    /**
+     * {@code B2_API b2JointId b2CreateMotionLockJoint( b2WorldId worldId, const b2MotionLockJointDef* def ); }
+     *
+     * @param worldId b2WorldId
+     * @param def ConstB2MotionLockJointDef
+     * @param __result store
+     *
+     * @return b2JointId
+     */
+    public static b2JointId b2CreateMotionLockJoint(b2WorldId worldId, ConstB2MotionLockJointDef def, b2JointId __result) {
+        checkPointers(worldId, def, __result);
+        nb2CreateMotionLockJoint(worldId.address(), def.address(), __result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2JointId b2CreateMotionLockJoint( b2WorldId worldId, const b2MotionLockJointDef* def ); } */
+    public static native void nb2CreateMotionLockJoint(long worldId, long def, long __result);
+
+    // --- [ b2MotionLockJoint_EnableLinearLock ] ---
+
+    /**
+     * {@code B2_API void b2MotionLockJoint_EnableLinearLock( b2JointId jointId, int axis, bool flag ); }
+     *
+     * @param jointId b2JointId
+     * @param axis int
+     * @param flag boolean
+     */
+    public static void b2MotionLockJoint_EnableLinearLock(b2JointId jointId, int axis, boolean flag) {
+        checkPointers(jointId);
+        nb2MotionLockJoint_EnableLinearLock(jointId.address(), axis, flag);
+    }
+
+    /* {@code B2_API void b2MotionLockJoint_EnableLinearLock( b2JointId jointId, int axis, bool flag ); } */
+    public static native void nb2MotionLockJoint_EnableLinearLock(long jointId, int axis, boolean flag);
+
+    // --- [ b2MotionLockJoint_IsLinearLockEnabled ] ---
+
+    /**
+     * {@code B2_API bool b2MotionLockJoint_IsLinearLockEnabled( b2JointId jointId, int axis ); }
+     *
+     * @param jointId b2JointId
+     * @param axis int
+     *
+     * @return boolean
+     */
+    public static boolean b2MotionLockJoint_IsLinearLockEnabled(b2JointId jointId, int axis) {
+        checkPointers(jointId);
+        return nb2MotionLockJoint_IsLinearLockEnabled(jointId.address(), axis);
+    }
+
+    /* {@code B2_API bool b2MotionLockJoint_IsLinearLockEnabled( b2JointId jointId, int axis ); } */
+    public static native boolean nb2MotionLockJoint_IsLinearLockEnabled(long jointId, int axis);
 
     // --- [ b2CreateWheelJoint ] ---
 

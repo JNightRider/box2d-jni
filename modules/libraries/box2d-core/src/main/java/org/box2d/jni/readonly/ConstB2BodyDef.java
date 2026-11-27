@@ -37,7 +37,7 @@ import org.box2d.jni.b2BodyType;
  * constant of type <code>b2BodyDef</code>. (native type: const b2BodyDef)
  *
  * @author wil
- * @version 1.0.1
+ * @version 1.1.0
  * @since 1.0.0
  */
 public interface ConstB2BodyDef extends ConstStruct {
@@ -147,12 +147,13 @@ public interface ConstB2BodyDef extends ConstStruct {
     long userData();
 
     /**
-     * Motions locks to restrict linear and angular movement. Caution: may lead
-     * to softer constraints along the locked direction
+     * Fully lock the rotation of this body by setting the inverse rotational
+     * inertia to zero. This also keeps the angular velocity at zero. The main
+     * inertia value is not affected.
      *
-     * @return ConstB2MotionLocks
+     * @return boolean
      */
-    ConstB2MotionLocks motionLocks();
+    boolean fixedRotation();
 
     /**
      * Set this flag to false if this body should never fall asleep.

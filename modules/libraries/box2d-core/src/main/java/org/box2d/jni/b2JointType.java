@@ -45,11 +45,12 @@ import org.box2d.jni.system.*;
  * 	b2_revoluteJoint,
  * 	b2_weldJoint,
  * 	b2_wheelJoint,
+ *      b2_motionLockJoint
  * } b2JointType;
  * </code></pre>
  *
  * @author wil
- * @version 1.0.2
+ * @version 1.1.0
  * @since 1.0.0
  */
 public enum b2JointType {
@@ -133,6 +134,15 @@ public enum b2JointType {
      */
     b2_wheelJoint(
         nb2_wheelJoint()
+    ),
+
+    /**
+     * <pre><code>
+     * b2_motionLockJoint -&#62; box2d
+     * </code></pre>
+     */
+    b2_motionLockJoint(
+        nb2_motionLockJoint()
     );
 
     static {
@@ -203,4 +213,6 @@ public enum b2JointType {
     public static native int nb2_weldJoint();
     /* Binding JNI to property 'b2_wheelJoint' of structure 'b2JointType' */
     public static native int nb2_wheelJoint();
+    /* Binding JNI to property 'b2_wheelJoint' of structure 'b2JointType' */
+    public static native int nb2_motionLockJoint();
 }

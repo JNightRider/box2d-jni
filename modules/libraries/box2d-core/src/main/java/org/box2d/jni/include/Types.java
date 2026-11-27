@@ -37,6 +37,7 @@ import org.box2d.jni.b2DistanceJointDef;
 import org.box2d.jni.b2ExplosionDef;
 import org.box2d.jni.b2Filter;
 import org.box2d.jni.b2FilterJointDef;
+import org.box2d.jni.b2MotionLockJointDef;
 import org.box2d.jni.b2MotorJointDef;
 import org.box2d.jni.b2MoverJointDef;
 import org.box2d.jni.b2PogoJointDef;
@@ -57,7 +58,7 @@ import static org.box2d.jni.libc.LibCStdint.*;
  * Class that represents the {@code <types.h>} header of box2d.
  *
  * @author wil
- * @version 1.0.2
+ * @version 1.1.0
  * @since 1.0.0
  */
 public final class Types {
@@ -353,7 +354,25 @@ public final class Types {
 
     /* {@code B2_API b2WheelJointDef b2DefaultWheelJointDef( void ); } */
     public static native void nb2DefaultWheelJointDef(long __result);
-    
+
+    // --- [ b2DefaultMotionLockJointDef ] ---
+
+    /**
+     * {@code B2_API b2MotionLockJointDef b2DefaultMotionLockJointDef( void ); }
+     *
+     * @param __result store
+     *
+     * @return b2MotionLockJointDef
+     */
+    public static b2MotionLockJointDef b2DefaultMotionLockJointDef(b2MotionLockJointDef __result) {
+        checkPointers(__result);
+        nb2DefaultMotionLockJointDef(__result.address());
+        return __result;
+    }
+
+    /* {@code B2_API b2MotionLockJointDef b2DefaultMotionLockJointDef( void ); } */
+    public static native void nb2DefaultMotionLockJointDef(long __result);
+
     // --- [ b2DefaultExplosionDef ] ---
 
     /**

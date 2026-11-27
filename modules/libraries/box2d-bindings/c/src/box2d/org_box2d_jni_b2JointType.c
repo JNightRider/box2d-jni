@@ -147,3 +147,15 @@ JNIEXPORT jint JNICALL Java_org_box2d_jni_b2JointType_nb2_1wheelJoint
     UNUSED_PARAMS(__env, clazz)
     return (jint)b2_wheelJoint;
 }
+
+/*
+ * Class:     org_box2d_jni_b2JointType
+ * Method:    nb2_motionLockJoint
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_org_box2d_jni_b2JointType_nb2_1motionLockJoint
+    (JNIEnv *__env, jclass clazz)
+{
+    UNUSED_PARAMS(__env, clazz)
+    return (jint)b2_motionLockJoint;
+}

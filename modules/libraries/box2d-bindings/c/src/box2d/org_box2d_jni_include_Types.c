@@ -235,6 +235,18 @@ JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultWheelJointDef
 
 /*
  * Class:     org_box2d_jni_include_Types
+ * Method:    nb2DefaultMotionLockJointDef
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_box2d_jni_include_Types_nb2DefaultMotionLockJointDef
+    (JNIEnv *__env, jclass clazz, jlong __result)
+{
+    UNUSED_PARAMS(__env, clazz)
+    *(b2MotionLockJointDef*)__result = b2DefaultMotionLockJointDef();
+}
+
+/*
+ * Class:     org_box2d_jni_include_Types
  * Method:    nb2DefaultExplosionDef
  * Signature: (J)V
  */

@@ -59,7 +59,7 @@ import org.box2d.jni.test.TestMacros.RUN_SUBTEST
  * Source code: https://github.com/erincatto/box2d/blob/main/test/test_world.c
  *
  * @author wil
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.3.0
  */
 class TestWorld {
@@ -627,9 +627,7 @@ class TestWorld {
             b2Body_SetBullet(bodyId, true)
             ENSURE(b2Body_IsBullet(bodyId) == true)
 
-            val locks = b2MotionLocks.calloc()
-            locks.linearX(true)
-            b2Body_SetMotionLocks(bodyId, locks)
+            b2Body_SetFixedRotation( bodyId, true );
             ENSURE(b2Body_IsBullet(bodyId) == true)
         }
 
@@ -644,9 +642,7 @@ class TestWorld {
             b2Body_SetBullet(bodyId, false)
             ENSURE(b2Body_IsBullet(bodyId) == false)
 
-            val locks = b2MotionLocks.calloc()
-            locks.linearX(true)
-            b2Body_SetMotionLocks(bodyId, locks)
+            b2Body_SetFixedRotation( bodyId, true );
             ENSURE(b2Body_IsBullet(bodyId) == false)
         }
 

@@ -31,26 +31,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.box2d.jni;
 
 import org.box2d.jni.system.*;
-import org.box2d.jni.readonly.ConstB2MotionLocks;
+import org.box2d.jni.readonly.ConstB2MotionLockJointDef;
 
 import static org.box2d.jni.libc.LibCStdlib.*;
+import static org.box2d.jni.libc.LibCString.*;
 import static org.box2d.jni.system.Memory.*;
+
 
 /**
  * <pre><code>
- * typedef struct b2MotionLocks
+ * typedef struct b2MotionLockJointDef
  * {
- * 	bool linearX;
- * 	bool linearY;
- * 	bool angularZ;
- * } b2MotionLocks;
+ *     b2JointDef base;
+ *     bool lockLinearX;
+ *     bool lockLinearY;
+ *     int internalValue;
+ * } b2MotionLockJointDef;
  * </code></pre>
  *
+ * A motion lock joint is designed to restrict motion to a line or a point.
+ * All restrictions are relative to the joint frame in body A.
+ *
  * @author wil
- * @since 1.0.0
  * @version 1.0.0
+ * @since 2.3.0
  */
-public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2MotionLocks {
+public class b2MotionLockJointDef extends Struct<b2MotionLockJointDef> implements ConstB2MotionLockJointDef {
 
     /** The struct size in bytes. */
     public static final int SIZEOF;
@@ -60,20 +66,23 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
 
     /** The struct member offsets. */
     private static final int
-            LINEAR_X,
-            LINEAR_Y,
-            ANGULAR_Z;
+            BASE,
+            LOCK_LINEAR_X,
+            LOCK_LINEAR_Y,
+            INTERNAL_VALUE;
 
     static {
         Layout layout = __struct(
+                __member(b2JointDef.SIZEOF, b2JointDef.ALIGNOF),
                 __member(1),
                 __member(1),
-                __member(1)
+                __member(4)
         );
 
-        LINEAR_X = layout.offsetof(0);
-        LINEAR_Y = layout.offsetof(1);
-        ANGULAR_Z = layout.offsetof(2);
+        BASE = layout.offsetof(0);
+        LOCK_LINEAR_X = layout.offsetof(1);
+        LOCK_LINEAR_Y = layout.offsetof(2);
+        INTERNAL_VALUE = layout.offsetof(3);
 
         SIZEOF = layout.getSize();
         ALIGNOF = layout.getAlignment();
@@ -84,7 +93,7 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
      *
      * @param ptr A reference pointer.
      */
-    public b2MotionLocks(Pointer ptr) {
+    public b2MotionLockJointDef(Pointer ptr) {
         super(ptr);
     }
 
@@ -93,7 +102,7 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
      *
      * @param address A virtual memory address
      */
-    public b2MotionLocks(long address) {
+    public b2MotionLockJointDef(long address) {
         super(address);
     }
 
@@ -102,122 +111,151 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
      *
      * @param address A virtual memory address
      * @param factor boolean
-     *
-     * @see Struct#Struct(long, boolean)
      */
-    protected b2MotionLocks(long address, boolean factor) {
+    protected b2MotionLockJointDef(long address, boolean factor) {
         super(address, factor);
     }
 
-    /** @return Returns the property {@code linearX} */
+    /** @return Returns the property {@code base} */
     @Override
-    public boolean linearX() { return nlinearX(address()); }
-    /** @return Returns the property {@code linearY} */
+    public b2JointDef base() { return nbase(address()); }
+
+    /** @return Returns the property {@code lockLinearX} */
     @Override
-    public boolean linearY() { return nlinearY(address()); }
-    /** @return Returns the property {@code angularZ} */
+    public boolean lockLinearX() { return nlockLinearX(address()); }
+
+    /** @return Returns the property {@code lockLinearY} */
     @Override
-    public boolean angularZ() { return nangularZ(address()); }
+    public boolean lockLinearY() { return nlockLinearY(address()); }
+
+    /** @return Returns the property {@code internalValue} */
+    @Override
+    public int internalValue() { return ninternalValue(address()); }
 
     /**
-     * Set the value of property {@code linearX}
+     * Set the value of property {@code base}
      *
-     * @param value The value
-     * @return b2MotionLocks
+     * @param value b2JointDef
+     * @return b2MotionLockJointDef
      */
-    public b2MotionLocks linearX(boolean value) { nlinearX(address(), value); return this; }
+    public b2MotionLockJointDef base(b2JointDef value) {
+        nbase(address(), value);
+        return this;
+    }
+
     /**
-     * Set the value of property {@code linearY}
+     * Set the value of property {@code lockLinearX}
      *
-     * @param value The value
-     * @return b2MotionLocks
+     * @param value boolean
+     * @return b2MotionLockJointDef
      */
-    public b2MotionLocks linearY(boolean value) { nlinearY(address(), value); return this; }
+    public b2MotionLockJointDef lockLinearX(boolean value) {
+        nlockLinearX(address(), value);
+        return this;
+    }
+
     /**
-     * Set the value of property {@code angularZ}
+     * Set the value of property {@code lockLinearY}
      *
-     * @param value The value
-     * @return b2MotionLocks
+     * @param value boolean
+     * @return b2MotionLockJointDef
      */
-    public b2MotionLocks angularZ(boolean value) { nangularZ(address(), value); return this; }
+    public b2MotionLockJointDef lockLinearY(boolean value) {
+        nlockLinearY(address(), value);
+        return this;
+    }
+
+    /**
+     * Set the value of property {@code internalValue}
+     *
+     * @param value int
+     * @return b2MotionLockJointDef
+     */
+    public b2MotionLockJointDef internalValue(int value) {
+        ninternalValue(address(), value);
+        return this;
+    }
 
     /*(non-Javadoc)
      */
     @Override
-    public int sizeof() { return SIZEOF; }
+    public int sizeof() {
+        return SIZEOF;
+    }
 
     /*(non-Javadoc)
      */
     @Override
-    protected b2MotionLocks create(long address, Pointer ptr) {
-        return ptr == null ? new b2MotionLocks(address) : new b2MotionLocks(ptr);
+    protected b2MotionLockJointDef create(long address, Pointer ptr) {
+        return ptr == null ? new b2MotionLockJointDef(address) : new b2MotionLockJointDef(ptr);
     }
 
     // -----------------------------------
 
     /**
      * Internal use of the buffer.
-     * @return b2MotionLocks
+     *
+     * @return b2MotionLockJointDef
      */
-    private static b2MotionLocks factory() {
-        return new b2MotionLocks(-1L, true);
+    private static b2MotionLockJointDef factory() {
+        return new b2MotionLockJointDef(-1L, true);
     }
 
     /**
      * Create a reference to a pointer to access its properties.
      *
      * @param ptr A reference pointer.
-     * @return b2MotionLocks
+     * @return b2MotionLockJointDef
      */
-    public static b2MotionLocks createSafe(Pointer ptr) {
+    public static b2MotionLockJointDef createSafe(Pointer ptr) {
         if (ptr == null) {
             return null;
         }
-        return new b2MotionLocks(ptr);
+        return new b2MotionLockJointDef(ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2MotionLocks}.
+     * Reserve memory for the new object {@code b2MotionLockJointDef}.
      *
      * @param alloc Custom memory manager
-     * @return b2MotionLocks
+     * @return b2MotionLockJointDef
      */
-    public static b2MotionLocks alloc(AllocFunc alloc) {
+    public static b2MotionLockJointDef alloc(AllocFunc alloc) {
         long address = alloc.alloc(ALIGNOF, 1, SIZEOF);
-        return address == NULL ? null : new b2MotionLocks(() -> address);
+        return address == NULL ? null : new b2MotionLockJointDef(() -> address);
     }
 
     /**
-     * Reserve memory for the new object {@code b2MotionLocks}.
+     * Reserve memory for the new object {@code b2MotionLockJointDef}.
      *
-     * @return b2MotionLocks
+     * @return b2MotionLockJointDef
      */
-    public static b2MotionLocks calloc() {
-        return new b2MotionLocks(ncalloc(1, SIZEOF));
+    public static b2MotionLockJointDef calloc() {
+        return new b2MotionLockJointDef(ncalloc(1, SIZEOF));
     }
 
     /**
-     * Reserve memory for the new object {@code b2MotionLocks}.
+     * Reserve memory for the new object {@code b2MotionLockJointDef}.
      *
      * @param arean arena
-     * @return b2MotionLocks
+     * @return b2MotionLockJointDef
      */
-    public static b2MotionLocks calloc(ArenaAlloc arean) {
+    public static b2MotionLockJointDef calloc(ArenaAlloc arean) {
         long ptr = arean.ncalloc(ALIGNOF, 1, SIZEOF);
-        return new b2MotionLocks(() -> ptr);
+        return new b2MotionLockJointDef(() -> ptr);
     }
 
     /**
-     * Reserve memory for the new object {@code b2MotionLocks}.
+     * Reserve memory for the new object {@code b2MotionLockJointDef}.
      *
-     * @return b2MotionLocks
+     * @return b2MotionLockJointDef
      */
-    public static b2MotionLocks malloc() {
-        return new b2MotionLocks(nmalloc(SIZEOF));
+    public static b2MotionLockJointDef malloc() {
+        return new b2MotionLockJointDef(nmalloc(SIZEOF));
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2MotionLocks}.
+     * Reserve an amount n of memory for the object {@code b2MotionLockJointDef}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -227,7 +265,7 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2MotionLocks}.
+     * Reserve an amount n of memory for the object {@code b2MotionLockJointDef}.
      *
      * @param capacity Number of elements
      * @param alloc Custom memory manager
@@ -239,7 +277,7 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2MotionLocks}.
+     * Reserve an amount n of memory for the object {@code b2MotionLockJointDef}.
      *
      * @param capacity Number of elements
      * @return Buffer
@@ -249,7 +287,7 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
     }
 
     /**
-     * Reserve an amount n of memory for the object {@code b2MotionLocks}.
+     * Reserve an amount n of memory for the object {@code b2MotionLockJointDef}.
      *
      * @param capacity Number of elements
      * @param arena Arean
@@ -261,22 +299,24 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
     }
 
     // -----------------------------------
+    
+    public static b2JointDef nbase(long address) { return b2JointDef.createSafe(() -> address + BASE); }
+    public static boolean nlockLinearX(long address) { return memGetByte(address + LOCK_LINEAR_X) != 0; }
+    public static boolean nlockLinearY(long address) { return memGetByte(address + LOCK_LINEAR_Y) != 0; }
+    public static int ninternalValue(long address) { return memGetInt(address + INTERNAL_VALUE); }
 
-    public static boolean nlinearX(long address) { return memGetByte(address + LINEAR_X) != 0; }
-    public static boolean nlinearY(long address) { return memGetByte(address + LINEAR_Y) != 0; }
-    public static boolean nangularZ(long address) { return memGetByte(address + ANGULAR_Z) != 0; }
-
-    public static void nlinearX(long address, boolean value) { memPutByte(address + LINEAR_X, (byte)(value ? 1 : 0)); }
-    public static void nlinearY(long address, boolean value) {  memPutByte(address + LINEAR_Y, (byte)(value ? 1 : 0)); }
-    public static void nangularZ(long address, boolean value) { memPutByte(address + ANGULAR_Z, (byte)(value ? 1 : 0)); }
+    public static void nbase(long address, b2JointDef value) { nmemcpy(address + BASE, value.address(), b2JointDef.SIZEOF); }
+    public static void nlockLinearX(long address, boolean value) { memPutByte(address + LOCK_LINEAR_X, (byte) (value ? 1 : 0)); }
+    public static void nlockLinearY(long address, boolean value) { memPutByte(address + LOCK_LINEAR_Y, (byte) (value ? 1 : 0)); }
+    public static void ninternalValue(long address, int value) { memPutInt(address + INTERNAL_VALUE, value); }
 
     // -----------------------------------
 
-    /** An array of {@code b2MotionLocks} structs. */
-    public static class Buffer extends StructBuffer<b2MotionLocks, Buffer> implements JNINative {
+    /** An array of {@code b2MotionLockJointDef} structs. */
+    public static class Buffer extends StructBuffer<b2MotionLockJointDef, Buffer> implements JNINative {
 
         /** An element that provides information about the structure. */
-        private static final b2MotionLocks ELEMENT_FACTORY = b2MotionLocks.factory();
+        private static final b2MotionLockJointDef ELEMENT_FACTORY = b2MotionLockJointDef.factory();
 
         /**
          * Create a new buffer.
@@ -304,7 +344,7 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
         /*(non-Javadoc)
          */
         @Override
-        protected b2MotionLocks getElementFactory() {
+        protected b2MotionLockJointDef getElementFactory() {
             return ELEMENT_FACTORY;
         }
 
@@ -323,3 +363,4 @@ public class b2MotionLocks extends Struct<b2MotionLocks> implements ConstB2Motio
         }
     }
 }
+
